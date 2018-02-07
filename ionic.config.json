@@ -1,0 +1,8 @@
+{
+  "name": "lacroix-mobile-front",
+  "app_id": "b7cfa783",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
