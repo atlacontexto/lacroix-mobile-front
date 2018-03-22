@@ -1,0 +1,43 @@
+<ion-header no-border>
+
+  <ion-navbar transparent>
+    <ion-title>
+      <img height="40" src="assets/imgs/atla-red.png">
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-bounce [ngClass]="class">
+  <ion-slides pager="true" dir="{{dir}}" (ionSlideWillChange)="onSlideChangeStart($event)">
+    <ion-slide *ngFor="let slide of slides">
+      <img style="width: 80px; height: 80px;" [src]="slide.icone" class="slide-image" />
+      <h3 ion-text color="light" text-uppercase class="slide-title" [innerHTML]="slide.title"></h3>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-8 offset-2>
+            <p class="landing-text" ion-text color="light" text-uppercase [innerHTML]="slide.description"></p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-navbar transparent>
+    <ion-buttons center>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-sm-12>
+            <button text-uppercase ion-button solid large full color="atla-red" (click)="next()">
+              {{ 'LANDING_BUTTON' | translate}}
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-buttons>
+  </ion-navbar>
+</ion-footer>
