@@ -1,0 +1,6 @@
+page-register-phone-check {
+    .grid, .row {
+        // Force grid to fill height of content as this is not set by default
+        height: 100%;
+      }
+}

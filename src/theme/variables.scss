@@ -73,6 +73,11 @@ $colors: (
 
 @import "ionic.theme.default";
 
+$toolbar-ios-button-color: #ec283e;
+//$toolbar-ios-title-text-color: #ffaa3f;
+$toolbar-md-button-color: #ec283e;
+//$toolbar-md-title-text-color: #ffaa3f;
+
 
 // Ionicons
 // --------------------------------------------------
@@ -87,3 +92,4 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+

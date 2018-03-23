@@ -34,6 +34,7 @@ export class LandingPage {
     public platform: Platform,
     public translate: TranslateService
   ) {
+    this.translate.setDefaultLang('pt-br');
     this.dir = platform.dir();
     this.translate.get([
       "LANDING_SLIDE1_TITLE",
@@ -97,7 +98,10 @@ export class LandingPage {
   }
 
   next() {
-
+    this.navCtrl.push('RegisterPhonePage', {}, {
+      animate: true,
+      direction: 'forward'
+    });
   }
 
   onSlideChangeStart(slider) {
