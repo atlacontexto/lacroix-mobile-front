@@ -16,8 +16,11 @@ import { RegisterPhonePage } from '../pages/register-phone/register-phone';
 import { RegisterPhoneCheckPage } from '../pages/register-phone-check/register-phone-check';
 import { RegisterPhonePageModule } from '../pages/register-phone/register-phone.module';
 import { RegisterPhoneCheckPageModule } from '../pages/register-phone-check/register-phone-check.module';
-import { BasicUserInfoPage } from '../pages/basic-user-info/basic-user-info';
-import { BasicUserInfoPageModule } from '../pages/basic-user-info/basic-user-info.module';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { UserBasicInfoPageModule } from '../pages/user-basic-info/user-basic-info.module';
+import { UserBasicInfoPage } from '../pages/user-basic-info/user-basic-info';
+import { UserServiceProvider } from '../providers/user-service/user-service';
+import { AlertServiceProvider } from '../providers/alert-service/alert-service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -42,7 +45,7 @@ export function createTranslateLoader(http: HttpClient) {
     LandingPageModule,
     RegisterPhonePageModule,
     RegisterPhoneCheckPageModule,
-    BasicUserInfoPageModule
+    UserBasicInfoPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -51,12 +54,15 @@ export function createTranslateLoader(http: HttpClient) {
     LandingPage,
     RegisterPhonePage,
     RegisterPhoneCheckPage,
-    BasicUserInfoPage
+    UserBasicInfoPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthServiceProvider,
+    UserServiceProvider,
+    AlertServiceProvider
   ]
 })
 export class AppModule {}

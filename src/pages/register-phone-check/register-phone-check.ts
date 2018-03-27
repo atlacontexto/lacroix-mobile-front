@@ -32,13 +32,13 @@ export class RegisterPhoneCheckPage {
       user.shortName = "saviocamacam";
       user.email = "saviocamacam@gmail.com";
 
-      this.navCtrl.push('BasicUserInfoPage', user, {
+      this.navCtrl.push('UserBasicInfoPage', user, {
         animate: true,
         direction: 'forward'
       });
 
     } else if(confirm) {
-      this.navCtrl.push('BasicUserInfoPage', {}, {
+      this.navCtrl.push('UserBasicInfoPage', {}, {
         animate: true,
         direction: 'forward'
       });

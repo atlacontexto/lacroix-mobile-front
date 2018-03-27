@@ -11,7 +11,7 @@
 
 <ion-content padding>
   <ion-grid>
-    <ion-row align-items-start>
+    <ion-row>
       <ion-col text-center>
         <h2 text-uppercase>
           {{ 'REGISTER_PHONE_TITLE' | translate}}
@@ -21,18 +21,20 @@
         </p>
       </ion-col>
     </ion-row>
-    <ion-row align-items-center>
-      <ion-item>
-        <ion-input text-center type="number" placeholder="Number Input with no label"></ion-input>
-      </ion-item>
-    </ion-row>
-    <ion-row align-items-end>
-      <ion-col col-sm-12 >
-        <button text-uppercase ion-button solid large full color="atla-red" (click)="next()">
-          {{ 'NEXT_BUTTON' | translate}}
-        </button>
-      </ion-col>
-    </ion-row>
+    <form (submit)="next()" [formGroup]=form>
+      <ion-row>
+        <ion-item>
+          <ion-input text-center type="number" formControlName="number" placeholder="Informe seu número"></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-col col-sm-12>
+          <button text-uppercase ion-button solid large [disabled]="!isReady" full color="atla-red">
+            {{ 'NEXT_BUTTON' | translate}}
+          </button>
+        </ion-col>
+      </ion-row>
+    </form>
   </ion-grid>
 
 </ion-content>

@@ -1,0 +1,44 @@
+<ion-header no-border>
+
+  <ion-navbar transparent>
+    <ion-title>
+      <img height="40" src="assets/imgs/atla-red.png">
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <form (submit)="updateUser()" [formGroup]="form">
+      <ion-row>
+        <ion-item>
+          <ion-input formControlName=cellphone type="number" placeholder="Celular"></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-item>
+          <ion-input formControlName=fullName type="text" placeholder="Nome Completo"></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-item>
+          <ion-input formControlName=shortName type="text" placeholder="Nome Curto"></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-item>
+          <ion-input formControlName=email type="text" placeholder="Email"></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <button text-uppercase ion-button solid large full color="atla-red" type="submit">
+          {{ 'NEXT_BUTTON' | translate}}
+        </button>
+      </ion-row>
+    </form>
+
+  </ion-grid>
+
+</ion-content>

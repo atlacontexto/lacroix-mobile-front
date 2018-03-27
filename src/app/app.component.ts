@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Platform, Config } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, Config, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -10,6 +10,7 @@ import { LandingPage } from '../pages/landing/landing';
   templateUrl: 'app.html'
 })
 export class MyApp {
+  @ViewChild(Nav) nav: Nav;
   rootPage:any = LandingPage;
 
   constructor(
@@ -32,6 +33,13 @@ export class MyApp {
     this.translate.setDefaultLang('pt-br');
     this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
       this.config.set('ios', 'backButtonText', values.BACK_BUTTON_TEXT);
+    })
+  }
+  
+  logout() {
+    this.nav.setRoot('LoginPage',{},{
+      animate: true,
+      direction: 'back'
     })
   }
 }
