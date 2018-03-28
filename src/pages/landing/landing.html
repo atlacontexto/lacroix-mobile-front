@@ -1,9 +1,8 @@
 <ion-header no-border>
 
-  <ion-navbar transparent>
+  <ion-navbar transparent text-center>
     <ion-title>
-      <img height="40" src="assets/imgs/atla-red.png">
-      ATLA ENSINO
+      <img height="40" src="assets/imgs/atla-red-full.png">
     </ion-title>
   </ion-navbar>
 
@@ -13,7 +12,7 @@
 <ion-content no-bounce [ngClass]="class">
   <ion-slides pager="true" dir="{{dir}}" (ionSlideWillChange)="onSlideChangeStart($event)">
     <ion-slide *ngFor="let slide of slides">
-      <img style="width: 80px; height: 80px;" [src]="slide.icone" class="slide-image" />
+      <!-- <img style="width: 80px; height: 80px;" [src]="slide.icone" class="slide-image" /> -->
       <h3 ion-text color="light" text-uppercase class="slide-title" [innerHTML]="slide.title"></h3>
       <ion-grid>
         <ion-row>

@@ -37,7 +37,7 @@ export class MyApp {
   }
   
   logout() {
-    this.nav.setRoot('LoginPage',{},{
+    this.nav.setRoot('LandingPage',{},{
       animate: true,
       direction: 'back'
     })

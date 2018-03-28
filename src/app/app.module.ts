@@ -21,6 +21,9 @@ import { UserBasicInfoPageModule } from '../pages/user-basic-info/user-basic-inf
 import { UserBasicInfoPage } from '../pages/user-basic-info/user-basic-info';
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { AlertServiceProvider } from '../providers/alert-service/alert-service';
+import { Keyboard } from '@ionic-native/keyboard';
+import { ProfileCreatePageModule } from '../pages/profile-create/profile-create.module';
+import { ProfileCreatePage } from '../pages/profile-create/profile-create';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -45,7 +48,8 @@ export function createTranslateLoader(http: HttpClient) {
     LandingPageModule,
     RegisterPhonePageModule,
     RegisterPhoneCheckPageModule,
-    UserBasicInfoPageModule
+    UserBasicInfoPageModule,
+    ProfileCreatePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -54,7 +58,8 @@ export function createTranslateLoader(http: HttpClient) {
     LandingPage,
     RegisterPhonePage,
     RegisterPhoneCheckPage,
-    UserBasicInfoPage
+    UserBasicInfoPage,
+    ProfileCreatePage
   ],
   providers: [
     StatusBar,
@@ -62,7 +67,8 @@ export function createTranslateLoader(http: HttpClient) {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,
     UserServiceProvider,
-    AlertServiceProvider
+    AlertServiceProvider,
+    Keyboard,
   ]
 })
 export class AppModule {}

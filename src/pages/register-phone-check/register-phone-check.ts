@@ -25,20 +25,20 @@ export class RegisterPhoneCheckPage {
   next() {
     var confirm = true;
     var registered = false;
-    var user = {cellNumber:"", completeName:"", shortName:"", email:""}
+    var user = {cellphone:"", fullName:"", shortName:"", email:""}
     if(confirm && registered) {
-      user.cellNumber = "+55(44)99119-6405";
-      user.completeName = "Savio de Oliveira Camacam";
+      user.cellphone = "+55(44)99119-6405";
+      user.fullName = "Savio de Oliveira Camacam";
       user.shortName = "saviocamacam";
       user.email = "saviocamacam@gmail.com";
 
-      this.navCtrl.push('UserBasicInfoPage', user, {
+      this.navCtrl.push('UserBasicInfoPage', {step: 'user', user: user} , {
         animate: true,
         direction: 'forward'
       });
 
     } else if(confirm) {
-      this.navCtrl.push('UserBasicInfoPage', {}, {
+      this.navCtrl.push('UserBasicInfoPage', {step: 'user'}, {
         animate: true,
         direction: 'forward'
       });

@@ -1,44 +1,91 @@
 <ion-header no-border>
 
-  <ion-navbar transparent>
+  <ion-navbar transparent text-center>
     <ion-title>
-      <img height="40" src="assets/imgs/atla-red.png">
+      <img height="40" src="assets/imgs/atla-red-full.png">
     </ion-title>
   </ion-navbar>
-
+  <ion-toolbar no-border-top transparent>
+    <ion-segment [(ngModel)]="step" color="atla-red">
+      <ion-segment-button [disabled]="statusUser" value="user">
+        Usuário
+      </ion-segment-button>
+      <ion-segment-button [disabled]="statusProfile" value="profile">
+        Perfil
+      </ion-segment-button>
+      <ion-segment-button [disabled]="statusLink" value="link">
+        Vínculo
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
+<ion-content no-padding>
+  <div [ngSwitch]="step">
+    <ion-grid *ngSwitchCase="'user'">
+      <form (submit)="updateUser()" [formGroup]="form">
+        <ion-row>
+          <ion-item>
+            <ion-input formControlName=cellphone type="number" placeholder="Celular"></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-row>
+          <ion-item>
+            <ion-input formControlName=fullName type="text" placeholder="Nome Completo"></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-row>
+          <ion-item>
+            <ion-input formControlName=shortName type="text" placeholder="Nome Curto"></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-row>
+          <ion-item>
+            <ion-input formControlName=email type="text" placeholder="Email"></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-row>
+          <button text-uppercase ion-button solid large full color="atla-red" type="submit">
+            {{ 'NEXT_BUTTON' | translate}}
+          </button>
+        </ion-row>
+      </form>
 
-<ion-content padding>
-  <ion-grid>
-    <form (submit)="updateUser()" [formGroup]="form">
+    </ion-grid>
+    <ion-grid *ngSwitchCase="'profile'">
       <ion-row>
-        <ion-item>
-          <ion-input formControlName=cellphone type="number" placeholder="Celular"></ion-input>
-        </ion-item>
+        <ion-col col-2>
+          <button ion-button icon-left color=atla-red (click)="openModal('ProfileCreatePage')">
+            <ion-icon name=add></ion-icon>
+            NOVO PERFIL
+          </button>
+        </ion-col>
+        <ion-col offset-8 col-2>
+          <button ion-button icon-only color=atla-red>
+            <ion-icon name=help></ion-icon>
+          </button>
+        </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-item>
-          <ion-input formControlName=fullName type="text" placeholder="Nome Completo"></ion-input>
-        </ion-item>
-      </ion-row>
-      <ion-row>
-        <ion-item>
-          <ion-input formControlName=shortName type="text" placeholder="Nome Curto"></ion-input>
-        </ion-item>
-      </ion-row>
-      <ion-row>
-        <ion-item>
-          <ion-input formControlName=email type="text" placeholder="Email"></ion-input>
-        </ion-item>
-      </ion-row>
-      <ion-row>
-        <button text-uppercase ion-button solid large full color="atla-red" type="submit">
-          {{ 'NEXT_BUTTON' | translate}}
-        </button>
-      </ion-row>
-    </form>
 
-  </ion-grid>
+      <ion-row>
+        <ion-list inset>
+          <button ion-item *ngFor="let item of items" (click)="openModal(item.component)">
+            <ion-avatar item-start>
+              <img [src]="item.icon">
+            </ion-avatar>
+            <h2 style="font-weight: bold;" text-uppercase ion-text color=blue-payplug>{{item.title}}</h2>
+            <h3 ion-text color=blue-payplug text-wrap>{{item.description}}</h3>
+          </button>
+        </ion-list>
+      </ion-row>
+
+    </ion-grid>
+    <ion-grid *ngSwitchCase="'link'">
+      <ion-row>
+        <h3>Link</h3>
+      </ion-row>
+    </ion-grid>
+  </div>
+
 
 </ion-content>
