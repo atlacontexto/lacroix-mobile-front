@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 /**
  * Generated class for the RegisterPhonePage page.
@@ -22,10 +23,11 @@ export class RegisterPhonePage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public authService: AuthServiceProvider
   ) {
     this.form = formBuilder.group({
-      number: ['', Validators.required]
+      cellphone: ['', Validators.required]
     });
     this.form.valueChanges.subscribe((v) => {
       this.isReady = this.form.valid;
@@ -37,9 +39,14 @@ export class RegisterPhonePage {
   }
 
   next() {
-    this.navCtrl.push('RegisterPhoneCheckPage', {}, {
-      animate: true,
-      direction: 'forward'
+    this.authService.sendSms(this.form.value).then(data => {
+      console.log(data)
+      this.navCtrl.push('RegisterPhoneCheckPage', {}, {
+        animate: true,
+        direction: 'forward'
+      });
+    }).catch(err => {
+      console.log(err);
     });
   }
 
