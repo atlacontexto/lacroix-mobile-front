@@ -13,6 +13,27 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content no-padding>
+  <ion-grid>
+    <ion-row>
+      <ion-item>
+        <ion-label>Perfil Principal</ion-label>
+        <ion-toggle value="foo" checked="true"></ion-toggle>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <p>{{type}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button full color=atla-red>Atualizar</button>
+      </ion-col>
+      <ion-col>
+          <button ion-button full color=atla-red>Iniciar</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

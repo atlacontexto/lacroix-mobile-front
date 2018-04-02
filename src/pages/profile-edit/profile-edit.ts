@@ -15,11 +15,14 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 })
 export class ProfileEditPage {
 
+  type = "";
+  
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public viewCtrl: ViewController
   ) {
+    this.type = navParams.get('title');
   }
 
   ionViewDidLoad() {

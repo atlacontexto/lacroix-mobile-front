@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ProfileCreatePage } from './profile-create';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { ProfileCreatePage } from './profile-create';
   ],
   imports: [
     IonicPageModule.forChild(ProfileCreatePage),
+    TranslateModule.forChild()
   ],
 })
 export class ProfileCreatePageModule {}

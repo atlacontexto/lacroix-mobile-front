@@ -1,38 +1,47 @@
 <ion-menu [content]="content" id="authenticated">
-    <ion-header no-border>
-      <ion-toolbar transparent>
-        <ion-title>
-          <img height="40" src="assets/imgs/atla-red.png">
-        </ion-title>
-      </ion-toolbar>
-    </ion-header>
-  
-    <ion-content>
-      <ion-list>
-        <button color="space" menuClose ion-item *ngFor="let p of privatePages" (click)="openPage(p)">
-          {{p.title}}
-        </button>
-      </ion-list>
-    </ion-content>
-  
-    <ion-footer>
-      <ion-navbar>
-        <ion-buttons center>
-          <ion-grid>
-            <ion-row justify-content-center>
-  
-              <button ion-button color="danger" block round (click)="logout()" menuToggle>
-                <ion-icon name="log-out" item-end></ion-icon>
-                Sair
-              </button>
-  
-            </ion-row>
-          </ion-grid>
-        </ion-buttons>
-      </ion-navbar>
-    </ion-footer>
-  </ion-menu>
-  
-  <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
-  <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
-  
+  <ion-header no-border>
+    <ion-toolbar transparent>
+      <ion-title text-center>
+        <img height="40" src="assets/imgs/atla-red.png">
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-item>
+      <ion-label stacked>Perfil</ion-label>
+      <ion-select [(ngModel)]="gender" (ionChange)="updateList()">
+        <ion-option selected=true value="alunp">Aluno</ion-option>
+        <ion-option value="pai">Pai</ion-option>
+        <ion-option value="professor">Professor</ion-option>
+        <ion-option value="escola">Escola</ion-option>
+        <ion-option value="municipio">Município</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-list>
+      <button color="space" menuClose ion-item *ngFor="let p of privatePages" (click)="openPage(p)">
+        {{p.title}}
+      </button>
+    </ion-list>
+  </ion-content>
+
+  <ion-footer>
+    <ion-navbar>
+      <ion-buttons center>
+        <ion-grid>
+          <ion-row justify-content-center>
+
+            <button ion-button color="danger" block round (click)="logout()" menuToggle>
+              <ion-icon name="log-out" item-end></ion-icon>
+              Sair
+            </button>
+
+          </ion-row>
+        </ion-grid>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-footer>
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

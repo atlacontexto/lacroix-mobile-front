@@ -20,31 +20,31 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content no-padding>
+<ion-content padding>
   <div [ngSwitch]="step">
-    <ion-grid *ngSwitchCase="'user'">
-      <form (submit)="updateUser()" [formGroup]="form">
+    <ion-grid *ngSwitchCase="'user'" padding>
+      <form (submit)="updateUser()" [formGroup]="form" no-padding>
         <ion-row>
-          <ion-item>
+          <ion-item no-padding>
             <ion-input formControlName=cellphone type="number" placeholder="Celular"></ion-input>
           </ion-item>
         </ion-row>
         <ion-row>
-          <ion-item>
+          <ion-item no-padding>
             <ion-input formControlName=fullName type="text" placeholder="Nome Completo"></ion-input>
           </ion-item>
         </ion-row>
         <ion-row>
-          <ion-item>
+          <ion-item no-padding>
             <ion-input formControlName=shortName type="text" placeholder="Nome Curto"></ion-input>
           </ion-item>
         </ion-row>
         <ion-row>
-          <ion-item>
+          <ion-item no-padding>
             <ion-input formControlName=email type="text" placeholder="Email"></ion-input>
           </ion-item>
         </ion-row>
-        <ion-row>
+        <ion-row margin-top>
           <button text-uppercase ion-button solid large full color="atla-red" type="submit">
             {{ 'NEXT_BUTTON' | translate}}
           </button>
@@ -55,7 +55,7 @@
     <ion-grid *ngSwitchCase="'profile'">
       <ion-row>
         <ion-col col-2>
-          <button ion-button icon-left color=atla-red (click)="openModal('ProfileCreatePage')">
+          <button ion-button icon-left color=atla-red (click)="openModal(item)">
             <ion-icon name=add></ion-icon>
             NOVO PERFIL
           </button>
@@ -69,14 +69,18 @@
 
       <ion-row>
         <ion-list inset>
-          <button ion-item *ngFor="let item of items" (click)="openModal(item.component)">
+          <button ion-item *ngFor="let item of items" (click)="openModal(item)">
             <ion-avatar item-start>
-              <img [src]="item.icon">
+              <!-- <img [src]="item.icon"> -->
             </ion-avatar>
             <h2 style="font-weight: bold;" text-uppercase ion-text color=blue-payplug>{{item.title}}</h2>
             <h3 ion-text color=blue-payplug text-wrap>{{item.description}}</h3>
           </button>
         </ion-list>
+      </ion-row>
+      
+      <ion-row>
+        <button ion-button full color=atla-red text-uppercase (click)="start()">{{'START_BUTTON' | translate}}</button>
       </ion-row>
 
     </ion-grid>

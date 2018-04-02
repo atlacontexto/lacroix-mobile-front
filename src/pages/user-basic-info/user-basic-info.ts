@@ -27,6 +27,7 @@ export class UserBasicInfoPage {
   statusLink = true;
   showFooter = true;
   items: Array<{ title: string, component: any, description: any, icon: string }>;
+  item = { title: '', component: 'ProfileCreatePage' };
 
   constructor(
     public navCtrl: NavController,
@@ -73,9 +74,14 @@ export class UserBasicInfoPage {
   }
 
   openModal(page) {
-    let profileModal = this.modalCtrl.create(page,{},{enableBackdropDismiss: true});
+    let profileModal = this.modalCtrl.create(page.component, { title: page.title }, { enableBackdropDismiss: true });
     profileModal.onDidDismiss(data => {
-
+      if (data) {
+        if (data['profileType']) {
+          this.step = 'link';
+          this.statusLink = true;
+        }
+      }
     });
     profileModal.present();
   }
@@ -93,6 +99,13 @@ export class UserBasicInfoPage {
     //   animate: true,
     //   direction: 'forward'
     // })
+  }
+
+  start() {
+    this.navCtrl.setRoot(HomePage, {}, {
+      animate: true,
+      direction: 'forward'
+    })
   }
 
 }
