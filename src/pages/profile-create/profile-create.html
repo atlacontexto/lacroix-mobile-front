@@ -9,15 +9,73 @@
   <ion-navbar text-center>
     <ion-title>Novo Perfil</ion-title>
     <ion-buttons start>
-        <button ion-button (click)="dismiss()">
-          Cancelar
-        </button>
-      </ion-buttons>
+      <button ion-button (click)="dismiss()">
+        Cancelar
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item no-padding>
+          <ion-label floating>Tipo de Perfil</ion-label>
+          <ion-select [(ngModel)]="profileType" (ionChange)="typeChanged()">
+            <ion-option value="pai">Pai</ion-option>
+            <ion-option value="professor">Professor</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="profileType == 'aluno'">
+      <ion-col>
+        <ion-item no-padding>
+          <ion-label>Seu CGM</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <form *ngIf="profileType == 'pai'" [formGroup]=formParent>
+      <ion-row>
+        <ion-col>
+          <ion-item no-padding>
+            <ion-label floating>CGM do meu filho</ion-label>
+            <ion-input formControlName=cgm type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </form>
+
+    <ion-row *ngIf="profileType == 'professor'">
+      <ion-col col-12>
+        <ion-item no-padding>
+          <ion-label floating>Nível</ion-label>
+          <ion-select [(ngModel)]="level">
+            <ion-option value="infantil">Infantil</ion-option>
+            <ion-option value="fundamental1">Fundamental 1</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 *ngIf="level == 'fundamental1'">
+        <h4 text-center>Áreas de interesse</h4>
+        <form [formGroup]=formProfessor>
+          <ion-item no-padding *ngFor='let item of items'>
+            <ion-label>{{item.title}}</ion-label>
+            <ion-toggle (checked)="item.checked" [formControlName]="item.formControl" color=atla-red></ion-toggle>
+          </ion-item>
+        </form>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <button color=atla-red ion-button *ngIf=profileType full text-uppercase (click)="dismiss()">
+        {{'NEXT_BUTTON' | translate}}
+      </button>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

@@ -35,6 +35,10 @@ export class MyApp {
       this.config.set('ios', 'backButtonText', values.BACK_BUTTON_TEXT);
     })
   }
+
+  updateList() {
+    console.log('atualizar lista de aplicações');
+  }
   
   logout() {
     this.nav.setRoot('LandingPage',{},{

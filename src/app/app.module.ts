@@ -24,6 +24,18 @@ import { AlertServiceProvider } from '../providers/alert-service/alert-service';
 import { Keyboard } from '@ionic-native/keyboard';
 import { ProfileCreatePageModule } from '../pages/profile-create/profile-create.module';
 import { ProfileCreatePage } from '../pages/profile-create/profile-create';
+import { FeedPage } from '../pages/feed/feed';
+import { NotificationsPage } from '../pages/notifications/notifications';
+import { SchedulePage } from '../pages/schedule/schedule';
+import { ChatPage } from '../pages/chat/chat';
+import { FeedPageModule } from '../pages/feed/feed.module';
+import { NotificationsPageModule } from '../pages/notifications/notifications.module';
+import { SchedulePageModule } from '../pages/schedule/schedule.module';
+import { ChatPageModule } from '../pages/chat/chat.module';
+import { ChatShowPage } from '../pages/chat-show/chat-show';
+import { ChatShowPageModule } from '../pages/chat-show/chat-show.module';
+import { PostDetailPage } from '../pages/post-detail/post-detail';
+import { PostDetailPageModule } from '../pages/post-detail/post-detail.module';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -49,7 +61,13 @@ export function createTranslateLoader(http: HttpClient) {
     RegisterPhonePageModule,
     RegisterPhoneCheckPageModule,
     UserBasicInfoPageModule,
-    ProfileCreatePageModule
+    ProfileCreatePageModule,
+    FeedPageModule,
+    NotificationsPageModule,
+    SchedulePageModule,
+    ChatPageModule,
+    ChatShowPageModule,
+    PostDetailPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -59,7 +77,13 @@ export function createTranslateLoader(http: HttpClient) {
     RegisterPhonePage,
     RegisterPhoneCheckPage,
     UserBasicInfoPage,
-    ProfileCreatePage
+    ProfileCreatePage,
+    FeedPage,
+    NotificationsPage,
+    SchedulePage,
+    ChatPage,
+    ChatShowPage,
+    PostDetailPage
   ],
   providers: [
     StatusBar,

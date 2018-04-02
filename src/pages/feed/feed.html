@@ -1,0 +1,50 @@
+<ion-header no-border>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>INÍCIO</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="cards-bg social-cards">
+
+  <ion-card *ngFor='let post of posts'>
+
+    <ion-item>
+      <ion-avatar item-start>
+        <img *ngIf=post.avatar [src]="post.avatar">
+      </ion-avatar>
+      <h2>{{post.creator}}</h2>
+      <p>{{post.date}}</p>
+    </ion-item>
+
+    <img *ngIf=post.image [src]="post.image">
+
+    <ion-card-content (click)=select(post)>
+      <p>{{post.message}}</p>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+        <button ion-button color="primary" clear small icon-start>
+          <ion-icon name='thumbs-up'></ion-icon>
+          {{post.countLikes}}
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button color="primary" clear small icon-start>
+          <ion-icon name='text'></ion-icon>
+          {{post.countComments}}
+        </button>
+      </ion-col>
+      <ion-col align-self-center text-center>
+        <ion-note>
+          {{post.timeAgo}}
+        </ion-note>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+
+</ion-content>
