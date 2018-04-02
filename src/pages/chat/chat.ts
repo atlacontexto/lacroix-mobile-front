@@ -17,10 +17,10 @@ import { ChatShowPage } from '../chat-show/chat-show';
 export class ChatPage {
 
   items = [
-    {name: 'Eliana Meneses', lastMessage: 'Vou procurar uma mesa', lastMessageTime: '1:12 pm'},
-    {name: 'Tânia', lastMessage: 'Falei seu nome na rádio', lastMessageTime: '1:12 pm'},
-    {name: 'Ana Kaffa', lastMessage: 'Tem como integrar a BNCC?', lastMessageTime: '1:12 pm'},
-    {name: 'Gisele Florentim', lastMessage: 'E o módulo administrativo?', lastMessageTime: '1:12 pm'},
+    {name: 'Eliana Meneses', avatar:'assets/imgs/placeholder.png', lastMessage: 'Vou procurar uma mesa', lastMessageTime: '1:12 pm'},
+    {name: 'Tânia', avatar:'assets/imgs/placeholder.png', lastMessage: 'Falei seu nome na rádio', lastMessageTime: '1:12 pm'},
+    {name: 'Ana Kaffa', avatar:'assets/imgs/placeholder.png', lastMessage: 'Tem como integrar a BNCC?', lastMessageTime: '1:12 pm'},
+    {name: 'Gisele Florentim', avatar:'assets/imgs/placeholder.png', lastMessage: 'E o módulo administrativo?', lastMessageTime: '1:12 pm'},
   ];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {

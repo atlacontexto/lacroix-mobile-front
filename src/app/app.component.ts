@@ -33,7 +33,8 @@ export class MyApp {
     this.translate.setDefaultLang('pt-br');
     this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
       this.config.set('ios', 'backButtonText', values.BACK_BUTTON_TEXT);
-    })
+    });
+    this.config.set('tabsHideOnSubPages', true);
   }
 
   updateList() {
