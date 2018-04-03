@@ -15,18 +15,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class FeedPage {
 
-  posts: Array<{creator: string, avatar?: '', image?: '', message: string, date: string, countLikes: string, countComments: string, timeAgo: string}>
+  posts: Array<{creator: string, avatar?: string, image?: string, message: string, date: string, countLikes: string, countComments: string, timeAgo: string}>
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.posts = [
-      {creator: 'Savio', message: 'Este é o primeiro post da Atla', date: '1 abril, 2018', countLikes: '14 likes', countComments: '36 comentários', timeAgo: '1h'},
-      {creator: 'Savio', message: 'Este é o primeiro post da Atla', date: '1 abril, 2018', countLikes: '14 likes', countComments: '36 comentários', timeAgo: '1h'},
-      {creator: 'Savio', message: 'Este é o primeiro post da Atla', date: '1 abril, 2018', countLikes: '14 likes', countComments: '36 comentários', timeAgo: '1h'},
-      {creator: 'Savio', message: 'Este é o primeiro post da Atla', date: '1 abril, 2018', countLikes: '14 likes', countComments: '36 comentários', timeAgo: '1h'}
+      {creator: 'Savio', avatar: 'https://lh3.googleusercontent.com/-psB35WIUYG8/AAAAAAAAAAI/AAAAAAAAA68/uBDj-HNhTCo/s60-p-rw-no/photo.jpg', message: 'Este é o primeiro post da Atla', date: '1 abril, 2018', countLikes: '14 likes', countComments: '36 comentários', timeAgo: '1h'},
+      {creator: 'Savio', avatar: 'https://lh3.googleusercontent.com/-psB35WIUYG8/AAAAAAAAAAI/AAAAAAAAA68/uBDj-HNhTCo/s60-p-rw-no/photo.jpg', message: 'Este é o primeiro post da Atla', date: '1 abril, 2018', countLikes: '14 likes', countComments: '36 comentários', timeAgo: '1h'},
+      {creator: 'Savio', avatar: 'https://lh3.googleusercontent.com/-psB35WIUYG8/AAAAAAAAAAI/AAAAAAAAA68/uBDj-HNhTCo/s60-p-rw-no/photo.jpg', message: 'Este é o primeiro post da Atla', date: '1 abril, 2018', countLikes: '14 likes', countComments: '36 comentários', timeAgo: '1h'},
+      {creator: 'Savio', avatar: 'https://lh3.googleusercontent.com/-psB35WIUYG8/AAAAAAAAAAI/AAAAAAAAA68/uBDj-HNhTCo/s60-p-rw-no/photo.jpg', message: 'Este é o primeiro post da Atla', date: '1 abril, 2018', countLikes: '14 likes', countComments: '36 comentários', timeAgo: '1h'}
     ]
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FeedPage');
+  }
+
+  select(post) {
+    this.navCtrl.push('PostDetailPage',{},{
+      animate: true,
+      direction: 'forward'
+    })
   }
 
 }

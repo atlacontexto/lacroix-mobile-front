@@ -21,7 +21,7 @@ export class RegisterPhonePage {
   isReady: boolean;
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public authService: AuthServiceProvider
@@ -39,15 +39,19 @@ export class RegisterPhonePage {
   }
 
   next() {
-    this.authService.sendSms(this.form.value).then(data => {
-      console.log(data)
-      this.navCtrl.push('RegisterPhoneCheckPage', {}, {
-        animate: true,
-        direction: 'forward'
-      });
-    }).catch(err => {
-      console.log(err);
-    });
+    // this.authService.sendSms(this.form.value).then(data => {
+    //   console.log(data)
+    //   this.navCtrl.push('RegisterPhoneCheckPage', {}, {
+    //     animate: true,
+    //     direction: 'forward'
+    //   });
+    // }).catch(err => {
+    //   console.log(err);
+    // });
+    this.navCtrl.push('RegisterPhoneCheckPage', {}, {
+          animate: true,
+          direction: 'forward'
+        });
   }
 
 }
