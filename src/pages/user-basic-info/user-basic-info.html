@@ -26,22 +26,26 @@
       <form (submit)="updateUser()" [formGroup]="form" no-padding>
         <ion-row>
           <ion-item no-padding>
-            <ion-input formControlName=cellphone type="number" placeholder="Celular"></ion-input>
+            <ion-label stacked>Celular</ion-label>
+            <ion-input formControlName=cellphone type="number"></ion-input>
           </ion-item>
         </ion-row>
         <ion-row>
           <ion-item no-padding>
-            <ion-input formControlName=fullName type="text" placeholder="Nome Completo"></ion-input>
+            <ion-label stacked>Nome completo</ion-label>
+            <ion-input formControlName=fullName type="text"></ion-input>
           </ion-item>
         </ion-row>
         <ion-row>
           <ion-item no-padding>
-            <ion-input formControlName=shortName type="text" placeholder="Nome Curto"></ion-input>
+            <ion-label stacked>Nome de usuário</ion-label>
+            <ion-input formControlName=shortName type="text"></ion-input>
           </ion-item>
         </ion-row>
         <ion-row>
           <ion-item no-padding>
-            <ion-input formControlName=email type="text" placeholder="Email"></ion-input>
+            <ion-label stacked>E-mail</ion-label>
+            <ion-input formControlName=email type="text"></ion-input>
           </ion-item>
         </ion-row>
         <ion-row margin-top>
@@ -78,7 +82,7 @@
           </button>
         </ion-list>
       </ion-row>
-      
+
       <ion-row>
         <button ion-button full color=atla-red text-uppercase (click)="start()">{{'START_BUTTON' | translate}}</button>
       </ion-row>
