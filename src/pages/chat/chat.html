@@ -3,7 +3,8 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>CONVERSA</ion-title>
+    <ion-searchbar placeholder=Buscar [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
+    </ion-searchbar>
   </ion-navbar>
 </ion-header>
 
@@ -11,7 +12,7 @@
 
   <ion-list>
 
-    <ion-list-header>Today</ion-list-header>
+    <ion-list-header>Hoje</ion-list-header>
 
     <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
       <ion-avatar item-start>
@@ -26,7 +27,7 @@
 
   <ion-list>
 
-    <ion-list-header>Yesterday</ion-list-header>
+    <ion-list-header>Ontem</ion-list-header>
 
     <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
       <ion-avatar item-start>
@@ -41,7 +42,7 @@
 
   <ion-list>
 
-    <ion-list-header>Last Week</ion-list-header>
+    <ion-list-header>Última semana</ion-list-header>
 
     <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
       <ion-avatar item-start>

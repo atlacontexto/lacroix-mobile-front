@@ -12,6 +12,11 @@ import { Keyboard } from '@ionic-native/keyboard';
  * Ionic pages and navigation.
  */
 
+export interface Slide {
+  title: string;
+  description: string;
+}
+
 @IonicPage()
 @Component({
   selector: 'page-user-basic-info',
@@ -19,6 +24,7 @@ import { Keyboard } from '@ionic-native/keyboard';
 })
 export class UserBasicInfoPage {
 
+  slides: Slide[];
   form: FormGroup;
   isReady: boolean;
   step: string;
@@ -28,6 +34,7 @@ export class UserBasicInfoPage {
   showFooter = true;
   items: Array<{ title: string, component: any, description: any, icon: string }>;
   item = { title: '', component: 'ProfileCreatePage' };
+  showHelp = false;
 
   constructor(
     public navCtrl: NavController,
@@ -42,7 +49,7 @@ export class UserBasicInfoPage {
       { title: 'Pai', description: 'Amélia Ferreira Camacam', component: 'ProfileEditPage', icon: 'home' },
       { title: 'Professor', description: 'Regente 1 | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'home' },
       { title: 'Escola', description: 'Diretora', component: 'ProfileEditPage', icon: 'home' },
-      { title: 'Aluno', description: '1º Ano | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'home' },
+      { title: 'Aluno', description: '5º Ano | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'home' },
       { title: 'Município', description: 'Chefe Departamento Pedagógico', component: 'ProfileEditPage', icon: 'home' }
     ]
     this.form = formBuilder.group({
@@ -61,6 +68,28 @@ export class UserBasicInfoPage {
   }
 
   ionViewWillEnter() {
+    this.slides = [
+      {
+        title: "Perfil para Alunos",
+        description: "Texto explicativo do uso de perfis para Alunos",
+      },
+      {
+        title: "Perfil para Pais",
+        description: "Texto explicativo do uso de perfis para Pais e Responsáveis",
+      },
+      {
+        title: "Perfil para Professores",
+        description: "Texto explicativo do uso de perfis para Professores",
+      },
+      {
+        title: "Perfil para Gestão Escolar",
+        description: "Texto explicativo do uso de perfis para Gestão Escolar",
+      },
+      {
+        title: "Perfil para Administração Municipal",
+        description: "Texto explicativo do uso de perfis para Gestão Municipal",
+      }
+    ]
     this.step = this.navParams.get('step') || 'user';
     if (this.step == 'user') {
       this.statusUser = false;
@@ -70,6 +99,14 @@ export class UserBasicInfoPage {
     }
     if (this.step == 'link') {
       this.statusLink = false;
+    }
+  }
+
+  showHelpAction() {
+    if (this.showHelp) {
+      this.showHelp = false;
+    } else {
+      this.showHelp = true;
     }
   }
 

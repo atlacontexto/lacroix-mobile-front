@@ -36,6 +36,18 @@ import { ChatShowPage } from '../pages/chat-show/chat-show';
 import { ChatShowPageModule } from '../pages/chat-show/chat-show.module';
 import { PostDetailPage } from '../pages/post-detail/post-detail';
 import { PostDetailPageModule } from '../pages/post-detail/post-detail.module';
+import { PlanningPageModule } from '../pages/planning/planning.module';
+import { ReportPageModule } from '../pages/report/report.module';
+import { ClassroomPageModule } from '../pages/classroom/classroom.module';
+import { PlanningPage } from '../pages/planning/planning';
+import { ClassroomPage } from '../pages/classroom/classroom';
+import { ReportPage } from '../pages/report/report';
+import { ExamPage } from '../pages/exam/exam';
+import { ExamPageModule } from '../pages/exam/exam.module';
+import { AuthorizationPage } from '../pages/authorization/authorization';
+import { AuthorizationPageModule } from '../pages/authorization/authorization.module';
+
+import { NgCalendarModule  } from 'ionic2-calendar';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -50,6 +62,7 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
+    NgCalendarModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -67,7 +80,12 @@ export function createTranslateLoader(http: HttpClient) {
     SchedulePageModule,
     ChatPageModule,
     ChatShowPageModule,
-    PostDetailPageModule
+    PostDetailPageModule,
+    PlanningPageModule,
+    ReportPageModule,
+    ClassroomPageModule,
+    ExamPageModule,
+    AuthorizationPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -83,7 +101,12 @@ export function createTranslateLoader(http: HttpClient) {
     SchedulePage,
     ChatPage,
     ChatShowPage,
-    PostDetailPage
+    PostDetailPage,
+    PlanningPage,
+    ClassroomPage,
+    ReportPage,
+    ExamPage,
+    AuthorizationPage
   ],
   providers: [
     StatusBar,

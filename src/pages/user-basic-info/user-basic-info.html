@@ -65,13 +65,29 @@
           </button>
         </ion-col>
         <ion-col offset-8 col-2>
-          <button ion-button icon-only color=atla-red>
+          <button ion-button icon-only color=atla-red (click)="showHelpAction()">
             <ion-icon name=help></ion-icon>
           </button>
         </ion-col>
       </ion-row>
 
-      <ion-row>
+      <ion-row *ngIf="!items || showHelp">
+        <ion-slides pager="true">
+          <ion-slide *ngFor="let slide of slides">
+            <!-- <img style="width: 80px; height: 80px;" [src]="slide.icone" class="slide-image" /> -->
+            <h3 ion-text text-uppercase [innerHTML]="slide.title"></h3>
+            <ion-grid>
+              <ion-row>
+                <ion-col col-8 offset-2>
+                  <p class="landing-text" ion-text  text-uppercase [innerHTML]="slide.description"></p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-slide>
+        </ion-slides>
+      </ion-row>
+
+      <ion-row *ngIf="items && !showHelp">
         <ion-list inset>
           <button ion-item *ngFor="let item of items" (click)="openModal(item)">
             <ion-avatar item-start>
