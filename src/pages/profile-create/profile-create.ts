@@ -76,6 +76,8 @@ export class ProfileCreatePage {
       this.formProfessor.controls['level'].setValue(this.level);
       console.log(this.formProfessor.value);
       this.viewCtrl.dismiss(this.formProfessor.value);
+    } else {
+      this.viewCtrl.dismiss();
     }
   }
 

@@ -15,11 +15,30 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PlanningPage {
 
+  materias: Array<{ title: string, component: any, description: any, icon: string }>;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.materias = [
+      { title: 'Arte', description: '', component: 'PlanningListPage', icon: 'home' },
+      { title: 'Ciências', description: '', component: 'PlanningListPage', icon: 'home' },
+      { title: 'Educação Física', description: '', component: 'PlanningListPage', icon: 'home' },
+      { title: 'Filosofia', description: '', component: 'PlanningListPage', icon: 'home' },
+      { title: 'Geografia', description: '', component: 'PlanningListPage', icon: 'home' },
+      { title: 'História', description: '', component: 'PlanningListPage', icon: 'home' },
+      { title: 'Língua Portuguesa', description: '', component: 'PlanningListPage', icon: 'home' },
+      { title: 'Matemática', description: '', component: 'PlanningListPage', icon: 'home' }
+    ]
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PlanningPage');
+  }
+
+  openPlanning(page) {
+    this.navCtrl.push(page.component,{},{
+      animate: true,
+      direction: 'forward'
+    })
   }
 
 }
