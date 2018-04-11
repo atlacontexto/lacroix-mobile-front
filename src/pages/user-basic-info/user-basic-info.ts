@@ -46,11 +46,11 @@ export class UserBasicInfoPage {
     public modalCtrl: ModalController
   ) {
     this.items = [
-      { title: 'Pai', description: 'Amélia Ferreira Camacam', component: 'ProfileEditPage', icon: 'home' },
-      { title: 'Professor', description: 'Regente 1 | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'home' },
-      { title: 'Escola', description: 'Diretora', component: 'ProfileEditPage', icon: 'home' },
-      { title: 'Aluno', description: '5º Ano | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'home' },
-      { title: 'Município', description: 'Chefe Departamento Pedagógico', component: 'ProfileEditPage', icon: 'home' }
+      { title: 'Pai', description: 'Amélia Ferreira Camacam', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
+      { title: 'Professor', description: 'Regente 1 | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
+      { title: 'Escola', description: 'Diretora', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
+      { title: 'Aluno', description: '5º Ano | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
+      { title: 'Município', description: 'Chefe Departamento Pedagógico', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' }
     ]
     this.form = formBuilder.group({
       cellphone: ['', Validators.required],

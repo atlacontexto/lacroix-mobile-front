@@ -17,7 +17,12 @@ export class PlanningPage {
 
   materias: Array<{ title: string, component: any, description: any, icon: string }>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams) {
+  }
+
+  ionViewWillEnter() {
     this.materias = [
       { title: 'Arte', description: '', component: 'PlanningListPage', icon: 'home' },
       { title: 'Ciências', description: '', component: 'PlanningListPage', icon: 'home' },
@@ -30,12 +35,16 @@ export class PlanningPage {
     ]
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PlanningPage');
+  openPlanning(page) {
+    this.navCtrl.push(page.component, { title: page.title }, {
+      animate: true,
+      direction: 'forward'
+    })
   }
 
-  openPlanning(page) {
-    this.navCtrl.push(page.component,{},{
+  open(planning?) {
+
+    this.navCtrl.push('PlanningDetailPage', { planning: planning }, {
       animate: true,
       direction: 'forward'
     })

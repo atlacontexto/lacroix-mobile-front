@@ -79,7 +79,7 @@
             <ion-grid>
               <ion-row>
                 <ion-col col-8 offset-2>
-                  <p class="landing-text" ion-text  text-uppercase [innerHTML]="slide.description"></p>
+                  <p class="landing-text" ion-text text-uppercase [innerHTML]="slide.description"></p>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -87,17 +87,15 @@
         </ion-slides>
       </ion-row>
 
-      <ion-row *ngIf="items && !showHelp">
-        <ion-list inset>
-          <button ion-item *ngFor="let item of items" (click)="openModal(item)">
-            <ion-avatar item-start>
-              <!-- <img [src]="item.icon"> -->
-            </ion-avatar>
-            <h2 style="font-weight: bold;" text-uppercase ion-text color=blue-payplug>{{item.title}}</h2>
-            <h3 ion-text color=blue-payplug text-wrap>{{item.description}}</h3>
-          </button>
-        </ion-list>
-      </ion-row>
+      <ion-list inset *ngIf="items && !showHelp">
+        <button ion-item *ngFor="let item of items" (click)="openModal(item)">
+          <ion-avatar item-start>
+             <img [src]="item.icon">
+          </ion-avatar>
+          <h2 style="font-weight: bold;" text-uppercase ion-text color=blue-payplug>{{item.title}}</h2>
+          <h3 ion-text color=blue-payplug text-wrap>{{item.description}}</h3>
+        </button>
+      </ion-list>
 
       <ion-row>
         <button ion-button full color=atla-red text-uppercase (click)="start()">{{'START_BUTTON' | translate}}</button>
