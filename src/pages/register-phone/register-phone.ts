@@ -39,19 +39,15 @@ export class RegisterPhonePage {
   }
 
   next() {
-    // this.authService.sendSms(this.form.value).then(data => {
-    //   console.log(data)
-    //   this.navCtrl.push('RegisterPhoneCheckPage', {}, {
-    //     animate: true,
-    //     direction: 'forward'
-    //   });
-    // }).catch(err => {
-    //   console.log(err);
-    // });
-    this.navCtrl.push('RegisterPhoneCheckPage', {}, {
-          animate: true,
-          direction: 'forward'
-        });
+    this.authService.sendSms(this.form.value).then(data => {
+      console.log(data)
+      this.navCtrl.push('RegisterPhoneCheckPage', {}, {
+        animate: true,
+        direction: 'forward'
+      });
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
 }

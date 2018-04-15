@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Platform } from 'ionic-angular';
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -12,7 +13,13 @@ export class AuthServiceProvider {
 
   apiUrl = 'api'
 
-  constructor(public http: HttpClient) {
+  constructor(
+    public http: HttpClient,
+    public platform: Platform
+  ) {
+    if(platform.is('cordova')) {
+      this.apiUrl = 'http://localhost:3000/api'
+    }
     console.log('Hello AuthServiceProvider Provider');
   }
 
