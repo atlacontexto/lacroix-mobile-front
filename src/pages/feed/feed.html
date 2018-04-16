@@ -18,7 +18,7 @@
         <img *ngIf="post.avatar" [src]="post.avatar">
       </ion-avatar>
       <h2>{{post.creator}}</h2>
-      <p>{{post.date}}</p>
+      <p>{{post.timeAgo}} - {{post.date}}</p>
     </ion-item>
 
     <img *ngIf=post.image [src]="post.image">
@@ -39,11 +39,6 @@
           <ion-icon name='text'></ion-icon>
           {{post.countComments}}
         </button>
-      </ion-col>
-      <ion-col align-self-center text-center>
-        <ion-note>
-          {{post.timeAgo}}
-        </ion-note>
       </ion-col>
     </ion-row>
 

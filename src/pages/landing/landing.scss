@@ -52,4 +52,7 @@ page-landing {
     top: 20px;
     bottom: inherit;
   }
+  ion-header, ion-slides, ion-footer {
+    background-color: rgba(0,0,0,0.5);
+  }
 }
