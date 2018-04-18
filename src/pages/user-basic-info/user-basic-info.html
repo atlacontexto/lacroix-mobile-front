@@ -21,7 +21,7 @@
 </ion-header>
 
 <ion-content padding>
-  <div [ngSwitch]="step">
+  <div [ngSwitch]="step" col-xl-8 offset-xl-2>
     <ion-grid *ngSwitchCase="'user'" padding>
       <form (submit)="updateUser()" [formGroup]="form" no-padding>
         <ion-row>

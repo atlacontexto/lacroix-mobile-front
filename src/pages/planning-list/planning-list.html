@@ -16,43 +16,45 @@
 
 <ion-content padding>
 
-  <ion-list>
-    <ion-list-header text-center no-lines>
-      PLANO DE TRABALHO DOCENTE
-    </ion-list-header>
+  <ion-grid col-xl-8 offset-xl-2>
+    <ion-list>
+      <ion-list-header text-center no-lines>
+        PLANO DE TRABALHO DOCENTE
+      </ion-list-header>
 
-    <ion-row>
-      <ion-col col-12 col-xl-2 col-lg-3 col-md-4>
-        <button ion-button icon-left block (click)="open(ptd)">
-          <ion-icon name=add></ion-icon>
-          NOVO</button>
-      </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col col-12 col-xl-2 col-lg-3 col-md-4>
+          <button ion-button icon-left block (click)="open({type: 'ptd'})">
+            <ion-icon name=add></ion-icon>
+            NOVO</button>
+        </ion-col>
+      </ion-row>
 
-    <button ion-item *ngFor="let ptd of ptds" (click)="open(ptd)">
-      <h2>{{ptd.title}}</h2>
-    </button>
-  </ion-list>
+      <button ion-item *ngFor="let ptd of ptds" (click)="open(ptd)">
+        <h2>{{ptd.title}}</h2>
+      </button>
+    </ion-list>
 
-  <ion-list>
-    <ion-list-header text-center>
-      PLANEJAMENTO DIÁRIO
-    </ion-list-header>
+    <ion-list>
+      <ion-list-header text-center>
+        PLANEJAMENTO DIÁRIO
+      </ion-list-header>
 
-    <ion-row>
-      <ion-col col-12 col-xl-2 col-lg-3 col-md-4>
-        <button ion-button icon-left block (click)="open(ptd)">
-          <ion-icon name=add></ion-icon>
-          NOVO</button>
-      </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col col-12 col-xl-2 col-lg-3 col-md-4>
+          <button ion-button icon-left block (click)="open({type: 'diario'})">
+            <ion-icon name=add></ion-icon>
+            NOVO</button>
+        </ion-col>
+      </ion-row>
 
-    <button ion-item *ngFor="let planning of plannings" (click)="open(planning)">
-      <h2>{{planning.date}}</h2>
-      <h3>{{planning.title}}</h3>
-      <p text-wrap>{{planning.description}}</p>
-    </button>
+      <button ion-item *ngFor="let planning of plannings" (click)="open(planning)">
+        <h2>{{planning.date}}</h2>
+        <h3>{{planning.title}}</h3>
+        <p text-wrap>{{planning.description}}</p>
+      </button>
 
-  </ion-list>
+    </ion-list>
+  </ion-grid>
 
 </ion-content>

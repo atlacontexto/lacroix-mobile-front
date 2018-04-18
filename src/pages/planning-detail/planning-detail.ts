@@ -15,11 +15,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PlanningDetailPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  type: any;
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams
+  ) {
+    if(navParams.get('planning'))
+      this.type = navParams.get('planning')['type'];
+    console.log(this.type);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PlanningDetailPage');
-  }
+  
 
 }

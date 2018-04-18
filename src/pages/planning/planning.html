@@ -9,18 +9,18 @@
 
 <ion-content padding>
 
-  <ion-grid *ngIf="materias && !showHelp">
+  <ion-grid *ngIf="materias && !showHelp" col-xl-8 offset-xl-2>
 
     <ion-list inset>
-      <button ion-item (click)="open('anualPlaning')">PLANEJAMENTO ANAUAL</button>
+      <button ion-item (click)="open({type: 'anual'})">PLANEJAMENTO ANUAL</button>
       <ion-list-header text-center no-lines>
         MATRIZ CURRICULAR
       </ion-list-header>
 
       <button ion-item *ngFor="let materia of materias" (click)="openPlanning(materia)">
-        <ion-avatar item-start>
-          <!-- <img [src]="item.icon"> -->
-        </ion-avatar>
+        <!-- <ion-avatar item-start>
+          <img [src]="item.icon">
+        </ion-avatar> -->
         <h2 style="font-weight: bold;" text-uppercase ion-text color=blue-payplug>{{materia.title}}</h2>
         <h3 ion-text color=blue-payplug text-wrap>{{materia.description}}</h3>
       </button>

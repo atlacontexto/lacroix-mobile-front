@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 
 /**
  * Generated class for the RegisterPhoneCheckPage page.
@@ -15,7 +18,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class RegisterPhoneCheckPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  form: FormGroup;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public formBuilder: FormBuilder,
+    public authService: AuthServiceProvider,
+    public alertService: AlertServiceProvider
+  ) {
+    this.form = formBuilder.group({
+      code: ['', Validators.required]
+    });
   }
 
   ionViewDidLoad() {
@@ -23,26 +37,20 @@ export class RegisterPhoneCheckPage {
   }
 
   next() {
-    var confirm = true;
-    var registered = false;
-    var user = {cellphone:"", fullName:"", shortName:"", email:""}
-    if(confirm && registered) {
-      user.cellphone = "+55(44)99119-6405";
-      user.fullName = "Savio de Oliveira Camacam";
-      user.shortName = "saviocamacam";
-      user.email = "saviocamacam@gmail.com";
-
-      this.navCtrl.push('UserBasicInfoPage', {step: 'user', user: user} , {
-        animate: true,
-        direction: 'forward'
-      });
-
-    } else if(confirm) {
-      this.navCtrl.push('UserBasicInfoPage', {step: 'user'}, {
-        animate: true,
-        direction: 'forward'
-      });
-    }
+    this.authService.checkCode(this.form.value).then((res) => {
+      console.log(res);
+      if (res['success']) {
+        console.log(res['message']);
+        this.navCtrl.push('UserBasicInfoPage', { step: 'user', user: res['data'] }, {
+          animate: true,
+          direction: 'forward'
+        });
+      } else {
+        this.alertService.presentAlert('Erro na validação', 'Tente mais tarde', 'OK');
+      }
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
 }

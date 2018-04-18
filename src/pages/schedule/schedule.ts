@@ -25,7 +25,11 @@ export class SchedulePage {
     currentDate: new Date()
   };
 
-  constructor(public navCtrl: NavController, private modalCtrl: ModalController, private alertCtrl: AlertController) {
+  constructor(
+    public navCtrl: NavController, 
+    private modalCtrl: ModalController, 
+    private alertCtrl: AlertController
+  ) {
   }
 
   ionViewDidLoad() {
@@ -62,7 +66,7 @@ export class SchedulePage {
 
     let alert = this.alertCtrl.create({
       title: '' + event.title,
-      subTitle: 'From: ' + start + '<br>To: ' + end,
+      subTitle: 'De: ' + start + '<br>Às: ' + end,
       buttons: ['OK']
     })
     alert.present();

@@ -46,7 +46,7 @@ export class UserBasicInfoPage {
     public modalCtrl: ModalController
   ) {
     this.items = [
-      { title: 'Pai', description: 'Amélia Ferreira Camacam', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
+      { title: 'Responsável', description: 'Amélia Ferreira Camacam', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
       { title: 'Professor', description: 'Regente 1 | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
       { title: 'Escola', description: 'Diretora', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
       { title: 'Aluno', description: '5º Ano | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },

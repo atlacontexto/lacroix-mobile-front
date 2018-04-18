@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { AlertServiceProvider } from '../../providers/alert-service/alert-service';
 
 /**
  * Generated class for the RegisterPhonePage page.
@@ -24,7 +25,8 @@ export class RegisterPhonePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    public authService: AuthServiceProvider
+    public authService: AuthServiceProvider,
+    public alertService: AlertServiceProvider
   ) {
     this.form = formBuilder.group({
       cellphone: ['', Validators.required]
@@ -40,11 +42,15 @@ export class RegisterPhonePage {
 
   next() {
     this.authService.sendSms(this.form.value).then(data => {
-      console.log(data)
-      this.navCtrl.push('RegisterPhoneCheckPage', {}, {
-        animate: true,
-        direction: 'forward'
-      });
+      console.log(data);
+      if (data['success']) {
+        this.navCtrl.push('RegisterPhoneCheckPage', {}, {
+          animate: true,
+          direction: 'forward'
+        });
+      } else {
+        this.alertService.presentAlert('Erro ao enviar SMS', 'Tente novamente mais tarde', 'OK');
+      }
     }).catch(err => {
       console.log(err);
     });

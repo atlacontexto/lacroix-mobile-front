@@ -50,6 +50,7 @@ import { AuthorizationPageModule } from '../pages/authorization/authorization.mo
 import { NgCalendarModule  } from 'ionic2-calendar';
 import { PlanningListPage } from '../pages/planning-list/planning-list';
 import { PlanningListPageModule } from '../pages/planning-list/planning-list.module';
+import { NotificationProvider } from '../providers/notification/notification';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -120,6 +121,7 @@ export function createTranslateLoader(http: HttpClient) {
     UserServiceProvider,
     AlertServiceProvider,
     Keyboard,
+    NotificationProvider,
   ]
 })
 export class AppModule {}
