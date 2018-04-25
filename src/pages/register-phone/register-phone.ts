@@ -44,7 +44,7 @@ export class RegisterPhonePage {
     this.authService.sendSms(this.form.value).then(data => {
       console.log(data);
       if (data['success']) {
-        this.navCtrl.push('RegisterPhoneCheckPage', {}, {
+        this.navCtrl.push('RegisterPhoneCheckPage', {cellphone: this.form.value.cellphone}, {
           animate: true,
           direction: 'forward'
         });

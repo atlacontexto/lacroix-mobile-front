@@ -20,7 +20,6 @@ export class AuthServiceProvider {
     if (platform.is('cordova')) {
       this.apiUrl = 'http://localhost:3000/api'
     }
-    console.log('Hello AuthServiceProvider Provider');
   }
 
   addUser(data) {

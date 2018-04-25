@@ -10,7 +10,7 @@
 
 
 <ion-content padding>
-  <ion-grid>
+  <ion-grid col-xl-8 offset-xl-2>
     <ion-row>
       <ion-col text-center>
         <h2 text-uppercase>
@@ -35,5 +35,23 @@
         </ion-col>
       </ion-row>
     </form>
+
+    <ion-row>
+      <ion-item no-padding>
+        <ion-input text-center disabled=true [ngModel]="cellphone" type="text"></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row padding-top>
+      <ion-col col-xl-6>
+        <button text-uppercase ion-button full color="atla-red" (click)="back()">
+          {{ 'SWITCH_NUMBER' | translate}}
+        </button>
+      </ion-col>
+      <ion-col col-xl-6>
+        <button text-uppercase ion-button full color="atla-red" (click)="resend()">
+          {{ 'RESEND_CODE' | translate}}
+        </button>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>
