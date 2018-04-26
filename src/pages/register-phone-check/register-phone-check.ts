@@ -19,6 +19,7 @@ import { AlertServiceProvider } from '../../providers/alert-service/alert-servic
 export class RegisterPhoneCheckPage {
 
   form: FormGroup;
+  cellphone: string;
 
   constructor(
     public navCtrl: NavController,
@@ -27,8 +28,9 @@ export class RegisterPhoneCheckPage {
     public authService: AuthServiceProvider,
     public alertService: AlertServiceProvider
   ) {
+    this.cellphone = this.navParams.get('cellphone');
     this.form = formBuilder.group({
-      code: ['', Validators.required]
+      code: ['', Validators.required],
     });
   }
 
@@ -36,12 +38,20 @@ export class RegisterPhoneCheckPage {
     console.log('ionViewDidLoad RegisterPhoneCheckPage');
   }
 
+  back() {
+    this.navCtrl.pop({direction: 'back'});
+  }
+
+  resend() {
+    
+  }
+
   next() {
     this.authService.checkCode(this.form.value).then((res) => {
-      console.log(res);
+      //console.log(res);
       if (res['success']) {
-        console.log(res['message']);
-        this.navCtrl.push('UserBasicInfoPage', { step: 'user', user: res['data'] }, {
+        //console.log(res['message']);
+        this.navCtrl.push('UserBasicInfoPage', { cellphone: this.cellphone, step: 'user', user: res['data'] }, {
           animate: true,
           direction: 'forward'
         });

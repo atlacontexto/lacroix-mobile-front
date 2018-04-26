@@ -26,6 +26,8 @@
   "NEXT_BUTTON": "próximo",
   "SKIP_BUTTON": "pular",
   "START_BUTTON": "iniciar",
+  "SWITCH_NUMBER": "editar número",
+  "RESEND_CODE": "renviar código",
 
   "BACK_BUTTON_TEXT": "voltar"
 }

@@ -23,29 +23,23 @@
 <ion-content padding>
   <div [ngSwitch]="step" col-xl-8 offset-xl-2>
     <ion-grid *ngSwitchCase="'user'" padding>
+      <ion-row>
+        <ion-item no-padding>
+          <ion-label stacked>Celular</ion-label>
+          <ion-input disabled=true [ngModel]=cellphone type="number"></ion-input>
+        </ion-item>
+      </ion-row>
       <form (submit)="updateUser()" [formGroup]="form" no-padding>
         <ion-row>
           <ion-item no-padding>
-            <ion-label stacked>Celular</ion-label>
-            <ion-input formControlName=cellphone type="number"></ion-input>
-          </ion-item>
-        </ion-row>
-        <ion-row>
-          <ion-item no-padding>
             <ion-label stacked>Nome completo</ion-label>
-            <ion-input formControlName=fullName type="text"></ion-input>
+            <ion-input formControlName=name type="text"></ion-input>
           </ion-item>
         </ion-row>
         <ion-row>
           <ion-item no-padding>
             <ion-label stacked>Nome de usuário</ion-label>
             <ion-input formControlName=shortName type="text"></ion-input>
-          </ion-item>
-        </ion-row>
-        <ion-row>
-          <ion-item no-padding>
-            <ion-label stacked>E-mail</ion-label>
-            <ion-input formControlName=email type="text"></ion-input>
           </ion-item>
         </ion-row>
         <ion-row margin-top>
@@ -90,7 +84,7 @@
       <ion-list inset *ngIf="items && !showHelp">
         <button ion-item *ngFor="let item of items" (click)="openModal(item)">
           <ion-avatar item-start>
-             <img [src]="item.icon">
+            <img [src]="item.icon">
           </ion-avatar>
           <h2 style="font-weight: bold;" text-uppercase ion-text color=blue-payplug>{{item.title}}</h2>
           <h3 ion-text color=blue-payplug text-wrap>{{item.description}}</h3>

@@ -24,6 +24,7 @@ export interface Slide {
 })
 export class UserBasicInfoPage {
 
+  cellphone: string;
   slides: Slide[];
   form: FormGroup;
   isReady: boolean;
@@ -45,36 +46,42 @@ export class UserBasicInfoPage {
     public key: Keyboard,
     public modalCtrl: ModalController
   ) {
-    this.items = [
-      { title: 'Responsável', description: 'Amélia Ferreira Camacam', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
-      { title: 'Professor', description: 'Regente 1 | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
-      { title: 'Escola', description: 'Diretora', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
-      { title: 'Aluno', description: '5º Ano | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
-      { title: 'Município', description: 'Chefe Departamento Pedagógico', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' }
-    ]
+    if (this.navParams.get('user')) {
+      console.log(this.navParams.get('user')['profile']['user']);
+      localStorage.setItem('userId', this.navParams.get('user')['profile']['user']['_id']);
+      var peopleId = this.navParams.get('user')['profile']['user']['people']['_id']; 
+      var name = this.navParams.get('user')['profile']['user']['people']['name'];
+      var userId = this.navParams.get('user')['profile']['user']['_id']; 
+      var shortName = this.navParams.get('user')['profile']['user']['shortName'];
+    }
+    this.cellphone = this.navParams.get('cellphone');
     this.form = formBuilder.group({
-      cellphone: ['', Validators.required],
-      fullName: ['', Validators.required],
-      shortName: ['', Validators.required],
-      email: ['', Validators.required],
+      peopleId: [peopleId],
+      name: [name, Validators.required],
+      userId: [userId],
+      shortName: [shortName, Validators.required]
     });
     this.form.valueChanges.subscribe((v) => {
       this.isReady = this.form.valid;
     })
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad UserBasicInfoPage');
-  }
-
   ionViewWillEnter() {
+    this.items = [
+      { title: 'Responsável', description: 'Amélia Ferreira Camacam', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
+      { title: 'Professor', description: 'Regente 1 | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
+      { title: 'Escola', description: 'Diretora', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
+      { title: 'Aluno', description: '5º Ano | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
+      { title: 'Município', description: 'Chefe Departamento Pedagógico', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' }
+    ];
+
     this.slides = [
       {
         title: "Perfil para Alunos",
         description: "Texto explicativo do uso de perfis para Alunos",
       },
       {
-        title: "Perfil para Pais",
+        title: "Perfil para Responsáveis",
         description: "Texto explicativo do uso de perfis para Pais e Responsáveis",
       },
       {
@@ -124,6 +131,7 @@ export class UserBasicInfoPage {
   }
 
   updateUser() {
+    console.log(this.form.value);
     this.userService.update(this.form.value).then((result) => {
       console.log(result);
     }).catch((err) => {
