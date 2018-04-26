@@ -23,9 +23,8 @@ export class UserServiceProvider {
   }
 
   update(user) {
-    console.log(user);
     return new Promise((resolve, reject) => {
-      this.http.put(this.apiUrl + '/user/basicinfo', user)
+      this.http.post(this.apiUrl + '/user/basicinfo', user)
         .subscribe(res => {
           console.log(res);
           resolve(res);

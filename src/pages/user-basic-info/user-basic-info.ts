@@ -48,7 +48,8 @@ export class UserBasicInfoPage {
   ) {
     if (this.navParams.get('user')) {
       console.log(this.navParams.get('user')['profile']['user']);
-      var peopleId = this.navParams.get('user')['profile']['user']['_id']; 
+      localStorage.setItem('userId', this.navParams.get('user')['profile']['user']['_id']);
+      var peopleId = this.navParams.get('user')['profile']['user']['people']['_id']; 
       var name = this.navParams.get('user')['profile']['user']['people']['name'];
       var userId = this.navParams.get('user')['profile']['user']['_id']; 
       var shortName = this.navParams.get('user')['profile']['user']['shortName'];
@@ -130,6 +131,7 @@ export class UserBasicInfoPage {
   }
 
   updateUser() {
+    console.log(this.form.value);
     this.userService.update(this.form.value).then((result) => {
       console.log(result);
     }).catch((err) => {

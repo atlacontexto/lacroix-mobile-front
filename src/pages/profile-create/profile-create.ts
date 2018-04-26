@@ -47,9 +47,9 @@ export class ProfileCreatePage {
 
   typeChanged() {
     console.log('evento levantado ' + this.profileType);
-    if (this.profileType == 'pai') {
+    if (this.profileType == 'parent') {
       this.formParent = this.formBuilder.group({
-        profileType: ['pai', Validators.required],
+        profileType: ['parent', Validators.required],
         cgm: ['', Validators.required],
       });
     } else if (this.profileType == 'professor') {
@@ -69,7 +69,7 @@ export class ProfileCreatePage {
   }
 
   dismiss() {
-    if (this.profileType == 'pai') {
+    if (this.profileType == 'parent') {
       console.log(this.formParent.value);
       this.viewCtrl.dismiss(this.formParent.value);
     } else if (this.profileType == 'professor') {
