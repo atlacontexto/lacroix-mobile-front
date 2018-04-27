@@ -139,7 +139,7 @@ export class UserBasicInfoPage {
     });
 
     this.step = 'profile';
-    this.statusProfile = false;
+    this.statusProfile = false; // Habilida a oção 'Perfil' do segment
     // this.navCtrl.setRoot(HomePage, {}, {
     //   animate: true,
     //   direction: 'forward'

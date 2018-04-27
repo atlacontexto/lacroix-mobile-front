@@ -18,7 +18,7 @@ export class UserServiceProvider {
     public platform: Platform
   ) {
     if (platform.is('cordova')) {
-      this.apiUrl = 'http://localhost:3000/api'
+      this.apiUrl = 'https://www.atlaensino.com/api'
     }
   }
 
