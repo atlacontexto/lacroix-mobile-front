@@ -15,18 +15,35 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 })
 export class ProfileEditPage {
 
-  type = "";
+  profile: any;
+  profileType: string;
+  disabled = false;
+  main = false;
   
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public viewCtrl: ViewController
   ) {
-    this.type = navParams.get('title');
+    this.profile = navParams.get('profile');
+    this.main = this.profile['main'];
+    console.log(this.profile);
+    if(this.profile['type']) {
+      this.disabled = true;
+      this.profileType = this.profile['type'];
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfileEditPage');
+  }
+
+  start() {
+
+  }
+
+  update() {
+
   }
 
   dismiss() {

@@ -18,7 +18,7 @@
     <ion-row>
       <ion-item>
         <ion-label>Perfil Principal</ion-label>
-        <ion-toggle value="foo" checked="true"></ion-toggle>
+        <ion-toggle [checked]="main"></ion-toggle>
       </ion-item>
     </ion-row>
     <ion-row>
@@ -26,12 +26,28 @@
         <p>{{type}}</p>
       </ion-col>
     </ion-row>
+
     <ion-row>
       <ion-col>
-        <button ion-button full color=atla-red>Atualizar</button>
+        <ion-item>
+          <ion-label stacked>Tipo de Perfil</ion-label>
+          <ion-select [disabled]="disabled" [(ngModel)]="profileType">
+            <ion-option value="student">Aluno</ion-option>
+            <ion-option value="parent">Responsável</ion-option>
+            <ion-option value="professor">Professor</ion-option>
+            <ion-option value="schoolm">Gestão Escolar</ion-option>
+            <ion-option value="countym">Gestão Municipal</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <button ion-button full color=atla-red (click)="update()">Atualizar</button>
       </ion-col>
       <ion-col>
-          <button ion-button full color=atla-red>Iniciar</button>
+          <button ion-button full color=atla-red (click)="start()">Iniciar</button>
       </ion-col>
     </ion-row>
   </ion-grid>

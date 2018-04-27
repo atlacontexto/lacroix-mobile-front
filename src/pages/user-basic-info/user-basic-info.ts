@@ -33,7 +33,7 @@ export class UserBasicInfoPage {
   statusProfile = true;
   statusLink = true;
   showFooter = true;
-  items: Array<{ title: string, component: any, description: any, icon: string }>;
+  items: Array<any>;
   item = { title: '', component: 'ProfileCreatePage' };
   showHelp = false;
 
@@ -49,9 +49,16 @@ export class UserBasicInfoPage {
     if (this.navParams.get('user')) {
       console.log(this.navParams.get('user')['profile']['user']);
       localStorage.setItem('userId', this.navParams.get('user')['profile']['user']['_id']);
-      var peopleId = this.navParams.get('user')['profile']['user']['people']['_id']; 
+      this.items = new Array<{ type: string, component?: any, description?: any, icon?: string }>();
+      var profiles = this.navParams.get('user')['profile']['user']['profiles'];
+      console.log(profiles);
+      profiles.forEach(element => {
+        this.items.push(Object.assign(element, {component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png'}));
+      });
+      console.log(this.items);
+      var peopleId = this.navParams.get('user')['profile']['user']['people']['_id'];
       var name = this.navParams.get('user')['profile']['user']['people']['name'];
-      var userId = this.navParams.get('user')['profile']['user']['_id']; 
+      var userId = this.navParams.get('user')['profile']['user']['_id'];
       var shortName = this.navParams.get('user')['profile']['user']['shortName'];
     }
     this.cellphone = this.navParams.get('cellphone');
@@ -67,14 +74,6 @@ export class UserBasicInfoPage {
   }
 
   ionViewWillEnter() {
-    this.items = [
-      { title: 'Responsável', description: 'Amélia Ferreira Camacam', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
-      { title: 'Professor', description: 'Regente 1 | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
-      { title: 'Escola', description: 'Diretora', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
-      { title: 'Aluno', description: '5º Ano | Escola Municipal Parigot de Souza', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' },
-      { title: 'Município', description: 'Chefe Departamento Pedagógico', component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' }
-    ];
-
     this.slides = [
       {
         title: "Perfil para Alunos",
@@ -118,7 +117,7 @@ export class UserBasicInfoPage {
   }
 
   openModal(page) {
-    let profileModal = this.modalCtrl.create(page.component, { title: page.title }, { enableBackdropDismiss: true });
+    let profileModal = this.modalCtrl.create(page.component, { profile: page }, { enableBackdropDismiss: true });
     profileModal.onDidDismiss(data => {
       if (data) {
         if (data['profileType']) {
@@ -131,7 +130,6 @@ export class UserBasicInfoPage {
   }
 
   updateUser() {
-    console.log(this.form.value);
     this.userService.update(this.form.value).then((result) => {
       console.log(result);
     }).catch((err) => {

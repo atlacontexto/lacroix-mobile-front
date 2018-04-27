@@ -56,7 +56,7 @@ export class MyApp {
         { title: 'Boletim', component: ReportPage, icon: 'home' },
         { title: 'Avaliação', component: ExamPage, icon: 'home' }
       ];
-    } else if (this.profile == 'pai') {
+    } else if (this.profile == 'responsavel') {
       this.privatePages = [
         { title: 'Início', component: HomePage, icon: 'home' },
         { title: 'Boletim', component: ReportPage, icon: 'home' },
