@@ -1,0 +1,48 @@
+<!--
+  Generated template for the DailyPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>LIVRO REGISTRO DE CLASSE</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list *ngIf="enrollments">
+
+    <ion-list-header>Hoje</ion-list-header>
+
+    <ion-item *ngFor="let item of enrollments">
+      <ion-toggle checked="false"></ion-toggle>
+      <ion-label>
+        {{item.name}}
+      </ion-label>
+      <ion-avatar item-start>
+        <img [src]="item.avatar">
+      </ion-avatar>
+    </ion-item>
+
+  </ion-list>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-navbar transparent>
+    <ion-buttons center>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-sm-12>
+            <button text-uppercase ion-button solid large full color="atla-red" (click)="saveDaily()">
+              SALVAR CHAMADA
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-buttons>
+  </ion-navbar>
+</ion-footer>

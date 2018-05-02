@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
+import { ENV } from '@environment';
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -11,14 +12,15 @@ import { Platform } from 'ionic-angular';
 @Injectable()
 export class AuthServiceProvider {
 
-  apiUrl = 'api'
+  apiUrl = ENV.API_LOCAL;
 
   constructor(
     public http: HttpClient,
     public platform: Platform
   ) {
     if (platform.is('cordova')) {
-      this.apiUrl = 'http://localhost:3000/api'
+      console.log(ENV.API_ENDPOINT);
+      this.apiUrl = ENV.API_ENDPOINT;
     }
   }
 
@@ -47,10 +49,13 @@ export class AuthServiceProvider {
   }
 
   sendSms(data) {
+    console.log('what the fuck?');
     return new Promise((resolve, reject) => {
       this.http.post(this.apiUrl + '/notification/validation', data).subscribe(res => {
+        console.log(res);
         resolve(res);
       }, (err) => {
+        console.log(err);
         reject(err);
       })
     })

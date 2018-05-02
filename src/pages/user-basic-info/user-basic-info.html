@@ -65,7 +65,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row *ngIf="!items || showHelp">
+      <ion-row *ngIf="!showProfiles || showHelp">
         <ion-slides pager="true">
           <ion-slide *ngFor="let slide of slides">
             <!-- <img style="width: 80px; height: 80px;" [src]="slide.icone" class="slide-image" /> -->
@@ -81,13 +81,13 @@
         </ion-slides>
       </ion-row>
 
-      <ion-list inset *ngIf="items && !showHelp">
-        <button ion-item *ngFor="let item of items" (click)="openModal(item)">
+      <ion-list inset *ngIf="showProfiles && !showHelp">
+        <button ion-item *ngFor="let profile of showProfiles" (click)="openModal(profile)">
           <ion-avatar item-start>
-            <img [src]="item.icon">
+            <img [src]="profile.icon">
           </ion-avatar>
-          <h2 style="font-weight: bold;" text-uppercase ion-text color=blue-payplug>{{item.type}}</h2>
-          <h3 ion-text color=blue-payplug text-wrap>{{item.description}}</h3>
+          <h2 style="font-weight: bold;" text-uppercase ion-text>{{profile.title}}</h2>
+          <h3 ion-text text-wrap>{{profile.description}}</h3>
         </button>
       </ion-list>
 

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
+import { ENV } from '@environment';
 
 /*
   Generated class for the UserServiceProvider provider.
@@ -11,14 +12,14 @@ import { Platform } from 'ionic-angular';
 @Injectable()
 export class UserServiceProvider {
 
-  apiUrl = 'api';
+  apiUrl = ENV.API_LOCAL;
 
   constructor(
     public http: HttpClient,
     public platform: Platform
   ) {
     if (platform.is('cordova')) {
-      this.apiUrl = 'https://www.atlaensino.com/api'
+      this.apiUrl = ENV.API_ENDPOINT;
     }
   }
 
@@ -26,13 +27,22 @@ export class UserServiceProvider {
     return new Promise((resolve, reject) => {
       this.http.post(this.apiUrl + '/user/basicinfo', user)
         .subscribe(res => {
-          console.log(res);
           resolve(res);
         }, (err) => {
-          console.error(err);
           reject(err);
         });
     })
+  }
+
+  updateProfile(profile) {
+    return new Promise((resolve, reject) => {
+      this.http.put(this.apiUrl + '/profile/' + profile._id, profile)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        })
+    });
   }
 
 }

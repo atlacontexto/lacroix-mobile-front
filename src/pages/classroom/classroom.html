@@ -7,12 +7,36 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>TURMAS</ion-title>
+    <ion-title>FREQUÊNCIA</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-grid offset-xl-2 col-xl-8>
+    <ion-searchbar placeholder="Buscar chamada" (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-list inset>
+      <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
+        <h3>{{ item.data }}</h3>
+        <p>Nº de faltas: {{ item.absence }}</p>
+      </button>
+    </ion-list>
+  </ion-grid>
 </ion-content>
+
+<ion-footer no-border>
+  <ion-navbar transparent>
+    <ion-buttons center>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-sm-12>
+            <button text-uppercase ion-button solid large full color="atla-red" (click)="newDaily()">
+              NOVA CHAMADA
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-buttons>
+  </ion-navbar>
+</ion-footer>

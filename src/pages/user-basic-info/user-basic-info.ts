@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ModalController, Events } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { HomePage } from '../home/home';
@@ -33,7 +33,7 @@ export class UserBasicInfoPage {
   statusProfile = true;
   statusLink = true;
   showFooter = true;
-  items: Array<any>;
+  showProfiles: Array<any>;
   item = { title: '', component: 'ProfileCreatePage' };
   showHelp = false;
 
@@ -44,18 +44,33 @@ export class UserBasicInfoPage {
     public userService: UserServiceProvider,
     public platform: Platform,
     public key: Keyboard,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public events: Events
   ) {
     if (this.navParams.get('user')) {
-      console.log(this.navParams.get('user')['profile']['user']);
       localStorage.setItem('userId', this.navParams.get('user')['profile']['user']['_id']);
-      this.items = new Array<{ type: string, component?: any, description?: any, icon?: string }>();
+      this.showProfiles = new Array<{ type: string, component?: any, description?: any, icon?: string }>();
       var profiles = this.navParams.get('user')['profile']['user']['profiles'];
-      console.log(profiles);
       profiles.forEach(element => {
-        this.items.push(Object.assign(element, {component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png'}));
+        var title = "";
+        if (element['type'] == 'countym') {
+          title = "GESTÃO MUNICIPAL";
+        }
+        else if (element['type'] == 'schoolm') {
+          title = "GESTÃO ESCOLAR";
+        }
+        else if (element['type'] == 'professor') {
+          title = "PROFESSOR";
+        }
+        else if (element['type'] == 'parent') {
+          title = "RESPONSÁVEL";
+        }
+        else if (element['type'] == 'student') {
+          title = "ALUNO";
+        }
+        this.showProfiles.push(Object.assign(element, { title: title, component: 'ProfileEditPage', icon: 'assets/imgs/placeholder.png' }));
       });
-      console.log(this.items);
+      this.events.publish('app:profiles', this.showProfiles);
       var peopleId = this.navParams.get('user')['profile']['user']['people']['_id'];
       var name = this.navParams.get('user')['profile']['user']['people']['name'];
       var userId = this.navParams.get('user')['profile']['user']['_id'];
@@ -131,9 +146,9 @@ export class UserBasicInfoPage {
 
   updateUser() {
     this.userService.update(this.form.value).then((result) => {
-      console.log(result);
+      // console.log(result);
     }).catch((err) => {
-      console.error(err);
+      // console.error(err);
     });
 
     this.step = 'profile';

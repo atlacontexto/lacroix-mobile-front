@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
 
 /**
  * Generated class for the ProfileEditPage page.
@@ -19,16 +21,24 @@ export class ProfileEditPage {
   profileType: string;
   disabled = false;
   main = false;
-  
+  formUpdate: FormGroup;
+
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public formBuilder: FormBuilder,
+    public userService: UserServiceProvider
   ) {
     this.profile = navParams.get('profile');
     this.main = this.profile['main'];
+    this.formUpdate = this.formBuilder.group({
+      _id: [this.profile['_id']],
+      main: [this.profile['main']],
+      type: ['', Validators.required]
+    });
     console.log(this.profile);
-    if(this.profile['type']) {
+    if (this.profile['type']) {
       this.disabled = true;
       this.profileType = this.profile['type'];
     }
@@ -38,12 +48,24 @@ export class ProfileEditPage {
     console.log('ionViewDidLoad ProfileEditPage');
   }
 
+  typeChanged() {
+    console.log(this.main);
+    console.log(this.profileType);
+    this.formUpdate.controls['main'].setValue(this.main);
+    this.formUpdate.controls['type'].setValue(this.profileType);
+  }
+
   start() {
 
   }
 
   update() {
-
+    console.log(this.formUpdate.value);
+    this.userService.updateProfile(this.formUpdate.value).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.error(err);
+    })
   }
 
   dismiss() {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, MenuController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 /**
@@ -32,8 +32,10 @@ export class LandingPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public menu: MenuController
   ) {
+    this.menu.enable(false, 'authenticated');
     this.translate.setDefaultLang('pt-br');
     this.dir = platform.dir();
     this.translate.get([

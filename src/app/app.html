@@ -10,15 +10,11 @@
   <ion-content>
     <ion-item>
       <ion-label stacked>Perfil</ion-label>
-      <ion-select [(ngModel)]="profile" (ionChange)="updateList()">
-        <ion-option selected=true value="aluno">Aluno</ion-option>
-        <ion-option value="responsavel">Responsável</ion-option>
-        <ion-option value="professor">Professor</ion-option>
-        <ion-option value="escola">Escola</ion-option>
-        <ion-option value="municipio">Município</ion-option>
+      <ion-select [(ngModel)]="profileSelected" (ionChange)="updateList()">
+        <ion-option *ngFor="let profile of profiles" [value]="profile">{{profile.title}}</ion-option>
       </ion-select>
     </ion-item>
-    <ion-list>
+    <ion-list *ngIf=privatePages>
       <button color="space" menuClose ion-item *ngFor="let p of privatePages" (click)="openPage(p)">
         {{p.title}}
       </button>
@@ -30,12 +26,10 @@
       <ion-buttons center>
         <ion-grid>
           <ion-row justify-content-center>
-
             <button ion-button color="danger" block round (click)="logout()" menuToggle>
               <ion-icon name="log-out" item-end></ion-icon>
               Sair
             </button>
-
           </ion-row>
         </ion-grid>
       </ion-buttons>

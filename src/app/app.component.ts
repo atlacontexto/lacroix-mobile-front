@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Config, Nav } from 'ionic-angular';
+import { Platform, Config, Nav, MenuController, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -18,25 +18,34 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage: any = LandingPage;
 
-  profile: string;
+  profileSelected: any;
+  profiles: any;
   privatePages: Array<{ title: string, component: any, icon: string }>;
 
   constructor(
+    public menu: MenuController,
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     private translate: TranslateService,
-    private config: Config
+    private config: Config,
+    public events: Events,
   ) {
+    this.events.subscribe('app:profiles', (profiles) => {
+      this.profiles = profiles;
+      this.profiles.forEach(element => {
+        if (element['main']) {
+          this.profileSelected = element;
+        }
+      });
+      console.log(this.profiles);
+      this.updateList();
+    });
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
     });
-    this.profile = 'aluno';
     this.initTranslate();
-    this.updateList();
   }
 
   initTranslate() {
@@ -48,38 +57,38 @@ export class MyApp {
   }
 
   updateList() {
-    console.log(this.profile);
+    console.log(this.profileSelected);
     console.log('atualizar lista de aplicações');
-    if (this.profile == 'aluno') {
+    if (this.profileSelected['type'] == 'studend') {
       this.privatePages = [
-        { title: 'Início', component: HomePage, icon: 'home' },
-        { title: 'Boletim', component: ReportPage, icon: 'home' },
-        { title: 'Avaliação', component: ExamPage, icon: 'home' }
+        { title: 'INÍCIO', component: HomePage, icon: 'home' },
+        { title: 'BOLETIM', component: ReportPage, icon: 'home' },
+        { title: 'AVALIAÇÃO', component: ExamPage, icon: 'home' }
       ];
-    } else if (this.profile == 'responsavel') {
+    } else if (this.profileSelected['type'] == 'parent') {
       this.privatePages = [
-        { title: 'Início', component: HomePage, icon: 'home' },
-        { title: 'Boletim', component: ReportPage, icon: 'home' },
-        { title: 'Avaliação', component: ExamPage, icon: 'home' }
+        { title: 'INÍCIO', component: HomePage, icon: 'home' },
+        { title: 'BOLETIM', component: ReportPage, icon: 'home' },
+        { title: 'AVALIAÇÃO', component: ExamPage, icon: 'home' }
       ];
-    } else if (this.profile == 'professor') {
+    } else if (this.profileSelected['type'] == 'professor') {
       this.privatePages = [
-        { title: 'Início', component: HomePage, icon: 'home' },
-        { title: 'Boletim', component: ReportPage, icon: 'home' },
-        { title: 'Planejamento', component: PlanningPage, icon: 'home' },
-        { title: 'Turmas', component: ClassroomPage, icon: 'home' },
-        { title: 'Avaliação', component: ExamPage, icon: 'home' }
+        { title: 'INÍCIO', component: HomePage, icon: 'home' },
+        { title: 'BOLETIM', component: ReportPage, icon: 'home' },
+        { title: 'PLANEJAMENTO', component: PlanningPage, icon: 'home' },
+        { title: 'FREQUÊNCIA', component: ClassroomPage, icon: 'home' },
+        { title: 'AVALIAÇÃO', component: ExamPage, icon: 'home' }
       ];
-    } else if (this.profile == 'escola') {
+    } else if (this.profileSelected['type'] == 'schoolm') {
       this.privatePages = [
-        { title: 'Início', component: HomePage, icon: 'home' },
-        { title: 'Turmas', component: ClassroomPage, icon: 'home' },
-        { title: 'Autorização', component: AuthorizationPage, icon: 'home' },
+        { title: 'INÍCIO', component: HomePage, icon: 'home' },
+        { title: 'TURMAS', component: ClassroomPage, icon: 'home' },
+        { title: 'AUTORIZAÇÃO', component: AuthorizationPage, icon: 'home' },
       ];
-    } else if (this.profile == 'municipio') {
+    } else if (this.profileSelected['type'] == 'countym') {
       this.privatePages = [
-        { title: 'Início', component: HomePage, icon: 'home' },
-        { title: 'Autorização', component: AuthorizationPage, icon: 'home' },
+        { title: 'INÍCIO', component: HomePage, icon: 'home' },
+        { title: 'AUTORIZAÇÃO', component: AuthorizationPage, icon: 'home' },
       ];
     }
   }
@@ -92,7 +101,7 @@ export class MyApp {
   }
 
   openPage(page) {
-    this.nav.push(page.component,{},{
+    this.nav.push(page.component, {profileSelected: this.profileSelected}, {
       animate: true,
       direction: 'forward'
     })

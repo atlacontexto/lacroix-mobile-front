@@ -51,6 +51,8 @@ import { NgCalendarModule  } from 'ionic2-calendar';
 import { PlanningListPage } from '../pages/planning-list/planning-list';
 import { PlanningListPageModule } from '../pages/planning-list/planning-list.module';
 import { NotificationProvider } from '../providers/notification/notification';
+import { ClassroomServiceProvider } from '../providers/classroom-service/classroom-service';
+import { DailyPageModule } from 'pages/daily/daily.module';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -89,7 +91,7 @@ export function createTranslateLoader(http: HttpClient) {
     ClassroomPageModule,
     ExamPageModule,
     AuthorizationPageModule,
-    PlanningListPageModule
+    PlanningListPageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -111,7 +113,7 @@ export function createTranslateLoader(http: HttpClient) {
     ReportPage,
     ExamPage,
     AuthorizationPage,
-    PlanningListPage
+    PlanningListPage,
   ],
   providers: [
     StatusBar,
@@ -122,6 +124,7 @@ export function createTranslateLoader(http: HttpClient) {
     AlertServiceProvider,
     Keyboard,
     NotificationProvider,
+    ClassroomServiceProvider,
   ]
 })
 export class AppModule {}
