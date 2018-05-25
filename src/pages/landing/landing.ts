@@ -53,7 +53,6 @@ export class LandingPage {
       "LANDING_SLIDE6_DESCRIPTION"
     ]).subscribe(
       values => {
-        console.log(values);
         this.slides = [
           {
             title: values.LANDING_SLIDE1_TITLE,
@@ -93,10 +92,6 @@ export class LandingPage {
           }
         ]
       })
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LandingPage');
   }
 
   next() {

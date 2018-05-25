@@ -21,9 +21,13 @@
 </ion-header>
 
 <ion-content padding>
+
+
+
   <div [ngSwitch]="step" col-xl-8 offset-xl-2>
     <ion-grid *ngSwitchCase="'user'" padding>
-      <ion-row>
+      <basic-info [cellphone]="cellphone"></basic-info>
+      <!-- <ion-row>
         <ion-item no-padding>
           <ion-label stacked>Celular</ion-label>
           <ion-input disabled=true [ngModel]=cellphone type="number"></ion-input>
@@ -47,7 +51,7 @@
             {{ 'NEXT_BUTTON' | translate}}
           </button>
         </ion-row>
-      </form>
+      </form> -->
 
     </ion-grid>
     <ion-grid *ngSwitchCase="'profile'">

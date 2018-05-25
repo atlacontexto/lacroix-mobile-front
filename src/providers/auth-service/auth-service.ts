@@ -49,13 +49,11 @@ export class AuthServiceProvider {
   }
 
   sendSms(data) {
-    console.log('what the fuck?');
     return new Promise((resolve, reject) => {
       this.http.post(this.apiUrl + '/notification/validation', data).subscribe(res => {
-        console.log(res);
+        console.log(res)
         resolve(res);
       }, (err) => {
-        console.log(err);
         reject(err);
       })
     })

@@ -13,9 +13,9 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content no-padding>
+  <ion-searchbar placeholder="Buscar chamada" (ionInput)="getItems($event)"></ion-searchbar>
   <ion-grid offset-xl-2 col-xl-8>
-    <ion-searchbar placeholder="Buscar chamada" (ionInput)="getItems($event)"></ion-searchbar>
     <ion-list inset>
       <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
         <h3>{{ item.data }}</h3>

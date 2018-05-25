@@ -47,6 +47,12 @@ export class UserBasicInfoPage {
     public modalCtrl: ModalController,
     public events: Events
   ) {
+    this.events.subscribe('app:userinfoupdated', (userinfo) => {
+      console.log(userinfo);
+      this.statusProfile = userinfo['statusProfile'];
+      this.step = userinfo['step'];
+    });
+    console.log(this.navParams.get('user'));
     if (this.navParams.get('user')) {
       localStorage.setItem('userId', this.navParams.get('user')['profile']['user']['_id']);
       this.showProfiles = new Array<{ type: string, component?: any, description?: any, icon?: string }>();

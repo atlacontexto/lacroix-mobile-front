@@ -101,7 +101,7 @@ export class MyApp {
   }
 
   openPage(page) {
-    this.nav.push(page.component, {profileSelected: this.profileSelected}, {
+    this.nav.push(page, {profileSelected: this.profileSelected}, {
       animate: true,
       direction: 'forward'
     })

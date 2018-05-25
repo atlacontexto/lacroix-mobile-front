@@ -1,0 +1,40 @@
+<ion-row>
+  <ion-item no-padding>
+    <ion-label stacked>Celular</ion-label>
+    <ion-input disabled=true [ngModel]=cellphone type="number"></ion-input>
+  </ion-item>
+</ion-row>
+<form (submit)="updateUser()" [formGroup]="form" no-padding>
+  <ion-row>
+    <ion-item no-padding>
+      <ion-label stacked>Nome completo</ion-label>
+      <ion-input formControlName=name type="text"></ion-input>
+    </ion-item>
+  </ion-row>
+  <ion-row>
+    <ion-item no-padding>
+      <ion-label stacked>Nome de usuário</ion-label>
+      <ion-input formControlName=shortName type="text"></ion-input>
+    </ion-item>
+  </ion-row>
+  <ion-item class='form-text error' *ngIf="form.controls.confirmPassword.touched && form.hasError('mismatchedPasswords') && !form.controls.password.valid">
+    <ion-label no-margin stacked>Passwords do not match</ion-label>
+  </ion-item>
+  <ion-row>
+    <ion-item no-padding>
+      <ion-label stacked>Senha</ion-label>
+      <ion-input formControlName=password type="text"></ion-input>
+    </ion-item>
+  </ion-row>
+  <ion-row>
+    <ion-item no-padding>
+      <ion-label stacked>Repita a senha</ion-label>
+      <ion-input formControlName="confirmPassword" type="text"></ion-input>
+    </ion-item>
+  </ion-row>
+  <ion-row margin-top>
+    <button text-uppercase ion-button solid large full color="atla-red" type="submit">
+      Próximo
+    </button>
+  </ion-row>
+</form>

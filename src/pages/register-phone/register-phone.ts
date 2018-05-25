@@ -36,15 +36,10 @@ export class RegisterPhonePage {
     });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPhonePage');
-  }
-
   next() {
     this.authService.sendSms(this.form.value).then(data => {
-      console.log(data);
       if (data['success']) {
-        this.navCtrl.push('RegisterPhoneCheckPage', {cellphone: this.form.value.cellphone}, {
+        this.navCtrl.push('RegisterPhoneCheckPage', {cellphone: this.form.value.cellphone, via: data['data']['via']}, {
           animate: true,
           direction: 'forward'
         });

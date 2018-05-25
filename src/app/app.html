@@ -15,7 +15,7 @@
       </ion-select>
     </ion-item>
     <ion-list *ngIf=privatePages>
-      <button color="space" menuClose ion-item *ngFor="let p of privatePages" (click)="openPage(p)">
+      <button color="space" menuClose ion-item *ngFor="let p of privatePages" (click)="openPage(p.component)">
         {{p.title}}
       </button>
     </ion-list>

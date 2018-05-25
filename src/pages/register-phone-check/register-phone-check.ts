@@ -34,10 +34,6 @@ export class RegisterPhoneCheckPage {
     });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPhoneCheckPage');
-  }
-
   back() {
     this.navCtrl.pop({direction: 'back'});
   }
@@ -47,7 +43,7 @@ export class RegisterPhoneCheckPage {
   }
 
   next() {
-    this.authService.checkCode(this.form.value).then((res) => {
+    this.authService.checkCode(Object.assign(this.form.value, {via: this.navParams.get('via')})).then((res) => {
       //console.log(res);
       if (res['success']) {
         //console.log(res['message']);
@@ -55,11 +51,12 @@ export class RegisterPhoneCheckPage {
           animate: true,
           direction: 'forward'
         });
-      } else {
-        this.alertService.presentAlert('Erro na validação', 'Tente mais tarde', 'OK');
       }
     }).catch(err => {
       console.log(err);
+      if(err['status'] == 401 && err['error']['message'] == 'invalid code') {
+        this.alertService.presentAlert('Erro na validação', 'O código de verificação não confere', 'OK');
+      }
     });
   }
 
