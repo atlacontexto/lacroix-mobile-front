@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular';
-import { ENV } from '@environment';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Platform } from "ionic-angular";
+import { ENV } from "@environment";
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -11,14 +11,10 @@ import { ENV } from '@environment';
 */
 @Injectable()
 export class AuthServiceProvider {
-
   apiUrl = ENV.API_LOCAL;
 
-  constructor(
-    public http: HttpClient,
-    public platform: Platform
-  ) {
-    if (platform.is('cordova')) {
+  constructor(public http: HttpClient, public platform: Platform) {
+    if (platform.is("cordova")) {
       console.log(ENV.API_ENDPOINT);
       this.apiUrl = ENV.API_ENDPOINT;
     }
@@ -26,49 +22,71 @@ export class AuthServiceProvider {
 
   addUser(data) {
     return new Promise((resolve, reject) => {
-      this.http.post(this.apiUrl + '/user', JSON.stringify(data))
-        .subscribe(res => {
+      this.http.post(this.apiUrl + "/user", JSON.stringify(data)).subscribe(
+        res => {
           console.log(res);
           resolve(res);
-        }, (err) => {
+        },
+        err => {
           console.error(err);
           reject(err);
-        });
+        }
+      );
     });
   }
 
   getUsers() {
     return new Promise(resolve => {
-      this.http.get(this.apiUrl + '/user').subscribe(data => {
-        console.log(data);
-        resolve(data);
-      }, err => {
-        console.log(err);
-      });
+      this.http.get(this.apiUrl + "/user").subscribe(
+        data => {
+          console.log(data);
+          resolve(data);
+        },
+        err => {
+          console.log(err);
+        }
+      );
     });
   }
 
   sendSms(data) {
-    console.log('what the fuck?');
     return new Promise((resolve, reject) => {
-      this.http.post(this.apiUrl + '/notification/validation', data).subscribe(res => {
-        console.log(res);
-        resolve(res);
-      }, (err) => {
-        console.log(err);
-        reject(err);
-      })
-    })
-  }
-
-  checkCode(code) {
-    return new Promise((resolve, reject) => {
-      this.http.post(this.apiUrl + '/notification/codecheck', code).subscribe(res => {
-        resolve(res);
-      }, (err) => {
-        reject(err);
-      });
+      this.http.post(this.apiUrl + "/notification/validation", data).subscribe(
+        res => {
+          // console.log(res["data"]["token"]);
+          localStorage.setItem("token", res["data"]["token"]);
+          // console.log(res);
+          resolve(res);
+        },
+        err => {
+          console.log(err);
+          reject(err);
+        }
+      );
     });
   }
 
+  checkCode(code) {
+    if (localStorage.getItem("token")) {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          Authorization: localStorage.getItem("token")
+        })
+      };
+      return new Promise((resolve, reject) => {
+        this.http
+          .post(this.apiUrl + "/notification/codecheck", code, httpOptions)
+          .subscribe(
+            res => {
+              console.log(res);
+              resolve(res);
+            },
+            err => {
+              console.log(err);
+              reject(err);
+            }
+          );
+      });
+    }
+  }
 }
