@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { ENV } from '@environment';
@@ -24,8 +24,13 @@ export class UserServiceProvider {
   }
 
   update(user) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: localStorage.getItem("token")
+      })
+    };
     return new Promise((resolve, reject) => {
-      this.http.post(this.apiUrl + '/user/basicinfo', user)
+      this.http.post(this.apiUrl + '/user/basicinfo', user, httpOptions)
         .subscribe(res => {
           resolve(res);
         }, (err) => {
