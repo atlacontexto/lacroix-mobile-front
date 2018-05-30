@@ -26,7 +26,7 @@
 
   <div [ngSwitch]="step" col-xl-8 offset-xl-2>
     <ion-grid *ngSwitchCase="'user'" padding>
-      <basic-info [cellphone]="cellphone"></basic-info>
+      <basic-info [userInfo]="userInfo"></basic-info>
       <!-- <ion-row>
         <ion-item no-padding>
           <ion-label stacked>Celular</ion-label>
