@@ -59,64 +59,64 @@ export class UserBasicInfoPage {
       this.step = userinfo["step"];
     });
     // console.log(this.navParams.get("user"));
-    if (false) {
-      localStorage.setItem(
-        "userId",
-        this.navParams.get("user")["profile"]["user"]["_id"]
-      );
-      this.showProfiles = new Array<{
-        type: string;
-        component?: any;
-        description?: any;
-        icon?: string;
-      }>();
-      var profiles = this.navParams.get("user")["profile"]["user"]["profiles"];
-      profiles.forEach(element => {
-        var title = "";
-        if (element["type"] == "countym") {
-          title = "GESTÃO MUNICIPAL";
-        } else if (element["type"] == "schoolm") {
-          title = "GESTÃO ESCOLAR";
-        } else if (element["type"] == "professor") {
-          title = "PROFESSOR";
-        } else if (element["type"] == "parent") {
-          title = "RESPONSÁVEL";
-        } else if (element["type"] == "student") {
-          title = "ALUNO";
-        }
-        this.showProfiles.push(
-          Object.assign(element, {
-            title: title,
-            component: "ProfileEditPage",
-            icon: "assets/imgs/placeholder.png"
-          })
-        );
-      });
-      this.events.publish("app:profiles", this.showProfiles);
-      var peopleId = this.navParams.get("user")["profile"]["user"]["people"][
-        "_id"
-      ];
-      var name = this.navParams.get("user")["profile"]["user"]["people"][
-        "name"
-      ];
-      var userId = this.navParams.get("user")["profile"]["user"]["_id"];
-      var shortName = this.navParams.get("user")["profile"]["user"][
-        "shortName"
-      ];
-    }
+    // if (false) {
+    //   localStorage.setItem(
+    //     "userId",
+    //     this.navParams.get("user")["profile"]["user"]["_id"]
+    //   );
+    //   this.showProfiles = new Array<{
+    //     type: string;
+    //     component?: any;
+    //     description?: any;
+    //     icon?: string;
+    //   }>();
+    //   var profiles = this.navParams.get("user")["profile"]["user"]["profiles"];
+    //   profiles.forEach(element => {
+    //     var title = "";
+    //     if (element["type"] == "countym") {
+    //       title = "GESTÃO MUNICIPAL";
+    //     } else if (element["type"] == "schoolm") {
+    //       title = "GESTÃO ESCOLAR";
+    //     } else if (element["type"] == "professor") {
+    //       title = "PROFESSOR";
+    //     } else if (element["type"] == "parent") {
+    //       title = "RESPONSÁVEL";
+    //     } else if (element["type"] == "student") {
+    //       title = "ALUNO";
+    //     }
+    //     this.showProfiles.push(
+    //       Object.assign(element, {
+    //         title: title,
+    //         component: "ProfileEditPage",
+    //         icon: "assets/imgs/placeholder.png"
+    //       })
+    //     );
+    //   });
+    //   this.events.publish("app:profiles", this.showProfiles);
+    //   var peopleId = this.navParams.get("user")["profile"]["user"]["people"][
+    //     "_id"
+    //   ];
+    //   var name = this.navParams.get("user")["profile"]["user"]["people"][
+    //     "name"
+    //   ];
+    //   var userId = this.navParams.get("user")["profile"]["user"]["_id"];
+    //   var shortName = this.navParams.get("user")["profile"]["user"][
+    //     "shortName"
+    //   ];
+    // }
     const user = this.navParams.get("user");
     const _cellphone = this.navParams.get("cellphone");
-    this.userInfo = Object.assign({}, { cellphone: _cellphone, user });
+    this.userInfo = { cellphone: _cellphone, ...user };
 
-    this.form = formBuilder.group({
-      peopleId: [peopleId],
-      name: [name, Validators.required],
-      userId: [userId],
-      shortName: [shortName, Validators.required]
-    });
-    this.form.valueChanges.subscribe(v => {
-      this.isReady = this.form.valid;
-    });
+    // this.form = formBuilder.group({
+    //   peopleId: [peopleId],
+    //   name: [name, Validators.required],
+    //   userId: [userId],
+    //   shortName: [shortName, Validators.required]
+    // });
+    // this.form.valueChanges.subscribe(v => {
+    //   this.isReady = this.form.valid;
+    // });
   }
 
   ionViewWillEnter() {

@@ -47,7 +47,8 @@ export class BasicInfoComponent {
   ngAfterContentInit() {
     console.log(this.userInfo);
     if (this.userInfo.user) {
-      console.log(this.userInfo.user);
+      console.log(this.userInfo);
+      const {} = this.userInfo;
       this.form.controls["peopleId"].setValue(this.userInfo.user.people._id);
       this.form.controls["name"].setValue(this.userInfo.user.people.name);
       this.form.controls["userId"].setValue(this.userInfo.user._id);
