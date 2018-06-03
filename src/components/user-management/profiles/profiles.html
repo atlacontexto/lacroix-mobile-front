@@ -1,0 +1,43 @@
+<ion-row>
+  <ion-col col-2>
+    <button ion-button icon-left color=atla-red (click)="openModal(item)">
+      <ion-icon name=add></ion-icon>
+      NOVO PERFIL
+    </button>
+  </ion-col>
+  <ion-col offset-8 col-2>
+    <button ion-button icon-only color=atla-red (click)="showHelpAction()">
+      <ion-icon name=help></ion-icon>
+    </button>
+  </ion-col>
+</ion-row>
+
+<ion-row *ngIf="!showProfiles || showHelp">
+  <ion-slides pager="true">
+    <ion-slide *ngFor="let slide of slides">
+      <!-- <img style="width: 80px; height: 80px;" [src]="slide.icone" class="slide-image" /> -->
+      <h3 ion-text text-uppercase [innerHTML]="slide.title"></h3>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-8 offset-2>
+            <p class="landing-text" ion-text text-uppercase [innerHTML]="slide.description"></p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+  </ion-slides>
+</ion-row>
+
+<ion-list inset *ngIf="showProfiles && !showHelp">
+  <button ion-item *ngFor="let profile of showProfiles" (click)="openModal(profile)">
+    <ion-avatar item-start>
+      <img [src]="profile.icon">
+    </ion-avatar>
+    <h2 style="font-weight: bold;" text-uppercase ion-text>{{profile.type}}</h2>
+    <h3 ion-text text-wrap>{{profile.description}}</h3>
+  </button>
+</ion-list>
+
+<ion-row *ngIf="showProfiles">
+  <button ion-button full color=atla-red text-uppercase (click)="start()">{{'START_BUTTON' | translate}}</button>
+</ion-row>

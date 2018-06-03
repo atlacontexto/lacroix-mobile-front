@@ -1,7 +1,7 @@
 <ion-row>
   <ion-item no-padding>
     <ion-label stacked>Celular</ion-label>
-    <ion-input disabled=true [ngModel]="userInfo['cellphone']" type="number"></ion-input>
+    <ion-input disabled=true [ngModel]="cellphone" type="number"></ion-input>
   </ion-item>
 </ion-row>
 <form (submit)="updateUser()" [formGroup]="form" no-padding>

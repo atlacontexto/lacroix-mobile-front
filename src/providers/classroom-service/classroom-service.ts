@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { ENV } from '@environment';
-import { Platform } from 'ionic-angular';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { ENV } from "@environment";
+import { Platform } from "ionic-angular";
 
 /*
   Generated class for the ClassroomServiceProvider provider.
@@ -11,14 +11,10 @@ import { Platform } from 'ionic-angular';
 */
 @Injectable()
 export class ClassroomServiceProvider {
-
   apiUrl = ENV.API_LOCAL;
 
-  constructor(
-    public http: HttpClient,
-    public platform: Platform
-  ) {
-    if (platform.is('cordova')) {
+  constructor(public http: HttpClient, public platform: Platform) {
+    if (platform.is("cordova")) {
       console.log(ENV.API_ENDPOINT);
       this.apiUrl = ENV.API_ENDPOINT;
     }
@@ -26,15 +22,19 @@ export class ClassroomServiceProvider {
 
   getEnrollments(professorId) {
     return new Promise((resolve, reject) => {
-      this.http.get(this.apiUrl + '/classroom/students?professor=' + professorId).subscribe(data => {
-        console.log(data['message']);
-        if(data['success']) {
-          resolve(data['data']);
-        }
-      }, err => {
-        reject(reject);
-      });
+      this.http
+        .get(this.apiUrl + "/classroom/students?professor=" + professorId)
+        .subscribe(
+          data => {
+            console.log(data["message"]);
+            if (data["success"]) {
+              resolve(data["data"]);
+            }
+          },
+          err => {
+            reject(reject);
+          }
+        );
     });
   }
-
 }

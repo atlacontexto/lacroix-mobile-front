@@ -17,6 +17,7 @@ import { AlertServiceProvider } from "../../../providers/alert-service/alert-ser
 export class BasicInfoComponent {
   @Input() userInfo;
   form: FormGroup;
+  cellphone: string;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -45,14 +46,28 @@ export class BasicInfoComponent {
   }
 
   ngAfterContentInit() {
-    console.log(this.userInfo);
+    if (!localStorage.getItem("cellphone"))
+      localStorage.setItem("cellphone", this.userInfo.cellphone);
     if (this.userInfo.user) {
-      console.log(this.userInfo);
-      const {} = this.userInfo;
+      // Launched from CodeCheck
+      this.cellphone = this.userInfo.cellphone;
       this.form.controls["peopleId"].setValue(this.userInfo.user.people._id);
       this.form.controls["name"].setValue(this.userInfo.user.people.name);
       this.form.controls["userId"].setValue(this.userInfo.user._id);
       this.form.controls["shortName"].setValue(this.userInfo.user.shortName);
+    } else {
+      // Launched from Home
+      this.events.publish("app:userinfoupdated", {
+        step: "user",
+        statusProfile: true
+      });
+      this.cellphone = localStorage.getItem("cellphone");
+      this.form.controls["peopleId"].setValue(localStorage.getItem("peopleId"));
+      this.form.controls["name"].setValue(localStorage.getItem("name"));
+      this.form.controls["userId"].setValue(localStorage.getItem("userId"));
+      this.form.controls["shortName"].setValue(
+        localStorage.getItem("shortName")
+      );
     }
   }
 
@@ -71,27 +86,23 @@ export class BasicInfoComponent {
 
   updateUser() {
     if (this.form.valid) {
-      console.log("valid?");
-      console.log(this.form.value);
-
       this.userService
         .update(this.form.value)
         .then(result => {
-          console.log(result);
           if (result["success"]) {
+            localStorage.setItem("userId", this.form.value.userId);
+            localStorage.setItem("shortName", this.form.value.shortName);
+            localStorage.setItem("peopleId", this.form.value.peopleId);
+            localStorage.setItem("name", this.form.value.name);
+            this.events.publish("app:user");
             this.events.publish("app:userinfoupdated", {
-              step: "profile",
-              statusProfile: false
+              statusProfile: false,
+              step: "user"
             });
-            // Habilida a oção 'Perfil' do segment
-            // this.navCtrl.setRoot(HomePage, {}, {
-            //   animate: true,
-            //   direction: 'forward'
-            // })
           }
         })
         .catch(err => {
-          // console.error(err);
+          console.error(err);
         });
     } else {
       this.alertService.presentAlert(

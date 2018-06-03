@@ -19,11 +19,6 @@ import { Keyboard } from "@ionic-native/keyboard";
  * Ionic pages and navigation.
  */
 
-export interface Slide {
-  title: string;
-  description: string;
-}
-
 @IonicPage()
 @Component({
   selector: "page-user-basic-info",
@@ -31,17 +26,14 @@ export interface Slide {
 })
 export class UserBasicInfoPage {
   userInfo: any;
-  slides: Slide[];
   form: FormGroup;
   isReady: boolean;
-  step: string;
-  statusUser = true;
-  statusProfile = true;
-  statusLink = true;
+  step = "user";
+  statusUser: boolean;
+  statusProfile: boolean;
+  statusLink: boolean;
   showFooter = true;
   showProfiles: Array<any>;
-  item = { title: "", component: "ProfileCreatePage" };
-  showHelp = false;
 
   constructor(
     public navCtrl: NavController,
@@ -53,10 +45,12 @@ export class UserBasicInfoPage {
     public modalCtrl: ModalController,
     public events: Events
   ) {
+    console.log("UserBasicInfo loaded");
     this.events.subscribe("app:userinfoupdated", userinfo => {
-      // console.log(userinfo);
-      this.statusProfile = userinfo["statusProfile"];
-      this.step = userinfo["step"];
+      if (userinfo["statusProfile"]) {
+        this.statusProfile = false;
+      }
+      if (userinfo["step"]) this.step = userinfo["step"];
     });
     // console.log(this.navParams.get("user"));
     // if (false) {
@@ -120,47 +114,16 @@ export class UserBasicInfoPage {
   }
 
   ionViewWillEnter() {
-    this.slides = [
-      {
-        title: "Perfil para Alunos",
-        description: "Texto explicativo do uso de perfis para Alunos"
-      },
-      {
-        title: "Perfil para Responsáveis",
-        description:
-          "Texto explicativo do uso de perfis para Pais e Responsáveis"
-      },
-      {
-        title: "Perfil para Professores",
-        description: "Texto explicativo do uso de perfis para Professores"
-      },
-      {
-        title: "Perfil para Gestão Escolar",
-        description: "Texto explicativo do uso de perfis para Gestão Escolar"
-      },
-      {
-        title: "Perfil para Administração Municipal",
-        description: "Texto explicativo do uso de perfis para Gestão Municipal"
-      }
-    ];
-    this.step = this.navParams.get("step") || "user";
-    if (this.step == "user") {
-      this.statusUser = false;
-    }
-    if (this.step == "profile") {
-      this.statusProfile = false;
-    }
-    if (this.step == "link") {
-      this.statusLink = false;
-    }
-  }
-
-  showHelpAction() {
-    if (this.showHelp) {
-      this.showHelp = false;
-    } else {
-      this.showHelp = true;
-    }
+    // this.step = this.navParams.get("step") || "user";
+    // if (this.step == "user") {
+    //   this.statusUser = false;
+    // }
+    // if (this.step == "profile") {
+    //   this.statusProfile = false;
+    // }
+    // if (this.step == "link") {
+    //   this.statusLink = false;
+    // }
   }
 
   openModal(page) {

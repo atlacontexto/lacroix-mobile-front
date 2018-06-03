@@ -5,6 +5,11 @@
         <img height="40" src="assets/imgs/atla-red.png">
       </ion-title>
     </ion-toolbar>
+    <ion-list no-line>
+      <button color="space" menuClose ion-item (click)='openPage(userComp)'>
+        {{username}}
+      </button>
+    </ion-list>
   </ion-header>
 
   <ion-content>
@@ -15,7 +20,7 @@
       </ion-select>
     </ion-item>
     <ion-list *ngIf=privatePages>
-      <button color="space" menuClose ion-item *ngFor="let p of privatePages" (click)="openPage(p.component)">
+      <button color="space" menuClose lo-line ion-item *ngFor="let p of privatePages" (click)="openPage(p.component)">
         {{p.title}}
       </button>
     </ion-list>

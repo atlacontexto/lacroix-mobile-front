@@ -39,7 +39,6 @@ export class AuthServiceProvider {
     return new Promise(resolve => {
       this.http.get(this.apiUrl + "/user").subscribe(
         data => {
-          console.log(data);
           resolve(data);
         },
         err => {
@@ -53,13 +52,10 @@ export class AuthServiceProvider {
     return new Promise((resolve, reject) => {
       this.http.post(this.apiUrl + "/notification/validation", data).subscribe(
         res => {
-          // console.log(res["data"]["token"]);
           localStorage.setItem("token", res["data"]["token"]);
-          // console.log(res);
           resolve(res);
         },
         err => {
-          console.log(err);
           reject(err);
         }
       );
@@ -78,11 +74,9 @@ export class AuthServiceProvider {
           .post(this.apiUrl + "/notification/codecheck", code, httpOptions)
           .subscribe(
             res => {
-              console.log(res);
               resolve(res);
             },
             err => {
-              console.log(err);
               reject(err);
             }
           );
