@@ -52,6 +52,7 @@ export class UserServiceProvider {
         )
         .subscribe(
           res => {
+            console.log(res);
             resolve(res);
           },
           err => {
