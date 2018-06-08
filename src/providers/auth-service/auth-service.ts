@@ -66,7 +66,7 @@ export class AuthServiceProvider {
     if (localStorage.getItem("token")) {
       const httpOptions = {
         headers: new HttpHeaders({
-          Authorization: "Bearer " + localStorage.getItem("token")
+          Authorization: localStorage.getItem("token")
         })
       };
       return new Promise((resolve, reject) => {
