@@ -24,11 +24,12 @@
             <ion-option value="professor">Professor</ion-option>
             <ion-option value="schoolm">Gestão Escolar</ion-option>
             <ion-option value="countym">Gestão Municipal</ion-option>
+            <ion-option value="comunity">Comunidade</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
     </ion-row>
-    
+
     <ion-row *ngIf="profileType == 'student'">
       <ion-col>
         <ion-item no-padding>
@@ -62,11 +63,22 @@
       <ion-col col-12 *ngIf="level == 'fundamental1'">
         <h4 text-center>Áreas de interesse</h4>
         <form [formGroup]=formProfessor>
-          <ion-item no-padding *ngFor='let item of items'>
-            <ion-label>{{item.title}}</ion-label>
-            <ion-toggle (checked)="item.checked" [formControlName]="item.formControl" color=atla-red></ion-toggle>
+          <ion-item no-padding *ngFor='let theme of themes'>
+            <ion-label>{{theme.title}}</ion-label>
+            <ion-toggle (checked)="theme.checked" [formControlName]="theme.formControl" color=atla-red></ion-toggle>
           </ion-item>
         </form>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="profileType == 'comunity'">
+      <ion-col col-12>
+        <ion-item no-padding>
+          <ion-label floating>Nível</ion-label>
+          <ion-select [(ngModel)]="comunityRole">
+            <ion-option value="voluntary">Voluntário</ion-option>
+          </ion-select>
+        </ion-item>
       </ion-col>
     </ion-row>
 
@@ -81,7 +93,7 @@
     </ion-row>
 
     <ion-row *ngIf="profileType == 'schoolm'">
-      <ion-col col-12 >
+      <ion-col col-12>
         <p ion-text text-justify text-uppercase>
           Os perfis para Gerenciamento Escolar são criados automaticamente ao ser realizado o contrato de uso do serviço. As funcionalidades
           para você devem ser liberadas pelo seu superior imediato. Ao serem liberadas, você receberá uma notificação na

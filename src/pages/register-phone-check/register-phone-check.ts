@@ -40,10 +40,12 @@ export class RegisterPhoneCheckPage {
   resend() {}
 
   next() {
+    console.log("WHAAAAAT?");
     this.authService
       .checkCode(this.form.value)
       .then(res => {
         if (res["success"]) {
+          console.log(res["data"]);
           this.navCtrl.push(
             "UserBasicInfoPage",
             { cellphone: this.cellphone, step: "user", user: res["data"] },

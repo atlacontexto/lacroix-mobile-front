@@ -76,39 +76,40 @@ export class MyApp {
   }
 
   updateList() {
-    console.log(this.profileSelected);
-    console.log("atualizar lista de aplicações");
-    if (this.profileSelected["type"] == "studend") {
-      this.privatePages = [
-        { title: "INÍCIO", component: "HomePage", icon: "home" },
-        { title: "BOLETIM", component: "ReportPage", icon: "home" },
-        { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
-      ];
-    } else if (this.profileSelected["type"] == "parent") {
-      this.privatePages = [
-        { title: "INÍCIO", component: "HomePage", icon: "home" },
-        { title: "BOLETIM", component: "ReportPage", icon: "home" },
-        { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
-      ];
-    } else if (this.profileSelected["type"] == "professor") {
-      this.privatePages = [
-        { title: "INÍCIO", component: "HomePage", icon: "home" },
-        { title: "BOLETIM", component: "ReportPage", icon: "home" },
-        { title: "PLANEJAMENTO", component: "PlanningPage", icon: "home" },
-        { title: "FREQUÊNCIA", component: "ClassroomPage", icon: "home" },
-        { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
-      ];
-    } else if (this.profileSelected["type"] == "schoolm") {
-      this.privatePages = [
-        { title: "INÍCIO", component: "HomePage", icon: "home" },
-        { title: "TURMAS", component: "ClassroomPage", icon: "home" },
-        { title: "AUTORIZAÇÃO", component: "AuthorizationPage", icon: "home" }
-      ];
-    } else if (this.profileSelected["type"] == "countym") {
-      this.privatePages = [
-        { title: "INÍCIO", component: "HomePage", icon: "home" },
-        { title: "AUTORIZAÇÃO", component: "AuthorizationPage", icon: "home" }
-      ];
+    if (this.profileSelected) {
+      console.log(this.profileSelected);
+      if (this.profileSelected["type"] == "student") {
+        this.privatePages = [
+          { title: "INÍCIO", component: "HomePage", icon: "home" },
+          { title: "BOLETIM", component: "ReportPage", icon: "home" },
+          { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
+        ];
+      } else if (this.profileSelected["type"] == "parent") {
+        this.privatePages = [
+          { title: "INÍCIO", component: "HomePage", icon: "home" },
+          { title: "BOLETIM", component: "ReportPage", icon: "home" },
+          { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
+        ];
+      } else if (this.profileSelected["type"] == "professor") {
+        this.privatePages = [
+          { title: "INÍCIO", component: "HomePage", icon: "home" },
+          { title: "BOLETIM", component: "ReportPage", icon: "home" },
+          { title: "PLANEJAMENTO", component: "PlanningPage", icon: "home" },
+          { title: "FREQUÊNCIA", component: "ClassroomPage", icon: "home" },
+          { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
+        ];
+      } else if (this.profileSelected["type"] == "schoolm") {
+        this.privatePages = [
+          { title: "INÍCIO", component: "HomePage", icon: "home" },
+          { title: "TURMAS", component: "ClassroomPage", icon: "home" },
+          { title: "AUTORIZAÇÃO", component: "AuthorizationPage", icon: "home" }
+        ];
+      } else if (this.profileSelected["type"] == "countym") {
+        this.privatePages = [
+          { title: "INÍCIO", component: "HomePage", icon: "home" },
+          { title: "AUTORIZAÇÃO", component: "AuthorizationPage", icon: "home" }
+        ];
+      }
     }
   }
 

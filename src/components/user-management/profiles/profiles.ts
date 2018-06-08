@@ -80,48 +80,56 @@ export class ProfilesComponent {
   }
 
   ngAfterContentInit() {
-    console.log("profiles showed");
-    this.userService.getProfiles().then(
-      res => {
-        if (res["success"]) {
-          res.data.profiles.forEach(element => {
-            this.showProfiles.push(
-              Object.assign(element, {
-                title: element.type,
-                component: "ProfileEditPage",
-                icon: "assets/imgs/placeholder.png"
-              })
-            );
-          });
-          this.events.publish("app:profiles", this.showProfiles);
+    if (this.showProfiles) {
+      this.userService.getProfiles().then(
+        res => {
+          if (res["success"]) {
+            console.log("success");
+            res.data.profiles.forEach(element => {
+              this.showProfiles.push(
+                Object.assign(element, {
+                  title: element.type,
+                  component: "ProfileEditPage",
+                  icon: "assets/imgs/placeholder.png"
+                })
+              );
+            });
+            this.events.publish("app:profiles", this.showProfiles);
+          } else {
+            console.log(res["message"]);
+            this.showHelp = true;
+          }
+        },
+        err => {
+          console.log(err);
         }
-      },
-      err => {
-        console.log(err);
-      }
-    );
-    this.slides = [
-      {
-        title: "Perfil para Alunos",
-        description: "Texto explicativo do uso de perfis para Alunos"
-      },
-      {
-        title: "Perfil para Responsáveis",
-        description:
-          "Texto explicativo do uso de perfis para Pais e Responsáveis"
-      },
-      {
-        title: "Perfil para Professores",
-        description: "Texto explicativo do uso de perfis para Professores"
-      },
-      {
-        title: "Perfil para Gestão Escolar",
-        description: "Texto explicativo do uso de perfis para Gestão Escolar"
-      },
-      {
-        title: "Perfil para Administração Municipal",
-        description: "Texto explicativo do uso de perfis para Gestão Municipal"
-      }
-    ];
+      );
+    }
+    if (!this.slides) {
+      this.slides = [
+        {
+          title: "Perfil para Alunos",
+          description: "Texto explicativo do uso de perfis para Alunos"
+        },
+        {
+          title: "Perfil para Responsáveis",
+          description:
+            "Texto explicativo do uso de perfis para Pais e Responsáveis"
+        },
+        {
+          title: "Perfil para Professores",
+          description: "Texto explicativo do uso de perfis para Professores"
+        },
+        {
+          title: "Perfil para Gestão Escolar",
+          description: "Texto explicativo do uso de perfis para Gestão Escolar"
+        },
+        {
+          title: "Perfil para Administração Municipal",
+          description:
+            "Texto explicativo do uso de perfis para Gestão Municipal"
+        }
+      ];
+    }
   }
 }

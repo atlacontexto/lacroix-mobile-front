@@ -23,8 +23,9 @@ export class ProfileCreatePage {
   profileType: string;
   formParent: FormGroup;
   formProfessor: FormGroup;
-  items: Array<{ title: string; checked: boolean; formControl: string }>;
+  themes: Array<{ title: string; checked: boolean; formControl: string }>;
   level: string;
+  comunityRole: string;
 
   constructor(
     public navCtrl: NavController,
@@ -32,7 +33,7 @@ export class ProfileCreatePage {
     public viewCtrl: ViewController,
     public formBuilder: FormBuilder
   ) {
-    this.items = [
+    this.themes = [
       { title: "Arte", checked: false, formControl: "arte" },
       { title: "Ciências", checked: false, formControl: "ciencias" },
       { title: "Educação Física", checked: false, formControl: "edfisica" },
@@ -50,10 +51,15 @@ export class ProfileCreatePage {
 
   typeChanged() {
     // console.log('evento levantado ' + this.profileType);
-    if (this.profileType == "parent") {
+    if (this.profileType == "student") {
+      this.formParent = this.formBuilder.group({
+        profileType: ["student", Validators.required],
+        cgm: ["", Validators.required]
+      });
+    } else if (this.profileType == "parent") {
       this.formParent = this.formBuilder.group({
         profileType: ["parent", Validators.required],
-        cgm: ["", Validators.required]
+        cgmChild: ["", Validators.required]
       });
     } else if (this.profileType == "professor") {
       this.formProfessor = this.formBuilder.group({
@@ -72,13 +78,19 @@ export class ProfileCreatePage {
   }
 
   dismiss() {
-    if (this.profileType == "parent") {
+    if (this.profileType == "student") {
+      console.log(this.formParent.value);
+      this.viewCtrl.dismiss(this.formParent.value);
+    } else if (this.profileType == "parent") {
       console.log(this.formParent.value);
       this.viewCtrl.dismiss(this.formParent.value);
     } else if (this.profileType == "professor") {
       this.formProfessor.controls["level"].setValue(this.level);
       console.log(this.formProfessor.value);
       this.viewCtrl.dismiss(this.formProfessor.value);
+    } else if (this.profileType == "comunity") {
+      console.log(this.formParent.value);
+      this.viewCtrl.dismiss(this.formParent.value);
     } else {
       this.viewCtrl.dismiss();
     }
