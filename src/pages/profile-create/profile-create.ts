@@ -74,6 +74,11 @@ export class ProfileCreatePage {
         lportuguesa: ["", Validators.required],
         matematica: ["", Validators.required]
       });
+    } else if (this.profileType == "comunity") {
+      this.formParent = this.formBuilder.group({
+        profileType: ["comunity", Validators.required],
+        role: [this.comunityRole]
+      });
     }
   }
 
