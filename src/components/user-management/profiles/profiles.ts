@@ -84,7 +84,6 @@ export class ProfilesComponent {
       this.userService.getProfiles().then(
         res => {
           if (res["success"]) {
-            console.log("success");
             res.data.profiles.forEach(element => {
               this.showProfiles.push(
                 Object.assign(element, {

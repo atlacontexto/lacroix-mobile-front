@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { ENV } from "@environment";
+import * as jwt_decode from "jwt-decode";
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -12,6 +13,7 @@ import { ENV } from "@environment";
 @Injectable()
 export class AuthServiceProvider {
   apiUrl = ENV.API_LOCAL;
+  headers: any;
 
   constructor(public http: HttpClient, public platform: Platform) {
     if (platform.is("cordova")) {
@@ -20,39 +22,36 @@ export class AuthServiceProvider {
     }
   }
 
-  addUser(data) {
-    return new Promise((resolve, reject) => {
-      this.http.post(this.apiUrl + "/user", JSON.stringify(data)).subscribe(
-        res => {
-          console.log(res);
-          resolve(res);
-        },
-        err => {
-          console.error(err);
-          reject(err);
-        }
-      );
-    });
+  getDecodedAccessToken(type: string): any {
+    try {
+      if (localStorage.getItem(type))
+        return jwt_decode(localStorage.getItem(type));
+    } catch (Error) {
+      return null;
+    }
   }
 
-  getUsers() {
-    return new Promise(resolve => {
-      this.http.get(this.apiUrl + "/user").subscribe(
-        data => {
-          resolve(data);
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    });
+  isExpired(type: string): boolean {
+    try {
+      if (localStorage.getItem(type)) {
+        let decoded = localStorage.getItem(type);
+        console.log(decoded);
+        return false;
+      } else return null;
+    } catch (error) {
+      return null;
+    }
   }
 
   sendSms(data) {
     return new Promise((resolve, reject) => {
       this.http.post(this.apiUrl + "/notification/validation", data).subscribe(
         res => {
-          localStorage.setItem("token", res["data"]["token"]);
+          localStorage.setItem(
+            "validationToken",
+            res["data"]["validationToken"]
+          );
+          // localStorage.setItem("refreshToken", res["data"]["refreshToken"]);
           resolve(res);
         },
         err => {
@@ -63,17 +62,21 @@ export class AuthServiceProvider {
   }
 
   checkCode(code) {
-    if (localStorage.getItem("token")) {
-      const httpOptions = {
-        headers: new HttpHeaders({
-          Authorization: localStorage.getItem("token")
-        })
-      };
+    if (!this.isExpired(localStorage.getItem("validationToken"))) {
       return new Promise((resolve, reject) => {
         this.http
-          .post(this.apiUrl + "/notification/codecheck", code, httpOptions)
+          .post(this.apiUrl + "/notification/codecheck", code, {
+            headers: {
+              "x-access-token": localStorage.getItem("validationToken")
+            }
+          })
           .subscribe(
             res => {
+              console.log(res);
+              if (res["token"]) {
+                localStorage.removeItem("validationToken");
+                localStorage.setItem("token", res["token"]);
+              }
               resolve(res);
             },
             err => {

@@ -20,16 +20,21 @@ export class UserServiceProvider {
   }
 
   update(user) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: localStorage.getItem("token")
-      })
-    };
     return new Promise((resolve, reject) => {
       this.http
-        .post(this.apiUrl + "/user/basicinfo", user, httpOptions)
+        .post(this.apiUrl + "/user/basicinfo", user, {
+          headers: {
+            "x-access-token":
+              localStorage.getItem("token") ||
+              localStorage.getItem("validationToken")
+          }
+        })
         .subscribe(
           res => {
+            if (res["token"]) {
+              localStorage.setItem("token", res["token"]);
+              localStorage.removeItem("validationToken");
+            }
             resolve(res);
           },
           err => {
@@ -39,17 +44,12 @@ export class UserServiceProvider {
     });
   }
   getProfiles(): any {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: localStorage.getItem("token")
-      })
-    };
+    // if (!this.jwtHelper.isTokenExpired(localStorage.getItem("token"))) {
     return new Promise((resolve, reject) => {
       this.http
-        .get(
-          `${this.apiUrl}/user/${localStorage.getItem("userId")}/profile`,
-          httpOptions
-        )
+        .get(`${this.apiUrl}/user/profiles`, {
+          headers: { "x-access-token": localStorage.getItem("token") }
+        })
         .subscribe(
           res => {
             console.log(res);
@@ -60,21 +60,17 @@ export class UserServiceProvider {
           }
         );
     });
+    // }
   }
 
   createProfile(value) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: localStorage.getItem("token")
-      })
-    };
     return new Promise((resolve, reject) => {
       this.http
-        .post(
-          this.apiUrl + "/user/" + localStorage.getItem("userId") + "/profile",
-          value,
-          httpOptions
-        )
+        .post(this.apiUrl + "/user/profiles", value, {
+          headers: {
+            "x-access-token": localStorage.getItem("token")
+          }
+        })
         .subscribe(
           res => {
             resolve(res);
