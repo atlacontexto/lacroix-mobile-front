@@ -44,7 +44,6 @@ export class RegisterPhoneCheckPage {
       .checkCode(this.form.value)
       .then(res => {
         if (res["success"]) {
-          console.log(res);
           this.navCtrl.push(
             "UserBasicInfoPage",
             { cellphone: this.cellphone, step: "user", user: res["data"] },
@@ -63,6 +62,17 @@ export class RegisterPhoneCheckPage {
       })
       .catch(err => {
         console.log(err);
+        let message;
+        if (err.error.message == "Invalid code.") {
+          message = "seu código está incorreto";
+        } else if (err === "code expired") {
+          message = "seu código expirou";
+        }
+        this.alertService.presentAlert(
+          "Erro na validação",
+          `Desculpe, mas ${message}. Volte ao início e tente novamente`,
+          "OK"
+        );
       });
   }
 }

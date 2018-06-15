@@ -11,33 +11,19 @@
         Usuário
       </ion-segment-button>
       <ion-segment-button [disabled]="statusProfile" value="profile">
-        Perfil
-      </ion-segment-button>
-      <ion-segment-button [disabled]="statusLink" value="link">
-        Vínculo
+        Perfis
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-
-
-
   <div [ngSwitch]="step" col-xl-8 offset-xl-2>
     <ion-grid *ngSwitchCase="'user'" padding>
       <basic-info [userInfo]="userInfo"></basic-info>
     </ion-grid>
     <ion-grid *ngSwitchCase="'profile'">
       <profiles></profiles>
-
-    </ion-grid>
-    <ion-grid *ngSwitchCase="'link'">
-      <ion-row>
-        <h3>Link</h3>
-      </ion-row>
     </ion-grid>
   </div>
-
-
 </ion-content>

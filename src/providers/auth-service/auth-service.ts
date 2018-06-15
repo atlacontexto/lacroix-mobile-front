@@ -1,8 +1,8 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { ENV } from "@environment";
-import * as jwt_decode from "jwt-decode";
+import * as JWT from "jwt-decode";
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -24,8 +24,7 @@ export class AuthServiceProvider {
 
   getDecodedAccessToken(type: string): any {
     try {
-      if (localStorage.getItem(type))
-        return jwt_decode(localStorage.getItem(type));
+      if (localStorage.getItem(type)) return JWT(localStorage.getItem(type));
     } catch (Error) {
       return null;
     }
@@ -34,9 +33,9 @@ export class AuthServiceProvider {
   isExpired(type: string): boolean {
     try {
       if (localStorage.getItem(type)) {
-        let decoded = localStorage.getItem(type);
-        console.log(decoded);
-        return false;
+        let decoded = JWT(localStorage.getItem(type));
+        var current_time = new Date().getTime() / 1000;
+        return current_time > decoded["exp"];
       } else return null;
     } catch (error) {
       return null;
@@ -62,8 +61,8 @@ export class AuthServiceProvider {
   }
 
   checkCode(code) {
-    if (!this.isExpired(localStorage.getItem("validationToken"))) {
-      return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
+      if (!this.isExpired("validationToken")) {
         this.http
           .post(this.apiUrl + "/notification/codecheck", code, {
             headers: {
@@ -72,7 +71,6 @@ export class AuthServiceProvider {
           })
           .subscribe(
             res => {
-              console.log(res);
               if (res["token"]) {
                 localStorage.removeItem("validationToken");
                 localStorage.setItem("token", res["token"]);
@@ -80,10 +78,13 @@ export class AuthServiceProvider {
               resolve(res);
             },
             err => {
+              console.log("here");
               reject(err);
             }
           );
-      });
-    }
+      } else {
+        reject("code expired");
+      }
+    });
   }
 }
