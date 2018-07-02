@@ -7,7 +7,6 @@ import { TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
 import { MyApp } from "./app.component";
-import { HomePage } from "../pages/home/home";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateLoader } from "@ngx-translate/core";
 import { LandingPage } from "../pages/landing/landing";
@@ -42,8 +41,9 @@ import { PlanningListPage } from "../pages/planning-list/planning-list";
 import { PlanningListPageModule } from "../pages/planning-list/planning-list.module";
 import { NotificationProvider } from "../providers/notification/notification";
 import { ClassroomServiceProvider } from "../providers/classroom-service/classroom-service";
-import { DailyPageModule } from "pages/daily/daily.module";
 import { HomePageModule } from "../pages/home/home.module";
+
+import { IonicStepperModule } from "ionic-stepper";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -65,6 +65,7 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     HomePageModule,
     LandingPageModule,
+    IonicStepperModule,
     RegisterPhonePageModule,
     RegisterPhoneCheckPageModule,
     UserBasicInfoPageModule,

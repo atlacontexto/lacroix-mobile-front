@@ -6,6 +6,7 @@ import {
   ViewController
 } from "ionic-angular";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import profiles from "../../fakedb/profiles";
 
 /**
  * Generated class for the ProfileCreatePage page.
@@ -26,6 +27,7 @@ export class ProfileCreatePage {
   themes: Array<{ title: string; checked: boolean; formControl: string }>;
   level: string;
   comunityRole: string;
+  profiles: any;
 
   constructor(
     public navCtrl: NavController,
@@ -47,6 +49,10 @@ export class ProfileCreatePage {
       },
       { title: "Matemática", checked: false, formControl: "matematica" }
     ];
+  }
+
+  ionViewWillEnter() {
+    this.profiles = profiles.profileTypes;
   }
 
   typeChanged() {
@@ -82,7 +88,8 @@ export class ProfileCreatePage {
     }
   }
 
-  dismiss() {
+  dismiss(ev) {
+    console.log(ev);
     if (this.profileType == "student") {
       console.log(this.formParent.value);
       this.viewCtrl.dismiss(this.formParent.value);

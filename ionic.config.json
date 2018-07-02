@@ -5,10 +5,8 @@
   "integrations": {
     "cordova": {}
   },
-  "proxies": [
-    {
-      "path": "/api",
-      "proxyUrl": "http://localhost:3000/api"
-    }
-  ]
+  "proxies": [{
+    "path": "/api",
+    "proxyUrl": "http://localhost:3000/api"
+  }]
 }

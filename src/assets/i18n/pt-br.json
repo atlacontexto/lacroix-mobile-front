@@ -5,23 +5,26 @@
   "LANDING_SLIDE2_TITLE": "Alunos",
   "LANDING_SLIDE2_DESCRIPTION": "Educação de qualidade é o maior legado que nossas crianças podem receber.",
 
-  "LANDING_SLIDE3_TITLE": "Pais",
+  "LANDING_SLIDE3_TITLE": "Família",
   "LANDING_SLIDE3_DESCRIPTION": "Pais mais presentes na vida acadêmica dos filhos e mais próximos da gestão escola, unindo esforços para criarmos uma educação melhor.",
 
   "LANDING_SLIDE4_TITLE": "Professores",
   "LANDING_SLIDE4_DESCRIPTION": "Dessa forma é possível trazer educação de qualidade, quando é possível compartilhar ideias e soluções.",
 
-  "LANDING_SLIDE5_TITLE": "Gestão Escolar",
+  "LANDING_SLIDE5_TITLE": "Escolas",
   "LANDING_SLIDE5_DESCRIPTION": "É possível aprimorar processos administrativos através do uso de tecnologia da informação específica para as escolas.",
 
-  "LANDING_SLIDE6_TITLE": "Administração Municipal",
+  "LANDING_SLIDE6_TITLE": "Municípios",
   "LANDING_SLIDE6_DESCRIPTION": "Com as escolas funcionando em rede, faltava uma ferramenta totalmente dedicada para a administração municipal acompanhar mais de perto suas escolas.",
 
-  "REGISTER_PHONE_TITLE":"informe o celular",
-  "REGISTER_PHONE_DESCRIPTION":"Texto explicativo",
-  
-  "REGISTER_PHONE_CHECK_TITLE":"insira o código",
-  "REGISTER_PHONE_CHECK_DESCRIPTION":"Texto explicativo",
+  "LANDING_SLIDE7_TITLE": "Comunidade",
+  "LANDING_SLIDE7_DESCRIPTION": "Um ensino melhor é feito com uma comunidade fortalecida e todo apoio é bem vindo.",
+
+  "REGISTER_PHONE_TITLE": "informe o celular",
+  "REGISTER_PHONE_DESCRIPTION": "Texto explicativo",
+
+  "REGISTER_PHONE_CHECK_TITLE": "insira o código",
+  "REGISTER_PHONE_CHECK_DESCRIPTION": "Texto explicativo",
 
   "NEXT_BUTTON": "próximo",
   "SKIP_BUTTON": "pular",

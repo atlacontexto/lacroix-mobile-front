@@ -1,0 +1,51 @@
+<form [formGroup]="formComunity">
+  <ion-row>
+    <ion-col>
+      <ion-item no-padding>
+        <ion-label floating>Representação</ion-label>
+        <ion-select formControlName="personality">
+          <ion-option value="entity">Entidade</ion-option>
+          <ion-option value="individual">Individual</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="formComunity.value.personality == 'entity'">
+    <ion-col col-12>
+      <ion-item no-padding>
+        <ion-label floating>Tipo</ion-label>
+        <ion-select formControlName="type">
+          <ion-option value="private">Empresa Privada</ion-option>
+          <ion-option value="ong">ONG</ion-option>
+          <ion-option value="syndicate">Sindicato</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+
+    <ion-col col-12>
+      <ion-item no-padding>
+        <ion-label floating>Nome da Organização</ion-label>
+        <ion-input formControlName="name" type="text"></ion-input>
+      </ion-item>
+    </ion-col>
+
+    <ion-col col-12>
+      <ion-item no-padding>
+        <ion-label floating>Meu Cargo</ion-label>
+        <ion-input formControlName="post" type="text"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item no-padding>
+        <ion-label floating>Voluntário</ion-label>
+        <ion-select formControlName="voluntary">
+          <ion-option *ngFor="let voluntary of voluntaries" [value]="voluntary.value">{{voluntary.viewValue}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</form>

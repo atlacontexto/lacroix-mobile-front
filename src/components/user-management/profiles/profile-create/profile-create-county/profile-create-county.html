@@ -1,0 +1,35 @@
+<form [formGroup]="formCounty">
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Estado</ion-label>
+        <ion-select formControlName=state (ionChange)="stateChanged($event)">
+          <ion-option *ngFor="let state of states" [value]="state.id">{{state.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Nome do Município</ion-label>
+        <ion-select formControlName="county">
+          <ion-option *ngFor="let county of counties" [value]="county.id">{{county.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Departamento</ion-label>
+        <ion-select formControlName="division">
+          <ion-option value="pedagogical">Pedagógico</ion-option>
+          <ion-option value="administrative">Administrativo</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</form>

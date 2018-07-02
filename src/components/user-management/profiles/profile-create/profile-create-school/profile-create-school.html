@@ -1,0 +1,50 @@
+<form [formGroup]="formSchool">
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Cargo</ion-label>
+        <ion-select formControlName="role">
+          <ion-option *ngFor="let role of roles" [value]="role.value">{{role.viewValue}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-item-divider color="light">Sobre a Escola</ion-item-divider>
+  <!-- Seleção do Estado -->
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Estado</ion-label>
+        <ion-select (ionChange)="stateChanged($event)" formControlName="state">
+          <ion-option *ngFor="let state of states" [value]="state.id">{{state.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <!-- Seleção do Município -->
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Município</ion-label>
+        <ion-select (ionChange)="countyChanged($event)" formControlName="county">
+          <ion-option *ngFor="let county of counties" [value]="county.id">{{county.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <!-- Seleção da Escola -->
+  <ion-row *ngIf="formSchool.value.county">
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Escola</ion-label>
+        <ion-select formControlName="school">
+          <ion-option *ngFor="let school of schools" [value]="school.id">{{school.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</form>
