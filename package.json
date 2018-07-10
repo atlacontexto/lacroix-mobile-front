@@ -15,7 +15,6 @@
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
-    "@angular/animations": "^6.0.7",
     "@angular/common": "5.0.3",
     "@angular/compiler": "5.0.3",
     "@angular/compiler-cli": "5.0.3",
@@ -44,7 +43,6 @@
     "intl": "^1.2.5",
     "ionic-angular": "3.9.2",
     "ionic-plugin-keyboard": "^2.2.1",
-    "ionic-stepper": "^1.1.0",
     "ionic2-calendar": "^0.4.4",
     "ionicons": "3.0.0",
     "jwt-decode": "^2.2.0",

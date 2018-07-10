@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
-import { AlertServiceProvider } from "../../providers/alert-service/alert-service";
+import { AlertProvider } from "../../providers/alert-service/alert-service";
 
 /**
  * Generated class for the RegisterPhoneCheckPage page.
@@ -25,7 +25,7 @@ export class RegisterPhoneCheckPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public authService: AuthServiceProvider,
-    public alertService: AlertServiceProvider
+    public alertService: AlertProvider
   ) {
     this.cellphone = this.navParams.get("cellphone");
     this.form = formBuilder.group({

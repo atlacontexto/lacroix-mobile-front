@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import profiles from "../../../../../fakedb/profiles";
+import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 
 /**
  * Generated class for the ProfileCreateComunityComponent component.
@@ -17,7 +17,10 @@ export class ProfileCreateComunityComponent {
   @Output() formComunitySubmited = new EventEmitter();
   voluntaries: any;
 
-  constructor(formBuilder: FormBuilder) {
+  constructor(
+    formBuilder: FormBuilder,
+    private profilesService: ProfilesProvider
+  ) {
     this.formComunity = formBuilder.group({
       personality: ["", Validators.compose([Validators.required])],
       name: [""],
@@ -28,6 +31,6 @@ export class ProfileCreateComunityComponent {
   }
 
   ngAfterContentInit() {
-    this.voluntaries = profiles.voluntaries;
+    this.voluntaries = this.profilesService.getVoluntaries();
   }
 }

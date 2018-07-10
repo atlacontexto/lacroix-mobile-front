@@ -88,23 +88,7 @@ export class ProfileCreatePage {
     }
   }
 
-  dismiss(ev) {
-    console.log(ev);
-    if (this.profileType == "student") {
-      console.log(this.formParent.value);
-      this.viewCtrl.dismiss(this.formParent.value);
-    } else if (this.profileType == "parent") {
-      console.log(this.formParent.value);
-      this.viewCtrl.dismiss(this.formParent.value);
-    } else if (this.profileType == "professor") {
-      this.formProfessor.controls["level"].setValue(this.level);
-      console.log(this.formProfessor.value);
-      this.viewCtrl.dismiss(this.formProfessor.value);
-    } else if (this.profileType == "comunity") {
-      console.log(this.formParent.value);
-      this.viewCtrl.dismiss(this.formParent.value);
-    } else {
-      this.viewCtrl.dismiss();
-    }
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }

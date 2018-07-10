@@ -2,6 +2,8 @@ import { Component, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import profiles from "../../../../../fakedb/profiles";
 import geo from "../../../../../fakedb/geo";
+import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
+import { GeoProvider } from "../../../../../providers/geo/geo";
 
 /**
  * Generated class for the ProfileCreateSchoolComponent component.
@@ -21,8 +23,12 @@ export class ProfileCreateSchoolComponent {
   counties: any;
   schools: any;
 
-  constructor(formBuilder: FormBuilder) {
-    this.formSchool = formBuilder.group({
+  constructor(
+    private formBuilder: FormBuilder,
+    private profilesProvider: ProfilesProvider,
+    private geoProvider: GeoProvider
+  ) {
+    this.formSchool = this.formBuilder.group({
       role: ["", Validators.compose([Validators.required])],
       state: ["", Validators.compose([Validators.required])],
       county: ["", Validators.compose([Validators.required])],
@@ -31,19 +37,15 @@ export class ProfileCreateSchoolComponent {
   }
 
   ngAfterContentInit() {
-    this.roles = profiles.schoolRoles;
-    this.states = geo.states;
+    this.roles = this.profilesProvider.getSchoolRoles();
+    this.states = this.geoProvider.getStates();
   }
 
-  stateChanged(ev) {
-    this.counties = geo.counties.filter(e => {
-      return e.state_id === ev;
-    });
+  stateChanged(stateId) {
+    this.counties = this.geoProvider.getCountiesByState(stateId);
   }
 
-  countyChanged(ev) {
-    this.schools = geo.schools.filter(s => {
-      return s.county_id === ev;
-    });
+  countyChanged(countyId) {
+    this.schools = this.geoProvider.getSchoolsByCounty(countyId);
   }
 }

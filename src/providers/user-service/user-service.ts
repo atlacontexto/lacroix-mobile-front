@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { ENV } from "@environment";
+import { AuthServiceProvider } from "../auth-service/auth-service";
 
 /*
   Generated class for the UserServiceProvider provider.
@@ -13,9 +14,20 @@ import { ENV } from "@environment";
 export class UserServiceProvider {
   apiUrl = ENV.API_LOCAL;
 
-  constructor(public http: HttpClient, public platform: Platform) {
+  constructor(
+    public http: HttpClient,
+    public platform: Platform,
+    private authService: AuthServiceProvider
+  ) {
     if (platform.is("cordova")) {
       this.apiUrl = ENV.API_ENDPOINT;
+    }
+  }
+
+  getUserAtt(att) {
+    const userInfo = this.authService.getDecodedAccessToken("token");
+    if (att == "_id") {
+      return userInfo["user"]["_id"];
     }
   }
 

@@ -1,12 +1,42 @@
 <form [formGroup]="formParent">
   <ion-row>
     <ion-col>
-      <ion-item no-padding>
+      <ion-item>
         <ion-label floating>Parentesco</ion-label>
         <ion-select formControlName=kinship>
           <ion-option *ngFor="let kinship of kinships" [value]="kinship.value">{{kinship.viewValue}}</ion-option>
         </ion-select>
       </ion-item>
     </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item padding-horizontal>
+        <ion-label>Convidar Dependente</ion-label>
+        <ion-toggle formControlName="hasChild"></ion-toggle>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="formParent.value.hasChild">
+    <ion-col col-12>
+      <ion-item padding-horizontal>
+        <ion-label floating>Celular ou E-mail</ion-label>
+        <ion-input (ionBlur)='onInputTime($event)' formControlName="childContact" type="text"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col col-12 *ngIf="child">
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img [src]="child.photo">
+        </ion-thumbnail>
+        <h2>{{child.name}}</h2>
+        <p>{{child.contact}}</p>
+        <button ion-button clear item-end (click)="viewProfile(child.id)">VER PERFIL</button>
+      </ion-item>
+      <p ion-text text-center>Uma solicitação será enviada. Verifique o estado do convite em "usuário"> "perfil-desejado"> "vínculo".</p>
+    </ion-col>
+    <p ion-text text-center *ngIf="formParent.value.childContact && !child">Nenhum usuário encontrado com este contato. Verifique se está correto, pois iremos mandar um convite.</p>
   </ion-row>
 </form>

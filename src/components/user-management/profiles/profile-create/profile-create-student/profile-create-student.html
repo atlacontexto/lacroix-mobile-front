@@ -1,7 +1,7 @@
-<form [formGroup]="formStudent">
+<form [formGroup]="formStudent" (ngSubmit)="onSubmit()">
   <ion-row>
     <ion-col>
-      <ion-item>
+      <ion-item padding-horizontal>
         <ion-label floating>Cursando</ion-label>
         <ion-select formControlName="level" (ionChange)="levelChanged($event)">
           <ion-option *ngFor="let level of levels" [value]="level.value">{{level.viewValue}}</ion-option>
@@ -12,7 +12,7 @@
 
   <ion-row margin-bottom>
     <ion-col>
-      <ion-item>
+      <ion-item padding-horizontal>
         <ion-label floating>Ano</ion-label>
         <ion-select formControlName="year">
           <ion-option *ngFor="let year of years" [value]="year.value">{{year.viewValue}}</ion-option>
@@ -21,5 +21,89 @@
     </ion-col>
   </ion-row>
 
-  <ion-item-divider color="light">ESCOLA</ion-item-divider>
+  <ion-row>
+    <ion-col>
+      <ion-item padding-horizontal>
+        <ion-label>Adicionar Escola</ion-label>
+        <ion-toggle formControlName="hasSchool"></ion-toggle>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <div *ngIf="formStudent.value.hasSchool">
+    <!-- Seleção do Estado -->
+
+    <ion-row>
+      <ion-col>
+        <ion-item padding-horizontal>
+          <ion-label floating>Estado</ion-label>
+          <ion-select (ionChange)="stateChanged($event)">
+            <ion-option *ngFor="let state of states" [value]="state.id">{{state.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- Seleção do Município -->
+
+    <ion-row>
+      <ion-col>
+        <ion-item padding-horizontal>
+          <ion-label floating>Município</ion-label>
+          <ion-select (ionChange)="countyChanged($event)">
+            <ion-option *ngFor="let county of counties" [value]="county._id">{{county.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- Seleção da Escola -->
+    <ion-row>
+      <ion-col>
+        <ion-item padding-horizontal>
+          <ion-label floating>Escola</ion-label>
+          <ion-select formControlName="school">
+            <ion-option *ngFor="let school of schools" [value]="school._id">{{school.institution.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <ion-row>
+    <ion-col>
+      <ion-item padding-horizontal>
+        <ion-label>Convidar Familiar</ion-label>
+        <ion-toggle formControlName="hasParent"></ion-toggle>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="formStudent.value.hasParent">
+    <ion-col col-12>
+      <ion-item padding-horizontal>
+        <ion-label floating>Celular ou E-mail</ion-label>
+        <ion-input (ionBlur)='onInputTime($event)' formControlName="parentContact" type="text"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col col-12 *ngIf="parent">
+      <ion-item padding-horizontal>
+        <ion-thumbnail item-start>
+          <img [src]="parent.photo">
+        </ion-thumbnail>
+        <h2>{{parent.name}}</h2>
+        <p>{{parent.contact}}</p>
+        <button ion-button clear item-end (click)="viewProfile(parent.id)">VER PERFIL</button>
+      </ion-item>
+      <p ion-text text-center>Uma solicitação será enviada. Verifique o estado do convite em "usuário"> "perfil-desejado"> "vínculo".</p>
+    </ion-col>
+    <p ion-text text-center *ngIf="formStudent.value.parentContact && !parent">Nenhum usuário encontrado com este contato. Verifique se está correto, pois iremos mandar um convite.</p>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <button type="submit" ion-button block full>CRIAR PERFIL</button>
+    </ion-col>
+  </ion-row>
+
 </form>

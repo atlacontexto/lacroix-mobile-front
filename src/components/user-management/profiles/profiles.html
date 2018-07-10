@@ -13,7 +13,7 @@
 </ion-row>
 
 <ion-row *ngIf="!showProfiles || showHelp">
-  <ion-slides pager="true">
+  <ion-slides pager="true" padding-top>
     <ion-slide *ngFor="let slide of slides">
       <!-- <img style="width: 80px; height: 80px;" [src]="slide.icone" class="slide-image" /> -->
       <h3 ion-text text-uppercase [innerHTML]="slide.title"></h3>

@@ -1,6 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { LoadingController, ToastController, MenuController, AlertController } from 'ionic-angular';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import {
+  LoadingController,
+  ToastController,
+  AlertController
+} from "ionic-angular";
 
 /*
   Generated class for the AlertServiceProvider provider.
@@ -9,18 +13,36 @@ import { LoadingController, ToastController, MenuController, AlertController } f
   and Angular DI.
 */
 @Injectable()
-export class AlertServiceProvider {
+export class AlertProvider {
+  loading: any;
 
   constructor(
-    public http: HttpClient, 
+    public http: HttpClient,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
-    private menuCtrl: MenuController,
     public alertCtrl: AlertController
-  ) {
+  ) {}
+
+  presentTimeLoading(message: string) {
+    let loading = this.loadingCtrl.create({
+      content: message
+    });
+
+    loading.present();
+
+    setTimeout(() => {
+      loading.dismiss();
+    }, 5000);
   }
 
-  presentAlert(title:string, subTitle: string, buttons) {
+  presentControlledLoader(message) {
+    this.loading = this.loadingCtrl.create({
+      content: message
+    });
+    this.loading.present();
+  }
+
+  presentAlert(title: string, subTitle: string, buttons) {
     var alert = this.alertCtrl.create({
       title: title,
       subTitle: subTitle,
@@ -28,6 +50,4 @@ export class AlertServiceProvider {
     });
     alert.present();
   }
-
-
 }

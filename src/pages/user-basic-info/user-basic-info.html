@@ -18,12 +18,10 @@
 </ion-header>
 
 <ion-content padding>
-  <div [ngSwitch]="step" col-xl-8 offset-xl-2>
-    <ion-grid *ngSwitchCase="'user'" padding>
-      <basic-info [userInfo]="userInfo"></basic-info>
-    </ion-grid>
-    <ion-grid *ngSwitchCase="'profile'">
-      <profiles></profiles>
-    </ion-grid>
+  <div no-padding [ngSwitch]="step" col-xl-8 offset-xl-2>
+    <basic-info *ngSwitchCase="'user'" [userInfo]="userInfo"></basic-info>
+
+    <profiles *ngSwitchCase="'profile'"></profiles>
+
   </div>
 </ion-content>

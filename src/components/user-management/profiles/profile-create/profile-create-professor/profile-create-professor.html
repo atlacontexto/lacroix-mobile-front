@@ -1,10 +1,21 @@
 <form [formGroup]=formProfessor>
   <ion-row>
     <ion-col>
-      <ion-item no-padding>
+      <ion-item>
         <ion-label floating>Nível Escolar</ion-label>
-        <ion-select formControlName="level">
+        <ion-select formControlName="level" (ionChange)="levelChanged($event)">
           <ion-option *ngFor="let level of levels" [value]="level.value">{{level.viewValue}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row margin-bottom>
+    <ion-col>
+      <ion-item>
+        <ion-label floating>Ano</ion-label>
+        <ion-select formControlName="year">
+          <ion-option *ngFor="let year of years" [value]="year.value">{{year.viewValue}}</ion-option>
         </ion-select>
       </ion-item>
     </ion-col>

@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import profiles from "../../../../../fakedb/profiles";
+import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
+import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
+import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
 
 /**
  * Generated class for the ProfileCreateParentComponent component.
@@ -16,14 +17,48 @@ export class ProfileCreateParentComponent {
   @Output() formParentSubmited = new EventEmitter();
   formParent: FormGroup;
   kinships: any;
+  child: any;
 
-  constructor(formBuilder: FormBuilder) {
-    this.formParent = formBuilder.group({
-      kinship: ["", Validators.compose([Validators.required])]
+  constructor(
+    private formBuilder: FormBuilder,
+    private profilesProvider: ProfilesProvider,
+    private alertProvider: AlertProvider
+  ) {
+    this.formParent = this.formBuilder.group({
+      kinship: ["", Validators.compose([Validators.required])],
+      hasChild: [false],
+      childContact: [""],
+      childId: [""],
+      childs: formBuilder.array([this.addChild()])
+    });
+  }
+
+  addChild(): any {
+    return this.formBuilder.group({
+      id: "",
+      contact: ""
     });
   }
 
   ngAfterContentInit() {
-    this.kinships = profiles.kinships;
+    this.kinships = this.profilesProvider.getKinships();
+  }
+
+  onInputTime(data) {
+    if (data.value) {
+      this.alertProvider.presentControlledLoader("Buscando por contato...");
+      this.child = this.profilesProvider.getFoundExamples(data.value)[0];
+      this.alertProvider.loading.dismiss();
+      if (!this.child) {
+        this.alertProvider.presentAlert(
+          "Usuário não encontrado",
+          "Gostaria de enviar um convite? Certifique de que o contato está correto",
+          "Ok"
+        );
+        console.log(this.formParent.value.childContact);
+      } else {
+        this.formParent.controls["childId"].setValue(this.child.id);
+      }
+    }
   }
 }

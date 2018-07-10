@@ -27,6 +27,10 @@ const profileTypes = [
 
 const courseLevels = [
   {
+    value: "infantil",
+    viewValue: "Educação Infantil"
+  },
+  {
     value: "f1",
     viewValue: "Ensino Fundamental 1"
   },
@@ -164,11 +168,45 @@ const courseYears = [
   }
 ];
 
+const foundExamples = [
+  {
+    name: "savio",
+    photo: "assets/imgs/placeholder.png",
+    contact: "savio@savio.com",
+    id: "43683863263"
+  },
+  {
+    name: "jefferson",
+    photo: "assets/imgs/placeholder.png",
+    contact: "jeffmant@jeffmant.com",
+    id: "43690089803"
+  },
+  {
+    name: "mercia",
+    photo: "assets/imgs/placeholder.png",
+    contact: "998509513",
+    id: "09990897963"
+  },
+  {
+    name: "barbara",
+    photo: "assets/imgs/placeholder.png",
+    contact: "barbara@barbara.com",
+    id: "76656463"
+  },
+  {
+    name: "celma",
+    photo: "assets/imgs/placeholder.png",
+    contact: "988173851",
+    id: "43689808978"
+  }
+];
+
 export default {
   courseLevels,
   profileTypes,
   schoolRoles,
   kinships,
   voluntaries,
-  courseYears
+  courseYears,
+  foundExamples
 };

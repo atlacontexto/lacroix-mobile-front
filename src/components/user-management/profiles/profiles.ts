@@ -58,24 +58,6 @@ export class ProfilesComponent {
       { profile: page },
       { enableBackdropDismiss: true }
     );
-    profileModal.onDidDismiss(data => {
-      if (data) {
-        if (data["profileType"]) {
-          this.userService.createProfile(data).then(
-            res => {
-              console.log(res);
-            },
-            err => {
-              console.error(err);
-            }
-          );
-          this.events.publish("app:userinfoupdated", {
-            step: "link",
-            statusLink: false
-          });
-        }
-      }
-    });
     profileModal.present();
   }
 

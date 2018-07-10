@@ -77,7 +77,6 @@ export class MyApp {
 
   updateList() {
     if (this.profileSelected) {
-      console.log(this.profileSelected);
       if (this.profileSelected["type"] == "student") {
         this.privatePages = [
           { title: "INÍCIO", component: "HomePage", icon: "home" },

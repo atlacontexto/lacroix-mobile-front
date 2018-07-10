@@ -19,7 +19,7 @@ import { AuthServiceProvider } from "../providers/auth-service/auth-service";
 import { UserBasicInfoPageModule } from "../pages/user-basic-info/user-basic-info.module";
 import { UserBasicInfoPage } from "../pages/user-basic-info/user-basic-info";
 import { UserServiceProvider } from "../providers/user-service/user-service";
-import { AlertServiceProvider } from "../providers/alert-service/alert-service";
+import { AlertProvider } from "../providers/alert-service/alert-service";
 import { Keyboard } from "@ionic-native/keyboard";
 import { ProfileCreatePageModule } from "../pages/profile-create/profile-create.module";
 import { ProfileCreatePage } from "../pages/profile-create/profile-create";
@@ -43,7 +43,8 @@ import { NotificationProvider } from "../providers/notification/notification";
 import { ClassroomServiceProvider } from "../providers/classroom-service/classroom-service";
 import { HomePageModule } from "../pages/home/home.module";
 
-import { IonicStepperModule } from "ionic-stepper";
+import { ProfilesProvider } from "../providers/profiles/profiles";
+import { GeoProvider } from "../providers/geo/geo";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -65,7 +66,6 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     HomePageModule,
     LandingPageModule,
-    IonicStepperModule,
     RegisterPhonePageModule,
     RegisterPhoneCheckPageModule,
     UserBasicInfoPageModule,
@@ -100,10 +100,12 @@ export function createTranslateLoader(http: HttpClient) {
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthServiceProvider,
     UserServiceProvider,
-    AlertServiceProvider,
+    AlertProvider,
     Keyboard,
     NotificationProvider,
-    ClassroomServiceProvider
+    ClassroomServiceProvider,
+    ProfilesProvider,
+    GeoProvider
   ]
 })
 export class AppModule {}

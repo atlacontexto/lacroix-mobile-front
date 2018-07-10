@@ -2,7 +2,7 @@ import { Component, Input } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UserServiceProvider } from "../../../providers/user-service/user-service";
 import { Events } from "ionic-angular";
-import { AlertServiceProvider } from "../../../providers/alert-service/alert-service";
+import { AlertProvider } from "../../../providers/alert-service/alert-service";
 
 /**
  * Generated class for the BasicInfoComponent component.
@@ -19,12 +19,20 @@ export class BasicInfoComponent {
   form: FormGroup;
   cellphone: string;
 
+  items: any = [];
+
   constructor(
     public formBuilder: FormBuilder,
     public userService: UserServiceProvider,
     public events: Events,
-    public alertService: AlertServiceProvider
+    public alertService: AlertProvider
   ) {
+    this.items = [
+      { title: "CONTA", expanded: false },
+      { title: "INFORMAÇÕES PESSOAIS", expanded: false },
+      { title: "ENDEREÇO", expanded: false }
+    ];
+
     this.form = this.formBuilder.group(
       {
         peopleId: [""],
@@ -69,6 +77,18 @@ export class BasicInfoComponent {
         localStorage.getItem("shortName")
       );
     }
+  }
+
+  expandItem(item) {
+    this.items.map(listItem => {
+      if (item == listItem) {
+        listItem.expanded = !listItem.expanded;
+      } else {
+        listItem.expanded = false;
+      }
+
+      return listItem;
+    });
   }
 
   matchingPasswords(passwordKey: string, confirmPasswordKey: string) {

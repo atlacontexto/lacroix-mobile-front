@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import geo from "../../../../../fakedb/geo";
+import { GeoProvider } from "../../../../../providers/geo/geo";
 
 /**
  * Generated class for the ProfileCreateCountyComponent component.
@@ -16,9 +16,9 @@ export class ProfileCreateCountyComponent {
   formCounty: FormGroup;
   @Output() formCountySubmited = new EventEmitter();
   states: { id: number; name: string; abbr: string }[];
-  counties: { id: number; state_id: number; name: string }[];
+  counties: any;
 
-  constructor(formBuilder: FormBuilder) {
+  constructor(formBuilder: FormBuilder, private geoProvider: GeoProvider) {
     this.formCounty = formBuilder.group({
       state: ["", Validators.compose([Validators.required])],
       county: ["", Validators.compose([Validators.required])],
@@ -27,13 +27,27 @@ export class ProfileCreateCountyComponent {
   }
 
   ngAfterContentInit() {
-    this.states = geo.states;
+    this.states = this.geoProvider.getStates();
   }
 
-  stateChanged(ev) {
-    console.log(ev);
-    this.counties = geo.counties.filter(e => {
-      return e.state_id === ev;
-    });
+  stateChanged(stateId) {
+    this.geoProvider
+      .getCountiesByState(stateId)
+      .then(counties => {
+        console.log(counties["data"]);
+        this.counties = counties["data"]["profiles"];
+        this.counties.sort((a, b) => {
+          if (a.external_id > b.external_id) {
+            return 1;
+          }
+          if (a.external_id < b.external_id) {
+            return -1;
+          }
+          return 0;
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 }

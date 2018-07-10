@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import profiles from "../../../../../fakedb/profiles";
+import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 
 /**
  * Generated class for the ProfileCreateProfessorComponent component.
@@ -16,14 +16,27 @@ export class ProfileCreateProfessorComponent {
   formProfessor: FormGroup;
   @Output() formProfessorSubmited = new EventEmitter();
   levels: any;
+  years: any;
 
-  constructor(formBuilder: FormBuilder) {
+  constructor(formBuilder: FormBuilder, private profiles: ProfilesProvider) {
     this.formProfessor = formBuilder.group({
       level: ["", Validators.compose([Validators.required])]
     });
   }
 
   ngAfterContentInit() {
-    this.levels = profiles.courseLevels;
+    this.levels = this.profiles.getCourseLevels();
+  }
+
+  levelChanged(ev) {
+    if (ev == "f1") {
+      this.years = this.profiles.changeYearsRange(1, 5);
+    } else if (ev == "f2") {
+      this.years = this.profiles.changeYearsRange(6, 9);
+    } else if (ev == "medio") {
+      this.years = this.profiles.changeYearsRange(1, 3);
+    } else if (ev == "superior") {
+      this.years = this.profiles.changeYearsRange(1, 7);
+    }
   }
 }
