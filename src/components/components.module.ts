@@ -11,6 +11,9 @@ import { ProfileCreateProfessorComponent } from "./user-management/profiles/prof
 import { ProfileCreateSchoolComponent } from "./user-management/profiles/profile-create/profile-create-school/profile-create-school";
 import { ProfileCreateCountyComponent } from "./user-management/profiles/profile-create/profile-create-county/profile-create-county";
 import { ProfileCreateComunityComponent } from "./user-management/profiles/profile-create/profile-create-comunity/profile-create-comunity";
+import { AddressComponent } from "./user-management/basic-info/address/address";
+import { PersonalComponent } from "./user-management/basic-info/personal/personal";
+import { AccountComponent } from "./user-management/basic-info/account/account";
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { ProfileCreateComunityComponent } from "./user-management/profiles/profi
     ProfileCreateSchoolComponent,
     ProfileCreateCountyComponent,
     ProfileCreateComunityComponent,
-    ProfileCreateStudentComponent
+    ProfileCreateStudentComponent,
+    AddressComponent,
+    PersonalComponent,
+    AccountComponent
   ],
   imports: [IonicModule, TranslateModule.forChild()],
   exports: [
@@ -38,7 +44,10 @@ import { ProfileCreateComunityComponent } from "./user-management/profiles/profi
     ProfileCreateSchoolComponent,
     ProfileCreateCountyComponent,
     ProfileCreateComunityComponent,
-    ProfileCreateStudentComponent
+    ProfileCreateStudentComponent,
+    AddressComponent,
+    PersonalComponent,
+    AccountComponent
   ]
 })
 export class ComponentsModule {}

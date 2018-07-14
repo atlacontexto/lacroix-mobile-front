@@ -33,11 +33,7 @@
     <ion-avatar item-start>
       <img [src]="profile.icon">
     </ion-avatar>
-    <h2 style="font-weight: bold;" text-uppercase ion-text>{{profile.type}}</h2>
+    <h2 style="font-weight: bold;" text-uppercase ion-text>{{profile.title}}</h2>
     <h3 ion-text text-wrap>{{profile.description}}</h3>
   </button>
 </ion-list>
-
-<ion-row *ngIf="showProfiles">
-  <button ion-button full color=atla-red text-uppercase (click)="start()">{{'START_BUTTON' | translate}}</button>
-</ion-row>

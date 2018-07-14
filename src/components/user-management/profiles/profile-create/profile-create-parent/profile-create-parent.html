@@ -1,4 +1,4 @@
-<form [formGroup]="formParent">
+<form [formGroup]="formParent" (ngSubmit)="onSubmit()">
   <ion-row>
     <ion-col>
       <ion-item>
@@ -14,12 +14,12 @@
     <ion-col>
       <ion-item padding-horizontal>
         <ion-label>Convidar Dependente</ion-label>
-        <ion-toggle formControlName="hasChild"></ion-toggle>
+        <ion-toggle formControlName="hasChilds"></ion-toggle>
       </ion-item>
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="formParent.value.hasChild">
+  <ion-row *ngIf="formParent.value.hasChilds">
     <ion-col col-12>
       <ion-item padding-horizontal>
         <ion-label floating>Celular ou E-mail</ion-label>
@@ -39,4 +39,19 @@
     </ion-col>
     <p ion-text text-center *ngIf="formParent.value.childContact && !child">Nenhum usuário encontrado com este contato. Verifique se está correto, pois iremos mandar um convite.</p>
   </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <button type="submit" ion-button block full>CRIAR PERFIL</button>
+    </ion-col>
+  </ion-row>
 </form>
+
+<!-- <div formArrayName="childs" *ngFor="let item of formParent.get('childs').controls; let i = index;">
+  <div [formGroupName]="i">
+    <input formControlName="id" placeholder="Item name">
+    <input formControlName="contact" placeholder="Item description">
+  </div>
+
+  Chosen name: {{ orderForm.controls.items.controls[i].controls.name.value }}
+</div> -->

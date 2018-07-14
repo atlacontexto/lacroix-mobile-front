@@ -52,11 +52,11 @@ export class ProfilesProvider {
     });
   }
 
-  getFoundExamples(contact) {
+  getProfileByContact(profileType, contact) {
     return new Promise((resolve, reject) => {
       this.http
         .get(
-          this.apiUrl + "/profile/parent/contact?address=" + contact,
+          `${this.apiUrl}/profile/${profileType}/contact?address=${contact}`,
           this.headers
         )
         .subscribe(
@@ -70,10 +70,10 @@ export class ProfilesProvider {
     });
   }
 
-  createStudentProfile(form: any): any {
+  createProfile(typeProfile, form) {
     return new Promise((resolve, reject) => {
       this.http
-        .post(this.apiUrl + "/profile/student", form, this.headers)
+        .post(`${this.apiUrl}/profile/${typeProfile}`, form, this.headers)
         .subscribe(
           res => {
             resolve(res);

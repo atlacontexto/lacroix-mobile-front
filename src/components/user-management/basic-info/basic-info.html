@@ -1,61 +1,56 @@
 <ion-grid no-padding>
   <ion-row *ngFor="let item of items">
     <ion-item no-padding detail-none (click)="expandItem(item)">
-      <h3 class="bold" ion-text color=blue-payplug>{{item.title}}</h3>
+      <h3 class="bold" ion-text color=blue-payplug>{{item.viewValue}}</h3>
       <button color="orange-payplug" *ngIf="!item.expanded" ion-button outline item-end>
         ALTERAR
       </button>
-      <button color="orange-payplug" *ngIf="item.expanded" ion-button outline item-end>
+      <button color="orange-payplug" *ngIf="item.expanded" ion-button item-end (click)="updateInfo(item.value)">
         PRONTO
       </button>
     </ion-item>
-    <expandable [expandHeight]="itemExpandHeight" [expanded]="item.expanded">
-      <ion-row *ngIf="item.expanded && item.title === 'CONTA'">
-        <ion-row>
-          <ion-item no-padding>
-            <ion-label stacked>Celular</ion-label>
-            <ion-input disabled=true [ngModel]="cellphone" type="number"></ion-input>
+    <expandable style="width: 100%" [expandHeight]="itemExpandHeight" [expanded]="item.expanded">
+      <ion-row *ngIf="item.expanded && item.value === 'account'">
+        <!-- <account></account> -->
+
+        <ion-item padding-horizontal>
+          <ion-label stacked>Celular</ion-label>
+          <ion-input disabled=true [ngModel]="cellphone" type="number"></ion-input>
+        </ion-item>
+
+        <form style="width: 100%" [formGroup]="form" no-padding>
+
+          <ion-item padding-horizontal>
+            <ion-label stacked>Nome completo</ion-label>
+            <ion-input formControlName=name type="text"></ion-input>
           </ion-item>
-        </ion-row>
-        <form (submit)="updateUser()" [formGroup]="form" no-padding>
-          <ion-list inset>
-            <ion-item no-padding>
-              <ion-label stacked>Nome completo</ion-label>
-              <ion-input formControlName=name type="text"></ion-input>
-            </ion-item>
 
 
-            <ion-item no-padding>
-              <ion-label stacked>Nome de usuário</ion-label>
-              <ion-input formControlName=shortName type="text"></ion-input>
-            </ion-item>
+          <ion-item padding-horizontal>
+            <ion-label stacked>Nome de usuário</ion-label>
+            <ion-input formControlName=shortName type="text"></ion-input>
+          </ion-item>
 
-            <ion-item class='form-text error' *ngIf="form.controls.confirmPassword.touched && form.hasError('mismatchedPasswords') && !form.controls.password.valid">
-              <ion-label no-margin stacked>Passwords do not match</ion-label>
-            </ion-item>
+          <ion-item padding-horizontal class='form-text error' *ngIf="form.controls.confirmPassword.touched && form.hasError('mismatchedPasswords') && !form.controls.password.valid">
+            <ion-label no-margin stacked>Passwords do not match</ion-label>
+          </ion-item>
 
-            <ion-item no-padding>
-              <ion-label stacked>Senha</ion-label>
-              <ion-input formControlName=password type="text"></ion-input>
-            </ion-item>
+          <ion-item padding-horizontal>
+            <ion-label stacked>Senha</ion-label>
+            <ion-input formControlName=password type="text"></ion-input>
+          </ion-item>
 
 
-            <ion-item no-padding>
-              <ion-label stacked>Repita a senha</ion-label>
-              <ion-input formControlName="confirmPassword" type="text"></ion-input>
-            </ion-item>
-          </ion-list>
-          <ion-row margin-top>
-            <button text-uppercase ion-button solid large full color="atla-red" type="submit">
-              Próximo
-            </button>
-          </ion-row>
+          <ion-item padding-horizontal>
+            <ion-label stacked>Repita a senha</ion-label>
+            <ion-input formControlName="confirmPassword" type="text"></ion-input>
+          </ion-item>
         </form>
       </ion-row>
-      <ion-row *ngIf="item.expanded && item.title === 'INFORMAÇÕES PESSOAIS'">
-        <p> Personal Info Works</p>
-      </ion-row>
-      <ion-row *ngIf="item.expanded && item.title === 'ENDEREÇO'">
+
+      <personal *ngIf="item.expanded && item.value === 'personal'"></personal>
+
+      <ion-row *ngIf="item.expanded && item.value === 'address'">
         <p> Address Works</p>
       </ion-row>
     </expandable>

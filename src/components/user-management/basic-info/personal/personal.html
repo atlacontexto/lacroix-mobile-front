@@ -1,0 +1,31 @@
+<form style="width: 100%" [formGroup]="formPersonal">
+  <ion-item padding-horizontal>
+    <ion-label stacked>Nome Completo</ion-label>
+    <ion-input formControlName="name" type="text"></ion-input>
+  </ion-item>
+
+  <ion-item padding-horizontal>
+    <ion-label stacked>Sexo</ion-label>
+    <ion-select formControlName="gender">
+      <ion-option value="f">Feminino</ion-option>
+      <ion-option value="m">Masculino</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item padding-horizontal>
+    <ion-label stacked>RG</ion-label>
+    <ion-input formControlName="rg" type="text"></ion-input>
+  </ion-item>
+
+  <ion-item padding-horizontal>
+    <ion-label stacked>UF</ion-label>
+    <ion-select formControlName="uf">
+      <ion-option value="ba">BA</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item padding-horizontal>
+    <ion-label stacked>CPF</ion-label>
+    <ion-input formControlName="cpf" type="number"></ion-input>
+  </ion-item>
+</form>

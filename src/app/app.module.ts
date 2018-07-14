@@ -45,6 +45,7 @@ import { HomePageModule } from "../pages/home/home.module";
 
 import { ProfilesProvider } from "../providers/profiles/profiles";
 import { GeoProvider } from "../providers/geo/geo";
+import { SubjectsProvider } from '../providers/subjects/subjects';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -105,7 +106,8 @@ export function createTranslateLoader(http: HttpClient) {
     NotificationProvider,
     ClassroomServiceProvider,
     ProfilesProvider,
-    GeoProvider
+    GeoProvider,
+    SubjectsProvider
   ]
 })
 export class AppModule {}

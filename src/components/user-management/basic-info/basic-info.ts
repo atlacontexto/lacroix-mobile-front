@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, EventEmitter } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UserServiceProvider } from "../../../providers/user-service/user-service";
 import { Events } from "ionic-angular";
@@ -17,9 +17,11 @@ import { AlertProvider } from "../../../providers/alert-service/alert-service";
 export class BasicInfoComponent {
   @Input() userInfo;
   form: FormGroup;
+  formPersonal: FormGroup;
   cellphone: string;
 
   items: any = [];
+  eventEmmit = new EventEmitter<string>();
 
   constructor(
     public formBuilder: FormBuilder,
@@ -28,9 +30,9 @@ export class BasicInfoComponent {
     public alertService: AlertProvider
   ) {
     this.items = [
-      { title: "CONTA", expanded: false },
-      { title: "INFORMAÇÕES PESSOAIS", expanded: false },
-      { title: "ENDEREÇO", expanded: false }
+      { viewValue: "CONTA", value: "account", expanded: false },
+      { viewValue: "INFORMAÇÕES PESSOAIS", value: "personal", expanded: false },
+      { viewValue: "ENDEREÇO", value: "address", expanded: false }
     ];
 
     this.form = this.formBuilder.group(
@@ -51,6 +53,14 @@ export class BasicInfoComponent {
       },
       { validator: this.matchingPasswords("password", "confirmPassword") }
     );
+
+    this.formPersonal = this.formBuilder.group({
+      name: [null],
+      gender: [null],
+      rg: [null],
+      uf: [null],
+      cpf: [null]
+    });
   }
 
   ngAfterContentInit() {
@@ -104,32 +114,37 @@ export class BasicInfoComponent {
     };
   }
 
-  updateUser() {
-    if (this.form.valid) {
-      this.userService
-        .update(this.form.value)
-        .then(result => {
-          if (result["success"]) {
-            localStorage.setItem("userId", this.form.value.userId);
-            localStorage.setItem("shortName", this.form.value.shortName);
-            localStorage.setItem("peopleId", this.form.value.peopleId);
-            localStorage.setItem("name", this.form.value.name);
-            this.events.publish("app:user");
-            this.events.publish("app:userinfoupdated", {
-              statusProfile: false,
-              step: "user"
-            });
-          }
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    } else {
-      this.alertService.presentAlert(
-        "Informações incorretas",
-        `Verifique usas informações básicas de usuário: Todos os campos são obrigatórios e a senha deve ter 6 caracteres`,
-        "OK"
-      );
+  updateInfo(value) {
+    this.eventEmmit.emit();
+    if (value === "account") {
+      if (this.form.valid) {
+        this.userService
+          .update(this.form.value)
+          .then(result => {
+            if (result["success"]) {
+              localStorage.setItem("userId", this.form.value.userId);
+              localStorage.setItem("shortName", this.form.value.shortName);
+              localStorage.setItem("peopleId", this.form.value.peopleId);
+              localStorage.setItem("name", this.form.value.name);
+              this.events.publish("app:user");
+              this.events.publish("app:userinfoupdated", {
+                statusProfile: false,
+                step: "user"
+              });
+            }
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      } else {
+        this.alertService.presentAlert(
+          "Informações incorretas",
+          `Verifique usas informações básicas de usuário: Todos os campos são obrigatórios e a senha deve ter 6 caracteres`,
+          "OK"
+        );
+      }
+    } else if (value === "address") {
+    } else if (value === "personal") {
     }
   }
 }

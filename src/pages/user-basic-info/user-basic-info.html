@@ -20,8 +20,9 @@
 <ion-content padding>
   <div no-padding [ngSwitch]="step" col-xl-8 offset-xl-2>
     <basic-info *ngSwitchCase="'user'" [userInfo]="userInfo"></basic-info>
-
     <profiles *ngSwitchCase="'profile'"></profiles>
-
   </div>
+  <ion-row>
+    <button ion-button full color=atla-red text-uppercase (click)="start()">{{'START_BUTTON' | translate}}</button>
+  </ion-row>
 </ion-content>

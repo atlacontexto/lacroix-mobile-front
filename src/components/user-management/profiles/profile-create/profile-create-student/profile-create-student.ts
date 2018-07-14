@@ -29,7 +29,7 @@ export class ProfileCreateStudentComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private profiles: ProfilesProvider,
+    private profilesProvider: ProfilesProvider,
     private geoProvider: GeoProvider,
     private alertProvider: AlertProvider,
     private modalCtrl: ModalController,
@@ -37,32 +37,32 @@ export class ProfileCreateStudentComponent {
   ) {
     this.formStudent = this.formBuilder.group({
       userId: [this.userService.getUserAtt("_id")],
-      level: ["", Validators.compose([Validators.required])],
-      year: ["", Validators.compose([Validators.required])],
+      level: [null, Validators.compose([Validators.required])],
+      year: [null, Validators.compose([Validators.required])],
       hasSchool: [false, Validators.compose([Validators.required])],
-      school: [""],
+      school: [null],
       hasParent: [false, Validators.compose([Validators.required])],
-      parentContact: [""],
-      parentId: [""]
+      parentContact: [null],
+      parentId: [null]
     });
   }
 
   ngAfterContentInit() {
     this.states = this.geoProvider.getStates();
-    this.levels = this.profiles.getCourseLevelsExcept("infantil");
+    this.levels = this.profilesProvider.getCourseLevelsExcept("infantil");
   }
 
   levelChanged(ev) {
     if (ev == "f1") {
-      this.years = this.profiles.changeYearsRange(4, 5);
+      this.years = this.profilesProvider.changeYearsRange(4, 5);
     } else if (ev == "f2") {
-      this.years = this.profiles.changeYearsRange(6, 9);
+      this.years = this.profilesProvider.changeYearsRange(6, 9);
     } else if (ev == "medio") {
-      this.years = this.profiles.changeYearsRange(1, 3);
+      this.years = this.profilesProvider.changeYearsRange(1, 3);
     } else if (ev == "superior") {
-      this.years = this.profiles.changeYearsRange(1, 7);
+      this.years = this.profilesProvider.changeYearsRange(1, 7);
     } else if (ev == "eja") {
-      this.years = this.profiles.changeYearsRange(1, 9);
+      this.years = this.profilesProvider.changeYearsRange(1, 9);
     }
   }
 
@@ -87,16 +87,13 @@ export class ProfileCreateStudentComponent {
       })
       .catch(err => {
         this.alertProvider.loading.dismiss();
-        console.error(err);
       });
   }
 
   countyChanged(countyId) {
-    console.log(countyId);
     this.geoProvider
       .getSchoolsByCounty(countyId)
       .then(res => {
-        console.log(res);
         this.schools = res["data"]["schools"];
       })
       .catch(err => {
@@ -106,13 +103,20 @@ export class ProfileCreateStudentComponent {
 
   onSubmit() {
     if (this.formStudent.valid) {
-      this.profiles
-        .createStudentProfile(this.formStudent.value)
+      this.profilesProvider
+        .createProfile("student", this.formStudent.value)
         .then(res => {
-          if (res["success"]) this.formStudentSubmited.emit();
+          if (res["success"]) {
+            this.alertProvider.presentAlert(
+              "Perfil de Aluno criado!",
+              "Aproveite para se conectar à sua escola e professores",
+              "Ok"
+            );
+            this.formStudentSubmited.emit();
+          }
         })
         .catch(err => {
-          console.log(err);
+          console.error(err);
           this.alertProvider.presentAlert(
             "Erro ao criar Perfil de Aluno",
             "Não foi possível criar seu pefil agora. Tente novamente mais tarde",
@@ -131,9 +135,9 @@ export class ProfileCreateStudentComponent {
   onInputTime(data) {
     if (data.value) {
       this.alertProvider.presentControlledLoader("Buscando por contato...");
-      // this.parent = this.profiles.getFoundExamplesFake(data.value)[0];
-      this.profiles
-        .getFoundExamples(data.value)
+      // this.parent = this.profilesProvider.getFoundExamplesFake(data.value)[0];
+      this.profilesProvider
+        .getProfileByContact("parent", data.value)
         .then(res => {
           console.log(res);
         })

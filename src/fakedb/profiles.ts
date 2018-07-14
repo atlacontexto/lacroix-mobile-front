@@ -43,6 +43,10 @@ const courseLevels = [
     viewValue: "Ensino Médio"
   },
   {
+    value: "mediot",
+    viewValue: "Ensino Médio Técnico"
+  },
+  {
     value: "superior",
     viewValue: "Ensino Superior"
   },

@@ -41,17 +41,6 @@ export class ProfilesComponent {
     }
   }
 
-  start() {
-    this.navCtrl.setRoot(
-      HomePage,
-      {},
-      {
-        animate: true,
-        direction: "forward"
-      }
-    );
-  }
-
   openModal(page) {
     let profileModal = this.modalCtrl.create(
       page.component,
@@ -67,9 +56,24 @@ export class ProfilesComponent {
         res => {
           if (res["success"]) {
             res.data.profiles.forEach(element => {
+              let title = "";
+              if (element.profileType == "ProfileProfessor") {
+                title = "Professor";
+              } else if (element.profileType == "ProfileStudent") {
+                title = "Aluno";
+              } else if (element.profileType == "ProfileParent") {
+                title = "Família";
+              } else if (element.profileType == "ProfileCounty") {
+                title = "Gestão Municipal";
+              } else if (element.profileType == "ProfileSchool") {
+                title = "Gestão Escolar";
+              } else if (element.profileType == "ProfileComunity") {
+                title = "Comunidade";
+              }
+
               this.showProfiles.push(
                 Object.assign(element, {
-                  title: element.type,
+                  title: title,
                   component: "ProfileEditPage",
                   icon: "assets/imgs/placeholder.png"
                 })
