@@ -80,19 +80,20 @@ export class MyApp {
     if (this.profileSelected) {
       if (this.profileSelected["profileType"] === "ProfileStudent") {
         this.privatePages = [
-          { title: "INÍCIO", component: "HomePage", icon: "home" },
+          { title: "INÍCIO", component: HomePage, icon: "home" },
           { title: "BOLETIM", component: "ReportPage", icon: "home" },
-          { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
+          { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" },
+          { title: "TAREFAS", component: "TaskPage", icon: "home" }
         ];
       } else if (this.profileSelected["profileType"] === "ProfileParent") {
         this.privatePages = [
-          { title: "INÍCIO", component: "HomePage", icon: "home" },
+          { title: "INÍCIO", component: HomePage, icon: "home" },
           { title: "BOLETIM", component: "ReportPage", icon: "home" },
           { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
         ];
       } else if (this.profileSelected["profileType"] === "ProfileProfessor") {
         this.privatePages = [
-          { title: "INÍCIO", component: "HomePage", icon: "home" },
+          { title: "INÍCIO", component: HomePage, icon: "home" },
           { title: "BOLETIM", component: "ReportPage", icon: "home" },
           { title: "PLANEJAMENTO", component: "PlanningPage", icon: "home" },
           { title: "FREQUÊNCIA", component: "ClassroomPage", icon: "home" },
@@ -100,18 +101,18 @@ export class MyApp {
         ];
       } else if (this.profileSelected["profileType"] === "ProfileSchool") {
         this.privatePages = [
-          { title: "INÍCIO", component: "HomePage", icon: "home" },
+          { title: "INÍCIO", component: HomePage, icon: "home" },
           { title: "TURMAS", component: "ClassroomPage", icon: "home" },
           { title: "AUTORIZAÇÃO", component: "AuthorizationPage", icon: "home" }
         ];
       } else if (this.profileSelected["profileType"] === "ProfileCounty") {
         this.privatePages = [
-          { title: "INÍCIO", component: "HomePage", icon: "home" },
+          { title: "INÍCIO", component: HomePage, icon: "home" },
           { title: "AUTORIZAÇÃO", component: "AuthorizationPage", icon: "home" }
         ];
       } else if (this.profileSelected["profileType"] === "ProfileComunity") {
         this.privatePages = [
-          { title: "INÍCIO", component: "HomePage", icon: "home" },
+          { title: "INÍCIO", component: HomePage, icon: "home" },
           { title: "HISTÓRICO", component: "HomePage", icon: "home" }
         ];
       }

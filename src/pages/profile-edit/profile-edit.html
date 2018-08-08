@@ -32,22 +32,25 @@
         <ion-item>
           <ion-label stacked>Tipo de Perfil</ion-label>
           <ion-select [disabled]="disabled" [(ngModel)]="profileType" (ionChange)="typeChanged()">
-            <ion-option value="student">Aluno</ion-option>
-            <ion-option value="parent">Responsável</ion-option>
-            <ion-option value="professor">Professor</ion-option>
-            <ion-option value="schoolm">Gestão Escolar</ion-option>
-            <ion-option value="countym">Gestão Municipal</ion-option>
+            <ion-option value="ProfileStudent">Aluno</ion-option>
+            <ion-option value="ProfileParent">Familiar</ion-option>
+            <ion-option value="ProfileProfessor">Professor</ion-option>
+            <ion-option value="ProfileSchool">Gestão Escolar</ion-option>
+            <ion-option value="ProfileCounty">Gestão Municipal</ion-option>
+            <ion-option value="ProfileComunity">Comunidade</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
     </ion-row>
+
+    <profile-edit-student *ngIf="profileType === 'ProfileStudent'" [profileStudentInfo]="profile"></profile-edit-student>
 
     <ion-row>
       <ion-col>
         <button ion-button full color=atla-red (click)="update()">Atualizar</button>
       </ion-col>
       <ion-col>
-          <button ion-button full color=atla-red (click)="start()">Iniciar</button>
+        <button ion-button full color=atla-red (click)="start()">Iniciar</button>
       </ion-col>
     </ion-row>
   </ion-grid>

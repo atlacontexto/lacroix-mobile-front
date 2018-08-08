@@ -45,7 +45,8 @@ import { HomePageModule } from "../pages/home/home.module";
 
 import { ProfilesProvider } from "../providers/profiles/profiles";
 import { GeoProvider } from "../providers/geo/geo";
-import { SubjectsProvider } from '../providers/subjects/subjects';
+import { SubjectsProvider } from "../providers/subjects/subjects";
+import { HomePage } from "../pages/home/home";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -82,6 +83,7 @@ export function createTranslateLoader(http: HttpClient) {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    HomePage,
     LandingPage,
     RegisterPhonePage,
     RegisterPhoneCheckPage,

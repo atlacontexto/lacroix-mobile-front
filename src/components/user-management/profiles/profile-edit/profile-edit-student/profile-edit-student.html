@@ -1,0 +1,27 @@
+<form [formGroup]="formStudentUpdate">
+  <ion-item>
+    <ion-label stacked>Etapa</ion-label>
+    <ion-select formControlName="level">
+      <ion-option *ngFor="let level of levels" [value]="level.value">{{level.viewValue}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Ano</ion-label>
+    <ion-select formControlName="serie">
+      <ion-option *ngFor="let serie of series" [value]="serie.value">{{serie.viewValue}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-list>
+    <ion-item *ngIf="school">
+      <ion-avatar item-start>
+        <img [src]="school.image">
+      </ion-avatar>
+      <h2 text-wrap (click)="openPage(school)">{{school.institution.name}}</h2>
+      <h3 (click)="openPage(school.countyIntitutional)">{{school.countyInstitutional.name}}</h3>
+      <p>Mais detalhes...</p>
+    </ion-item>
+  </ion-list>
+
+</form>

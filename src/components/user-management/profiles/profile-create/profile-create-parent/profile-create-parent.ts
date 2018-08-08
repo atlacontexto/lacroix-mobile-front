@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
 import { UserServiceProvider } from "../../../../../providers/user-service/user-service";
+import { ModalController } from "ionic-angular";
 
 /**
  * Generated class for the ProfileCreateParentComponent component.
@@ -25,7 +26,8 @@ export class ProfileCreateParentComponent {
     private formBuilder: FormBuilder,
     private profilesProvider: ProfilesProvider,
     private alertProvider: AlertProvider,
-    private userService: UserServiceProvider
+    private userService: UserServiceProvider,
+    private modalCtrl: ModalController
   ) {
     this.formParent = this.formBuilder.group({
       userId: [this.userService.getUserAtt("_id")],
@@ -113,5 +115,12 @@ export class ProfileCreateParentComponent {
           );
         });
     }
+  }
+
+  viewProfile(profileId) {
+    const profileModal = this.modalCtrl.create("ProfileShowPage", {
+      profileId: profileId
+    });
+    profileModal.present();
   }
 }

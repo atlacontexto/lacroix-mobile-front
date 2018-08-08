@@ -1,12 +1,14 @@
 {
   "name": "lacroix-mobile-front",
-  "app_id": "b7cfa783",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
   },
-  "proxies": [{
-    "path": "/api",
-    "proxyUrl": "http://localhost:3000/api"
-  }]
+  "type": "ionic-angular",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://localhost:3000/api"
+    }
+  ],
+  "pro_id": "b7cfa783"
 }

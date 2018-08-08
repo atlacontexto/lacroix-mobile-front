@@ -3,7 +3,6 @@ import { IonicModule } from "ionic-angular";
 import { BasicInfoComponent } from "./user-management/basic-info/basic-info";
 import { ProfilesComponent } from "./user-management/profiles/profiles";
 import { TranslateModule } from "@ngx-translate/core";
-import { ProfileEditComponent } from "./user-management/profiles/profile-edit/profile-edit";
 import { ExpandableComponent } from "./expandable/expandable";
 import { ProfileCreateStudentComponent } from "./user-management/profiles/profile-create/profile-create-student/profile-create-student";
 import { ProfileCreateParentComponent } from "./user-management/profiles/profile-create/profile-create-parent/profile-create-parent";
@@ -14,12 +13,12 @@ import { ProfileCreateComunityComponent } from "./user-management/profiles/profi
 import { AddressComponent } from "./user-management/basic-info/address/address";
 import { PersonalComponent } from "./user-management/basic-info/personal/personal";
 import { AccountComponent } from "./user-management/basic-info/account/account";
+import { ProfileEditStudentComponent } from "./user-management/profiles/profile-edit/profile-edit-student/profile-edit-student";
 
 @NgModule({
   declarations: [
     BasicInfoComponent,
     ProfilesComponent,
-    ProfileEditComponent,
     ExpandableComponent,
     ProfileCreateStudentComponent,
     ProfileCreateParentComponent,
@@ -30,13 +29,13 @@ import { AccountComponent } from "./user-management/basic-info/account/account";
     ProfileCreateStudentComponent,
     AddressComponent,
     PersonalComponent,
-    AccountComponent
+    AccountComponent,
+    ProfileEditStudentComponent
   ],
   imports: [IonicModule, TranslateModule.forChild()],
   exports: [
     BasicInfoComponent,
     ProfilesComponent,
-    ProfileEditComponent,
     ExpandableComponent,
     ProfileCreateStudentComponent,
     ProfileCreateParentComponent,
@@ -47,7 +46,8 @@ import { AccountComponent } from "./user-management/basic-info/account/account";
     ProfileCreateStudentComponent,
     AddressComponent,
     PersonalComponent,
-    AccountComponent
+    AccountComponent,
+    ProfileEditStudentComponent
   ]
 })
 export class ComponentsModule {}

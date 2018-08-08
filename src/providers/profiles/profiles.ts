@@ -21,9 +21,16 @@ export class ProfilesProvider {
     };
   }
 
-  getCourseLevelsExcept(arg0: any): any {
+  getLevelViewName(name) {
+    let level = profiles.courseLevels.filter(v => {
+      return v.value === name;
+    });
+    return level[0]["viewValue"];
+  }
+
+  getCourseLevelsExcept(level): any {
     return profiles.courseLevels.filter(v => {
-      return v.value !== arg0;
+      return v.value !== level;
     });
   }
   getSchoolRoles(): any {
@@ -46,9 +53,39 @@ export class ProfilesProvider {
     });
   }
 
+  getYearRangeByLevel(level) {
+    if (level == "f1") {
+      return this.changeYearsRange(4, 5);
+    } else if (level == "f2") {
+      return this.changeYearsRange(6, 9);
+    } else if (level == "medio") {
+      return this.changeYearsRange(1, 3);
+    } else if (level == "superior") {
+      return this.changeYearsRange(1, 7);
+    } else if (level == "eja") {
+      return this.changeYearsRange(1, 9);
+    }
+    return null;
+  }
+
   getFoundExamplesFake(contact) {
     return this.profiles.foundExamples.filter(v => {
       return v.contact === contact;
+    });
+  }
+
+  getSchoolBasicInfo(arg0: any): any {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(`${this.apiUrl}/profile/school-institutional/${arg0}`)
+        .subscribe(
+          res => {
+            resolve(res);
+          },
+          err => {
+            reject(err);
+          }
+        );
     });
   }
 
