@@ -75,6 +75,7 @@ export class AuthServiceProvider {
                 localStorage.removeItem("validationToken");
                 localStorage.setItem("token", res["token"]);
               }
+              console.log(res);
               resolve(res);
             },
             err => {

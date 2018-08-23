@@ -88,7 +88,6 @@ export class ProfileCreateProfessorComponent {
     if (ev == "f1") {
       this.years = this.profilesProvider.changeYearsRange(1, 5);
       this.subjects = this.subjectsProvider.getSubjectsFake();
-      console.log(this.subjects);
     } else if (ev == "f2") {
       this.years = this.profilesProvider.changeYearsRange(6, 9);
       this.subjects = null;
@@ -105,7 +104,6 @@ export class ProfileCreateProfessorComponent {
   }
 
   onSubmit() {
-    console.log(this.formProfessor.value);
     if (this.formProfessor.valid) {
       this.profilesProvider
         .createProfile("professor", this.formProfessor.value)

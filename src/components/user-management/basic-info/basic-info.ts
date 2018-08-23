@@ -29,6 +29,7 @@ export class BasicInfoComponent {
     public events: Events,
     public alertService: AlertProvider
   ) {
+    
     this.items = [
       { viewValue: "CONTA", value: "account", expanded: false },
       { viewValue: "INFORMAÇÕES PESSOAIS", value: "personal", expanded: false },
@@ -64,9 +65,20 @@ export class BasicInfoComponent {
   }
 
   ngAfterContentInit() {
+    this.userService.getAllUserInfo().then(res => {
+      this.userInfo = res["data"]
+      console.log(this.userInfo)
+      this.form.controls["peopleId"].setValue(this.userInfo.user.people._id);
+      this.form.controls["name"].setValue(this.userInfo.user.people.name);
+      this.form.controls["userId"].setValue(this.userInfo.user._id);
+      this.form.controls["shortName"].setValue(this.userInfo.user.shortName);
+    }).catch(err => {
+      console.error(err);
+    })
     if (!localStorage.getItem("cellphone"))
       localStorage.setItem("cellphone", this.userInfo.cellphone);
     if (this.userInfo.user) {
+      console.log("user")
       // Launched from CodeCheck
       this.cellphone = this.userInfo.cellphone;
       this.form.controls["peopleId"].setValue(this.userInfo.user.people._id);
@@ -116,6 +128,7 @@ export class BasicInfoComponent {
 
   updateInfo(value) {
     this.eventEmmit.emit();
+    this.alertService.presentControlledLoader("Atualizando suas informações...");
     if (value === "account") {
       if (this.form.valid) {
         this.userService
@@ -132,11 +145,24 @@ export class BasicInfoComponent {
                 step: "user"
               });
             }
+            this.alertService.loading.dismiss();
+            this.alertService.presentAlert(
+              "Informações Atualizadas com sucesso!",
+              "Suas informações foram atualizadas e logo serão vistas pelo sistema.",
+              "Ok"
+            );
           })
           .catch(err => {
+            this.alertService.loading.dismiss();
+            this.alertService.presentAlert(
+              "Erro crítico",
+              "Suas informações não foram atualizadas. Tente novamente mais tarde.",
+              "Ok"
+            );
             console.error(err);
           });
       } else {
+        this.alertService.loading.dismiss();
         this.alertService.presentAlert(
           "Informações incorretas",
           `Verifique usas informações básicas de usuário: Todos os campos são obrigatórios e a senha deve ter 6 caracteres`,

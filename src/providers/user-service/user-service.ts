@@ -105,4 +105,18 @@ export class UserServiceProvider {
       );
     });
   }
+
+  getAllUserInfo() {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${this.apiUrl}/user/user-info`, {
+        headers: {
+          "x-access-token": localStorage.getItem("token")
+        }
+      }).subscribe(res => {
+        resolve(res);
+      }, err => {
+        reject(err);
+      })
+    })
+  }
 }

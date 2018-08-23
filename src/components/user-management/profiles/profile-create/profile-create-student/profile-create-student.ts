@@ -36,7 +36,7 @@ export class ProfileCreateStudentComponent {
     private userService: UserServiceProvider
   ) {
     this.formStudent = this.formBuilder.group({
-      userId: [this.userService.getUserAtt("_id")],
+      user: [this.userService.getUserAtt("_id")],
       level: [null, Validators.compose([Validators.required])],
       year: [null, Validators.compose([Validators.required])],
       hasSchool: [false, Validators.compose([Validators.required])],

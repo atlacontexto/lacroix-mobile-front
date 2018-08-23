@@ -30,7 +30,7 @@ export class ProfileCreateParentComponent {
     private modalCtrl: ModalController
   ) {
     this.formParent = this.formBuilder.group({
-      userId: [this.userService.getUserAtt("_id")],
+      user: [this.userService.getUserAtt("_id")],
       kinship: [null, Validators.compose([Validators.required])],
       hasChilds: [false],
       childs: formBuilder.array([this.createChild()]),

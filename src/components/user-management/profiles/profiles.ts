@@ -47,48 +47,15 @@ export class ProfilesComponent {
       { profile: page },
       { enableBackdropDismiss: true }
     );
+    profileModal.onDidDismiss(() => {
+      this.updateProfilesListing();
+    })
     profileModal.present();
   }
 
   ngAfterContentInit() {
     if (this.showProfiles) {
-      this.userService.getProfiles().then(
-        res => {
-          if (res["success"]) {
-            res.data.profiles.forEach(element => {
-              let title = "";
-              if (element.profileType == "ProfileProfessor") {
-                title = "Professor";
-              } else if (element.profileType == "ProfileStudent") {
-                title = "Aluno";
-              } else if (element.profileType == "ProfileParent") {
-                title = "Família";
-              } else if (element.profileType == "ProfileCounty") {
-                title = "Gestão Municipal";
-              } else if (element.profileType == "ProfileSchool") {
-                title = "Gestão Escolar";
-              } else if (element.profileType == "ProfileComunity") {
-                title = "Comunidade";
-              }
-
-              this.showProfiles.push(
-                Object.assign(element, {
-                  title: title,
-                  component: "ProfileEditPage",
-                  icon: "assets/imgs/placeholder.png"
-                })
-              );
-            });
-            this.events.publish("app:profiles", this.showProfiles);
-          } else {
-            console.log(res["message"]);
-            this.showHelp = true;
-          }
-        },
-        err => {
-          console.log(err);
-        }
-      );
+      this.updateProfilesListing()
     }
     if (!this.slides) {
       this.slides = [
@@ -116,5 +83,55 @@ export class ProfilesComponent {
         }
       ];
     }
+  }
+
+  updateProfilesListing() {
+    this.showProfiles = new Array();
+    this.userService.getProfiles().then(
+      res => {
+        if (res["success"]) {
+          res.data.profiles.forEach(element => {
+            let title = "";
+            if (element.profileType == "ProfileProfessor") {
+              title = "Professor";
+            } else if (element.profileType == "ProfileStudent") {
+              title = "Aluno";
+            } else if (element.profileType == "ProfileParent") {
+              title = "Família";
+            } else if (element.profileType == "ProfileCounty") {
+              title = "Gestão Municipal";
+            } else if (element.profileType == "ProfileSchool") {
+              title = "Gestão Escolar";
+            } else if (element.profileType == "ProfileComunity") {
+              title = "Comunidade";
+            }
+            let main = false;
+            if(element._id === res.data.main) {
+              main = true
+            }
+            this.showProfiles.push(
+              Object.assign(element, {
+                title: title,
+                component: "ProfileEditPage",
+                icon: "assets/imgs/placeholder.png",
+                main
+              })
+            );
+          });
+          this.events.publish("app:profiles", this.showProfiles);
+          if(this.showProfiles.length) {
+            this.events.publish("app:showstart", true);
+          } else {
+            this.events.publish("app:showstart", false);
+          }
+        } else {
+          console.log(res["message"]);
+          this.showHelp = true;
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 }

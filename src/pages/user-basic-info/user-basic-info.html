@@ -22,7 +22,7 @@
     <basic-info *ngSwitchCase="'user'" [userInfo]="userInfo"></basic-info>
     <profiles *ngSwitchCase="'profile'"></profiles>
   </div>
-  <ion-row>
+  <ion-row *ngIf="showStart">
     <button ion-button full color=atla-red text-uppercase (click)="start()">{{'START_BUTTON' | translate}}</button>
   </ion-row>
 </ion-content>

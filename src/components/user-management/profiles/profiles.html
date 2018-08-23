@@ -12,7 +12,7 @@
   </ion-col>
 </ion-row>
 
-<ion-row *ngIf="!showProfiles || showHelp">
+<ion-row *ngIf="showProfiles.length === 0 || showHelp">
   <ion-slides pager="true" padding-top>
     <ion-slide *ngFor="let slide of slides">
       <!-- <img style="width: 80px; height: 80px;" [src]="slide.icone" class="slide-image" /> -->
@@ -34,6 +34,14 @@
       <img [src]="profile.icon">
     </ion-avatar>
     <h2 style="font-weight: bold;" text-uppercase ion-text>{{profile.title}}</h2>
-    <h3 ion-text text-wrap>{{profile.description}}</h3>
+    <ion-grid>
+      <ion-row *ngIf="profile.main">
+        <ion-col><h3 ion-text text-wrap>PRINCIPAL</h3></ion-col>
+      </ion-row>
+      <ion-row *ngIf="profile.description">
+        <ion-col><h3 ion-text text-wrap>{{profile.description}}</h3></ion-col>
+      </ion-row>
+    </ion-grid>
+    
   </button>
 </ion-list>

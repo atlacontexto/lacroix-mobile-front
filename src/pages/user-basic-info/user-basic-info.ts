@@ -33,6 +33,7 @@ export class UserBasicInfoPage {
   statusProfile: boolean;
   showFooter = true;
   showProfiles: Array<any>;
+  showStart = false;
 
   constructor(
     public navCtrl: NavController,
@@ -44,7 +45,9 @@ export class UserBasicInfoPage {
     public modalCtrl: ModalController,
     public events: Events
   ) {
-    console.log("UserBasicInfo loaded");
+    this.events.subscribe("app:showstart", value => {
+      this.showStart = value;
+    })
     this.events.subscribe("app:userinfoupdated", userinfo => {
       if (userinfo["statusProfile"]) {
         this.statusProfile = false;
