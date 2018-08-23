@@ -48,6 +48,7 @@ export class ProfilesComponent {
       { enableBackdropDismiss: true }
     );
     profileModal.onDidDismiss(() => {
+      // if(page.component === "ProfileCreatePage")
       this.updateProfilesListing();
     })
     profileModal.present();

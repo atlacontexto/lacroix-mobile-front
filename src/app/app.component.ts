@@ -76,7 +76,7 @@ export class MyApp {
   }
 
   updateList() {
-    // console.log(this.profileSelected);
+    console.log(this.profileSelected);
     if (this.profileSelected) {
       if (this.profileSelected["profileType"] === "ProfileStudent") {
         this.privatePages = [

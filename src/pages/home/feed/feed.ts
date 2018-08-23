@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Events } from "ionic-angular";
 
 /**
  * Generated class for the FeedPage page.
@@ -14,7 +14,11 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
   templateUrl: "feed.html"
 })
 export class FeedPage {
-  posts: Array<{
+
+  private profileType = "";
+  private detail = "";
+
+  private posts: Array<{
     creator: string;
     avatar?: string;
     image?: string;
@@ -24,7 +28,11 @@ export class FeedPage {
     countComments: string;
     timeAgo: string;
   }>;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events) {
+    this.events.subscribe("app:timeline:profile", value => {
+      this.profileType = value.profileType;
+      this.detail = value.detail;
+    })
     this.posts = [
       {
         creator: "Savio",
