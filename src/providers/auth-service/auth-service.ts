@@ -66,7 +66,7 @@ export class AuthServiceProvider {
         this.http
           .post(this.apiUrl + "/notification/codecheck", code, {
             headers: {
-              "x-access-token": localStorage.getItem("validationToken")
+              "x-access-token": localStorage.getItem("token") || localStorage.getItem("validationToken")
             }
           })
           .subscribe(
@@ -79,12 +79,13 @@ export class AuthServiceProvider {
               resolve(res);
             },
             err => {
+              console.error(err)
               console.log("here");
               reject(err);
             }
           );
       } else {
-        reject("code expired");
+        resolve("code expired");
       }
     });
   }

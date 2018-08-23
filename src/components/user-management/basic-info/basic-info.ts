@@ -67,7 +67,6 @@ export class BasicInfoComponent {
   ngAfterContentInit() {
     this.userService.getAllUserInfo().then(res => {
       this.userInfo = res["data"]
-      console.log(this.userInfo)
       this.form.controls["peopleId"].setValue(this.userInfo.user.people._id);
       this.form.controls["name"].setValue(this.userInfo.user.people.name);
       this.form.controls["userId"].setValue(this.userInfo.user._id);
@@ -78,7 +77,6 @@ export class BasicInfoComponent {
     if (!localStorage.getItem("cellphone"))
       localStorage.setItem("cellphone", this.userInfo.cellphone);
     if (this.userInfo.user) {
-      console.log("user")
       // Launched from CodeCheck
       this.cellphone = this.userInfo.cellphone;
       this.form.controls["peopleId"].setValue(this.userInfo.user.people._id);
@@ -153,7 +151,7 @@ export class BasicInfoComponent {
             );
           })
           .catch(err => {
-            this.alertService.loading.dismiss();
+            
             this.alertService.presentAlert(
               "Erro crítico",
               "Suas informações não foram atualizadas. Tente novamente mais tarde.",
@@ -162,7 +160,7 @@ export class BasicInfoComponent {
             console.error(err);
           });
       } else {
-        this.alertService.loading.dismiss();
+        
         this.alertService.presentAlert(
           "Informações incorretas",
           `Verifique usas informações básicas de usuário: Todos os campos são obrigatórios e a senha deve ter 6 caracteres`,
@@ -170,7 +168,9 @@ export class BasicInfoComponent {
         );
       }
     } else if (value === "address") {
+      
     } else if (value === "personal") {
     }
+    this.alertService.loading.dismiss();
   }
 }

@@ -61,7 +61,7 @@ export class RegisterPhoneCheckPage {
         }
       })
       .catch(err => {
-        console.log(err);
+        console.error(err);
         let message;
         if (err.error.message == "Invalid code.") {
           message = "seu código está incorreto";
