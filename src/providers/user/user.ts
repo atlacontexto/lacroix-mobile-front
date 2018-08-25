@@ -2,7 +2,10 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { ENV } from "@environment";
-import { AuthServiceProvider } from "../auth-service/auth-service";
+import { AuthProvider } from "../auth/auth";
+import { BehaviorSubject } from "rxjs";
+import { User } from "../../app/model/user";
+import { ProfilesProvider } from "../profiles/profiles";
 
 /*
   Generated class for the UserServiceProvider provider.
@@ -11,17 +14,31 @@ import { AuthServiceProvider } from "../auth-service/auth-service";
   and Angular DI.
 */
 @Injectable()
-export class UserServiceProvider {
+export class UserProvider {
   apiUrl = ENV.API_LOCAL;
+  user: BehaviorSubject<any> = new BehaviorSubject<any[]>([]);
 
   constructor(
     public http: HttpClient,
     public platform: Platform,
-    private authService: AuthServiceProvider
+    private authService: AuthProvider,
+    private profiles: ProfilesProvider
   ) {
+    console.log("Hello UserProvider Provider");
     if (platform.is("cordova")) {
       this.apiUrl = ENV.API_ENDPOINT;
     }
+    this.getAllUserInfo().then(userInfo => {
+      console.log(userInfo);
+      const user = new User(this.profiles);
+      user.setProfiles(userInfo["profiles"]);
+      user.setPeople(userInfo["people"]);
+      user.setMainProfile(userInfo["mainProfile"]);
+      user.setId(userInfo["_id"]);
+      user.setShortName(userInfo["shortName"]);
+      this.profiles.currentProfile.next(user.getMainProfile());
+      this.user.next(user);
+    });
   }
 
   getUserAtt(att) {
@@ -108,15 +125,24 @@ export class UserServiceProvider {
 
   getAllUserInfo() {
     return new Promise((resolve, reject) => {
-      this.http.get(`${this.apiUrl}/user/user-info`, {
-        headers: {
-          "x-access-token": localStorage.getItem("token")
-        }
-      }).subscribe(res => {
-        resolve(res);
-      }, err => {
-        reject(err);
-      })
-    })
+      this.http
+        .get(`${this.apiUrl}/user/user-info`, {
+          headers: {
+            "x-access-token": localStorage.getItem("token")
+          }
+        })
+        .subscribe(
+          res => {
+            if (res["success"]) {
+              resolve(res["data"]["user"]);
+            } else {
+              resolve["success"];
+            }
+          },
+          err => {
+            reject(err);
+          }
+        );
+    });
   }
 }

@@ -21,7 +21,9 @@ export class AlertProvider {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController
-  ) {}
+  ) {
+    console.log('Hello AlertProvider Provider');
+  }
 
   presentTimeLoading(message: string) {
     let loading = this.loadingCtrl.create({

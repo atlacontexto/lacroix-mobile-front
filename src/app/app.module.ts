@@ -15,10 +15,9 @@ import { RegisterPhonePage } from "../pages/register-phone/register-phone";
 import { RegisterPhoneCheckPage } from "../pages/register-phone-check/register-phone-check";
 import { RegisterPhonePageModule } from "../pages/register-phone/register-phone.module";
 import { RegisterPhoneCheckPageModule } from "../pages/register-phone-check/register-phone-check.module";
-import { AuthServiceProvider } from "../providers/auth-service/auth-service";
 import { UserBasicInfoPageModule } from "../pages/user-basic-info/user-basic-info.module";
 import { UserBasicInfoPage } from "../pages/user-basic-info/user-basic-info";
-import { UserServiceProvider } from "../providers/user-service/user-service";
+import { UserProvider } from "../providers/user/user";
 import { AlertProvider } from "../providers/alert-service/alert-service";
 import { Keyboard } from "@ionic-native/keyboard";
 import { ProfileCreatePageModule } from "../pages/profile-create/profile-create.module";
@@ -47,6 +46,8 @@ import { ProfilesProvider } from "../providers/profiles/profiles";
 import { GeoProvider } from "../providers/geo/geo";
 import { SubjectsProvider } from "../providers/subjects/subjects";
 import { HomePage } from "../pages/home/home";
+import { FeedProvider } from '../providers/feed/feed';
+import { AuthProvider } from "../providers/auth/auth";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -101,15 +102,16 @@ export function createTranslateLoader(http: HttpClient) {
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    AuthServiceProvider,
-    UserServiceProvider,
+    AuthProvider,
+    UserProvider,
     AlertProvider,
     Keyboard,
     NotificationProvider,
     ClassroomServiceProvider,
     ProfilesProvider,
     GeoProvider,
-    SubjectsProvider
+    SubjectsProvider,
+    FeedProvider
   ]
 })
 export class AppModule {}

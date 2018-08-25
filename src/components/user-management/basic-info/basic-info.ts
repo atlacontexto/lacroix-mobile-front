@@ -1,8 +1,8 @@
 import { Component, Input, EventEmitter } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { UserServiceProvider } from "../../../providers/user-service/user-service";
 import { Events } from "ionic-angular";
 import { AlertProvider } from "../../../providers/alert-service/alert-service";
+import { UserProvider } from "../../../providers/user/user";
 
 /**
  * Generated class for the BasicInfoComponent component.
@@ -15,7 +15,8 @@ import { AlertProvider } from "../../../providers/alert-service/alert-service";
   templateUrl: "basic-info.html"
 })
 export class BasicInfoComponent {
-  @Input() userInfo;
+  @Input()
+  userInfo;
   form: FormGroup;
   formPersonal: FormGroup;
   cellphone: string;
@@ -25,11 +26,10 @@ export class BasicInfoComponent {
 
   constructor(
     public formBuilder: FormBuilder,
-    public userService: UserServiceProvider,
+    public userService: UserProvider,
     public events: Events,
     public alertService: AlertProvider
   ) {
-    
     this.items = [
       { viewValue: "CONTA", value: "account", expanded: false },
       { viewValue: "INFORMAÇÕES PESSOAIS", value: "personal", expanded: false },
@@ -65,15 +65,19 @@ export class BasicInfoComponent {
   }
 
   ngAfterContentInit() {
-    this.userService.getAllUserInfo().then(res => {
-      this.userInfo = res["data"]
-      this.form.controls["peopleId"].setValue(this.userInfo.user.people._id);
-      this.form.controls["name"].setValue(this.userInfo.user.people.name);
-      this.form.controls["userId"].setValue(this.userInfo.user._id);
-      this.form.controls["shortName"].setValue(this.userInfo.user.shortName);
-    }).catch(err => {
-      console.error(err);
-    })
+    this.userService
+      .getAllUserInfo()
+      .then(res => {
+        this.userInfo = res;
+        console.log(this.userInfo);
+        this.form.controls["peopleId"].setValue(this.userInfo.people._id);
+        this.form.controls["name"].setValue(this.userInfo.people.name);
+        this.form.controls["userId"].setValue(this.userInfo._id);
+        this.form.controls["shortName"].setValue(this.userInfo.shortName);
+      })
+      .catch(err => {
+        console.error(err);
+      });
     if (!localStorage.getItem("cellphone"))
       localStorage.setItem("cellphone", this.userInfo.cellphone);
     if (this.userInfo.user) {
@@ -126,7 +130,9 @@ export class BasicInfoComponent {
 
   updateInfo(value) {
     this.eventEmmit.emit();
-    this.alertService.presentControlledLoader("Atualizando suas informações...");
+    this.alertService.presentControlledLoader(
+      "Atualizando suas informações..."
+    );
     if (value === "account") {
       if (this.form.valid) {
         this.userService
@@ -151,7 +157,6 @@ export class BasicInfoComponent {
             );
           })
           .catch(err => {
-            
             this.alertService.presentAlert(
               "Erro crítico",
               "Suas informações não foram atualizadas. Tente novamente mais tarde.",
@@ -160,7 +165,6 @@ export class BasicInfoComponent {
             console.error(err);
           });
       } else {
-        
         this.alertService.presentAlert(
           "Informações incorretas",
           `Verifique usas informações básicas de usuário: Todos os campos são obrigatórios e a senha deve ter 6 caracteres`,
@@ -168,7 +172,6 @@ export class BasicInfoComponent {
         );
       }
     } else if (value === "address") {
-      
     } else if (value === "personal") {
     }
     this.alertService.loading.dismiss();

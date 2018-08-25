@@ -16,7 +16,7 @@
     <ion-item>
       <ion-label stacked>Perfil</ion-label>
       <ion-select [(ngModel)]="profileSelected" (ionChange)="updateList()">
-        <ion-option *ngFor="let profile of profiles" [value]="profile">{{profile.title}}</ion-option>
+        <ion-option *ngFor="let profile of profiles" [value]="profile">{{profile.getShowType()}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-list *ngIf=privatePages>

@@ -11,14 +11,14 @@
     <ion-avatar item-start>
       <img src="assets/imgs/placeholder.png">
     </ion-avatar>
-    <p>{{profileType}}</p>
+    <p>{{currentProfile.getProfileType()}}</p>
     <h2>{{detail}}</h2>
-    <button ion-button item-end>Tenho uma Novidade!</button>
+    <button ion-button item-end (click)="newPost()">Tenho uma Novidade!</button>
   </ion-item>
 </ion-header>
 
-<ion-content padding class="cards-bg social-cards" >
-  
+<ion-content padding class="cards-bg social-cards">
+
   <ion-card *ngFor='let post of posts' col-xl-8 offset-xl-2>
 
     <ion-item>

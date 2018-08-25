@@ -1,9 +1,9 @@
-import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
+import { AuthProvider } from "../../providers/auth/auth";
 
 export class NotificationModel {
-    authService: AuthServiceProvider;
+    authService: AuthProvider;
     
-    constructor(authService: AuthServiceProvider) {
+    constructor(authService: AuthProvider) {
         this.authService = authService;
     }
 

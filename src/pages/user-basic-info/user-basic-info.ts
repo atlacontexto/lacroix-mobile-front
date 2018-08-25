@@ -8,9 +8,9 @@ import {
   Events
 } from "ionic-angular";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { UserServiceProvider } from "../../providers/user-service/user-service";
 import { HomePage } from "../home/home";
 import { Keyboard } from "@ionic-native/keyboard";
+import { UserProvider } from "../../providers/user/user";
 
 /**
  * Generated class for the UserBasicInfoPage page.
@@ -39,7 +39,7 @@ export class UserBasicInfoPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    public userService: UserServiceProvider,
+    public userService: UserProvider,
     public platform: Platform,
     public key: Keyboard,
     public modalCtrl: ModalController,

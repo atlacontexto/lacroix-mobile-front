@@ -11,11 +11,12 @@ import * as JWT from "jwt-decode";
   and Angular DI.
 */
 @Injectable()
-export class AuthServiceProvider {
+export class AuthProvider {
   apiUrl = ENV.API_LOCAL;
   headers: any;
 
   constructor(public http: HttpClient, public platform: Platform) {
+    console.log("Hello AuthProvider Provider");
     if (platform.is("cordova")) {
       console.log(ENV.API_ENDPOINT);
       this.apiUrl = ENV.API_ENDPOINT;
@@ -66,7 +67,9 @@ export class AuthServiceProvider {
         this.http
           .post(this.apiUrl + "/notification/codecheck", code, {
             headers: {
-              "x-access-token": localStorage.getItem("token") || localStorage.getItem("validationToken")
+              "x-access-token":
+                localStorage.getItem("token") ||
+                localStorage.getItem("validationToken")
             }
           })
           .subscribe(
@@ -79,7 +82,7 @@ export class AuthServiceProvider {
               resolve(res);
             },
             err => {
-              console.error(err)
+              console.error(err);
               console.log("here");
               reject(err);
             }

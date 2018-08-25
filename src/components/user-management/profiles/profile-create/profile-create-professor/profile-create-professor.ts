@@ -3,8 +3,8 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 import { GeoProvider } from "../../../../../providers/geo/geo";
 import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
-import { UserServiceProvider } from "../../../../../providers/user-service/user-service";
 import { SubjectsProvider } from "../../../../../providers/subjects/subjects";
+import { UserProvider } from "../../../../../providers/user/user";
 
 /**
  * Generated class for the ProfileCreateProfessorComponent component.
@@ -31,7 +31,7 @@ export class ProfileCreateProfessorComponent {
     private profilesProvider: ProfilesProvider,
     private geoProvider: GeoProvider,
     private alertProvider: AlertProvider,
-    private userService: UserServiceProvider,
+    private userService: UserProvider,
     private subjectsProvider: SubjectsProvider
   ) {
     this.formProfessor = this.formBuilder.group({
