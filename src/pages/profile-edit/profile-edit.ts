@@ -6,7 +6,7 @@ import {
   ViewController
 } from "ionic-angular";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { UserServiceProvider } from "../../providers/user-service/user-service";
+import { UserProvider } from "../../providers/user/user";
 
 /**
  * Generated class for the ProfileEditPage page.
@@ -32,7 +32,7 @@ export class ProfileEditPage {
     public navParams: NavParams,
     public viewCtrl: ViewController,
     public formBuilder: FormBuilder,
-    public userService: UserServiceProvider
+    public userService: UserProvider
   ) {
     this.profile = navParams.get("profile");
     this.main = this.profile["main"];

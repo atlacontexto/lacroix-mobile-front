@@ -12,6 +12,7 @@ import subjectsEf from "../../fakedb/subjects";
 export class SubjectsProvider {
   subjectsEf;
   constructor(public http: HttpClient) {
+    console.log('Hello SubjectsProvider Provider');
     this.subjectsEf = subjectsEf;
   }
 

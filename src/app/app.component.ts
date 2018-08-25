@@ -6,6 +6,9 @@ import { SplashScreen } from "@ionic-native/splash-screen";
 import { TranslateService } from "@ngx-translate/core";
 import { LandingPage } from "../pages/landing/landing";
 import { UserBasicInfoPage } from "../pages/user-basic-info/user-basic-info";
+import { ProfilesProvider } from "../providers/profiles/profiles";
+import { UserProvider } from "../providers/user/user";
+import { User } from "./model/user";
 
 @Component({
   templateUrl: "app.html"
@@ -19,6 +22,7 @@ export class MyApp {
   profileSelected: any;
   profiles: any;
   privatePages: Array<{ title: string; component: any; icon: string }>;
+  user: User;
 
   constructor(
     public menu: MenuController,
@@ -27,8 +31,22 @@ export class MyApp {
     splashScreen: SplashScreen,
     private translate: TranslateService,
     private config: Config,
-    public events: Events
+    public events: Events,
+    public profilesProvider: ProfilesProvider,
+    public userProvider: UserProvider
   ) {
+    this.userProvider.user.subscribe(user => {
+      console.log(user);
+      this.user = user;
+      if (user.length !== 0) {
+        console;
+        console.log("bosta");
+        this.username = this.user.getShortName();
+      }
+    });
+    this.profilesProvider.listProfiles.subscribe(profiles => {
+      this.profiles = profiles;
+    });
     this.userComp = "UserBasicInfoPage";
     if (localStorage.getItem("shortName"))
       this.username = localStorage.getItem("shortName");
@@ -79,6 +97,8 @@ export class MyApp {
   updateList() {
     // console.log(this.profileSelected);
     if (this.profileSelected) {
+      this.events.publish("app:timeline:profile", this.profileSelected);
+      this.profilesProvider.setCurrentProfile(this.profileSelected);
       if (this.profileSelected["profileType"] === "ProfileStudent") {
         this.privatePages = [
           { title: "INÍCIO", component: HomePage, icon: "home" },

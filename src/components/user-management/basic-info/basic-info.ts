@@ -1,8 +1,8 @@
 import { Component, Input, EventEmitter } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { UserServiceProvider } from "../../../providers/user-service/user-service";
 import { Events } from "ionic-angular";
 import { AlertProvider } from "../../../providers/alert-service/alert-service";
+import { UserProvider } from "../../../providers/user/user";
 
 /**
  * Generated class for the BasicInfoComponent component.
@@ -26,7 +26,7 @@ export class BasicInfoComponent {
 
   constructor(
     public formBuilder: FormBuilder,
-    public userService: UserServiceProvider,
+    public userService: UserProvider,
     public events: Events,
     public alertService: AlertProvider
   ) {
@@ -68,19 +68,12 @@ export class BasicInfoComponent {
     this.userService
       .getAllUserInfo()
       .then(res => {
-        console.log(res["data"]);
-        this.userInfo = res["data"];
-        console.log(this.userInfo.mainProfile);
-        if (this.userInfo.mainProfile) {
-          console.log("enviou");
-          this.events.publish("app:showstart", true);
-        } else {
-          this.events.publish("app:showstart", false);
-        }
-        this.form.controls["peopleId"].setValue(this.userInfo.user.people._id);
-        this.form.controls["name"].setValue(this.userInfo.user.people.name);
-        this.form.controls["userId"].setValue(this.userInfo.user._id);
-        this.form.controls["shortName"].setValue(this.userInfo.user.shortName);
+        this.userInfo = res;
+        console.log(this.userInfo);
+        this.form.controls["peopleId"].setValue(this.userInfo.people._id);
+        this.form.controls["name"].setValue(this.userInfo.people.name);
+        this.form.controls["userId"].setValue(this.userInfo._id);
+        this.form.controls["shortName"].setValue(this.userInfo.shortName);
       })
       .catch(err => {
         console.error(err);

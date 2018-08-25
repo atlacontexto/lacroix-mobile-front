@@ -4,7 +4,7 @@ import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 import { GeoProvider } from "../../../../../providers/geo/geo";
 import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
 import { ModalController } from "ionic-angular";
-import { UserServiceProvider } from "../../../../../providers/user-service/user-service";
+import { UserProvider } from "../../../../../providers/user/user";
 
 /**
  * Generated class for the ProfileCreateStudentComponent component.
@@ -33,7 +33,7 @@ export class ProfileCreateStudentComponent {
     private geoProvider: GeoProvider,
     private alertProvider: AlertProvider,
     private modalCtrl: ModalController,
-    private userService: UserServiceProvider
+    private userService: UserProvider
   ) {
     this.formStudent = this.formBuilder.group({
       user: [this.userService.getUserAtt("_id")],

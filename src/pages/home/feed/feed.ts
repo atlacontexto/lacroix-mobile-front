@@ -1,5 +1,14 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, Events } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Events,
+  ModalController
+} from "ionic-angular";
+import { NewsNewPage } from "./news/news-new/news-new";
+import { ProfilesProvider } from "../../../providers/profiles/profiles";
+import { Profile } from "app/model/profile";
 
 /**
  * Generated class for the FeedPage page.
@@ -14,9 +23,7 @@ import { IonicPage, NavController, NavParams, Events } from "ionic-angular";
   templateUrl: "feed.html"
 })
 export class FeedPage {
-
-  private profileType = "";
-  private detail = "";
+  private currentProfile: Profile;
 
   private posts: Array<{
     creator: string;
@@ -28,11 +35,22 @@ export class FeedPage {
     countComments: string;
     timeAgo: string;
   }>;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events) {
-    this.events.subscribe("app:timeline:profile", value => {
-      this.profileType = value.profileType;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public events: Events,
+    private modalCtrl: ModalController,
+    private profilesProvider: ProfilesProvider
+  ) {
+    profilesProvider.currentProfile.subscribe(profile => {
+      this.currentProfile = profile;
+      console.log(this.currentProfile);
+    });
+    /*  this.events.subscribe("app:timeline:profile", value => {
+      console.log(value);
+      this.profileType = value.title;
       this.detail = value.detail;
-    })
+    }) */
     this.posts = [
       {
         creator: "Savio",
@@ -82,6 +100,11 @@ export class FeedPage {
         direction: "forward"
       }
     );
+  }
+
+  newPost() {
+    let newPost = this.modalCtrl.create(NewsNewPage, {}, {});
+    newPost.present({});
   }
 
   onInput(event) {}

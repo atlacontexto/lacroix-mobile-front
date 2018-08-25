@@ -14,6 +14,7 @@ export class ClassroomServiceProvider {
   apiUrl = ENV.API_LOCAL;
 
   constructor(public http: HttpClient, public platform: Platform) {
+    console.log('Hello ClassroomProvider Provider');
     if (platform.is("cordova")) {
       console.log(ENV.API_ENDPOINT);
       this.apiUrl = ENV.API_ENDPOINT;

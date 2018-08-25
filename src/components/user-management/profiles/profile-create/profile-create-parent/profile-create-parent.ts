@@ -2,8 +2,8 @@ import { Component, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
-import { UserServiceProvider } from "../../../../../providers/user-service/user-service";
 import { ModalController } from "ionic-angular";
+import { UserProvider } from "../../../../../providers/user/user";
 
 /**
  * Generated class for the ProfileCreateParentComponent component.
@@ -26,7 +26,7 @@ export class ProfileCreateParentComponent {
     private formBuilder: FormBuilder,
     private profilesProvider: ProfilesProvider,
     private alertProvider: AlertProvider,
-    private userService: UserServiceProvider,
+    private userService: UserProvider,
     private modalCtrl: ModalController
   ) {
     this.formParent = this.formBuilder.group({

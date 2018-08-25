@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { NavController, ModalController, Events } from "ionic-angular";
 import { HomePage } from "../../../pages/home/home";
-import { UserServiceProvider } from "../../../providers/user-service/user-service";
+import { UserProvider } from "../../../providers/user/user";
 
 /**
  * Generated class for the ProfilesComponent component.
@@ -28,7 +28,7 @@ export class ProfilesComponent {
     public navCtrl: NavController,
     public modalCtrl: ModalController,
     public events: Events,
-    public userService: UserServiceProvider
+    public userService: UserProvider
   ) {
     this.showProfiles = new Array();
   }

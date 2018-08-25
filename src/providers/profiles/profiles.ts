@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import profiles from "../../fakedb/profiles";
 import { ENV } from "@environment";
+import { BehaviorSubject } from "rxjs";
 
 /*
   Generated class for the ProfilesProvider provider.
@@ -14,7 +15,12 @@ export class ProfilesProvider {
   apiUrl = ENV.API_LOCAL;
   profiles: any;
   headers: any;
+
+  public currentProfile: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  public listProfiles: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+
   constructor(public http: HttpClient) {
+    console.log('Hello ProfilesProvider Provider');
     this.profiles = profiles;
     this.headers = {
       headers: { "x-access-token": localStorage.getItem("token") }
@@ -136,5 +142,9 @@ export class ProfilesProvider {
     } else if (ev == "superior") {
       return this.changeYearsRange(1, 7);
     }
+  }
+
+  setCurrentProfile(profile) {
+    this.currentProfile.next(profile)
   }
 }
