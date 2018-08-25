@@ -12,7 +12,8 @@ import { UserBasicInfoPage } from "../pages/user-basic-info/user-basic-info";
 })
 export class MyApp {
   userComp: string;
-  @ViewChild(Nav) nav: Nav;
+  @ViewChild(Nav)
+  nav: Nav;
   rootPage: any;
   username: any;
   profileSelected: any;
@@ -76,7 +77,7 @@ export class MyApp {
   }
 
   updateList() {
-    console.log(this.profileSelected);
+    // console.log(this.profileSelected);
     if (this.profileSelected) {
       if (this.profileSelected["profileType"] === "ProfileStudent") {
         this.privatePages = [

@@ -108,6 +108,9 @@ export class ProfilesProvider {
   }
 
   createProfile(typeProfile, form) {
+    console.log(this.headers);
+    console.log(form);
+    console.log(typeProfile);
     return new Promise((resolve, reject) => {
       this.http
         .post(`${this.apiUrl}/profile/${typeProfile}`, form, this.headers)
@@ -116,6 +119,7 @@ export class ProfilesProvider {
             resolve(res);
           },
           err => {
+            console.log(err);
             reject(err);
           }
         );

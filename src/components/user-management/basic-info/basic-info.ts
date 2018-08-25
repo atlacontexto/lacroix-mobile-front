@@ -15,7 +15,8 @@ import { AlertProvider } from "../../../providers/alert-service/alert-service";
   templateUrl: "basic-info.html"
 })
 export class BasicInfoComponent {
-  @Input() userInfo;
+  @Input()
+  userInfo;
   form: FormGroup;
   formPersonal: FormGroup;
   cellphone: string;
@@ -29,7 +30,6 @@ export class BasicInfoComponent {
     public events: Events,
     public alertService: AlertProvider
   ) {
-    
     this.items = [
       { viewValue: "CONTA", value: "account", expanded: false },
       { viewValue: "INFORMAÇÕES PESSOAIS", value: "personal", expanded: false },
@@ -65,15 +65,26 @@ export class BasicInfoComponent {
   }
 
   ngAfterContentInit() {
-    this.userService.getAllUserInfo().then(res => {
-      this.userInfo = res["data"]
-      this.form.controls["peopleId"].setValue(this.userInfo.user.people._id);
-      this.form.controls["name"].setValue(this.userInfo.user.people.name);
-      this.form.controls["userId"].setValue(this.userInfo.user._id);
-      this.form.controls["shortName"].setValue(this.userInfo.user.shortName);
-    }).catch(err => {
-      console.error(err);
-    })
+    this.userService
+      .getAllUserInfo()
+      .then(res => {
+        console.log(res["data"]);
+        this.userInfo = res["data"];
+        console.log(this.userInfo.mainProfile);
+        if (this.userInfo.mainProfile) {
+          console.log("enviou");
+          this.events.publish("app:showstart", true);
+        } else {
+          this.events.publish("app:showstart", false);
+        }
+        this.form.controls["peopleId"].setValue(this.userInfo.user.people._id);
+        this.form.controls["name"].setValue(this.userInfo.user.people.name);
+        this.form.controls["userId"].setValue(this.userInfo.user._id);
+        this.form.controls["shortName"].setValue(this.userInfo.user.shortName);
+      })
+      .catch(err => {
+        console.error(err);
+      });
     if (!localStorage.getItem("cellphone"))
       localStorage.setItem("cellphone", this.userInfo.cellphone);
     if (this.userInfo.user) {
@@ -126,7 +137,9 @@ export class BasicInfoComponent {
 
   updateInfo(value) {
     this.eventEmmit.emit();
-    this.alertService.presentControlledLoader("Atualizando suas informações...");
+    this.alertService.presentControlledLoader(
+      "Atualizando suas informações..."
+    );
     if (value === "account") {
       if (this.form.valid) {
         this.userService
@@ -151,7 +164,6 @@ export class BasicInfoComponent {
             );
           })
           .catch(err => {
-            
             this.alertService.presentAlert(
               "Erro crítico",
               "Suas informações não foram atualizadas. Tente novamente mais tarde.",
@@ -160,7 +172,6 @@ export class BasicInfoComponent {
             console.error(err);
           });
       } else {
-        
         this.alertService.presentAlert(
           "Informações incorretas",
           `Verifique usas informações básicas de usuário: Todos os campos são obrigatórios e a senha deve ter 6 caracteres`,
@@ -168,7 +179,6 @@ export class BasicInfoComponent {
         );
       }
     } else if (value === "address") {
-      
     } else if (value === "personal") {
     }
     this.alertService.loading.dismiss();
