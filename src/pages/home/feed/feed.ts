@@ -9,6 +9,7 @@ import {
 import { NewsNewPage } from "./news/news-new/news-new";
 import { ProfilesProvider } from "../../../providers/profiles/profiles";
 import { Profile } from "app/model/profile";
+import { FeedProvider } from "../../../providers/feed/feed";
 
 /**
  * Generated class for the FeedPage page.
@@ -40,7 +41,8 @@ export class FeedPage {
     public navParams: NavParams,
     public events: Events,
     private modalCtrl: ModalController,
-    private profilesProvider: ProfilesProvider
+    private profilesProvider: ProfilesProvider,
+    public feedProvider: FeedProvider
   ) {
     profilesProvider.currentProfile.subscribe(profile => {
       this.currentProfile = profile;

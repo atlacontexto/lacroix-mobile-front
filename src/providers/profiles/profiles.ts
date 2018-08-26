@@ -20,7 +20,7 @@ export class ProfilesProvider {
   public listProfiles: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
   constructor(public http: HttpClient) {
-    console.log('Hello ProfilesProvider Provider');
+    console.log("Hello ProfilesProvider Provider");
     this.profiles = profiles;
     this.headers = {
       headers: { "x-access-token": localStorage.getItem("token") }
@@ -141,6 +141,6 @@ export class ProfilesProvider {
   }
 
   setCurrentProfile(profile) {
-    this.currentProfile.next(profile)
+    this.currentProfile.next(profile);
   }
 }

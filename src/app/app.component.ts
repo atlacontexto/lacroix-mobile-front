@@ -36,32 +36,19 @@ export class MyApp {
     public userProvider: UserProvider
   ) {
     this.userProvider.user.subscribe(user => {
-      console.log(user);
       this.user = user;
       if (user.length !== 0) {
-        console;
-        console.log("bosta");
         this.username = this.user.getShortName();
       }
     });
     this.profilesProvider.listProfiles.subscribe(profiles => {
       this.profiles = profiles;
     });
+    this.profilesProvider.currentProfile.subscribe(profile => {
+      this.profileSelected = profile;
+    });
     this.userComp = "UserBasicInfoPage";
-    if (localStorage.getItem("shortName"))
-      this.username = localStorage.getItem("shortName");
-    this.events.subscribe("app:profiles", profiles => {
-      this.profiles = profiles;
-      this.profiles.forEach(element => {
-        if (element["main"]) {
-          this.profileSelected = element;
-        }
-      });
-      this.updateList();
-    });
-    this.events.subscribe("app:user", () => {
-      this.username = localStorage.getItem("shortName");
-    });
+
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
@@ -95,10 +82,11 @@ export class MyApp {
   }
 
   updateList() {
-    console.log(this.profileSelected);
+    // console.log(this.profileSelected);
     if (this.profileSelected) {
-      this.events.publish("app:timeline:profile", this.profileSelected);
-      this.profilesProvider.setCurrentProfile(this.profileSelected);
+      // this.events.publish("app:timeline:profile", this.profileSelected);
+      this.profilesProvider.currentProfile.next(this.profileSelected);
+      // this.profilesProvider.setCurrentProfile(this.profileSelected);
       if (this.profileSelected["profileType"] === "ProfileStudent") {
         this.privatePages = [
           { title: "INÍCIO", component: HomePage, icon: "home" },
