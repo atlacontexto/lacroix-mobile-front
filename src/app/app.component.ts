@@ -9,13 +9,15 @@ import { UserBasicInfoPage } from "../pages/user-basic-info/user-basic-info";
 import { ProfilesProvider } from "../providers/profiles/profiles";
 import { UserProvider } from "../providers/user/user";
 import { User } from "./model/user";
+import { AuthProvider } from "../providers/auth/auth";
+import { AlertProvider } from "../providers/alert-service/alert-service";
 
 @Component({
   templateUrl: "app.html"
 })
 export class MyApp {
-  userComp: string;
   @ViewChild(Nav)
+  userComp: string;
   nav: Nav;
   rootPage: any;
   username: any;
@@ -32,9 +34,49 @@ export class MyApp {
     private translate: TranslateService,
     private config: Config,
     public events: Events,
+    public authProvider: AuthProvider,
     public profilesProvider: ProfilesProvider,
+    public alertProvider: AlertProvider,
     public userProvider: UserProvider
   ) {
+    // Controle d
+    this.authProvider.isLoggedIn.subscribe(value => {
+      if (!value) {
+        const alert = this.alertProvider.alertCtrl.create({
+          title: "Login",
+          message: "Sua sessão expirou. Informe sua senha para entrar de novo",
+          inputs: [
+            {
+              name: "password",
+              placeholder: "Password",
+              type: "password"
+            }
+          ],
+          buttons: [
+            {
+              text: "Cancel",
+              role: "cancel",
+              handler: data => {
+                console.log("Cancel clicked");
+              }
+            },
+            {
+              text: "Login",
+              handler: data => {
+                if (data.password) {
+                  // logged in!
+                } else {
+                  // invalid login
+                  return false;
+                }
+              }
+            }
+          ]
+        });
+        alert.present();
+      }
+    });
+
     this.userProvider.user.subscribe(user => {
       this.user = user;
       if (user.length !== 0) {

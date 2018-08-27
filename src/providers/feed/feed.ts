@@ -28,8 +28,11 @@ export class FeedProvider {
       this.apiUrl = ENV.API_ENDPOINT;
     }
     this.profilesProvider.currentProfile.subscribe(profile => {
-      this.currentProfile = profile;
-      this.getPostsByProfile();
+      if (profile instanceof Profile) {
+        console.log(profile);
+        this.currentProfile = profile;
+        this.getPostsByProfile();
+      }
     });
     this.headers = {
       headers: { "x-access-token": localStorage.getItem("token") }

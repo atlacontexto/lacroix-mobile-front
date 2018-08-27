@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { ENV } from "@environment";
 import * as JWT from "jwt-decode";
+import { BehaviorSubject } from "rxjs";
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -14,8 +15,11 @@ import * as JWT from "jwt-decode";
 export class AuthProvider {
   apiUrl = ENV.API_LOCAL;
   headers: any;
+  isLogged;
+  isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(public http: HttpClient, public platform: Platform) {
+    this.isLoggedIn.next(this.isValid("token"));
     console.log("Hello AuthProvider Provider");
     if (platform.is("cordova")) {
       console.log(ENV.API_ENDPOINT);
@@ -31,12 +35,12 @@ export class AuthProvider {
     }
   }
 
-  isExpired(type: string): boolean {
+  isValid(type: string): boolean {
     try {
       if (localStorage.getItem(type)) {
         let decoded = JWT(localStorage.getItem(type));
         var current_time = new Date().getTime() / 1000;
-        return current_time > decoded["exp"];
+        return current_time < decoded["exp"];
       } else return null;
     } catch (error) {
       return null;
@@ -63,7 +67,7 @@ export class AuthProvider {
 
   checkCode(code) {
     return new Promise((resolve, reject) => {
-      if (!this.isExpired("validationToken")) {
+      if (!this.isValid("validationToken")) {
         this.http
           .post(this.apiUrl + "/notification/codecheck", code, {
             headers: {
