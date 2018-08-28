@@ -44,8 +44,14 @@ export class MyApp {
       if (!value) {
         const alert = this.alertProvider.alertCtrl.create({
           title: "Login",
-          message: "Sua sessão expirou. Informe sua senha para entrar de novo",
+          message:
+            "Sua sessão expirou. Informe sua senha para entrar de novo. Ao cancelar, você será desconectado da aplicação para novo login.",
           inputs: [
+            {
+              name: "login",
+              placeholder: "Nome de Usuário",
+              type: "text"
+            },
             {
               name: "password",
               placeholder: "Password",
@@ -54,16 +60,65 @@ export class MyApp {
           ],
           buttons: [
             {
-              text: "Cancel",
+              text: "Cancelar",
               role: "cancel",
               handler: data => {
-                console.log("Cancel clicked");
+                let confirmAlert = this.alertProvider.alertCtrl.create({
+                  title: "Deseja sair?",
+                  message:
+                    "Ao confirmar, você será direcionado para a tela de Apresentação para novo loging. Deseja continuar",
+                  buttons: [
+                    {
+                      text: "Cancelar",
+                      handler: () => {
+                        this.authProvider.isLoggedIn.next(false);
+                      }
+                    },
+                    {
+                      text: "Sair",
+                      handler: () => {
+                        this.logout();
+                      }
+                    }
+                  ]
+                });
+                confirmAlert.present();
               }
             },
             {
               text: "Login",
               handler: data => {
                 if (data.password) {
+                  this.authProvider
+                    .signin({
+                      shortName: data.login,
+                      password: data.password
+                    })
+                    .then(res => {
+                      console.log(res);
+                    })
+                    .catch(err => {
+                      if (err.status === 401) {
+                        let incorrectAlert = this.alertProvider.alertCtrl.create(
+                          {
+                            title: "Senha incorreta",
+                            message:
+                              "Insira sua senha novamente. Ao errar 3 vezes você será desconectado.",
+                            buttons: [
+                              {
+                                text: "OK",
+                                handler: data => {
+                                  this.authProvider.isLoggedIn.next(false);
+                                }
+                              }
+                            ]
+                          }
+                        );
+                        incorrectAlert.present();
+                      }
+
+                      console.error(err);
+                    });
                   // logged in!
                 } else {
                   // invalid login

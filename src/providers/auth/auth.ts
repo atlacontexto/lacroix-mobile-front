@@ -19,6 +19,11 @@ export class AuthProvider {
   isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(public http: HttpClient, public platform: Platform) {
+    this.headers = {
+      headers: {
+        "x-access-token": localStorage.getItem("token")
+      }
+    };
     this.isLoggedIn.next(this.isValid("token"));
     console.log("Hello AuthProvider Provider");
     if (platform.is("cordova")) {
@@ -45,6 +50,24 @@ export class AuthProvider {
     } catch (error) {
       return null;
     }
+  }
+
+  signin(credentials: any): any {
+    return new Promise((resolve, reject) => {
+      this.http
+        .post(`${this.apiUrl}/signin`, credentials, this.headers)
+        .subscribe(
+          res => {
+            if (res["success"]) {
+              localStorage.setItem("token", res["token"]);
+            }
+            resolve(res);
+          },
+          err => {
+            reject(err);
+          }
+        );
+    });
   }
 
   sendSms(data) {
