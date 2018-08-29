@@ -7,9 +7,25 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>news-new</ion-title>
+    <ion-buttons start (click)="dismiss()">
+      <button ion-button>
+        Cancelar
+      </button>
+    </ion-buttons>
+    <!-- <ion-title text-wrap>Acessando como {{currentProfile.getShowType()}}</ion-title> -->
+    <ion-buttons end>
+      <button ion-button item-end (click)="send()">Enviar</button>
+    </ion-buttons>
   </ion-navbar>
-
+  <ion-item no-lines no-padding *ngIf="isProfile(currentProfile)">
+    <ion-item no-lines (click)="showProfile()">
+      <ion-avatar item-start>
+        <img src="assets/imgs/placeholder.png">
+      </ion-avatar>
+      <p text-wrap>Acessando como {{currentProfile.getShowType()}}</p>
+      <h2>{{detail}}</h2>
+    </ion-item>
+  </ion-item>
 </ion-header>
 
 
@@ -20,11 +36,6 @@
         <ion-label stacked>O que tem para nos contar?</ion-label>
         <ion-textarea #myInput id="myInput" rows="1" maxLength="500" (keyup)="resize()" [(ngModel)]="newsContent"></ion-textarea>
       </ion-item>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <button ion-button color="danger" full (click)="dismiss()">Enviar</button>
-      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

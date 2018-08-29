@@ -37,12 +37,22 @@ export class RegisterPhoneCheckPage {
     this.navCtrl.pop({ direction: "back" });
   }
 
-  resend() {}
+  resend() {
+    this.authService
+      .sendSms(this.form.value)
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   next() {
     this.authService
       .checkCode(this.form.value)
       .then(res => {
+        console.log(res);
         if (res["success"]) {
           this.navCtrl.push(
             "UserBasicInfoPage",
@@ -52,6 +62,19 @@ export class RegisterPhoneCheckPage {
               direction: "forward"
             }
           );
+        } else if (res === "code expired") {
+          let expiredAlert = this.alertService.alertCtrl.create({
+            title: "Erro na validação",
+            message: "Seu código expirou. Um novo código será enviado.",
+            buttons: [
+              {
+                text: "Ok",
+                handler: data => {
+                  this.resend();
+                }
+              }
+            ]
+          });
         } else {
           this.alertService.presentAlert(
             "Erro na validação",

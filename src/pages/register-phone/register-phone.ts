@@ -39,22 +39,14 @@ export class RegisterPhonePage {
     this.authService
       .sendSms(this.form.value)
       .then(data => {
-        if (data["success"]) {
-          this.navCtrl.push(
-            "RegisterPhoneCheckPage",
-            { cellphone: this.form.value.cellphone, via: data["data"]["via"] },
-            {
-              animate: true,
-              direction: "forward"
-            }
-          );
-        } else {
-          this.alertService.presentAlert(
-            "Erro ao enviar SMS",
-            "Tente novamente mais tarde",
-            "OK"
-          );
-        }
+        this.navCtrl.push(
+          "RegisterPhoneCheckPage",
+          { cellphone: this.form.value.cellphone, via: data["via"] },
+          {
+            animate: true,
+            direction: "forward"
+          }
+        );
       })
       .catch(err => {
         console.log(err);

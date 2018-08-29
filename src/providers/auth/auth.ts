@@ -4,6 +4,7 @@ import { Platform } from "ionic-angular";
 import { ENV } from "@environment";
 import * as JWT from "jwt-decode";
 import { BehaviorSubject } from "rxjs";
+import { AlertProvider } from "../alert-service/alert-service";
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -18,7 +19,11 @@ export class AuthProvider {
   isLogged;
   isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(public http: HttpClient, public platform: Platform) {
+  constructor(
+    public http: HttpClient,
+    public platform: Platform,
+    public alertService: AlertProvider
+  ) {
     this.headers = {
       headers: {
         "x-access-token": localStorage.getItem("token")
@@ -80,6 +85,15 @@ export class AuthProvider {
           );
           // localStorage.setItem("refreshToken", res["data"]["refreshToken"]);
           resolve(res);
+          if (res["success"]) {
+            resolve(res["data"]);
+          } else {
+            this.alertService.presentAlert(
+              "Erro ao enviar SMS",
+              "Tente novamente mais tarde",
+              "OK"
+            );
+          }
         },
         err => {
           reject(err);
@@ -90,7 +104,7 @@ export class AuthProvider {
 
   checkCode(code) {
     return new Promise((resolve, reject) => {
-      if (!this.isValid("validationToken")) {
+      if (this.isValid("validationToken")) {
         this.http
           .post(this.apiUrl + "/notification/codecheck", code, {
             headers: {
@@ -110,7 +124,6 @@ export class AuthProvider {
             },
             err => {
               console.error(err);
-              console.log("here");
               reject(err);
             }
           );

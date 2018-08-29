@@ -30,7 +30,6 @@ export class UserProvider {
     }
     if (this.authService.isLoggedIn.value) {
       this.getAllUserInfo().then(userInfo => {
-        console.log(userInfo);
         const user = new User(this.profiles);
         user.setProfiles(userInfo["profiles"]);
         user.setPeople(userInfo["people"]);

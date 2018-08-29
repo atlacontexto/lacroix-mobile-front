@@ -11,14 +11,15 @@ import { UserProvider } from "../providers/user/user";
 import { User } from "./model/user";
 import { AuthProvider } from "../providers/auth/auth";
 import { AlertProvider } from "../providers/alert-service/alert-service";
+import { Profile } from "./model/profile";
 
 @Component({
   templateUrl: "app.html"
 })
 export class MyApp {
   @ViewChild(Nav)
-  userComp: string;
   nav: Nav;
+  userComp: string;
   rootPage: any;
   username: any;
   profileSelected: any;
@@ -41,7 +42,7 @@ export class MyApp {
   ) {
     // Controle d
     this.authProvider.isLoggedIn.subscribe(value => {
-      if (!value) {
+      if (!value && localStorage.getItem("token")) {
         const alert = this.alertProvider.alertCtrl.create({
           title: "Login",
           message:
@@ -142,7 +143,10 @@ export class MyApp {
       this.profiles = profiles;
     });
     this.profilesProvider.currentProfile.subscribe(profile => {
-      this.profileSelected = profile;
+      if (profile instanceof Profile) {
+        this.profileSelected = profile;
+        this.updateList();
+      }
     });
     this.userComp = "UserBasicInfoPage";
 
@@ -155,13 +159,13 @@ export class MyApp {
   }
 
   setRoot() {
-    this.privatePages = [
-      { title: "INÍCIO", component: HomePage, icon: "home" },
-      { title: "BOLETIM", component: "ReportPage", icon: "home" },
-      { title: "PLANEJAMENTO", component: "PlanningPage", icon: "home" },
-      { title: "FREQUÊNCIA", component: "ClassroomPage", icon: "home" },
-      { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
-    ];
+    // this.privatePages = [
+    //   { title: "INÍCIO", component: HomePage, icon: "home" },
+    //   { title: "BOLETIM", component: "ReportPage", icon: "home" },
+    //   { title: "PLANEJAMENTO", component: "PlanningPage", icon: "home" },
+    //   { title: "FREQUÊNCIA", component: "ClassroomPage", icon: "home" },
+    //   { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
+    // ];
 
     if (localStorage.getItem("token")) {
       this.rootPage = HomePage;
@@ -178,11 +182,15 @@ export class MyApp {
     this.config.set("tabsHideOnSubPages", true);
   }
 
-  updateList() {
-    // console.log(this.profileSelected);
+  private changeSelected(): void {
+    this.profilesProvider.currentProfile.next(this.profileSelected);
+    this.updateList;
+  }
+
+  private updateList(): void {
     if (this.profileSelected) {
       // this.events.publish("app:timeline:profile", this.profileSelected);
-      this.profilesProvider.currentProfile.next(this.profileSelected);
+
       // this.profilesProvider.setCurrentProfile(this.profileSelected);
       if (this.profileSelected["profileType"] === "ProfileStudent") {
         this.privatePages = [

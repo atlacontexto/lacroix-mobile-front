@@ -8,8 +8,9 @@ import {
 } from "ionic-angular";
 import { NewsNewPage } from "./news/news-new/news-new";
 import { ProfilesProvider } from "../../../providers/profiles/profiles";
-import { Profile } from "app/model/profile";
+import { Profile } from "../../../app/model/profile";
 import { FeedProvider } from "../../../providers/feed/feed";
+import { NewsModel } from "app/model/newsModel";
 
 /**
  * Generated class for the FeedPage page.
@@ -25,17 +26,16 @@ import { FeedProvider } from "../../../providers/feed/feed";
 })
 export class FeedPage {
   private currentProfile: Profile;
-
-  private posts: Array<{
-    creator: string;
-    avatar?: string;
-    image?: string;
-    message: string;
-    date: string;
-    countLikes: string;
-    countComments: string;
-    timeAgo: string;
-  }>;
+  postFake = {
+    creator: "Savio",
+    avatar: "assets/imgs/placeholder.png",
+    message: "Este é o primeiro post da Atla",
+    date: "1 abril, 2018",
+    countLikes: "14 likes",
+    countComments: "36 comentários",
+    timeAgo: "1h"
+  };
+  private news: Array<NewsModel>;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -44,53 +44,14 @@ export class FeedPage {
     private profilesProvider: ProfilesProvider,
     public feedProvider: FeedProvider
   ) {
-    profilesProvider.currentProfile.subscribe(profile => {
+    this.profilesProvider.currentProfile.subscribe(profile => {
       this.currentProfile = profile;
       console.log(this.currentProfile);
     });
-    /*  this.events.subscribe("app:timeline:profile", value => {
-      console.log(value);
-      this.profileType = value.title;
-      this.detail = value.detail;
-    }) */
-    this.posts = [
-      {
-        creator: "Savio",
-        avatar: "assets/imgs/placeholder.png",
-        message: "Este é o primeiro post da Atla",
-        date: "1 abril, 2018",
-        countLikes: "14 likes",
-        countComments: "36 comentários",
-        timeAgo: "1h"
-      },
-      {
-        creator: "Savio",
-        avatar: "assets/imgs/placeholder.png",
-        message: "Este é o primeiro post da Atla",
-        date: "1 abril, 2018",
-        countLikes: "14 likes",
-        countComments: "36 comentários",
-        timeAgo: "1h"
-      },
-      {
-        creator: "Savio",
-        avatar: "assets/imgs/placeholder.png",
-        message: "Este é o primeiro post da Atla",
-        date: "1 abril, 2018",
-        countLikes: "14 likes",
-        countComments: "36 comentários",
-        timeAgo: "1h"
-      },
-      {
-        creator: "Savio",
-        avatar: "assets/imgs/placeholder.png",
-        message: "Este é o primeiro post da Atla",
-        date: "1 abril, 2018",
-        countLikes: "14 likes",
-        countComments: "36 comentários",
-        timeAgo: "1h"
-      }
-    ];
+    this.feedProvider.news.subscribe(posts => {
+      this.news = posts;
+      console.log(this.news);
+    });
   }
 
   select(post) {
@@ -110,4 +71,17 @@ export class FeedPage {
   }
 
   onInput(event) {}
+
+  isProfile(): boolean {
+    return this.currentProfile instanceof Profile;
+  }
+
+  showProfile(profile?: Profile): void {
+    console.log(profile);
+    if (!profile) {
+      this.navCtrl.push("ProfileShowPage", this.currentProfile);
+    } else {
+      this.navCtrl.push("ProfileShowPage", profile);
+    }
+  }
 }

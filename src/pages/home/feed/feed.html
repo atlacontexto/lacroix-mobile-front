@@ -7,12 +7,15 @@
       (ionCancel)="onCancel($event)">
     </ion-searchbar>
   </ion-navbar>
-  <ion-item no-lines>
-    <ion-avatar item-start>
-      <img src="assets/imgs/placeholder.png">
-    </ion-avatar>
-    <!-- <p>{{currentProfile.getProfileType()}}</p> -->
-    <h2>{{detail}}</h2>
+  <ion-item no-lines no-padding *ngIf="isProfile(currentProfile)">
+    <ion-item no-lines (click)="showProfile()">
+      <ion-avatar item-start>
+        <img src="assets/imgs/placeholder.png">
+      </ion-avatar>
+      <p text-wrap>Acessando como {{currentProfile.getShowType()}}</p>
+      <h2>{{detail}}</h2>
+
+    </ion-item>
     <button ion-button item-end (click)="newPost()">Tenho uma Novidade!</button>
   </ion-item>
 </ion-header>

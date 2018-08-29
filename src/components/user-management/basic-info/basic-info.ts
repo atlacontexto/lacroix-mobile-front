@@ -143,13 +143,8 @@ export class BasicInfoComponent {
               localStorage.setItem("shortName", this.form.value.shortName);
               localStorage.setItem("peopleId", this.form.value.peopleId);
               localStorage.setItem("name", this.form.value.name);
-              this.events.publish("app:user");
-              this.events.publish("app:userinfoupdated", {
-                statusProfile: false,
-                step: "user"
-              });
             }
-            this.alertService.loading.dismiss();
+            // this.alertService.loading.dismiss();
             this.alertService.presentAlert(
               "Informações Atualizadas com sucesso!",
               "Suas informações foram atualizadas e logo serão vistas pelo sistema.",
