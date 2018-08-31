@@ -10,7 +10,8 @@ import { NewsNewPage } from "./news/news-new/news-new";
 import { ProfilesProvider } from "../../../providers/profiles/profiles";
 import { Profile } from "../../../app/model/profile";
 import { FeedProvider } from "../../../providers/feed/feed";
-import { NewsModel } from "app/model/newsModel";
+import { NewsModel } from "../../../app/model/newsModel";
+import { UserProvider } from "../../../providers/user/user";
 
 /**
  * Generated class for the FeedPage page.
@@ -42,7 +43,8 @@ export class FeedPage {
     public events: Events,
     private modalCtrl: ModalController,
     private profilesProvider: ProfilesProvider,
-    public feedProvider: FeedProvider
+    public feedProvider: FeedProvider,
+    public userProvider: UserProvider
   ) {
     this.profilesProvider.currentProfile.subscribe(profile => {
       this.currentProfile = profile;
@@ -79,7 +81,10 @@ export class FeedPage {
   showProfile(profile?: Profile): void {
     console.log(profile);
     if (!profile) {
-      this.navCtrl.push("ProfileShowPage", this.currentProfile);
+      this.navCtrl.push("ProfileShowPage", {
+        profile: { ...this.currentProfile },
+        user: { ...this.userProvider.user.value }
+      });
     } else {
       this.navCtrl.push("ProfileShowPage", profile);
     }

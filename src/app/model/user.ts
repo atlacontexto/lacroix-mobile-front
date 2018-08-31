@@ -1,6 +1,6 @@
 import { Profile } from "./profile";
 import { People } from "./people";
-import { ProfilesProvider } from "providers/profiles/profiles";
+import { ProfilesProvider } from "../../providers/profiles/profiles";
 
 export class User {
   private _id: number;
