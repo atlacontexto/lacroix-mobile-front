@@ -11,4 +11,8 @@ export class People {
     //   this[prop] = jsonObj[prop];
     // }
   }
+
+  getName(): string {
+    return this.name;
+  }
 }

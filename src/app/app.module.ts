@@ -15,13 +15,9 @@ import { RegisterPhonePage } from "../pages/register-phone/register-phone";
 import { RegisterPhoneCheckPage } from "../pages/register-phone-check/register-phone-check";
 import { RegisterPhonePageModule } from "../pages/register-phone/register-phone.module";
 import { RegisterPhoneCheckPageModule } from "../pages/register-phone-check/register-phone-check.module";
-import { UserBasicInfoPageModule } from "../pages/user-basic-info/user-basic-info.module";
-import { UserBasicInfoPage } from "../pages/user-basic-info/user-basic-info";
 import { UserProvider } from "../providers/user/user";
 import { AlertProvider } from "../providers/alert-service/alert-service";
 import { Keyboard } from "@ionic-native/keyboard";
-import { ProfileCreatePageModule } from "../pages/profile-create/profile-create.module";
-import { ProfileCreatePage } from "../pages/profile-create/profile-create";
 import { PostDetailPage } from "../pages/post-detail/post-detail";
 import { PostDetailPageModule } from "../pages/post-detail/post-detail.module";
 import { PlanningPageModule } from "../pages/planning/planning.module";
@@ -46,8 +42,11 @@ import { ProfilesProvider } from "../providers/profiles/profiles";
 import { GeoProvider } from "../providers/geo/geo";
 import { SubjectsProvider } from "../providers/subjects/subjects";
 import { HomePage } from "../pages/home/home";
-import { FeedProvider } from '../providers/feed/feed';
+import { FeedProvider } from "../providers/feed/feed";
 import { AuthProvider } from "../providers/auth/auth";
+import { UserManagementModule } from "../pages/user-management/user-management.module";
+import { ProfileEditPageModule } from "../pages/user-management/profiles/profile-edit/profile-edit.module";
+import { ProfileEditPage } from "../pages/user-management/profiles/profile-edit/profile-edit";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -71,15 +70,15 @@ export function createTranslateLoader(http: HttpClient) {
     LandingPageModule,
     RegisterPhonePageModule,
     RegisterPhoneCheckPageModule,
-    UserBasicInfoPageModule,
-    ProfileCreatePageModule,
+    UserManagementModule,
     PostDetailPageModule,
     PlanningPageModule,
     ReportPageModule,
     ClassroomPageModule,
     ExamPageModule,
     AuthorizationPageModule,
-    PlanningListPageModule
+    PlanningListPageModule,
+    ProfileEditPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -88,8 +87,6 @@ export function createTranslateLoader(http: HttpClient) {
     LandingPage,
     RegisterPhonePage,
     RegisterPhoneCheckPage,
-    UserBasicInfoPage,
-    ProfileCreatePage,
     PostDetailPage,
     PlanningPage,
     ClassroomPage,

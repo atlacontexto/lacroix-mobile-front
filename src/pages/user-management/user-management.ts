@@ -21,10 +21,10 @@ import { UserProvider } from "../../providers/user/user";
 
 @IonicPage()
 @Component({
-  selector: "page-user-basic-info",
-  templateUrl: "user-basic-info.html"
+  selector: "page-user-management",
+  templateUrl: "user-management.html"
 })
-export class UserBasicInfoPage {
+export class UserManagementPage {
   userInfo: any;
   form: FormGroup;
   isReady: boolean;
@@ -47,7 +47,7 @@ export class UserBasicInfoPage {
   ) {
     this.events.subscribe("app:showstart", value => {
       this.showStart = value;
-    })
+    });
     this.events.subscribe("app:userinfoupdated", userinfo => {
       if (userinfo["statusProfile"]) {
         this.statusProfile = false;

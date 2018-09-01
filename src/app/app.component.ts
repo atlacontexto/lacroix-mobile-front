@@ -5,7 +5,6 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { TranslateService } from "@ngx-translate/core";
 import { LandingPage } from "../pages/landing/landing";
-import { UserBasicInfoPage } from "../pages/user-basic-info/user-basic-info";
 import { ProfilesProvider } from "../providers/profiles/profiles";
 import { UserProvider } from "../providers/user/user";
 import { User } from "./model/user";
@@ -148,7 +147,7 @@ export class MyApp {
         this.updateList();
       }
     });
-    this.userComp = "UserBasicInfoPage";
+    this.userComp = "UserManagementPage";
 
     platform.ready().then(() => {
       statusBar.styleDefault();

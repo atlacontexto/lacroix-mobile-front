@@ -48,11 +48,9 @@ export class FeedPage {
   ) {
     this.profilesProvider.currentProfile.subscribe(profile => {
       this.currentProfile = profile;
-      console.log(this.currentProfile);
     });
     this.feedProvider.news.subscribe(posts => {
       this.news = posts;
-      console.log(this.news);
     });
   }
 
@@ -79,14 +77,11 @@ export class FeedPage {
   }
 
   showProfile(profile?: Profile): void {
-    console.log(profile);
     if (!profile) {
-      this.navCtrl.push("ProfileShowPage", {
-        profile: { ...this.currentProfile },
-        user: { ...this.userProvider.user.value }
-      });
+      this.profilesProvider.showingProfile.next(this.currentProfile);
     } else {
-      this.navCtrl.push("ProfileShowPage", profile);
+      this.profilesProvider.showingProfile.next(profile);
     }
+    this.navCtrl.push("ProfileShowPage");
   }
 }

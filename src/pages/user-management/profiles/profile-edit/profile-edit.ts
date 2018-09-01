@@ -1,12 +1,12 @@
 import { Component } from "@angular/core";
 import {
-  IonicPage,
   NavController,
   NavParams,
-  ViewController
+  ViewController,
+  IonicPage
 } from "ionic-angular";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { UserProvider } from "../../providers/user/user";
+import { UserProvider } from "../../../../providers/user/user";
 
 /**
  * Generated class for the ProfileEditPage page.
@@ -14,7 +14,6 @@ import { UserProvider } from "../../providers/user/user";
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
 @IonicPage()
 @Component({
   selector: "page-profile-edit",

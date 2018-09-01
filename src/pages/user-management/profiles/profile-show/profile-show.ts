@@ -1,7 +1,9 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
-import { Profile } from "../../app/model/profile";
-import { User } from "../../app/model/user";
+import { User } from "../../../../app/model/user";
+import { Profile } from "../../../../app/model/profile";
+import { ProfilesProvider } from "../../../../providers/profiles/profiles";
+import { UserProvider } from "../../../../providers/user/user";
 
 /**
  * Generated class for the ProfileShowPage page.
@@ -32,14 +34,24 @@ export class ProfileShowPage {
   userIn: User;
   profile: Profile;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.profile = this.navParams.get("profile");
-    this.userIn = this.navParams.get("user");
-    console.log(this.profile);
-    console.log(this.userIn);
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public profilesProvider: ProfilesProvider,
+    public userProvider: UserProvider
+  ) {
+    this.profile = this.profilesProvider.showingProfile.value;
+    if (this.profile instanceof Profile) {
+      this.userIn = this.userProvider.user.value;
+      console.log(this.userIn);
+    }
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad ProfileFivePage");
+  }
+
+  isUser(): boolean {
+    return this.userIn instanceof User;
   }
 }

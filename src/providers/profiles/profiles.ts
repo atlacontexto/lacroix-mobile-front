@@ -16,6 +16,7 @@ export class ProfilesProvider {
   profiles: any;
   headers: any;
 
+  public showingProfile: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   public currentProfile: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   public listProfiles: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 

@@ -4,13 +4,12 @@ import { ProfilesProvider } from "../../providers/profiles/profiles";
 
 export class User {
   private _id: number;
-  private name: string;
   private profiles: Profile[] = new Array<Profile>();
   private people: People;
   private mainProfile: any;
   private shortName: any;
 
-  constructor(public profilesProvider: ProfilesProvider) {}
+  constructor(public profilesProvider?: ProfilesProvider) {}
 
   setProfiles(profiles: any): any {
     if (profiles) {
@@ -26,6 +25,10 @@ export class User {
     if (people) {
       this.people = Object.assign(new People(), people);
     }
+  }
+
+  getPeople(): People {
+    return this.people;
   }
 
   setShortName(shortname: any): any {

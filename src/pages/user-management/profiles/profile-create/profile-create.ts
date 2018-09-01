@@ -1,12 +1,12 @@
 import { Component } from "@angular/core";
 import {
-  IonicPage,
   NavController,
   NavParams,
-  ViewController
+  ViewController,
+  IonicPage
 } from "ionic-angular";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import profiles from "../../fakedb/profiles";
+import profiles from "../../../../fakedb/profiles";
 
 /**
  * Generated class for the ProfileCreatePage page.
@@ -14,7 +14,6 @@ import profiles from "../../fakedb/profiles";
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
 @IonicPage()
 @Component({
   selector: "page-profile-create",
