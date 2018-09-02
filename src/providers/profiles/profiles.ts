@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import profiles from "../../fakedb/profiles";
 import { ENV } from "@environment";
 import { BehaviorSubject } from "rxjs";
+import { AuthProvider } from "../auth/auth";
 
 /*
   Generated class for the ProfilesProvider provider.
@@ -20,12 +21,16 @@ export class ProfilesProvider {
   public currentProfile: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   public listProfiles: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, public authProvider: AuthProvider) {
     console.log("Hello ProfilesProvider Provider");
     this.profiles = profiles;
-    this.headers = {
-      headers: { "x-access-token": localStorage.getItem("token") }
-    };
+    this.authProvider.isLoggedIn.subscribe(value => {
+      if (value) {
+        this.headers = {
+          headers: { "x-access-token": localStorage.getItem("token") }
+        };
+      }
+    });
   }
 
   getLevelViewName(name) {
@@ -123,6 +128,14 @@ export class ProfilesProvider {
         .post(`${this.apiUrl}/profile/${typeProfile}`, form, this.headers)
         .subscribe(
           res => {
+            this.authProvider
+              .updateToken()
+              .then(res => {
+                console.log(res);
+              })
+              .catch(err => {
+                console.error(err);
+              });
             resolve(res);
           },
           err => {

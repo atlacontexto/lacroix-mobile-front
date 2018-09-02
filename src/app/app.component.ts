@@ -133,13 +133,14 @@ export class MyApp {
     });
 
     this.userProvider.user.subscribe(user => {
-      this.user = user;
-      if (user.length !== 0) {
+      if (user instanceof User) {
+        this.user = user;
         this.username = this.user.getShortName();
       }
     });
     this.profilesProvider.listProfiles.subscribe(profiles => {
       this.profiles = profiles;
+      this.updateList();
     });
     this.profilesProvider.currentProfile.subscribe(profile => {
       if (profile instanceof Profile) {
@@ -158,15 +159,9 @@ export class MyApp {
   }
 
   setRoot() {
-    // this.privatePages = [
-    //   { title: "INÍCIO", component: HomePage, icon: "home" },
-    //   { title: "BOLETIM", component: "ReportPage", icon: "home" },
-    //   { title: "PLANEJAMENTO", component: "PlanningPage", icon: "home" },
-    //   { title: "FREQUÊNCIA", component: "ClassroomPage", icon: "home" },
-    //   { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
-    // ];
-
-    if (localStorage.getItem("token")) {
+    if (this.user instanceof User && this.user.getProfiles().length == 0) {
+      this.rootPage = "UserManagementPage";
+    } else if (localStorage.getItem("token")) {
       this.rootPage = HomePage;
     } else {
       this.rootPage = LandingPage;

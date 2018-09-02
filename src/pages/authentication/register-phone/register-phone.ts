@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { AlertProvider } from "../../providers/alert-service/alert-service";
-import { AuthProvider } from "../../providers/auth/auth";
+import { AuthProvider } from "../../../providers/auth/auth";
+import { AlertProvider } from "../../../providers/alert-service/alert-service";
 
 /**
  * Generated class for the RegisterPhonePage page.

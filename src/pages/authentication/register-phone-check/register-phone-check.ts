@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AlertProvider } from "../../providers/alert-service/alert-service";
-import { AuthProvider } from "../../providers/auth/auth";
+import { AuthProvider } from "../../../providers/auth/auth";
+import { AlertProvider } from "../../../providers/alert-service/alert-service";
 
 /**
  * Generated class for the RegisterPhoneCheckPage page.
@@ -52,10 +52,9 @@ export class RegisterPhoneCheckPage {
     this.authService
       .checkCode(this.form.value)
       .then(res => {
-        console.log(res);
         if (res["success"]) {
           this.navCtrl.push(
-            "UserBasicInfoPage",
+            "UserManagementPage",
             { cellphone: this.cellphone, step: "user", user: res["data"] },
             {
               animate: true,
@@ -84,7 +83,6 @@ export class RegisterPhoneCheckPage {
         }
       })
       .catch(err => {
-        console.error(err);
         let message;
         if (err.error.message == "Invalid code.") {
           message = "seu código está incorreto";

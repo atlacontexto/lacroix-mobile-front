@@ -25,94 +25,18 @@
       </ion-col>
     </ion-row>
 
-
     <profile-create-student *ngIf="profileType == 'student'" (formStudentSubmited)="dismiss($event)"></profile-create-student>
-    <ion-row>
-      <!-- <ion-col>
-        <ion-item no-padding>
-          <ion-label>Meu CGM</ion-label>
-          <ion-input type="text"></ion-input>
-        </ion-item>
-      </ion-col> -->
-    </ion-row>
-
 
     <profile-create-parent *ngIf="profileType == 'parent'" (formParentSubmited)="dismiss($event)"></profile-create-parent>
 
-    <!-- <form [formGroup]=formParent>
-      <ion-row>
-        <ion-col>
-          <ion-item no-padding>
-            <ion-label floating>CGM do meu filho</ion-label>
-            <ion-input formControlName=cgm type="number"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </form> -->
-
     <profile-create-professor *ngIf="profileType == 'professor'" (formProfessorSubmited)="dismiss($event)"></profile-create-professor>
-    <!-- <ion-row>
-      <ion-col col-12>
-        <ion-item no-padding>
-          <ion-label floating>Nível</ion-label>
-          <ion-select [(ngModel)]="level">
-            <ion-option value="infantil">Infantil</ion-option>
-            <ion-option value="fundamental1">Fundamental 1</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-      <ion-col col-12 *ngIf="level == 'fundamental1'">
-        <h4 text-center>Áreas de interesse</h4>
-        <form [formGroup]=formProfessor>
-          <ion-item no-padding *ngFor='let theme of themes'>
-            <ion-label>{{theme.title}}</ion-label>
-            <ion-toggle (checked)="theme.checked" [formControlName]="theme.formControl" color=atla-red></ion-toggle>
-          </ion-item>
-        </form>
-      </ion-col>
-    </ion-row> -->
 
     <profile-create-comunity *ngIf="profileType == 'comunity'" (formComunitySubmited)="dismiss()"></profile-create-comunity>
-    <!-- <ion-row>
-      <ion-col col-12>
-        <ion-item no-padding>
-          <ion-label floating>Nível</ion-label>
-          <ion-select [(ngModel)]="comunityRole">
-            <ion-option value="voluntary">Voluntário</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row> -->
 
     <profile-create-county *ngIf="profileType == 'county'" (formCountySubmited)="dismiss($event)"></profile-create-county>
-    <!-- <ion-row>
-      <ion-col col-12>
-        <p ion-text text-justify text-uppercase>
-          Os perfis para Gerenciamento Municipal são criados automaticamente ao ser realizado o contrato de uso do serviço. As funcionalidades
-          para você devem ser liberadas pelo seu superior imediato. Ao serem liberadas, você receberá uma notificação na
-          tela inicial do seu aplicativo.
-        </p>
-      </ion-col>
-    </ion-row> -->
 
     <profile-create-school *ngIf="profileType == 'school'" (formSchoolSubmited)="dismiss($event)"></profile-create-school>
 
-    <!-- <ion-row>
-      <ion-col col-12>
-        <p ion-text text-justify text-uppercase>
-          Os perfis para Gerenciamento Escolar são criados automaticamente ao ser realizado o contrato de uso do serviço. As funcionalidades
-          para você devem ser liberadas pelo seu superior imediato. Ao serem liberadas, você receberá uma notificação na
-          tela inicial do seu aplicativo.
-        </p>
-      </ion-col>
-    </ion-row> -->
-
-
-    <!-- <ion-row>
-      <button color=atla-red ion-button *ngIf=profileType full text-uppercase (click)="dismiss()">
-        {{'NEXT_BUTTON' | translate}}
-      </button>
-    </ion-row> -->
   </ion-grid>
 
 </ion-content>

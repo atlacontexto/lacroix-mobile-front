@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Events } from "ionic-angular";
 import { AlertProvider } from "../../../providers/alert-service/alert-service";
 import { UserProvider } from "../../../providers/user/user";
+import { User } from "../../../app/model/user";
+import { ProfilesProvider } from "../../../providers/profiles/profiles";
 
 /**
  * Generated class for the BasicInfoComponent component.
@@ -28,7 +30,8 @@ export class BasicInfoComponent {
     public formBuilder: FormBuilder,
     public userService: UserProvider,
     public events: Events,
-    public alertService: AlertProvider
+    public alertService: AlertProvider,
+    public profilesProvider: ProfilesProvider
   ) {
     this.items = [
       { viewValue: "CONTA", value: "account", expanded: false },
@@ -68,15 +71,34 @@ export class BasicInfoComponent {
     this.userService
       .getAllUserInfo()
       .then(res => {
+        if (!(this.userService.user.value instanceof User)) {
+          const user = new User(this.profilesProvider);
+          user.setProfiles(res["profiles"]);
+          user.setPeople(res["people"]);
+          user.setMainProfile(res["mainProfile"]);
+          user.setId(res["_id"]);
+          user.setShortName(res["shortName"]);
+          this.profilesProvider.currentProfile.next(user.getMainProfile());
+          this.userService.user.next(user);
+
+          let toast = this.alertService.toastCtrl.create({
+            message: `Olá ${this.userInfo.people.name}`,
+            duration: 2000
+          });
+          toast.present();
+        }
         this.userInfo = res;
-        console.log(this.userInfo);
         this.form.controls["peopleId"].setValue(this.userInfo.people._id);
         this.form.controls["name"].setValue(this.userInfo.people.name);
         this.form.controls["userId"].setValue(this.userInfo._id);
         this.form.controls["shortName"].setValue(this.userInfo.shortName);
       })
       .catch(err => {
-        console.error(err);
+        let toast = this.alertService.toastCtrl.create({
+          message: "Cadastro de novo usuário",
+          duration: 2000
+        });
+        toast.present();
       });
     if (!localStorage.getItem("cellphone"))
       localStorage.setItem("cellphone", this.userInfo.cellphone);

@@ -11,20 +11,12 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateLoader } from "@ngx-translate/core";
 import { LandingPage } from "../pages/landing/landing";
 import { LandingPageModule } from "../pages/landing/landing.module";
-import { RegisterPhonePage } from "../pages/register-phone/register-phone";
-import { RegisterPhoneCheckPage } from "../pages/register-phone-check/register-phone-check";
-import { RegisterPhonePageModule } from "../pages/register-phone/register-phone.module";
-import { RegisterPhoneCheckPageModule } from "../pages/register-phone-check/register-phone-check.module";
 import { UserProvider } from "../providers/user/user";
 import { AlertProvider } from "../providers/alert-service/alert-service";
 import { Keyboard } from "@ionic-native/keyboard";
 import { PostDetailPage } from "../pages/post-detail/post-detail";
 import { PostDetailPageModule } from "../pages/post-detail/post-detail.module";
-import { PlanningPageModule } from "../pages/planning/planning.module";
 import { ReportPageModule } from "../pages/report/report.module";
-import { ClassroomPageModule } from "../pages/classroom/classroom.module";
-import { PlanningPage } from "../pages/planning/planning";
-import { ClassroomPage } from "../pages/classroom/classroom";
 import { ReportPage } from "../pages/report/report";
 import { ExamPage } from "../pages/exam/exam";
 import { ExamPageModule } from "../pages/exam/exam.module";
@@ -32,8 +24,6 @@ import { AuthorizationPage } from "../pages/authorization/authorization";
 import { AuthorizationPageModule } from "../pages/authorization/authorization.module";
 
 import { NgCalendarModule } from "ionic2-calendar";
-import { PlanningListPage } from "../pages/planning-list/planning-list";
-import { PlanningListPageModule } from "../pages/planning-list/planning-list.module";
 import { NotificationProvider } from "../providers/notification/notification";
 import { ClassroomServiceProvider } from "../providers/classroom-service/classroom-service";
 import { HomePageModule } from "../pages/home/home.module";
@@ -47,6 +37,11 @@ import { AuthProvider } from "../providers/auth/auth";
 import { UserManagementModule } from "../pages/user-management/user-management.module";
 import { ProfileEditPageModule } from "../pages/user-management/profiles/profile-edit/profile-edit.module";
 import { ProfileEditPage } from "../pages/user-management/profiles/profile-edit/profile-edit";
+import { PlanningListPageModule } from "../pages/professor/planning-list/planning-list.module";
+import { ClassroomPageModule } from "../pages/professor/classroom/classroom.module";
+import { PlanningPageModule } from "../pages/professor/planning/planning.module";
+import { RegisterPhonePageModule } from "../pages/authentication/register-phone/register-phone.module";
+import { RegisterPhoneCheckPageModule } from "../pages/authentication/register-phone-check/register-phone-check.module";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -85,15 +80,10 @@ export function createTranslateLoader(http: HttpClient) {
     MyApp,
     HomePage,
     LandingPage,
-    RegisterPhonePage,
-    RegisterPhoneCheckPage,
     PostDetailPage,
-    PlanningPage,
-    ClassroomPage,
     ReportPage,
     ExamPage,
-    AuthorizationPage,
-    PlanningListPage
+    AuthorizationPage
   ],
   providers: [
     StatusBar,

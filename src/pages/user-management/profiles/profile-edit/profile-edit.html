@@ -44,6 +44,11 @@
     </ion-row>
 
     <profile-edit-student *ngIf="profileType === 'ProfileStudent'" [profileStudentInfo]="profile"></profile-edit-student>
+    <profile-edit-parent *ngIf="profileType === 'ProfileParent'"></profile-edit-parent>
+    <profile-edit-professor *ngIf="profileType === 'ProfileProfessor'"></profile-edit-professor>
+    <profile-edit-school *ngIf="profileType === 'ProfileSchool'"></profile-edit-school>
+    <profile-edit-county *ngIf="profileType === 'ProfileCounty'"></profile-edit-county>
+    <profile-edit-comunity *ngIf="profileType === 'ProfileComunity'"></profile-edit-comunity>
 
     <ion-row>
       <ion-col>

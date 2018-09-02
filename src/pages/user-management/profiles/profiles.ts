@@ -50,13 +50,13 @@ export class ProfilesComponent {
     profileModal.onDidDismiss(() => {
       // if(page.component === "ProfileCreatePage")
       this.updateProfilesListing();
-    })
+    });
     profileModal.present();
   }
 
   ngAfterContentInit() {
     if (this.showProfiles) {
-      this.updateProfilesListing()
+      this.updateProfilesListing();
     }
     if (!this.slides) {
       this.slides = [
@@ -107,8 +107,8 @@ export class ProfilesComponent {
               title = "Comunidade";
             }
             let main = false;
-            if(element._id === res.data.main) {
-              main = true
+            if (element._id === res.data.main) {
+              main = true;
             }
             this.showProfiles.push(
               Object.assign(element, {
@@ -120,7 +120,7 @@ export class ProfilesComponent {
             );
           });
           this.events.publish("app:profiles", this.showProfiles);
-          if(this.showProfiles.length) {
+          if (this.showProfiles.length) {
             this.events.publish("app:showstart", true);
           } else {
             this.events.publish("app:showstart", false);

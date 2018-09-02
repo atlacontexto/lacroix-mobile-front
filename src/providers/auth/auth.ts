@@ -37,6 +37,23 @@ export class AuthProvider {
     }
   }
 
+  updateToken(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.post(`${this.apiUrl}/updateToken`, {}, this.headers).subscribe(
+        res => {
+          if (res["success"]) {
+            localStorage.setItem("token", res["token"]);
+            this.isLoggedIn.next(this.isValid("token"));
+          }
+          resolve(res);
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
+  }
+
   getDecodedAccessToken(type: string): any {
     try {
       if (localStorage.getItem(type)) return JWT(localStorage.getItem(type));
@@ -65,6 +82,7 @@ export class AuthProvider {
           res => {
             if (res["success"]) {
               localStorage.setItem("token", res["token"]);
+              this.isLoggedIn.next(this.isValid("token"));
             }
             resolve(res);
           },
@@ -109,7 +127,7 @@ export class AuthProvider {
           .post(this.apiUrl + "/notification/codecheck", code, {
             headers: {
               "x-access-token":
-                localStorage.getItem("token") ||
+                // localStorage.getItem("token") ||
                 localStorage.getItem("validationToken")
             }
           })
@@ -118,12 +136,12 @@ export class AuthProvider {
               if (res["token"]) {
                 localStorage.removeItem("validationToken");
                 localStorage.setItem("token", res["token"]);
+                this.isLoggedIn.next(this.isValid("token"));
               }
-              console.log(res);
+
               resolve(res);
             },
             err => {
-              console.error(err);
               reject(err);
             }
           );

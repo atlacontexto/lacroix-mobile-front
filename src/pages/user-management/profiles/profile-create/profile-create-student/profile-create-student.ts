@@ -5,6 +5,7 @@ import { GeoProvider } from "../../../../../providers/geo/geo";
 import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
 import { ModalController } from "ionic-angular";
 import { UserProvider } from "../../../../../providers/user/user";
+import { AuthProvider } from "../../../../../providers/auth/auth";
 
 /**
  * Generated class for the ProfileCreateStudentComponent component.
@@ -19,7 +20,8 @@ import { UserProvider } from "../../../../../providers/user/user";
 export class ProfileCreateStudentComponent {
   formStudent: FormGroup;
   levelSelected: any;
-  @Output() formStudentSubmited = new EventEmitter();
+  @Output()
+  formStudentSubmited = new EventEmitter();
   levels: { value: string; viewValue: string }[];
   years: any;
   counties: any;
@@ -33,7 +35,8 @@ export class ProfileCreateStudentComponent {
     private geoProvider: GeoProvider,
     private alertProvider: AlertProvider,
     private modalCtrl: ModalController,
-    private userService: UserProvider
+    private userService: UserProvider,
+    private authProvider: AuthProvider
   ) {
     this.formStudent = this.formBuilder.group({
       user: [this.userService.getUserAtt("_id")],

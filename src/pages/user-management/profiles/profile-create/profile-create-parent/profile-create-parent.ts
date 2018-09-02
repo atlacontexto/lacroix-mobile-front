@@ -16,7 +16,8 @@ import { UserProvider } from "../../../../../providers/user/user";
   templateUrl: "profile-create-parent.html"
 })
 export class ProfileCreateParentComponent {
-  @Output() formParentSubmited = new EventEmitter();
+  @Output()
+  formParentSubmited = new EventEmitter();
   formParent: FormGroup;
   kinships: any;
   child: any;
@@ -97,6 +98,7 @@ export class ProfileCreateParentComponent {
       this.profilesProvider
         .createProfile("parent", this.formParent.value)
         .then(res => {
+          console.log(res);
           if (res["success"]) {
             this.alertProvider.presentAlert(
               "Perfil Familiar criado",
@@ -114,6 +116,12 @@ export class ProfileCreateParentComponent {
             "OK"
           );
         });
+    } else {
+      this.alertProvider.presentAlert(
+        "Informações incompletas",
+        "Preencha os campos obrigatórios",
+        "Ok"
+      );
     }
   }
 
