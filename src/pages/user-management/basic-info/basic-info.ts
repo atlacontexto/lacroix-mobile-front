@@ -1,6 +1,6 @@
-import { Component, Input, EventEmitter } from "@angular/core";
+import { Component, Input, EventEmitter, Output } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Events } from "ionic-angular";
+
 import { AlertProvider } from "../../../providers/alert-service/alert-service";
 import { UserProvider } from "../../../providers/user/user";
 import { User } from "../../../app/model/user";
@@ -24,12 +24,12 @@ export class BasicInfoComponent {
   cellphone: string;
 
   items: any = [];
+  @Output()
   eventEmmit = new EventEmitter<string>();
 
   constructor(
     public formBuilder: FormBuilder,
     public userService: UserProvider,
-    public events: Events,
     public alertService: AlertProvider,
     public profilesProvider: ProfilesProvider
   ) {
@@ -44,7 +44,7 @@ export class BasicInfoComponent {
         peopleId: [""],
         name: ["", Validators.required],
         userId: [""],
-        shortName: ["", Validators.required],
+        shortName: [{ value: "", disabled: false }, Validators.required],
         password: [
           "",
           Validators.compose([
@@ -68,9 +68,11 @@ export class BasicInfoComponent {
   }
 
   ngAfterContentInit() {
+    this.expandItem(this.items[0]);
     this.userService
       .getAllUserInfo()
       .then(res => {
+        console.log(res["shortName"]);
         if (!(this.userService.user.value instanceof User)) {
           const user = new User(this.profilesProvider);
           user.setProfiles(res["profiles"]);
@@ -88,12 +90,17 @@ export class BasicInfoComponent {
           toast.present();
         }
         this.userInfo = res;
+        this.form.controls["shortName"].disable();
         this.form.controls["peopleId"].setValue(this.userInfo.people._id);
         this.form.controls["name"].setValue(this.userInfo.people.name);
         this.form.controls["userId"].setValue(this.userInfo._id);
         this.form.controls["shortName"].setValue(this.userInfo.shortName);
+        if (res["profiles"].length == 0) {
+          this.requestForCreateProfile();
+        }
       })
       .catch(err => {
+        this.form.controls["shortName"].enable();
         let toast = this.alertService.toastCtrl.create({
           message: "Cadastro de novo usuário",
           duration: 2000
@@ -111,10 +118,6 @@ export class BasicInfoComponent {
       this.form.controls["shortName"].setValue(this.userInfo.user.shortName);
     } else {
       // Launched from Home
-      this.events.publish("app:userinfoupdated", {
-        step: "user",
-        statusProfile: true
-      });
       this.cellphone = localStorage.getItem("cellphone");
       this.form.controls["peopleId"].setValue(localStorage.getItem("peopleId"));
       this.form.controls["name"].setValue(localStorage.getItem("name"));
@@ -150,8 +153,25 @@ export class BasicInfoComponent {
     };
   }
 
+  requestForCreateProfile() {
+    let requestForProfile = this.alertService.alertCtrl.create({
+      title: "Crie um perfil!",
+      message:
+        "Vá em Perfis > Novo Perfil e escolha o perfil que mais se adequa a você.",
+      buttons: [
+        {
+          text: "OK",
+          handler: () => {
+            this.eventEmmit.emit("profile");
+          }
+        }
+      ]
+    });
+    requestForProfile.present();
+  }
+
   updateInfo(value) {
-    this.eventEmmit.emit();
+    // this.eventEmmit.emit();
     this.alertService.presentControlledLoader(
       "Atualizando suas informações..."
     );
@@ -166,20 +186,52 @@ export class BasicInfoComponent {
               localStorage.setItem("peopleId", this.form.value.peopleId);
               localStorage.setItem("name", this.form.value.name);
             }
-            // this.alertService.loading.dismiss();
-            this.alertService.presentAlert(
-              "Informações Atualizadas com sucesso!",
-              "Suas informações foram atualizadas e logo serão vistas pelo sistema.",
-              "Ok"
-            );
+
+            this.userService.buildUser().then(() => {
+              let infoUpdatedAlert = this.alertService.alertCtrl.create({
+                title: "Informações Atualizadas com sucesso!",
+                message:
+                  "Suas informações foram atualizadas e logo serão vistas pelo sistema.",
+                buttons: [
+                  {
+                    text: "Ok",
+                    handler: () => {
+                      if (
+                        this.userService.user.value instanceof User &&
+                        !this.userService.user.value.hasProfiles()
+                      ) {
+                        this.requestForCreateProfile();
+                      }
+                    }
+                  }
+                ]
+              });
+            });
           })
           .catch(err => {
-            this.alertService.presentAlert(
-              "Erro crítico",
-              "Suas informações não foram atualizadas. Tente novamente mais tarde.",
-              "Ok"
-            );
-            console.error(err);
+            if (err.error.code === 11000) {
+              switch (err.error.data.fields) {
+                case "shortName":
+                  this.alertService.presentAlert(
+                    "Escolha outro Nome de Usuário",
+                    `${
+                      this.form.value["shortName"]
+                    } já está em uso. Escolha outro e tente novamente`,
+                    "Ok"
+                  );
+
+                  break;
+
+                default:
+                  break;
+              }
+            } else {
+              this.alertService.presentAlert(
+                "Erro crítico",
+                "Suas informações não foram atualizadas. Tente novamente mais tarde.",
+                "Ok"
+              );
+            }
           });
       } else {
         this.alertService.presentAlert(

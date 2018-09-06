@@ -28,8 +28,11 @@ export class UserProvider {
     if (platform.is("cordova")) {
       this.apiUrl = ENV.API_ENDPOINT;
     }
-    if (this.authService.isLoggedIn.value) {
-      this.getAllUserInfo().then(userInfo => {
+  }
+
+  async buildUser() {
+    return await this.getAllUserInfo()
+      .then(userInfo => {
         const user = new User(this.profiles);
         user.setProfiles(userInfo["profiles"]);
         user.setPeople(userInfo["people"]);
@@ -38,8 +41,10 @@ export class UserProvider {
         user.setShortName(userInfo["shortName"]);
         this.profiles.currentProfile.next(user.getMainProfile());
         this.user.next(user);
+      })
+      .catch(err => {
+        console.log(err);
       });
-    }
   }
 
   getUserAtt(att) {
@@ -136,8 +141,6 @@ export class UserProvider {
           res => {
             if (res["success"]) {
               resolve(res["data"]["user"]);
-            } else {
-              resolve["success"];
             }
           },
           err => {

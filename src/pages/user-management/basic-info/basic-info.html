@@ -5,9 +5,7 @@
       <button color="orange-payplug" *ngIf="!item.expanded" ion-button outline item-end>
         ALTERAR
       </button>
-      <button color="orange-payplug" *ngIf="item.expanded" ion-button item-end (click)="updateInfo(item.value)">
-        PRONTO
-      </button>
+
     </ion-item>
     <expandable style="width: 100%" [expandHeight]="itemExpandHeight" [expanded]="item.expanded">
       <ion-row *ngIf="item.expanded && item.value === 'account'">
@@ -45,6 +43,7 @@
             <ion-label stacked>Repita a senha</ion-label>
             <ion-input formControlName="confirmPassword" type="text"></ion-input>
           </ion-item>
+          <button ion-button full (click)="updateInfo(item.value)">SALVAR</button>
         </form>
       </ion-row>
 

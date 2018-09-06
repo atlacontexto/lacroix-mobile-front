@@ -19,7 +19,7 @@
 
 <ion-content padding>
   <div no-padding [ngSwitch]="step" col-xl-8 offset-xl-2>
-    <basic-info *ngSwitchCase="'user'" [userInfo]="userInfo"></basic-info>
+    <basic-info (eventEmmit)="switchSegment($event)" *ngSwitchCase="'user'" [userInfo]="userInfo"></basic-info>
     <profiles *ngSwitchCase="'profile'"></profiles>
   </div>
   <ion-row *ngIf="showStart">

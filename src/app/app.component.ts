@@ -153,12 +153,24 @@ export class MyApp {
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
-      this.setRoot();
+      if (this.authProvider.isLoggedIn.value) {
+        this.userProvider
+          .buildUser()
+          .then(() => {
+            this.setRoot();
+          })
+          .catch(() => {
+            this.setRoot();
+          });
+      }
     });
     this.initTranslate();
   }
 
   setRoot() {
+    console.log("root?");
+    // console.log(this.user instanceof User);
+    // console.log(this.user.getProfiles().length);
     if (this.user instanceof User && this.user.getProfiles().length == 0) {
       this.rootPage = "UserManagementPage";
     } else if (localStorage.getItem("token")) {

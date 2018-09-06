@@ -4,6 +4,7 @@ import profiles from "../../fakedb/profiles";
 import { ENV } from "@environment";
 import { BehaviorSubject } from "rxjs";
 import { AuthProvider } from "../auth/auth";
+import { Platform } from "ionic-angular";
 
 /*
   Generated class for the ProfilesProvider provider.
@@ -21,8 +22,16 @@ export class ProfilesProvider {
   public currentProfile: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   public listProfiles: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
-  constructor(public http: HttpClient, public authProvider: AuthProvider) {
+  constructor(
+    public http: HttpClient,
+    public authProvider: AuthProvider,
+    public platform: Platform
+  ) {
     console.log("Hello ProfilesProvider Provider");
+    if (platform.is("cordova")) {
+      console.log(ENV.API_ENDPOINT);
+      this.apiUrl = ENV.API_ENDPOINT;
+    }
     this.profiles = profiles;
     this.authProvider.isLoggedIn.subscribe(value => {
       if (value) {

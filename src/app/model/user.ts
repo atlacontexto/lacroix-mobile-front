@@ -31,6 +31,10 @@ export class User {
     return this.people;
   }
 
+  hasProfiles(): boolean {
+    return this.profiles.length > 0;
+  }
+
   setShortName(shortname: any): any {
     this.shortName = shortname;
   }

@@ -11,6 +11,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { HomePage } from "../home/home";
 import { Keyboard } from "@ionic-native/keyboard";
 import { UserProvider } from "../../providers/user/user";
+import { User } from "../../app/model/user";
 
 /**
  * Generated class for the UserBasicInfoPage page.
@@ -30,7 +31,7 @@ export class UserManagementPage {
   isReady: boolean;
   step = "user";
   statusUser: boolean;
-  statusProfile: boolean;
+  statusProfile = true;
   showFooter = true;
   showProfiles: Array<any>;
   showStart = false;
@@ -45,14 +46,13 @@ export class UserManagementPage {
     public modalCtrl: ModalController,
     public events: Events
   ) {
-    this.events.subscribe("app:showstart", value => {
-      this.showStart = value;
-    });
-    this.events.subscribe("app:userinfoupdated", userinfo => {
-      if (userinfo["statusProfile"]) {
+    this.userService.user.subscribe(user => {
+      if (user instanceof User) {
         this.statusProfile = false;
       }
-      if (userinfo["step"]) this.step = userinfo["step"];
+    });
+    this.events.subscribe("app:showstart", value => {
+      this.showStart = value;
     });
     const user = this.navParams.get("user");
     const _cellphone = this.navParams.get("cellphone");
@@ -73,6 +73,11 @@ export class UserManagementPage {
       }
     });
     profileModal.present();
+  }
+
+  switchSegment(ev) {
+    console.log(ev);
+    this.step = ev;
   }
 
   start() {
