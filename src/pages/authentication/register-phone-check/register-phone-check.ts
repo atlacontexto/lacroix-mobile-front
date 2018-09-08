@@ -10,7 +10,7 @@ import { AlertProvider } from "../../../providers/alert-service/alert-service";
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+const MAX_TIME = 60;
 @IonicPage()
 @Component({
   selector: "page-register-phone-check",
@@ -19,6 +19,9 @@ import { AlertProvider } from "../../../providers/alert-service/alert-service";
 export class RegisterPhoneCheckPage {
   form: FormGroup;
   cellphone: string;
+  maxTime: any = MAX_TIME;
+  timer: any;
+  hidevalue: any;
 
   constructor(
     public navCtrl: NavController,
@@ -33,15 +36,47 @@ export class RegisterPhoneCheckPage {
     });
   }
 
+  ionViewDidLoad() {
+    this.StartTimer();
+  }
+
+  StartTimer() {
+    this.timer = setTimeout(x => {
+      if (this.maxTime <= 0) {
+      }
+      this.maxTime -= 1;
+
+      if (this.maxTime > 0) {
+        this.hidevalue = false;
+        this.StartTimer();
+      } else {
+        this.hidevalue = true;
+      }
+    }, 1000);
+  }
+
   back() {
-    this.navCtrl.pop({ direction: "back" });
+    this.navCtrl.setRoot("RegisterPhonePage", {
+      animate: true,
+      direction: "forward"
+    });
+  }
+
+  showWaitAlert() {
+    let waitAlert = this.alertService.alertCtrl.create({
+      title: "Aguarde",
+      message:
+        "Estamos enviando o código de validação para seu celular. Caso não receba, pode tentar reenviar para seguir com o acesso.",
+      buttons: ["OK"]
+    });
+    waitAlert.present();
   }
 
   resend() {
     this.authService
       .sendSms(this.form.value)
       .then(data => {
-        console.log(data);
+        this.maxTime = MAX_TIME;
       })
       .catch(err => {
         console.log(err);
@@ -74,6 +109,7 @@ export class RegisterPhoneCheckPage {
               }
             ]
           });
+          expiredAlert.present();
         } else {
           this.alertService.presentAlert(
             "Erro na validação",

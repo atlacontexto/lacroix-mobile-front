@@ -24,11 +24,15 @@ export class AuthProvider {
     public platform: Platform,
     public alertService: AlertProvider
   ) {
-    this.headers = {
-      headers: {
-        "x-access-token": localStorage.getItem("token")
+    this.isLoggedIn.subscribe(value => {
+      if (value) {
+        this.headers = {
+          headers: {
+            "x-access-token": localStorage.getItem("token")
+          }
+        };
       }
-    };
+    });
     this.isLoggedIn.next(this.isValid("token"));
     console.log("Hello AuthProvider Provider");
     if (platform.is("cordova")) {
@@ -102,6 +106,7 @@ export class AuthProvider {
             res["data"]["validationToken"]
           );
           // localStorage.setItem("refreshToken", res["data"]["refreshToken"]);
+
           resolve(res);
           if (res["success"]) {
             resolve(res["data"]);

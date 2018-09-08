@@ -19,15 +19,23 @@
         </p>
       </ion-col>
     </ion-row>
+
     <form (submit)="next()" [formGroup]=form>
       <ion-row>
-        <ion-item>
-          <ion-input text-center type="number" formControlName="cellphone" placeholder="Informe seu número"></ion-input>
-        </ion-item>
+        <ion-col offset-2 col-2 no-padding>
+          <ion-item no-padding>
+            <ion-input disabled formControlName="prefix" type=""></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6 no-padding>
+          <ion-item no-padding>
+            <ion-input formControlName="cellphone" type="text" name="phone" placeholder="(00) 90000-0000" [brmasker]="{mask: '(00) 00000-0000', len: 15}"></ion-input>
+          </ion-item>
+        </ion-col>
       </ion-row>
       <ion-row padding-top>
         <ion-col no-padding>
-          <button text-uppercase ion-button solid large [disabled]="!isReady" full color="atla-red">
+          <button text-uppercase ion-button solid large full color="atla-red">
             {{ 'NEXT_BUTTON' | translate}}
           </button>
         </ion-col>

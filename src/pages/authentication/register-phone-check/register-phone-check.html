@@ -13,9 +13,10 @@
   <ion-grid col-xl-8 offset-xl-2>
     <ion-row>
       <ion-col text-center>
-        <h2 text-uppercase>
-          {{ 'REGISTER_PHONE_CHECK_TITLE' | translate}}
+        <h2 text-uppercase (click)="hidevalue ? back() : showWaitAlert()">
+          {{cellphone}}
         </h2>
+        <p *ngIf="hidevalue">{{ 'SWITCH_NUMBER' | translate}}</p>
         <p text-uppercase>
           {{ 'REGISTER_PHONE_CHECK_DESCRIPTION' | translate}}
         </p>
@@ -37,17 +38,13 @@
     </form>
 
     <ion-row>
-      <ion-item no-padding>
-        <ion-input text-center disabled=true [ngModel]="cellphone" type="text"></ion-input>
-      </ion-item>
-    </ion-row>
-    <ion-row padding-top>
-      <ion-col col-6>
-        <button text-uppercase ion-button full color="atla-red" (click)="back()">
-          {{ 'SWITCH_NUMBER' | translate}}
-        </button>
+      <ion-col col-12>
+        <p text-center *ngIf="!hidevalue"> Você poderá reenviar o códido ou alterar o número depois de {{maxTime}}
+          segundos.</p>
       </ion-col>
-      <ion-col col-6>
+    </ion-row>
+    <ion-row padding-top *ngIf="hidevalue">
+      <ion-col col-12>
         <button text-uppercase ion-button full color="atla-red" (click)="resend()">
           {{ 'RESEND_CODE' | translate}}
         </button>

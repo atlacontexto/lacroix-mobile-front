@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { ENV } from "@environment";
@@ -6,6 +6,7 @@ import { AuthProvider } from "../auth/auth";
 import { BehaviorSubject } from "rxjs";
 import { User } from "../../app/model/user";
 import { ProfilesProvider } from "../profiles/profiles";
+import { Profile } from "../../app/model/profile";
 
 /*
   Generated class for the UserServiceProvider provider.
@@ -34,16 +35,19 @@ export class UserProvider {
     return await this.getAllUserInfo()
       .then(userInfo => {
         const user = new User(this.profiles);
+        user.$people = userInfo["people"];
+        user.$mainProfile = userInfo["mainProfile"];
         user.setProfiles(userInfo["profiles"]);
-        user.setPeople(userInfo["people"]);
-        user.setMainProfile(userInfo["mainProfile"]);
-        user.setId(userInfo["_id"]);
-        user.setShortName(userInfo["shortName"]);
-        this.profiles.currentProfile.next(user.getMainProfile());
+        user.id = userInfo["_id"];
+        user.$shortName = userInfo["shortName"];
+        user.$mainContact = userInfo["mainPhone"];
+        console.log(this.profiles.currentProfile.value);
+        if (!(this.profiles.currentProfile.value instanceof Profile))
+          this.profiles.currentProfile.next(user.getMainProfileAsProfile());
         this.user.next(user);
       })
       .catch(err => {
-        console.log(err);
+        throw err;
       });
   }
 
@@ -69,10 +73,12 @@ export class UserProvider {
             if (res["token"]) {
               localStorage.setItem("token", res["token"]);
               localStorage.removeItem("validationToken");
+              this.authService.isLoggedIn.next(true);
             }
             resolve(res);
           },
           err => {
+            console.log(err);
             reject(err);
           }
         );
@@ -87,7 +93,10 @@ export class UserProvider {
         })
         .subscribe(
           res => {
-            resolve(res);
+            if (res["success"] && this.user.value instanceof User) {
+              this.user.value.setProfiles(res["data"]["profiles"]);
+              resolve(this.user.value.getProfiles());
+            }
           },
           err => {
             reject(err);
@@ -132,15 +141,20 @@ export class UserProvider {
   getAllUserInfo() {
     return new Promise((resolve, reject) => {
       this.http
-        .get(`${this.apiUrl}/user/user-info`, {
+        .get<HttpResponse<any>>(`${this.apiUrl}/user/user-info`, {
           headers: {
             "x-access-token": localStorage.getItem("token")
-          }
+          },
+          observe: "response"
         })
         .subscribe(
           res => {
-            if (res["success"]) {
-              resolve(res["data"]["user"]);
+            console.log(res);
+            if (res.status == 200 && res.body["success"]) {
+              console.log("here??");
+              resolve(res.body["data"]["user"]);
+            } else {
+              reject();
             }
           },
           err => {

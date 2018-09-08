@@ -9,8 +9,6 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { MyApp } from "./app.component";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateLoader } from "@ngx-translate/core";
-import { LandingPage } from "../pages/landing/landing";
-import { LandingPageModule } from "../pages/landing/landing.module";
 import { UserProvider } from "../providers/user/user";
 import { AlertProvider } from "../providers/alert-service/alert-service";
 import { Keyboard } from "@ionic-native/keyboard";
@@ -36,7 +34,6 @@ import { FeedProvider } from "../providers/feed/feed";
 import { AuthProvider } from "../providers/auth/auth";
 import { UserManagementModule } from "../pages/user-management/user-management.module";
 import { ProfileEditPageModule } from "../pages/user-management/profiles/profile-edit/profile-edit.module";
-import { ProfileEditPage } from "../pages/user-management/profiles/profile-edit/profile-edit";
 import { PlanningListPageModule } from "../pages/professor/planning-list/planning-list.module";
 import { ClassroomPageModule } from "../pages/professor/classroom/classroom.module";
 import { PlanningPageModule } from "../pages/professor/planning/planning.module";
@@ -62,7 +59,7 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     HomePageModule,
-    LandingPageModule,
+
     RegisterPhonePageModule,
     RegisterPhoneCheckPageModule,
     UserManagementModule,
@@ -79,7 +76,6 @@ export function createTranslateLoader(http: HttpClient) {
   entryComponents: [
     MyApp,
     HomePage,
-    LandingPage,
     PostDetailPage,
     ReportPage,
     ExamPage,

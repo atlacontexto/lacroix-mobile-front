@@ -18,7 +18,6 @@ import { ProfilesProvider } from "../../../providers/profiles/profiles";
 })
 export class BasicInfoComponent {
   @Input()
-  userInfo;
   form: FormGroup;
   formPersonal: FormGroup;
   cellphone: string;
@@ -41,9 +40,9 @@ export class BasicInfoComponent {
 
     this.form = this.formBuilder.group(
       {
-        peopleId: [""],
-        name: ["", Validators.required],
-        userId: [""],
+        peopleId: [null],
+        name: [null, Validators.required],
+        userId: [null],
         shortName: [{ value: "", disabled: false }, Validators.required],
         password: [
           "",
@@ -70,33 +69,24 @@ export class BasicInfoComponent {
   ngAfterContentInit() {
     this.expandItem(this.items[0]);
     this.userService
-      .getAllUserInfo()
-      .then(res => {
-        console.log(res["shortName"]);
-        if (!(this.userService.user.value instanceof User)) {
-          const user = new User(this.profilesProvider);
-          user.setProfiles(res["profiles"]);
-          user.setPeople(res["people"]);
-          user.setMainProfile(res["mainProfile"]);
-          user.setId(res["_id"]);
-          user.setShortName(res["shortName"]);
-          this.profilesProvider.currentProfile.next(user.getMainProfile());
-          this.userService.user.next(user);
-
+      .buildUser()
+      .then(() => {
+        let user = this.userService.user.value;
+        if (user instanceof User) {
           let toast = this.alertService.toastCtrl.create({
-            message: `Olá ${this.userInfo.people.name}`,
+            message: `Olá ${user.$people.$name}`,
             duration: 2000
           });
           toast.present();
-        }
-        this.userInfo = res;
-        this.form.controls["shortName"].disable();
-        this.form.controls["peopleId"].setValue(this.userInfo.people._id);
-        this.form.controls["name"].setValue(this.userInfo.people.name);
-        this.form.controls["userId"].setValue(this.userInfo._id);
-        this.form.controls["shortName"].setValue(this.userInfo.shortName);
-        if (res["profiles"].length == 0) {
-          this.requestForCreateProfile();
+          this.cellphone = user.$mainContact.$address;
+          this.form.get("shortName").disable();
+          this.form.controls["peopleId"].setValue(user.$people.id);
+          this.form.controls["name"].setValue(user.$people.$name);
+          this.form.controls["userId"].setValue(user.id);
+          this.form.controls["shortName"].setValue(user.$shortName);
+          if (user.getProfiles().length == 0) {
+            this.requestForCreateProfile();
+          }
         }
       })
       .catch(err => {
@@ -107,25 +97,6 @@ export class BasicInfoComponent {
         });
         toast.present();
       });
-    if (!localStorage.getItem("cellphone"))
-      localStorage.setItem("cellphone", this.userInfo.cellphone);
-    if (this.userInfo.user) {
-      // Launched from CodeCheck
-      this.cellphone = this.userInfo.cellphone;
-      this.form.controls["peopleId"].setValue(this.userInfo.user.people._id);
-      this.form.controls["name"].setValue(this.userInfo.user.people.name);
-      this.form.controls["userId"].setValue(this.userInfo.user._id);
-      this.form.controls["shortName"].setValue(this.userInfo.user.shortName);
-    } else {
-      // Launched from Home
-      this.cellphone = localStorage.getItem("cellphone");
-      this.form.controls["peopleId"].setValue(localStorage.getItem("peopleId"));
-      this.form.controls["name"].setValue(localStorage.getItem("name"));
-      this.form.controls["userId"].setValue(localStorage.getItem("userId"));
-      this.form.controls["shortName"].setValue(
-        localStorage.getItem("shortName")
-      );
-    }
   }
 
   expandItem(item) {
@@ -206,6 +177,7 @@ export class BasicInfoComponent {
                   }
                 ]
               });
+              infoUpdatedAlert.present();
             });
           })
           .catch(err => {

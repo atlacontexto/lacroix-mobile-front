@@ -76,7 +76,6 @@ export class UserManagementPage {
   }
 
   switchSegment(ev) {
-    console.log(ev);
     this.step = ev;
   }
 

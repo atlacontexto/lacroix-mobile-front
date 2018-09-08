@@ -1,6 +1,6 @@
 <ion-row>
   <ion-col col-8>
-    <button ion-button icon-left full color=atla-red (click)="openModal(item)">
+    <button ion-button icon-left full color=atla-red (click)="createProfile()">
       <ion-icon name=add></ion-icon>
       NOVO PERFIL
     </button>
@@ -29,19 +29,23 @@
 </ion-row>
 
 <ion-list inset *ngIf="showProfiles && !showHelp">
-  <button ion-item *ngFor="let profile of showProfiles" (click)="openModal(profile)">
+  <button ion-item *ngFor="let profile of showProfiles" (click)="editProfile(profile)">
     <ion-avatar item-start>
-      <img [src]="profile.icon">
+      <img [src]="profile.avatar">
     </ion-avatar>
-    <h2 style="font-weight: bold;" text-uppercase ion-text>{{profile.title}}</h2>
+    <h2 style="font-weight: bold;" text-uppercase ion-text>{{profile.showType}}</h2>
     <ion-grid>
       <ion-row *ngIf="profile.main">
-        <ion-col><h3 ion-text text-wrap>PRINCIPAL</h3></ion-col>
+        <ion-col>
+          <h3 ion-text text-wrap>PRINCIPAL</h3>
+        </ion-col>
       </ion-row>
       <ion-row *ngIf="profile.description">
-        <ion-col><h3 ion-text text-wrap>{{profile.description}}</h3></ion-col>
+        <ion-col>
+          <h3 ion-text text-wrap>{{profile.description}}</h3>
+        </ion-col>
       </ion-row>
     </ion-grid>
-    
+
   </button>
 </ion-list>

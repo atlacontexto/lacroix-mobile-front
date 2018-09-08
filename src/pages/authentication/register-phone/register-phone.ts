@@ -28,7 +28,14 @@ export class RegisterPhonePage {
     public alertService: AlertProvider
   ) {
     this.form = formBuilder.group({
-      cellphone: ["", Validators.required]
+      prefix: ["+55", Validators.required],
+      cellphone: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/\(\d{2}\)\s\d{4,5}-?\d{4}/g)
+        ])
+      ]
     });
     this.form.valueChanges.subscribe(v => {
       this.isReady = this.form.valid;
@@ -36,20 +43,37 @@ export class RegisterPhonePage {
   }
 
   next() {
-    this.authService
-      .sendSms(this.form.value)
-      .then(data => {
-        this.navCtrl.push(
-          "RegisterPhoneCheckPage",
-          { cellphone: this.form.value.cellphone, via: data["via"] },
-          {
-            animate: true,
-            direction: "forward"
-          }
-        );
-      })
-      .catch(err => {
-        console.log(err);
+    let phone = this.form.value.prefix.concat(
+      this.form.value.cellphone.match(/\d+/g).join("")
+    );
+    console.log(phone);
+    if (this.isReady) {
+      this.authService
+        .sendSms({ cellphone: phone })
+        .then(data => {
+          this.navCtrl.setRoot(
+            "RegisterPhoneCheckPage",
+            {
+              cellphone: phone,
+              via: data["via"]
+            },
+            {
+              animate: true,
+              direction: "forward"
+            }
+          );
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+      let incorrectNumber = this.alertService.alertCtrl.create({
+        title: "Número incorreto",
+        message:
+          "Por favor, verifique seu número.  \n Ele deve seguir o formato (00)00000-0000",
+        buttons: ["OK"]
       });
+      incorrectNumber.present();
+    }
   }
 }

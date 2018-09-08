@@ -21,7 +21,7 @@ export class MyApp {
   userComp: string;
   rootPage: any;
   username: any;
-  profileSelected: any;
+  profileSelected: Profile;
   profiles: any;
   privatePages: Array<{ title: string; component: any; icon: string }>;
   user: User;
@@ -135,14 +135,16 @@ export class MyApp {
     this.userProvider.user.subscribe(user => {
       if (user instanceof User) {
         this.user = user;
-        this.username = this.user.getShortName();
+        this.username = this.user.$shortName;
       }
     });
     this.profilesProvider.listProfiles.subscribe(profiles => {
+      console.log(profiles);
       this.profiles = profiles;
       this.updateList();
     });
     this.profilesProvider.currentProfile.subscribe(profile => {
+      console.log(profile);
       if (profile instanceof Profile) {
         this.profileSelected = profile;
         this.updateList();
@@ -162,13 +164,14 @@ export class MyApp {
           .catch(() => {
             this.setRoot();
           });
+      } else {
+        this.setRoot();
       }
     });
     this.initTranslate();
   }
 
   setRoot() {
-    console.log("root?");
     // console.log(this.user instanceof User);
     // console.log(this.user.getProfiles().length);
     if (this.user instanceof User && this.user.getProfiles().length == 0) {
@@ -176,7 +179,7 @@ export class MyApp {
     } else if (localStorage.getItem("token")) {
       this.rootPage = HomePage;
     } else {
-      this.rootPage = LandingPage;
+      this.rootPage = "LandingPage";
     }
   }
 
@@ -189,12 +192,14 @@ export class MyApp {
   }
 
   private changeSelected(): void {
+    console.log(this.profileSelected);
     this.profilesProvider.currentProfile.next(this.profileSelected);
     this.updateList;
   }
 
   private updateList(): void {
     if (this.profileSelected) {
+      console.log(this.profileSelected);
       // this.events.publish("app:timeline:profile", this.profileSelected);
 
       // this.profilesProvider.setCurrentProfile(this.profileSelected);
