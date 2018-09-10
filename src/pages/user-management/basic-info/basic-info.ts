@@ -5,6 +5,7 @@ import { AlertProvider } from "../../../providers/alert-service/alert-service";
 import { UserProvider } from "../../../providers/user/user";
 import { User } from "../../../app/model/user";
 import { ProfilesProvider } from "../../../providers/profiles/profiles";
+import { AuthProvider } from "../../../providers/auth/auth";
 
 /**
  * Generated class for the BasicInfoComponent component.
@@ -30,8 +31,10 @@ export class BasicInfoComponent {
     public formBuilder: FormBuilder,
     public userService: UserProvider,
     public alertService: AlertProvider,
-    public profilesProvider: ProfilesProvider
+    public profilesProvider: ProfilesProvider,
+    public authService: AuthProvider
   ) {
+    this.cellphone = this.authService.cellphone.value;
     this.items = [
       { viewValue: "CONTA", value: "account", expanded: false },
       { viewValue: "INFORMAÇÕES PESSOAIS", value: "personal", expanded: false },
@@ -68,35 +71,40 @@ export class BasicInfoComponent {
 
   ngAfterContentInit() {
     this.expandItem(this.items[0]);
-    this.userService
-      .buildUser()
-      .then(() => {
-        let user = this.userService.user.value;
-        if (user instanceof User) {
-          let toast = this.alertService.toastCtrl.create({
-            message: `Olá ${user.$people.$name}`,
-            duration: 2000
-          });
-          toast.present();
-          this.cellphone = user.$mainContact.$address;
-          this.form.get("shortName").disable();
-          this.form.controls["peopleId"].setValue(user.$people.id);
-          this.form.controls["name"].setValue(user.$people.$name);
-          this.form.controls["userId"].setValue(user.id);
-          this.form.controls["shortName"].setValue(user.$shortName);
-          if (user.getProfiles().length == 0) {
-            this.requestForCreateProfile();
+    console.log(this.authService.getDecodedAccessToken("token"));
+    if (this.authService.getDecodedAccessToken("token")) {
+      this.userService
+        .buildUser()
+        .then(() => {
+          let user = this.userService.user.value;
+          if (user instanceof User) {
+            let toast = this.alertService.toastCtrl.create({
+              message: `Olá ${user.$people.$name}`,
+              duration: 2000
+            });
+            toast.present();
+            this.cellphone = user.$mainContact.$address;
+            this.form.get("shortName").disable();
+            this.form.controls["peopleId"].setValue(user.$people.id);
+            this.form.controls["name"].setValue(user.$people.$name);
+            this.form.controls["userId"].setValue(user.id);
+            this.form.controls["shortName"].setValue(user.$shortName);
+            if (user.getProfiles().length == 0) {
+              this.requestForCreateProfile();
+            }
           }
-        }
-      })
-      .catch(err => {
-        this.form.controls["shortName"].enable();
-        let toast = this.alertService.toastCtrl.create({
-          message: "Cadastro de novo usuário",
-          duration: 2000
+        })
+        .catch(err => {
+          console.log(err);
         });
-        toast.present();
+    } else {
+      this.form.controls["shortName"].enable();
+      let toast = this.alertService.toastCtrl.create({
+        message: "Cadastro de novo usuário",
+        duration: 2000
       });
+      toast.present();
+    }
   }
 
   expandItem(item) {

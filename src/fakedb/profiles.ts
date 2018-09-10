@@ -90,11 +90,11 @@ const kinships = [
   },
   {
     value: "stepfather",
-    viewValue: "Padastro"
+    viewValue: "Padrasto"
   },
   {
     value: "stepmother",
-    viewValue: "Madastra"
+    viewValue: "Madrasta"
   },
   {
     value: "grandmo",

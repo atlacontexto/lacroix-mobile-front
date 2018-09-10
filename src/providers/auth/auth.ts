@@ -18,6 +18,7 @@ export class AuthProvider {
   headers: any;
   isLogged;
   isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  cellphone: BehaviorSubject<string> = new BehaviorSubject<string>("");
 
   constructor(
     public http: HttpClient,
@@ -33,7 +34,7 @@ export class AuthProvider {
         };
       }
     });
-    this.isLoggedIn.next(this.isValid("token"));
+    this.isLoggedIn.next(this.isTokenValid("token"));
     console.log("Hello AuthProvider Provider");
     if (platform.is("cordova")) {
       console.log(ENV.API_ENDPOINT);
@@ -47,7 +48,7 @@ export class AuthProvider {
         res => {
           if (res["success"]) {
             localStorage.setItem("token", res["token"]);
-            this.isLoggedIn.next(this.isValid("token"));
+            this.isLoggedIn.next(this.isTokenValid("token"));
           }
           resolve(res);
         },
@@ -66,7 +67,7 @@ export class AuthProvider {
     }
   }
 
-  isValid(type: string): boolean {
+  isTokenValid(type: string): boolean {
     try {
       if (localStorage.getItem(type)) {
         let decoded = JWT(localStorage.getItem(type));
@@ -86,7 +87,7 @@ export class AuthProvider {
           res => {
             if (res["success"]) {
               localStorage.setItem("token", res["token"]);
-              this.isLoggedIn.next(this.isValid("token"));
+              this.isLoggedIn.next(this.isTokenValid("token"));
             }
             resolve(res);
           },
@@ -127,7 +128,7 @@ export class AuthProvider {
 
   checkCode(code) {
     return new Promise((resolve, reject) => {
-      if (this.isValid("validationToken")) {
+      if (this.isTokenValid("validationToken")) {
         this.http
           .post(this.apiUrl + "/notification/codecheck", code, {
             headers: {
@@ -141,7 +142,7 @@ export class AuthProvider {
               if (res["token"]) {
                 localStorage.removeItem("validationToken");
                 localStorage.setItem("token", res["token"]);
-                this.isLoggedIn.next(this.isValid("token"));
+                this.isLoggedIn.next(this.isTokenValid("token"));
               }
 
               resolve(res);

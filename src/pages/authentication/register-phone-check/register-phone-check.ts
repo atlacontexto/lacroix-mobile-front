@@ -74,9 +74,12 @@ export class RegisterPhoneCheckPage {
 
   resend() {
     this.authService
-      .sendSms(this.form.value)
+      .sendSms({ cellphone: this.cellphone })
       .then(data => {
-        this.maxTime = MAX_TIME;
+        let value = Number(localStorage.getItem("resentTime"));
+        this.maxTime = MAX_TIME * value;
+        localStorage.setItem("resentTime", String(value + 1));
+        this.StartTimer();
       })
       .catch(err => {
         console.log(err);
@@ -88,9 +91,10 @@ export class RegisterPhoneCheckPage {
       .checkCode(this.form.value)
       .then(res => {
         if (res["success"]) {
+          this.authService.cellphone.next(this.cellphone);
           this.navCtrl.push(
             "UserManagementPage",
-            { cellphone: this.cellphone, step: "user", user: res["data"] },
+            {},
             {
               animate: true,
               direction: "forward"

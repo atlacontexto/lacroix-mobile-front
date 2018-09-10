@@ -158,6 +158,10 @@ export class UserProvider {
             }
           },
           err => {
+            console.log(err);
+            if (err.status == 401 && err.error.message) {
+              this.authService.isLoggedIn.next(false);
+            }
             reject(err);
           }
         );

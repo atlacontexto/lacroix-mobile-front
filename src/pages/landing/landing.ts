@@ -109,6 +109,7 @@ export class LandingPage {
   }
 
   next() {
+    localStorage.setItem("resentTime", "2");
     this.navCtrl.push(
       "RegisterPhonePage",
       {},

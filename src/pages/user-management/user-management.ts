@@ -54,9 +54,6 @@ export class UserManagementPage {
     this.events.subscribe("app:showstart", value => {
       this.showStart = value;
     });
-    const user = this.navParams.get("user");
-    const _cellphone = this.navParams.get("cellphone");
-    this.userInfo = { cellphone: _cellphone, ...user };
   }
 
   openModal(page) {
