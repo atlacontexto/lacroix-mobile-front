@@ -54,17 +54,6 @@ export class FeedPage {
     });
   }
 
-  select(post) {
-    this.navCtrl.push(
-      "PostDetailPage",
-      {},
-      {
-        animate: true,
-        direction: "forward"
-      }
-    );
-  }
-
   newPost() {
     let newPost = this.modalCtrl.create(NewsNewPage, {}, {});
     newPost.present({});

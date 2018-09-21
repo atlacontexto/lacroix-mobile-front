@@ -1,0 +1,39 @@
+<ion-slides (ionSlideDidChange)="slideChanged($event)">
+  <ion-slide *ngFor="let new of news">
+    <ion-card>
+
+      <ion-item>
+        <h2>Marty McFly</h2>
+        <p>November 5, 1955</p>
+        <ion-note>
+          11h ago
+        </ion-note>
+      </ion-item>
+      <ion-card-content (click)="select(new)">
+        <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a
+          DeLorean?! Whoa. This is heavy.</p>
+      </ion-card-content>
+      <img src="assets/img/background/background-2.jpg">
+
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-only color="light" larger block>
+            <ion-icon name="arrow-down"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-only color="secondary" larger block>
+            <ion-icon name="star"></ion-icon>
+          </button>
+        </ion-col>
+
+        <ion-col>
+          <button ion-button icon-only color="primary" larger block>
+            <ion-icon name="arrow-up"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+
+    </ion-card>
+  </ion-slide>
+</ion-slides>

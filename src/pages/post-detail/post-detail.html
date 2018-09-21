@@ -8,29 +8,15 @@
 
   <ion-navbar>
     <p padding-left>Tânia Caetano e outras 13 pessoas</p>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="comment()">
-        <ion-icon name="arrow-forward"></ion-icon>
-      </button>
-      <button ion-button icon-only (click)="comment()">
-        <ion-icon name="thumbs-up"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
 
+  </ion-navbar>
+  <news-show-one> </news-show-one>
 </ion-header>
 
 
 <ion-content padding>
 
-  <ion-item *ngFor="let item of items">
-    <ion-avatar item-start>
-      <img src="assets/imgs/placeholder.png">
-    </ion-avatar>
-    <h6>{{item.name}}</h6>
-    <p text-wrap>{{item.lastMessage}}</p>
-    <ion-note item-end>{{item.lastMessageTime}}</ion-note>
-  </ion-item>
+  <news-comments></news-comments>
 
 </ion-content>
 

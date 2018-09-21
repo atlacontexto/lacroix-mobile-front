@@ -9,12 +9,14 @@ import { SchedulePage } from "./schedule/schedule";
   selector: "page-home",
   template: `
   <ion-tabs color=light>
-    <ion-tab tabIcon="home" tabBadge="3" tabBadgeStyle="danger" tabTitle="Início" [root]="tab1"></ion-tab>
-    <ion-tab tabIcon="notifications" tabBadge="3" tabBadgeStyle="danger" tabTitle="Notificações" [root]="tab2"></ion-tab>
-    <ion-tab tabIcon="calendar" tabBadge="3" tabBadgeStyle="danger" tabTitle="Calendário" [root]="tab3"></ion-tab>
-    <ion-tab tabIcon="chatboxes" tabBadge="3" tabBadgeStyle="danger" tabTitle="Conversa" [root]="tab4"></ion-tab>
+    <ion-tab tabIcon="home"  tabBadgeStyle="danger" tabTitle="Início" [root]="tab1"></ion-tab>
+    <ion-tab tabIcon="notifications"  tabBadgeStyle="danger" tabTitle="Notificações" [root]="tab2"></ion-tab>
+    <ion-tab tabIcon="calendar"  tabBadgeStyle="danger" tabTitle="Calendário" [root]="tab3"></ion-tab>
+    <ion-tab tabIcon="chatboxes"  tabBadgeStyle="danger" tabTitle="Conversa" [root]="tab4"></ion-tab>
   </ion-tabs>`
 })
+
+/* Adicionar tabBadges às opções de navegação da tela principal */
 export class HomePage {
   tab1: any;
   tab2: any;

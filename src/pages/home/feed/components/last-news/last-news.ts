@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
+import { Slides } from "ionic-angular";
 
 /**
  * Generated class for the LastNewsComponent component.
@@ -11,6 +12,8 @@ import { Component } from "@angular/core";
   templateUrl: "last-news.html"
 })
 export class LastNewsComponent {
+  @ViewChild(Slides)
+  slides: Slides;
   partners: { partner: string; info1: string; info2: string; icon: string }[];
 
   constructor() {

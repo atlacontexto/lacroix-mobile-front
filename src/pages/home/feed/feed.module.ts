@@ -4,10 +4,29 @@ import { FeedPage } from "./feed";
 import { NewsNewPage } from "./news/news-new/news-new";
 import { NewsEditPage } from "./news/news-edit/news-edit";
 import { LastNewsComponent } from "./components/last-news/last-news";
+import { NewsShowComponent } from "./news/news-show/news-show";
+import { NewsCommentsComponent } from "./news/news-comments/news-comments";
+import { NewsShowOneComponent } from "./news/news-show-one/news-show-one";
 
 @NgModule({
-  declarations: [FeedPage, NewsNewPage, NewsEditPage, LastNewsComponent],
+  declarations: [
+    FeedPage,
+    NewsNewPage,
+    NewsEditPage,
+    LastNewsComponent,
+    NewsShowComponent,
+    NewsCommentsComponent,
+    NewsShowOneComponent
+  ],
   imports: [IonicPageModule.forChild(FeedPage)],
-  entryComponents: [NewsNewPage, NewsEditPage, LastNewsComponent]
+  entryComponents: [
+    NewsNewPage,
+    NewsEditPage,
+    LastNewsComponent,
+    NewsShowComponent,
+    NewsCommentsComponent,
+    NewsShowOneComponent
+  ],
+  exports: [NewsCommentsComponent, NewsShowOneComponent]
 })
 export class FeedPageModule {}
