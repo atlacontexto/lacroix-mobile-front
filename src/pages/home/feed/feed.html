@@ -22,37 +22,6 @@
 
 <ion-content padding class="cards-bg social-cards">
 
-  <ion-card *ngFor='let post of posts' col-xl-8 offset-xl-2>
-
-    <ion-item>
-      <ion-avatar item-start>
-        <img *ngIf="post.avatar" [src]="post.avatar">
-      </ion-avatar>
-      <h2>{{post.creator}}</h2>
-      <p>{{post.timeAgo}} - {{post.date}}</p>
-    </ion-item>
-
-    <img *ngIf=post.image [src]="post.image">
-
-    <ion-card-content (click)=select(post)>
-      <p>{{post.message}}</p>
-    </ion-card-content>
-
-    <ion-row>
-      <ion-col>
-        <button ion-button color="primary" clear small icon-start>
-          <ion-icon name='thumbs-up'></ion-icon>
-          {{post.countLikes}}
-        </button>
-      </ion-col>
-      <ion-col>
-        <button ion-button color="primary" clear small icon-start>
-          <ion-icon name='text'></ion-icon>
-          {{post.countComments}}
-        </button>
-      </ion-col>
-    </ion-row>
-
-  </ion-card>
+  <last-news></last-news>
 
 </ion-content>

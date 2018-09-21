@@ -8,6 +8,7 @@ import { ProfilesComponent } from "./profiles/profiles";
 import { PersonalComponent } from "./basic-info/personal/personal";
 import { AccountComponent } from "./basic-info/account/account";
 import { AddressComponent } from "./basic-info/address/address";
+import { BillingComponent } from "./basic-info/billing/billing";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { AddressComponent } from "./basic-info/address/address";
     ProfilesComponent,
     PersonalComponent,
     AccountComponent,
-    AddressComponent
+    AddressComponent,
+    BillingComponent
   ],
   imports: [
     IonicPageModule.forChild(UserManagementPage),

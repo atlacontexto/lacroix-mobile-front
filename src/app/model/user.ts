@@ -117,7 +117,7 @@ export class User {
 
   getMainProfileAsProfile(): Profile {
     let a = this.profiles.find(profile => {
-      return profile.getId() === this.mainProfile;
+      return profile.id === this.mainProfile;
     });
     return a;
   }

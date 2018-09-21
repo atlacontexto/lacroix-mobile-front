@@ -49,9 +49,8 @@
 
       <personal *ngIf="item.expanded && item.value === 'personal'"></personal>
 
-      <ion-row *ngIf="item.expanded && item.value === 'address'">
-        <p> Address Works</p>
-      </ion-row>
+      <address *ngIf="item.expanded && item.value === 'address'"></address>
+      <billing *ngIf="item.expanded && item.value === 'billing'"></billing>
     </expandable>
   </ion-row>
 </ion-grid>

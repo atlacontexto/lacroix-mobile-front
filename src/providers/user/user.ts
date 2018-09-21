@@ -41,7 +41,6 @@ export class UserProvider {
         user.id = userInfo["_id"];
         user.$shortName = userInfo["shortName"];
         user.$mainContact = userInfo["mainPhone"];
-        console.log(this.profiles.currentProfile.value);
         if (!(this.profiles.currentProfile.value instanceof Profile))
           this.profiles.currentProfile.next(user.getMainProfileAsProfile());
         this.user.next(user);
@@ -85,7 +84,6 @@ export class UserProvider {
     });
   }
   getProfiles(): any {
-    // if (!this.jwtHelper.isTokenExpired(localStorage.getItem("token"))) {
     return new Promise((resolve, reject) => {
       this.http
         .get(`${this.apiUrl}/user/profiles`, {
@@ -103,7 +101,6 @@ export class UserProvider {
           }
         );
     });
-    // }
   }
 
   createProfile(value) {
@@ -149,9 +146,7 @@ export class UserProvider {
         })
         .subscribe(
           res => {
-            console.log(res);
             if (res.status == 200 && res.body["success"]) {
-              console.log("here??");
               resolve(res.body["data"]["user"]);
             } else {
               reject();

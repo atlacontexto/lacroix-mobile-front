@@ -48,7 +48,7 @@ export class FeedProvider {
     return new Promise((resolve, reject) => {
       this.http
         .get(
-          `${this.apiUrl}/social/news/${this.currentProfile.getId()}/feed`,
+          `${this.apiUrl}/social/news/${this.currentProfile.id}/feed`,
           this.headers
         )
         .subscribe(
@@ -66,7 +66,7 @@ export class FeedProvider {
     return new Promise((resolve, reject) => {
       this.http
         .post(
-          `${this.apiUrl}/social/news/${this.currentProfile.getId()}`,
+          `${this.apiUrl}/social/news/${this.currentProfile.id}`,
           { content: post },
           this.headers
         )

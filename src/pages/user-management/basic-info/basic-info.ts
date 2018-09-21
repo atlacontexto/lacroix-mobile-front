@@ -38,7 +38,8 @@ export class BasicInfoComponent {
     this.items = [
       { viewValue: "CONTA", value: "account", expanded: false },
       { viewValue: "INFORMAÇÕES PESSOAIS", value: "personal", expanded: false },
-      { viewValue: "ENDEREÇO", value: "address", expanded: false }
+      { viewValue: "ENDEREÇO", value: "address", expanded: false },
+      { viewValue: "ASSINATURA", value: "billing", expanded: false }
     ];
 
     this.form = this.formBuilder.group(

@@ -42,93 +42,7 @@ export class MyApp {
     // Controle d
     this.authProvider.isLoggedIn.subscribe(value => {
       if (!value && localStorage.getItem("token")) {
-        const alert = this.alertProvider.alertCtrl.create({
-          title: "Login",
-          message:
-            "Sua sessão expirou. Informe sua senha para entrar de novo. Ao cancelar, você será desconectado da aplicação para novo login.",
-          inputs: [
-            {
-              name: "login",
-              placeholder: "Nome de Usuário",
-              type: "text"
-            },
-            {
-              name: "password",
-              placeholder: "Password",
-              type: "password"
-            }
-          ],
-          buttons: [
-            {
-              text: "Cancelar",
-              role: "cancel",
-              handler: data => {
-                let confirmAlert = this.alertProvider.alertCtrl.create({
-                  title: "Deseja sair?",
-                  message:
-                    "Ao confirmar, você será direcionado para a tela de Apresentação para novo loging. Deseja continuar",
-                  buttons: [
-                    {
-                      text: "Cancelar",
-                      handler: () => {
-                        this.authProvider.isLoggedIn.next(false);
-                      }
-                    },
-                    {
-                      text: "Sair",
-                      handler: () => {
-                        this.logout();
-                      }
-                    }
-                  ]
-                });
-                confirmAlert.present();
-              }
-            },
-            {
-              text: "Login",
-              handler: data => {
-                if (data.password) {
-                  this.authProvider
-                    .signin({
-                      shortName: data.login,
-                      password: data.password
-                    })
-                    .then(res => {
-                      console.log(res);
-                    })
-                    .catch(err => {
-                      if (err.status === 401) {
-                        let incorrectAlert = this.alertProvider.alertCtrl.create(
-                          {
-                            title: "Senha incorreta",
-                            message:
-                              "Insira sua senha novamente. Ao errar 3 vezes você será desconectado.",
-                            buttons: [
-                              {
-                                text: "OK",
-                                handler: data => {
-                                  this.authProvider.isLoggedIn.next(false);
-                                }
-                              }
-                            ]
-                          }
-                        );
-                        incorrectAlert.present();
-                      }
-
-                      console.error(err);
-                    });
-                  // logged in!
-                } else {
-                  // invalid login
-                  return false;
-                }
-              }
-            }
-          ]
-        });
-        alert.present();
+        this.validateAccess();
       }
     });
 
@@ -139,12 +53,10 @@ export class MyApp {
       }
     });
     this.profilesProvider.listProfiles.subscribe(profiles => {
-      console.log(profiles);
       this.profiles = profiles;
       this.updateList();
     });
     this.profilesProvider.currentProfile.subscribe(profile => {
-      console.log(profile);
       if (profile instanceof Profile) {
         this.profileSelected = profile;
         this.updateList();
@@ -199,10 +111,6 @@ export class MyApp {
 
   private updateList(): void {
     if (this.profileSelected) {
-      console.log(this.profileSelected);
-      // this.events.publish("app:timeline:profile", this.profileSelected);
-
-      // this.profilesProvider.setCurrentProfile(this.profileSelected);
       if (this.profileSelected["profileType"] === "ProfileStudent") {
         this.privatePages = [
           { title: "INÍCIO", component: HomePage, icon: "home" },
@@ -257,7 +165,6 @@ export class MyApp {
   }
 
   openPage(page) {
-    console.log(page)
     this.nav.push(
       page,
       { profileSelected: this.profileSelected },
@@ -266,5 +173,95 @@ export class MyApp {
         direction: "forward"
       }
     );
+  }
+
+  validateAccess(): any {
+    const alert = this.alertProvider.alertCtrl.create({
+      title: "Login",
+      message:
+        "Sua sessão expirou. Informe sua senha para entrar de novo. Ao cancelar, você será desconectado da aplicação para novo login.",
+      inputs: [
+        {
+          name: "login",
+          placeholder: "Nome de Usuário",
+          type: "text"
+        },
+        {
+          name: "password",
+          placeholder: "Password",
+          type: "password"
+        }
+      ],
+      buttons: [
+        {
+          text: "Cancelar",
+          role: "cancel",
+          handler: data => {
+            let confirmAlert = this.alertProvider.alertCtrl.create({
+              title: "Deseja sair?",
+              message:
+                "Ao confirmar, você será direcionado para a tela de Apresentação para novo loging. Deseja continuar",
+              buttons: [
+                {
+                  text: "Cancelar",
+                  handler: () => {
+                    this.authProvider.isLoggedIn.next(false);
+                  }
+                },
+                {
+                  text: "Sair",
+                  handler: () => {
+                    this.logout();
+                  }
+                }
+              ]
+            });
+            confirmAlert.present();
+          }
+        },
+        {
+          text: "Login",
+          handler: data => {
+            if (data.password) {
+              this.authProvider
+                .signin({
+                  shortName: data.login,
+                  password: data.password
+                })
+                .then(res => {
+                  console.log(res);
+                  this.authProvider.isLoggedIn.next(true);
+                })
+                .catch(err => {
+                  if (err.status === 401) {
+                    let incorrectAlert = this.alertProvider.alertCtrl.create({
+                      title: "Senha incorreta",
+                      message:
+                        "Insira sua senha novamente. Ao errar 3 vezes você será desconectado.",
+                      buttons: [
+                        {
+                          text: "OK",
+                          handler: data => {
+                            this.authProvider.isLoggedIn.next(false);
+                            this.userProvider.buildUser();
+                          }
+                        }
+                      ]
+                    });
+                    incorrectAlert.present();
+                  }
+
+                  console.error(err);
+                });
+              // logged in!
+            } else {
+              // invalid login
+              return false;
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }

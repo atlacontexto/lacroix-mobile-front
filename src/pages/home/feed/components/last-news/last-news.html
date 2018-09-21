@@ -1,0 +1,7 @@
+<ion-slides (ionSlideDidChange)="slideChanged($event)">
+  <ion-slide *ngFor="let partner of partners" class="buttons-slider">
+    <button clear ion-button icon-only block>
+      <img [src]="partner.icon" width="40">
+    </button>
+  </ion-slide>
+</ion-slides>

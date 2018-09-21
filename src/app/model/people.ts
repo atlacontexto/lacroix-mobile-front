@@ -5,6 +5,10 @@ export class People {
   private name: string;
   private user: string;
   private address: AddressModel;
+  private born: Date;
+  private cpf: string;
+  private rg: string;
+  private gender: string;
 
   constructor(jsonString?: string) {
     // let jsonObj: any = JSON.parse(jsonString);
@@ -75,5 +79,69 @@ export class People {
    */
   public set $address(value: AddressModel) {
     this.address = value;
+  }
+
+  /**
+   * Getter $born
+   * @return {Date}
+   */
+  public get $born(): Date {
+    return this.born;
+  }
+
+  /**
+   * Getter $cpf
+   * @return {string}
+   */
+  public get $cpf(): string {
+    return this.cpf;
+  }
+
+  /**
+   * Getter $rg
+   * @return {string}
+   */
+  public get $rg(): string {
+    return this.rg;
+  }
+
+  /**
+   * Getter $gender
+   * @return {string}
+   */
+  public get $gender(): string {
+    return this.gender;
+  }
+
+  /**
+   * Setter $born
+   * @param {Date} value
+   */
+  public set $born(value: Date) {
+    this.born = value;
+  }
+
+  /**
+   * Setter $cpf
+   * @param {string} value
+   */
+  public set $cpf(value: string) {
+    this.cpf = value;
+  }
+
+  /**
+   * Setter $rg
+   * @param {string} value
+   */
+  public set $rg(value: string) {
+    this.rg = value;
+  }
+
+  /**
+   * Setter $gender
+   * @param {string} value
+   */
+  public set $gender(value: string) {
+    this.gender = value;
   }
 }
