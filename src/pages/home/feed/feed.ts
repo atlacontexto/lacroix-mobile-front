@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import {
   IonicPage,
   NavController,
@@ -12,6 +12,7 @@ import { Profile } from "../../../app/model/profile";
 import { FeedProvider } from "../../../providers/feed/feed";
 import { NewsModel } from "../../../app/model/newsModel";
 import { UserProvider } from "../../../providers/user/user";
+import { NewsShowComponent } from "./news/news-show/news-show";
 
 /**
  * Generated class for the FeedPage page.
@@ -26,6 +27,8 @@ import { UserProvider } from "../../../providers/user/user";
   templateUrl: "feed.html"
 })
 export class FeedPage {
+  @ViewChild(NewsShowComponent)
+  child: NewsShowComponent;
   private currentProfile: Profile;
   postFake = {
     creator: "Savio",
@@ -40,7 +43,6 @@ export class FeedPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public events: Events,
     private modalCtrl: ModalController,
     private profilesProvider: ProfilesProvider,
     public feedProvider: FeedProvider,
@@ -63,6 +65,11 @@ export class FeedPage {
 
   isProfile(): boolean {
     return this.currentProfile instanceof Profile;
+  }
+
+  ionViewWillLeave() {
+    console.log("ionViewWillLeave");
+    this.child.unsubscribeAll();
   }
 
   showProfile(profile?: Profile): void {

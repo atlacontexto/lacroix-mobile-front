@@ -18,9 +18,9 @@ export class ProfilesProvider {
   profiles: any;
   headers: any;
 
-  public showingProfile: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  public currentProfile: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  public listProfiles: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  public showingProfile: BehaviorSubject<any>;
+  public currentProfile: BehaviorSubject<any>;
+  public listProfiles: BehaviorSubject<any>;
 
   constructor(
     public http: HttpClient,
@@ -28,6 +28,9 @@ export class ProfilesProvider {
     public platform: Platform
   ) {
     console.log("Hello ProfilesProvider Provider");
+    this.currentProfile = new BehaviorSubject(null);
+    this.listProfiles = new BehaviorSubject(null);
+    this.showingProfile = new BehaviorSubject(null);
     if (platform.is("cordova")) {
       console.log(ENV.API_ENDPOINT);
       this.apiUrl = ENV.API_ENDPOINT;

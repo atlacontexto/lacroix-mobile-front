@@ -1,9 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { User } from "../../../../app/model/user";
 import { Profile } from "../../../../app/model/profile";
 import { ProfilesProvider } from "../../../../providers/profiles/profiles";
 import { UserProvider } from "../../../../providers/user/user";
+import { Subject } from "rxjs";
+import { takeUntil, filter } from "rxjs/operators";
 
 /**
  * Generated class for the ProfileShowPage page.
@@ -17,7 +19,7 @@ import { UserProvider } from "../../../../providers/user/user";
   selector: "page-profile-show",
   templateUrl: "profile-show.html"
 })
-export class ProfileShowPage {
+export class ProfileShowPage implements OnInit, OnDestroy {
   user = {
     name: "Cosima Niehaus",
     profileImage: "assets/img/avatar/girl-avatar.png",
@@ -34,21 +36,42 @@ export class ProfileShowPage {
   userIn: User;
   profile: Profile;
 
+  private _unsubscribeAll: Subject<any>;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public profilesProvider: ProfilesProvider,
     public userProvider: UserProvider
   ) {
-    this.profile = this.profilesProvider.showingProfile.value;
-    if (this.profile instanceof Profile) {
-      this.userIn = this.userProvider.user.value;
-      console.log(this.userIn);
-    }
+    this._unsubscribeAll = new Subject();
   }
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad ProfileFivePage");
+  ngOnInit(): void {
+    console.log("Profile Show Initied");
+    this.profilesProvider.showingProfile
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        filter(profile => profile instanceof Profile)
+      )
+      .subscribe(profile => {
+        this.profile = profile;
+      });
+
+    this.userProvider.user
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        filter(user => user instanceof User)
+      )
+      .subscribe(user => {
+        this.userIn = user;
+      });
+  }
+
+  ngOnDestroy(): void {
+    console.log("Profile Show closed");
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   isUser(): boolean {

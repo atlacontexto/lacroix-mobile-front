@@ -27,6 +27,6 @@ import { NewsShowOneComponent } from "./news/news-show-one/news-show-one";
     NewsCommentsComponent,
     NewsShowOneComponent
   ],
-  exports: [NewsCommentsComponent, NewsShowOneComponent]
+  exports: [NewsCommentsComponent, NewsShowOneComponent, NewsShowComponent]
 })
 export class FeedPageModule {}

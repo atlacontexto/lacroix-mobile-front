@@ -7,9 +7,8 @@
       11h ago
     </ion-note>
   </ion-item>
-  <ion-card-content>
-    <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a
-      DeLorean?! Whoa. This is heavy.</p>
+  <ion-card-content *ngIf="post">
+    <p>{{post.text}}</p>
   </ion-card-content>
   <!-- <img src="assets/img/background/background-2.jpg"> -->
 

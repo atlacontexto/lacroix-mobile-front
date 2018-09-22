@@ -4,6 +4,8 @@ import { FeedProvider } from "../../../../../providers/feed/feed";
 import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 import { Profile } from "../../../../../app/model/profile";
 import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
+import { filter, takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 
 /**
  * Generated class for the NewsNewPage page.
@@ -21,6 +23,7 @@ export class NewsNewPage {
   myInput: ElementRef;
   private newsContent: string;
   currentProfile: Profile;
+  private _unsubscribeAll: Subject<any>;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -29,11 +32,23 @@ export class NewsNewPage {
     public profilesProvider: ProfilesProvider,
     public alertProvider: AlertProvider
   ) {
-    this.currentProfile = this.profilesProvider.currentProfile.value;
+    this._unsubscribeAll = new Subject();
   }
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad NewsNewPage");
+    this.profilesProvider.currentProfile
+      .pipe(
+        filter(profile => profile instanceof Profile),
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe(profile => {
+        this.currentProfile = profile;
+      });
+  }
+
+  ionViewWillLeave() {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   isProfile(): boolean {
@@ -56,7 +71,7 @@ export class NewsNewPage {
       .postNews(this.newsContent)
       .then(res => {
         console.log(res);
-        this.feedProvider.getPostsByProfile();
+        this.feedProvider.getPostsByProfile(this.currentProfile.id);
       })
       .catch(err => {
         console.log(err);
