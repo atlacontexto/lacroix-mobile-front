@@ -72,7 +72,7 @@ export class BasicInfoComponent {
 
   ngAfterContentInit() {
     this.expandItem(this.items[0]);
-    console.log(this.authService.getDecodedAccessToken("token"));
+    
     if (this.authService.getDecodedAccessToken("token")) {
       this.userService
         .buildUser()

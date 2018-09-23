@@ -1,4 +1,10 @@
-import { Component, Output, EventEmitter } from "@angular/core";
+import {
+  Component,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnDestroy
+} from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 import { GeoProvider } from "../../../../../providers/geo/geo";
@@ -6,6 +12,10 @@ import { AlertProvider } from "../../../../../providers/alert-service/alert-serv
 import { ModalController } from "ionic-angular";
 import { UserProvider } from "../../../../../providers/user/user";
 import { AuthProvider } from "../../../../../providers/auth/auth";
+import { Profile } from "../../../../../app/model/profile";
+import { Subject } from "rxjs";
+import { filter, takeUntil } from "rxjs/operators";
+import { User } from "../../../../../app/model/user";
 
 /**
  * Generated class for the ProfileCreateStudentComponent component.
@@ -17,7 +27,7 @@ import { AuthProvider } from "../../../../../providers/auth/auth";
   selector: "profile-create-student",
   templateUrl: "profile-create-student.html"
 })
-export class ProfileCreateStudentComponent {
+export class ProfileCreateStudentComponent implements OnInit, OnDestroy {
   formStudent: FormGroup;
   levelSelected: any;
   @Output()
@@ -27,7 +37,8 @@ export class ProfileCreateStudentComponent {
   counties: any;
   schools: any;
   states: any;
-  parent: { name: string; photo: string; contact: string; id: string };
+  parent: any;
+  private _unsubscribeAll: Subject<any>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,8 +49,9 @@ export class ProfileCreateStudentComponent {
     private userService: UserProvider,
     private authProvider: AuthProvider
   ) {
+    this._unsubscribeAll = new Subject();
     this.formStudent = this.formBuilder.group({
-      user: [this.userService.getUserAtt("_id")],
+      user: [null, Validators.compose([Validators.required])],
       level: [null, Validators.compose([Validators.required])],
       year: [null, Validators.compose([Validators.required])],
       hasSchool: [false, Validators.compose([Validators.required])],
@@ -50,9 +62,23 @@ export class ProfileCreateStudentComponent {
     });
   }
 
-  ngAfterContentInit() {
+  ngOnInit(): void {
+    console.log("OnInit Create Student");
+    this.userService.user
+      .pipe(
+        filter(user => user instanceof User),
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe(user => {
+        console.log(user);
+        this.formStudent.controls["user"].setValue(user.id);
+      });
     this.states = this.geoProvider.getStates();
     this.levels = this.profilesProvider.getCourseLevelsExcept("infantil");
+  }
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   levelChanged(ev) {
@@ -105,6 +131,7 @@ export class ProfileCreateStudentComponent {
   }
 
   onSubmit() {
+    console.log(this.formStudent.value);
     if (this.formStudent.valid) {
       this.profilesProvider
         .createProfile("student", this.formStudent.value)
@@ -138,30 +165,31 @@ export class ProfileCreateStudentComponent {
   onInputTime(data) {
     if (data.value) {
       this.alertProvider.presentControlledLoader("Buscando por contato...");
-      // this.parent = this.profilesProvider.getFoundExamplesFake(data.value)[0];
       this.profilesProvider
         .getProfileByContact("parent", data.value)
         .then(res => {
-          console.log(res);
+          this.parent = res;
+
+          this.formStudent.controls["parentId"].setValue(
+            this.parent.profile._id
+          );
         })
         .catch(err => {
           console.error(err);
+          this.alertProvider.presentAlert(
+            "Usuário não encontrado",
+            "Gostaria de enviar um convite? Certifique de que o contato está correto",
+            "Ok"
+          );
         });
       this.alertProvider.loading.dismiss();
-      if (!this.parent) {
-        this.alertProvider.presentAlert(
-          "Usuário não encontrado",
-          "Gostaria de enviar um convite? Certifique de que o contato está correto",
-          "Ok"
-        );
-        console.log(this.formStudent.value.parentContact);
-      } else {
-        this.formStudent.controls["parentId"].setValue(this.parent.id);
-      }
     }
   }
 
   viewProfile(profileId) {
+    this.profilesProvider.showingProfile.next(
+      Object.assign(new Profile(), this.parent.profile)
+    );
     const profileModal = this.modalCtrl.create("ProfileShowPage", {
       profileId: profileId
     });

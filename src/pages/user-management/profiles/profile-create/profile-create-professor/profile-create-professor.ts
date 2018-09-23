@@ -18,7 +18,8 @@ import { UserProvider } from "../../../../../providers/user/user";
 })
 export class ProfileCreateProfessorComponent {
   formProfessor: FormGroup;
-  @Output() formProfessorSubmited = new EventEmitter();
+  @Output()
+  formProfessorSubmited = new EventEmitter();
   levels: any;
   years: any;
   schools: any;
@@ -108,6 +109,7 @@ export class ProfileCreateProfessorComponent {
       this.profilesProvider
         .createProfile("professor", this.formProfessor.value)
         .then(res => {
+          console.log(res);
           if (res["success"]) {
             this.alertProvider.presentAlert(
               "Perfil de Professor criado!",

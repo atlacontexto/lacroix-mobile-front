@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import geo from "../../fakedb/geo";
 import { ENV } from "@environment";
+import { AuthProvider } from "../auth/auth";
 
 /*
   Generated class for the GeoProvider provider.
@@ -13,8 +14,16 @@ import { ENV } from "@environment";
 export class GeoProvider {
   apiUrl = ENV.API_LOCAL;
   geo: any;
-  constructor(public http: HttpClient) {
+  headers: { headers: { "x-access-token": string } };
+  constructor(public http: HttpClient, private authProvider: AuthProvider) {
     this.geo = geo;
+    this.authProvider.isLoggedIn.subscribe(value => {
+      if (value) {
+        this.headers = {
+          headers: { "x-access-token": localStorage.getItem("token") }
+        };
+      }
+    });
   }
 
   getSchoolsByCountyFake(countyId: any): any {
@@ -29,10 +38,12 @@ export class GeoProvider {
         .get(
           this.apiUrl +
             "/profile/school-institutional?countyInstitutional=" +
-            county_id
+            county_id,
+          this.headers
         )
         .subscribe(
           res => {
+            
             resolve(res);
           },
           err => {
@@ -55,7 +66,10 @@ export class GeoProvider {
   getCountiesByState(stateId: string) {
     return new Promise((resolve, reject) => {
       this.http
-        .get(this.apiUrl + "/profile/county-institutional?state_id=" + stateId)
+        .get(
+          this.apiUrl + "/profile/county-institutional?state_id=" + stateId,
+          this.headers
+        )
         .subscribe(
           res => {
             resolve(res);

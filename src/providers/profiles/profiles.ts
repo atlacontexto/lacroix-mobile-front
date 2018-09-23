@@ -113,7 +113,7 @@ export class ProfilesProvider {
     });
   }
 
-  getProfileByContact(profileType, contact) {
+  getProfileByContact(profileType, contact: string) {
     return new Promise((resolve, reject) => {
       this.http
         .get(
@@ -122,7 +122,7 @@ export class ProfilesProvider {
         )
         .subscribe(
           res => {
-            resolve(res);
+            resolve(res["data"]);
           },
           err => {
             reject(err);
@@ -132,9 +132,6 @@ export class ProfilesProvider {
   }
 
   createProfile(typeProfile, form) {
-    console.log(this.headers);
-    console.log(form);
-    console.log(typeProfile);
     return new Promise((resolve, reject) => {
       this.http
         .post(`${this.apiUrl}/profile/${typeProfile}`, form, this.headers)
@@ -142,16 +139,11 @@ export class ProfilesProvider {
           res => {
             this.authProvider
               .updateToken()
-              .then(res => {
-                console.log(res);
-              })
-              .catch(err => {
-                console.error(err);
-              });
+              .then(res => {})
+              .catch(err => {});
             resolve(res);
           },
           err => {
-            console.log(err);
             reject(err);
           }
         );

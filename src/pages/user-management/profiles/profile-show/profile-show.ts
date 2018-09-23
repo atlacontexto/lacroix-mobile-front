@@ -55,6 +55,7 @@ export class ProfileShowPage implements OnInit, OnDestroy {
         filter(profile => profile instanceof Profile)
       )
       .subscribe(profile => {
+        console.log(profile);
         this.profile = profile;
       });
 
@@ -64,6 +65,7 @@ export class ProfileShowPage implements OnInit, OnDestroy {
         filter(user => user instanceof User)
       )
       .subscribe(user => {
+        console.log(user);
         this.userIn = user;
       });
   }

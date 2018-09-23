@@ -1,4 +1,4 @@
-<form [formGroup]="formSchool">
+<form [formGroup]="formSchool" (ngSubmit)="onSubmit()">
   <ion-row>
     <ion-col>
       <ion-item padding-horizontal>
@@ -58,4 +58,9 @@
       </ion-col>
     </ion-row>
   </div>
+  <ion-row>
+    <ion-col>
+      <button type="submit" ion-button block full>CRIAR PERFIL</button>
+    </ion-col>
+  </ion-row>
 </form>
