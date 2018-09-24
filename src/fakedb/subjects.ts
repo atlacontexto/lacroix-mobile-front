@@ -23,6 +23,21 @@ const subjectsEf = [
     id: 5,
     value: "geo",
     viewValue: "Geografia"
+  },
+  {
+    id: 6,
+    value: "ef",
+    viewValue: "Educação Física"
+  },
+  {
+    id: 7,
+    value: "art",
+    viewValue: "Artes"
+  },
+  {
+    id: 8,
+    value: "fil",
+    viewValue: "Filosofia"
   }
 ];
 

@@ -5,8 +5,21 @@
     </button>
     <ion-title>NOTIFICAÇÕES</ion-title>
   </ion-navbar>
+  <ion-toolbar no-border-top transparent>
+    <ion-segment [(ngModel)]="step" color="atla-red">
+      <ion-segment-button value="notices">
+        Informes
+      </ion-segment-button>
+      <ion-segment-button value="requests">
+        Solicitações
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-
+<ion-content no-padding>
+  <div no-padding [ngSwitch]="step" col-xl-8 offset-xl-2>
+    <notices *ngSwitchCase="'notices'"></notices>
+    <requests *ngSwitchCase="'requests'"></requests>
+  </div>
 </ion-content>

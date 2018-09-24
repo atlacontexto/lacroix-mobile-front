@@ -68,8 +68,9 @@ export class FeedPage {
   }
 
   ionViewWillLeave() {
-    console.log("ionViewWillLeave");
-    this.child.unsubscribeAll();
+    console.log("Feed ionViewWillLeave");
+    const a = this.child.unsubscribeAll();
+    console.log(a);
   }
 
   showProfile(profile?: Profile): void {

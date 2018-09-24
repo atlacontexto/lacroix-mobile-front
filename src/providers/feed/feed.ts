@@ -6,6 +6,7 @@ import { ENV } from "@environment";
 import { Platform } from "ionic-angular";
 import { Profile } from "../../app/model/profile";
 import { filter, takeUntil } from "rxjs/operators";
+import { AuthProvider } from "../auth/auth";
 
 /*
   Generated class for the FeedProvider provider.
@@ -24,7 +25,8 @@ export class FeedProvider {
   constructor(
     public http: HttpClient,
     public profilesProvider: ProfilesProvider,
-    public platform: Platform
+    public platform: Platform,
+    public authProvider: AuthProvider
   ) {
     console.log("Hello FeedProvider Provider");
     this._currentPost = new BehaviorSubject(null);
@@ -32,6 +34,13 @@ export class FeedProvider {
       this.apiUrl = ENV.API_ENDPOINT;
     }
     this._unsubscribeAll = new Subject();
+    this.authProvider.isLoggedIn.subscribe(value => {
+      if (value) {
+        this.headers = {
+          headers: { "x-access-token": localStorage.getItem("token") }
+        };
+      }
+    });
     this.profilesProvider.currentProfile
       .pipe(
         filter(profile => profile instanceof Profile),
@@ -47,18 +56,29 @@ export class FeedProvider {
             console.error(err);
           });
       });
-
-    this.headers = {
-      headers: { "x-access-token": localStorage.getItem("token") }
-    };
   }
 
   getPostsByProfile(id): any {
+    console.log("what?");
+    return new Promise((resolve, reject) => {
+      this.http.get(`${this.apiUrl}/social/news/${id}`, this.headers).subscribe(
+        res => {
+          resolve(res["data"]);
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
+  }
+
+  getFeed(id: string): any {
     return new Promise((resolve, reject) => {
       this.http
         .get(`${this.apiUrl}/social/news/${id}/feed`, this.headers)
         .subscribe(
           res => {
+            console.log(res);
             resolve(res["data"]);
           },
           err => {

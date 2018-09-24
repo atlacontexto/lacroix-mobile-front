@@ -52,6 +52,16 @@ export class ProfilesProvider {
     return level[0]["viewValue"];
   }
 
+  getCourseYear(value): any {
+    return profiles.courseYears.filter(v => {
+      return v.value == value;
+    });
+  }
+
+  getCourseYearsFundamental() {
+    return profiles.courseYears;
+  }
+
   getCourseLevelsExcept(level): any {
     return profiles.courseLevels.filter(v => {
       return v.value !== level;

@@ -34,7 +34,7 @@ import { FeedProvider } from "../providers/feed/feed";
 import { AuthProvider } from "../providers/auth/auth";
 import { UserManagementModule } from "../pages/user-management/user-management.module";
 import { ProfileEditPageModule } from "../pages/user-management/profiles/profile-edit/profile-edit.module";
-import { PlanningListPageModule } from "../pages/professor/planning-list/planning-list.module";
+
 import { ClassroomPageModule } from "../pages/professor/classroom/classroom.module";
 import { PlanningPageModule } from "../pages/professor/planning/planning.module";
 import { RegisterPhonePageModule } from "../pages/authentication/register-phone/register-phone.module";
@@ -69,7 +69,6 @@ export function createTranslateLoader(http: HttpClient) {
     ClassroomPageModule,
     ExamPageModule,
     AuthorizationPageModule,
-    PlanningListPageModule,
     ProfileEditPageModule
   ],
   bootstrap: [IonicApp],

@@ -136,39 +136,39 @@ const voluntaries = [
 const courseYears = [
   {
     value: "1",
-    viewValue: "1º Ano"
+    viewValue: "1º"
   },
   {
     value: "2",
-    viewValue: "2º Ano"
+    viewValue: "2º"
   },
   {
     value: "3",
-    viewValue: "3º Ano"
+    viewValue: "3º"
   },
   {
     value: "4",
-    viewValue: "4º Ano"
+    viewValue: "4º"
   },
   {
     value: "5",
-    viewValue: "5º Ano"
+    viewValue: "5º"
   },
   {
     value: "6",
-    viewValue: "6º Ano"
+    viewValue: "6º"
   },
   {
     value: "7",
-    viewValue: "7º Ano"
+    viewValue: "7º"
   },
   {
     value: "8",
-    viewValue: "8º Ano"
+    viewValue: "8º"
   },
   {
     value: "9",
-    viewValue: "9º Ano"
+    viewValue: "9º"
   }
 ];
 

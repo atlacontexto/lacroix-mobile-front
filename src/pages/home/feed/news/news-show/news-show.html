@@ -1,16 +1,17 @@
-<ion-slides (ionSlideDidChange)="slideChanged($event)">
-  <ion-slide *ngFor="let new of news">
+<ion-slides>
+  <!-- (ionSlideDidChange)="slideChanged($event)"  -->
+  <ion-slide *ngFor="let news of news">
     <ion-card>
 
       <ion-item>
-        <h2>Marty McFly</h2>
+        <h2>{{news.user}}</h2>
         <p>November 5, 1955</p>
         <ion-note>
           11h ago
         </ion-note>
       </ion-item>
-      <ion-card-content (click)="select(new)">
-        <p>{{new.text}}</p>
+      <ion-card-content (click)="select(news)">
+        <p>{{news.text}}</p>
       </ion-card-content>
       <img src="assets/img/background/background-2.jpg">
 
@@ -32,7 +33,12 @@
           </button>
         </ion-col>
       </ion-row>
-
+      <p (click)="select(news)" color="primary" padding ion-text text-center> Esta notícia tem {{news.comments.length}}
+        comentários.</p>
     </ion-card>
   </ion-slide>
+
+  <ion-row>
+      <p *ngIf="news.length == 0" ion-text text-center>VOCÊ AINDA NÃO TEM NOTÍCIAS SOBRE...</p>
+  </ion-row>
 </ion-slides>
