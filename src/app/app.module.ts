@@ -39,6 +39,7 @@ import { ClassroomPageModule } from "../pages/professor/classroom/classroom.modu
 import { PlanningPageModule } from "../pages/professor/planning/planning.module";
 import { RegisterPhonePageModule } from "../pages/authentication/register-phone/register-phone.module";
 import { RegisterPhoneCheckPageModule } from "../pages/authentication/register-phone-check/register-phone-check.module";
+import { PlanningProvider } from '../providers/planning/planning';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -93,7 +94,8 @@ export function createTranslateLoader(http: HttpClient) {
     ProfilesProvider,
     GeoProvider,
     SubjectsProvider,
-    FeedProvider
+    FeedProvider,
+    PlanningProvider
   ]
 })
 export class AppModule {}

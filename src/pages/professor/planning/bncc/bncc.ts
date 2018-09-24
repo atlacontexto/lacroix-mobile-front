@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Subject } from "rxjs";
 import { ProfilesProvider } from "../../../../providers/profiles/profiles";
 import { SubjectsProvider } from "../../../../providers/subjects/subjects";
+import { PlanningProvider } from "../../../../providers/planning/planning";
 
 /**
  * Generated class for the BnccPage page.
@@ -22,15 +23,22 @@ export class BnccPage implements OnInit, OnDestroy {
   subject: any;
   years: any;
   year: any;
+  habilities: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private subjectsProvider: SubjectsProvider,
-    private profilesProvider: ProfilesProvider
+    private profilesProvider: ProfilesProvider,
+    private planningProvider: PlanningProvider
   ) {
     this._unsubscribeAll = new Subject();
     this.subjects = this.subjectsProvider.getSubjectsFake();
-    this.years = this.profilesProvider.changeYearsRange(1, 3);
+    this.years = this.profilesProvider.getCourseYearsFundamental();
+    const value = this.navParams.get("year");
+    console.log(this.subjects);
+    this.year = value[0]["viewValue"];
+    this.subject = this.subjects[0]["viewValue"];
+    this.getHabilities();
   }
 
   ionViewDidLoad() {
@@ -43,9 +51,22 @@ export class BnccPage implements OnInit, OnDestroy {
   yearChanged(ev) {
     console.log(ev);
     console.log(this.year);
+    this.getHabilities();
   }
   subjectChanged(ev) {
     console.log(ev);
     console.log(this.subject);
+    this.getHabilities();
+  }
+
+  getHabilities() {
+    this.planningProvider
+      .getHabilities(this.year, this.subject)
+      .then(res => {
+        this.habilities = res["habilities"];
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 }

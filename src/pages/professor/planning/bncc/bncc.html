@@ -20,7 +20,7 @@
         <ion-item>
           <ion-label stacked>* Ano</ion-label>
           <ion-select [(ngModel)]="year" (ionChange)="yearChanged($event)">
-            <ion-option *ngFor="let year of years" [value]="year.value">{{year.viewValue}}</ion-option>
+            <ion-option *ngFor="let year of years" [value]="year.viewValue">{{year.viewValue}}</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -31,10 +31,19 @@
         <ion-item>
           <ion-label stacked>Discplinas</ion-label>
           <ion-select [(ngModel)]="subject" (ionChange)="subjectChanged($event)">
-            <ion-option *ngFor="let subject of subjects" [value]="subject.value">{{subject.viewValue}}</ion-option>
+            <ion-option *ngFor="let subject of subjects" [value]="subject.viewValue">{{subject.viewValue}}</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-list>
+    <ion-item *ngFor="let hability of habilities">
+      <h2 ion-text text-wrap>{{hability.codigo}}</h2>
+      <h3 ion-text text-wrap>{{hability.camposDeAtuacao}}</h3>
+      <h3 ion-text text-wrap>{{hability.objetosDeConhecimento}}</h3>
+      <p ion-text text-wrap>{{hability.habilidades}}</p>
+    </ion-item>
+  </ion-list>
 </ion-content>

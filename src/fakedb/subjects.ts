@@ -32,7 +32,7 @@ const subjectsEf = [
   {
     id: 7,
     value: "art",
-    viewValue: "Artes"
+    viewValue: "Arte"
   },
   {
     id: 8,
