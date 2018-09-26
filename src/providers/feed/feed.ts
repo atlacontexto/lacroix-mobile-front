@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { ProfilesProvider } from "../profiles/profiles";
 import { BehaviorSubject, Subject } from "rxjs";
 import { ENV } from "@environment";
-import { Platform } from "ionic-angular";
+import { Platform, AlertController } from "ionic-angular";
 import { Profile } from "../../app/model/profile";
 import { filter, takeUntil } from "rxjs/operators";
 import { AuthProvider } from "../auth/auth";
@@ -26,7 +26,8 @@ export class FeedProvider {
     public http: HttpClient,
     public profilesProvider: ProfilesProvider,
     public platform: Platform,
-    public authProvider: AuthProvider
+    public authProvider: AuthProvider,
+    public alertCtrl: AlertController
   ) {
     console.log("Hello FeedProvider Provider");
     this._currentPost = new BehaviorSubject(null);
@@ -54,12 +55,18 @@ export class FeedProvider {
           })
           .catch(err => {
             console.error(err);
+            let getPostsAlertFailed = this.alertCtrl.create({
+              title: "Erro no acesso às Notícias",
+              message:
+                "Houve um erro interno na recuperação das suas notícias, perdoe o inconveniente. Tente mais tarde.",
+              buttons: ["Ok"]
+            });
+            getPostsAlertFailed.present();
           });
       });
   }
 
   getPostsByProfile(id): any {
-    console.log("what?");
     return new Promise((resolve, reject) => {
       this.http.get(`${this.apiUrl}/social/news/${id}`, this.headers).subscribe(
         res => {
@@ -78,7 +85,6 @@ export class FeedProvider {
         .get(`${this.apiUrl}/social/news/${id}/feed`, this.headers)
         .subscribe(
           res => {
-            console.log(res);
             resolve(res["data"]);
           },
           err => {
@@ -98,7 +104,14 @@ export class FeedProvider {
         )
         .subscribe(
           res => {
-            console.log(res);
+            if (res["success"]) {
+              let newPostAlertSuccess = this.alertCtrl.create({
+                title: "Novidade enviada com sucesso!",
+                message: "Logo seus seguidores poderão ver o que enviou.",
+                buttons: ["Ok"]
+              });
+              newPostAlertSuccess.present();
+            }
             resolve(res["newNews"]);
           },
           err => {

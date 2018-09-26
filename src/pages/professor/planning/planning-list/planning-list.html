@@ -44,7 +44,7 @@
         </ion-col>
       </ion-row>
 
-      <button ion-item *ngFor="let planning of plannings" (click)="open(planning)">
+      <button ion-item *ngFor="let planning of plannings" (click)="openDaily(planning)">
         <h2>{{planning.date}}</h2>
         <h3>{{planning.title}}</h3>
         <p text-wrap>{{planning.description}}</p>
