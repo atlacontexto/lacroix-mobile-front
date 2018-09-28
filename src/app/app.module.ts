@@ -12,14 +12,6 @@ import { TranslateLoader } from "@ngx-translate/core";
 import { UserProvider } from "../providers/user/user";
 import { AlertProvider } from "../providers/alert-service/alert-service";
 import { Keyboard } from "@ionic-native/keyboard";
-import { PostDetailPage } from "../pages/post-detail/post-detail";
-import { PostDetailPageModule } from "../pages/post-detail/post-detail.module";
-import { ReportPageModule } from "../pages/report/report.module";
-import { ReportPage } from "../pages/report/report";
-import { ExamPage } from "../pages/exam/exam";
-import { ExamPageModule } from "../pages/exam/exam.module";
-import { AuthorizationPage } from "../pages/authorization/authorization";
-import { AuthorizationPageModule } from "../pages/authorization/authorization.module";
 
 import { NgCalendarModule } from "ionic2-calendar";
 import { NotificationProvider } from "../providers/notification/notification";
@@ -32,14 +24,9 @@ import { SubjectsProvider } from "../providers/subjects/subjects";
 import { HomePage } from "../pages/home/home";
 import { FeedProvider } from "../providers/feed/feed";
 import { AuthProvider } from "../providers/auth/auth";
-import { UserManagementModule } from "../pages/user-management/user-management.module";
-import { ProfileEditPageModule } from "../pages/user-management/profiles/profile-edit/profile-edit.module";
-
-import { ClassroomPageModule } from "../pages/professor/classroom/classroom.module";
-import { PlanningPageModule } from "../pages/professor/planning/planning.module";
-import { RegisterPhonePageModule } from "../pages/authentication/register-phone/register-phone.module";
-import { RegisterPhoneCheckPageModule } from "../pages/authentication/register-phone-check/register-phone-check.module";
-import { PlanningProvider } from '../providers/planning/planning';
+import { PlanningProvider } from "../providers/planning/planning";
+import { FileOpener } from "@ionic-native/file-opener";
+import { File } from "@ionic-native/file";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -59,28 +46,10 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    HomePageModule,
-
-    RegisterPhonePageModule,
-    RegisterPhoneCheckPageModule,
-    UserManagementModule,
-    PostDetailPageModule,
-    PlanningPageModule,
-    ReportPageModule,
-    ClassroomPageModule,
-    ExamPageModule,
-    AuthorizationPageModule,
-    ProfileEditPageModule
+    HomePageModule
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    HomePage,
-    PostDetailPage,
-    ReportPage,
-    ExamPage,
-    AuthorizationPage
-  ],
+  entryComponents: [MyApp, HomePage],
   providers: [
     StatusBar,
     SplashScreen,
@@ -95,7 +64,9 @@ export function createTranslateLoader(http: HttpClient) {
     GeoProvider,
     SubjectsProvider,
     FeedProvider,
-    PlanningProvider
+    PlanningProvider,
+    File,
+    FileOpener
   ]
 })
 export class AppModule {}

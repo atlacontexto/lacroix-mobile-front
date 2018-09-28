@@ -66,7 +66,6 @@ export class NewsShowComponent implements OnInit, OnDestroy {
       .getPostsByProfile(this.profile.id)
       .then(res => {
         this.news = res.news;
-        console.log(this.news.length);
       })
       .catch(err => {
         console.log(err);
@@ -78,7 +77,6 @@ export class NewsShowComponent implements OnInit, OnDestroy {
       .getFeed(this.profile.id)
       .then(res => {
         this.news = res.news;
-        console.log(this.news.length);
       })
       .catch(err => {
         console.log(err);
