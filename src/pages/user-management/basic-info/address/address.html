@@ -1,4 +1,46 @@
-<!-- Generated template for the AddressComponent component -->
-<div>
-  {{text}}
-</div>
+<form [formGroup]="addressForm">
+  <ion-row>
+    <ion-col col-9>
+      <ion-item>
+        <ion-label floating> CEP</ion-label>
+        <ion-input type=text formControlName="cep"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col col-3>
+      <button ion-button icon-only full large (click)="searchCEP()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+
+  <ion-item>
+    <ion-label floating>Estado</ion-label>
+    <ion-select formControlName="uf">
+      <ion-option *ngFor="let state of states" [value]="state.abbr">{{state.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Cidade</ion-label>
+    <ion-input type=text formControlName="county"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Rua / Logradouro</ion-label>
+    <ion-input type=text formControlName="street"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Número</ion-label>
+    <ion-input type=text formControlName="number"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Complemento</ion-label>
+    <ion-input type=text formControlName="complement"></ion-input>
+  </ion-item>
+
+  <ion-item padding no-lines>
+    <button padding ion-button block (click)="onSubmit()">SALVAR</button>
+  </ion-item>
+</form>

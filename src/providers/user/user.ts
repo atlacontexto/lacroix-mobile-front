@@ -51,10 +51,7 @@ export class UserProvider {
   }
 
   getUserAtt(att) {
-    const userInfo = this.authService.getDecodedAccessToken("token");
-    if (att == "_id") {
-      return userInfo["user"]["_id"];
-    }
+    return this.authService.getDecodedAccessToken("token")["user"][att];
   }
 
   update(user) {

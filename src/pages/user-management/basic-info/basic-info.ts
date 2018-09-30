@@ -47,13 +47,16 @@ export class BasicInfoComponent {
         peopleId: [null],
         name: [null, Validators.required],
         userId: [null],
-        shortName: [{ value: "", disabled: false }, Validators.required],
+        shortName: [
+          { value: "", disabled: false },
+          Validators.required,
+          Validators.pattern("^[a-z0-9_-]{8,15}$")
+        ],
         password: [
           "",
           Validators.compose([
             Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(6)
+            Validators.pattern("^[a-z0-9_-]{8,15}$")
           ])
         ],
         confirmPassword: ["", Validators.required]
@@ -72,7 +75,7 @@ export class BasicInfoComponent {
 
   ngAfterContentInit() {
     this.expandItem(this.items[0]);
-    
+
     if (this.authService.getDecodedAccessToken("token")) {
       this.userService
         .buildUser()

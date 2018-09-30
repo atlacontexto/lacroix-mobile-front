@@ -32,7 +32,6 @@ export class ProfilesProvider {
     this.listProfiles = new BehaviorSubject(null);
     this.showingProfile = new BehaviorSubject(null);
     if (platform.is("cordova")) {
-      console.log(ENV.API_ENDPOINT);
       this.apiUrl = ENV.API_ENDPOINT;
     }
     this.profiles = profiles;

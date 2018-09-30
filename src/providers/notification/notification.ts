@@ -1,5 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { ENV } from "@environment";
+import { Platform } from "ionic-angular";
 
 /*
   Generated class for the NotificationProvider provider.
@@ -9,9 +11,11 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class NotificationProvider {
-
-  constructor(public http: HttpClient) {
-    console.log('Hello NotificationProvider Provider');
+  apiUrl = ENV.API_LOCAL;
+  constructor(public http: HttpClient, public platform: Platform) {
+    console.log("Hello NotificationProvider Provider");
+    if (platform.is("cordova")) {
+      this.apiUrl = ENV.API_ENDPOINT;
+    }
   }
-
 }

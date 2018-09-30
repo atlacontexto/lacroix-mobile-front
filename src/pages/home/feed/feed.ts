@@ -3,7 +3,6 @@ import {
   IonicPage,
   NavController,
   NavParams,
-  Events,
   ModalController
 } from "ionic-angular";
 import { NewsNewPage } from "./news/news-new/news-new";

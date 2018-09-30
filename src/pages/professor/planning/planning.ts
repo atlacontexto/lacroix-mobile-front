@@ -48,14 +48,11 @@ export class PlanningPage implements OnInit, OnDestroy {
         takeUntil(this._unsubscribeAll)
       )
       .subscribe(profile => {
-        console.log(profile);
         this.profile = profile;
         this.subjects = this.subjects.filter(x =>
           profile.subjects.includes(x.value)
         );
         this.year = this._profilesProvider.getCourseYear(this.profile["serie"]);
-        console.log(this.subjects);
-        console.log(this.year);
       });
   }
   ngOnDestroy(): void {

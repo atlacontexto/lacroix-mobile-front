@@ -27,6 +27,8 @@ import { AuthProvider } from "../providers/auth/auth";
 import { PlanningProvider } from "../providers/planning/planning";
 import { FileOpener } from "@ionic-native/file-opener";
 import { File } from "@ionic-native/file";
+import { AddressProvider } from '../providers/address/address';
+import { PersonalProvider } from '../providers/personal/personal';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -66,7 +68,9 @@ export function createTranslateLoader(http: HttpClient) {
     FeedProvider,
     PlanningProvider,
     File,
-    FileOpener
+    FileOpener,
+    AddressProvider,
+    PersonalProvider
   ]
 })
 export class AppModule {}

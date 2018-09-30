@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import geo from "../../fakedb/geo";
 import { ENV } from "@environment";
 import { AuthProvider } from "../auth/auth";
+import { Platform } from "ionic-angular";
 
 /*
   Generated class for the GeoProvider provider.
@@ -15,8 +16,15 @@ export class GeoProvider {
   apiUrl = ENV.API_LOCAL;
   geo: any;
   headers: { headers: { "x-access-token": string } };
-  constructor(public http: HttpClient, private authProvider: AuthProvider) {
+  constructor(
+    public http: HttpClient,
+    private authProvider: AuthProvider,
+    public platform: Platform
+  ) {
     this.geo = geo;
+    if (platform.is("cordova")) {
+      this.apiUrl = ENV.API_ENDPOINT;
+    }
     this.authProvider.isLoggedIn.subscribe(value => {
       if (value) {
         this.headers = {
@@ -43,7 +51,6 @@ export class GeoProvider {
         )
         .subscribe(
           res => {
-            
             resolve(res);
           },
           err => {
@@ -54,7 +61,9 @@ export class GeoProvider {
   }
 
   getStates(): any {
-    return this.geo.states;
+    return this.geo.states.sort((a, b) => {
+      return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+    });
   }
 
   getCountiesByStateFake(stateId: any): any {
