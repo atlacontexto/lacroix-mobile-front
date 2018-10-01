@@ -142,7 +142,6 @@ export class BasicInfoComponent {
   }
 
   expandItem(item) {
-    console.log(item);
     this.items.map(listItem => {
       if (item == listItem) {
         listItem.expanded = !listItem.expanded;

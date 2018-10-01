@@ -17,9 +17,9 @@
           {{cellphone}}
         </h2>
         <p *ngIf="hidevalue">{{ 'SWITCH_NUMBER' | translate}}</p>
-        <p>
+        <h4>
           {{ 'REGISTER_PHONE_CHECK_DESCRIPTION' | translate}}
-        </p>
+        </h4>
       </ion-col>
     </ion-row>
     <form (submit)="next()" [formGroup]="form">

@@ -49,32 +49,37 @@ export class AddressComponent implements OnInit, OnDestroy {
       uf: [null, Validators.required]
     });
 
-    this._addressProvider
-      .getCurrentUserAdrress()
-      .then(address => {
-        if (address) {
-          // this.address = address;
-          this.addressForm.controls["street"].setValue(address.street);
-          this.addressForm.controls["number"].setValue(address.number);
-          this.addressForm.controls["complement"].setValue(address.complement);
-          this.addressForm.controls["block"].setValue(address.block);
-          this.addressForm.controls["cep"].setValue(address.cep);
-          this.addressForm.controls["county"].setValue(address.county);
-          this.addressForm.controls["uf"].setValue(address.uf);
-        }
-        getLoading.dismiss();
-      })
-      .catch(err => {
-        console.log(err);
-        getLoading.dismiss();
-        let getFailed = this.alertCtrl.create({
-          title: "Erro na busca",
-          message:
-            "Ocorreu um erro na busca por suas informações de Endereço. Por favor, tente novamente mais tarde.",
-          buttons: ["Ok"]
+    if (this._userProvider.user.value.$people.$address) {
+      this._addressProvider
+        .getCurrentUserAdrress()
+        .then(address => {
+          if (address) {
+            this.addressForm.controls["street"].setValue(address.street);
+            this.addressForm.controls["number"].setValue(address.number);
+            this.addressForm.controls["complement"].setValue(
+              address.complement
+            );
+            this.addressForm.controls["block"].setValue(address.block);
+            this.addressForm.controls["cep"].setValue(address.cep);
+            this.addressForm.controls["county"].setValue(address.county);
+            this.addressForm.controls["uf"].setValue(address.uf);
+          }
+          getLoading.dismiss();
+        })
+        .catch(err => {
+          console.log(err);
+          getLoading.dismiss();
+          let getFailed = this.alertCtrl.create({
+            title: "Erro na busca",
+            message:
+              "Ocorreu um erro na busca por suas informações de Endereço. Por favor, tente novamente mais tarde.",
+            buttons: ["Ok"]
+          });
+          getFailed.present();
         });
-        getFailed.present();
-      });
+    } else {
+      getLoading.dismiss();
+    }
   }
 
   searchCEP() {

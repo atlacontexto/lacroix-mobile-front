@@ -59,14 +59,19 @@ export class AddressProvider {
   }
 
   getCurrentUserAdrress(): Promise<any> {
+    console.log("here?promise");
     return new Promise((resolve, reject) => {
       this.http
         .get(`${this.apiUrl}/address/address-info`, this.headers)
         .subscribe(
           response => {
+            console.log("here?resolve");
+
             resolve(response["data"]["address"]);
           },
           error => {
+            console.log("here?reject");
+
             reject(error);
           }
         );
