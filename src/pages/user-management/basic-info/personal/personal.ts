@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { PersonalProvider } from "../../../../providers/personal/personal";
 import { GeoProvider } from "../../../../providers/geo/geo";
-import { AlertController } from "ionic-angular";
+import { AlertController, LoadingController } from "ionic-angular";
 import { UserProvider } from "../../../../providers/user/user";
 
 /**
@@ -29,7 +29,8 @@ export class PersonalComponent implements OnInit, OnDestroy {
     private _personalProvider: PersonalProvider,
     private _geoProvider: GeoProvider,
     private alertCtrl: AlertController,
-    private _userProvider: UserProvider
+    private _userProvider: UserProvider,
+    public loadingCtrl: LoadingController
   ) {
     this.personalForm = this.formBuilder.group({
       name: [null, Validators.required],
@@ -95,6 +96,10 @@ export class PersonalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    let getLoading = this.loadingCtrl.create({
+      content: "Buscando..."
+    });
+    getLoading.present();
     this.states = this._geoProvider.getStates();
     this._personalProvider
       .getPeople()
@@ -107,9 +112,11 @@ export class PersonalComponent implements OnInit, OnDestroy {
           this.personalForm.controls["rg_uf"].setValue(people.rg_uf);
           this.personalForm.controls["cpf"].setValue(people.cpf);
         }
+        getLoading.dismiss();
       })
       .catch(error => {
         console.log(error);
+        getLoading.dismiss();
         let getFailed = this.alertCtrl.create({
           title: "Erro na recuperação",
           message:

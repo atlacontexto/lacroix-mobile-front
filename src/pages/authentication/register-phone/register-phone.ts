@@ -43,11 +43,11 @@ export class RegisterPhonePage {
   }
 
   next() {
-    let phone = this.form.value.prefix.concat(
-      this.form.value.cellphone.match(/\d+/g).join("")
-    );
-    console.log(phone);
     if (this.isReady) {
+      let phone = this.form.value.prefix.concat(
+        this.form.value.cellphone.match(/\d+/g).join("")
+      );
+      console.log(phone);
       this.authService
         .sendSms({ cellphone: phone })
         .then(data => {

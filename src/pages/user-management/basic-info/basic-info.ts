@@ -6,6 +6,7 @@ import { UserProvider } from "../../../providers/user/user";
 import { User } from "../../../app/model/user";
 import { ProfilesProvider } from "../../../providers/profiles/profiles";
 import { AuthProvider } from "../../../providers/auth/auth";
+import { LoadingController, AlertController } from "ionic-angular";
 
 /**
  * Generated class for the BasicInfoComponent component.
@@ -32,15 +33,12 @@ export class BasicInfoComponent {
     public userService: UserProvider,
     public alertService: AlertProvider,
     public profilesProvider: ProfilesProvider,
-    public authService: AuthProvider
+    public authService: AuthProvider,
+    private alertCtrl: AlertController,
+    public loadingCtrl: LoadingController
   ) {
     this.cellphone = this.authService.cellphone.value;
-    this.items = [
-      { viewValue: "CONTA", value: "account", expanded: false },
-      { viewValue: "INFORMAÇÕES PESSOAIS", value: "personal", expanded: false },
-      { viewValue: "ENDEREÇO", value: "address", expanded: false },
-      { viewValue: "ASSINATURA", value: "billing", expanded: false }
-    ];
+    this.items = [{ viewValue: "CONTA", value: "account", expanded: false }];
 
     this.form = this.formBuilder.group(
       {
@@ -49,8 +47,10 @@ export class BasicInfoComponent {
         userId: [null],
         shortName: [
           { value: "", disabled: false },
-          Validators.required,
-          Validators.pattern("^[a-z0-9_-]{8,15}$")
+          Validators.compose([
+            Validators.required,
+            Validators.pattern("^[a-z0-9_-]{8,15}$")
+          ])
         ],
         password: [
           "",
@@ -59,7 +59,13 @@ export class BasicInfoComponent {
             Validators.pattern("^[a-z0-9_-]{8,15}$")
           ])
         ],
-        confirmPassword: ["", Validators.required]
+        confirmPassword: [
+          "",
+          Validators.compose([
+            Validators.required,
+            Validators.pattern("^[a-z0-9_-]{8,15}$")
+          ])
+        ]
       },
       { validator: this.matchingPasswords("password", "confirmPassword") }
     );
@@ -74,6 +80,10 @@ export class BasicInfoComponent {
   }
 
   ngAfterContentInit() {
+    let getLoading = this.loadingCtrl.create({
+      content: "Buscando..."
+    });
+    getLoading.present();
     this.expandItem(this.items[0]);
 
     if (this.authService.getDecodedAccessToken("token")) {
@@ -82,6 +92,17 @@ export class BasicInfoComponent {
         .then(() => {
           let user = this.userService.user.value;
           if (user instanceof User) {
+            this.items = [
+              { viewValue: "CONTA", value: "account", expanded: false },
+              {
+                viewValue: "INFORMAÇÕES PESSOAIS",
+                value: "personal",
+                expanded: false
+              },
+              { viewValue: "ENDEREÇO", value: "address", expanded: false },
+              { viewValue: "ASSINATURA", value: "billing", expanded: false }
+            ];
+            getLoading.dismiss();
             let toast = this.alertService.toastCtrl.create({
               message: `Olá ${user.$people.$name}`,
               duration: 2000
@@ -100,8 +121,17 @@ export class BasicInfoComponent {
         })
         .catch(err => {
           console.log(err);
+          getLoading.dismiss();
+          let getFailed = this.alertCtrl.create({
+            title: "Erro na busca",
+            message:
+              "Ocorreu um erro na busca por suas informações de Endereço. Por favor, tente novamente mais tarde.",
+            buttons: ["Ok"]
+          });
+          getFailed.present();
         });
     } else {
+      getLoading.dismiss();
       this.form.controls["shortName"].enable();
       let toast = this.alertService.toastCtrl.create({
         message: "Cadastro de novo usuário",
@@ -112,6 +142,7 @@ export class BasicInfoComponent {
   }
 
   expandItem(item) {
+    console.log(item);
     this.items.map(listItem => {
       if (item == listItem) {
         listItem.expanded = !listItem.expanded;

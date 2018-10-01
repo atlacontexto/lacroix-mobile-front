@@ -96,7 +96,10 @@ export class AddressComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (this.addressForm.valid) {
-      if (this._userProvider.user.value.$people.$address) {
+      if (
+        this._userProvider.user.value.$people &&
+        this._userProvider.user.value.$people.$address
+      ) {
         console.log("update");
         this._addressProvider
           .updateCurrentUserAddress(this.addressForm.value)
