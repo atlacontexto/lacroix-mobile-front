@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { AuthProvider } from "../auth/auth";
 import { Platform } from "ionic-angular";
 import { ENV } from "@environment";
+import { ProfilesProvider } from "../profiles/profiles";
 
 /*
   Generated class for the PlanningProvider provider.
@@ -17,7 +18,8 @@ export class PlanningProvider {
   constructor(
     public http: HttpClient,
     public authProvider: AuthProvider,
-    public platform: Platform
+    public platform: Platform,
+    public _profilesProvider: ProfilesProvider
   ) {
     console.log("Hello PlanningProvider Provider");
     if (platform.is("cordova")) {
@@ -49,6 +51,26 @@ export class PlanningProvider {
           },
           err => {
             console.error(err);
+            reject(err);
+          }
+        );
+    });
+  }
+
+  getDailyPlanningByTheme(theme) {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(
+          `/api/profile/professor/${
+            this._profilesProvider.currentProfile.value.id
+          }/planning/daily?theme=${theme}`,
+          this.headers
+        )
+        .subscribe(
+          res => {
+            resolve(res["data"]["planning"]);
+          },
+          err => {
             reject(err);
           }
         );

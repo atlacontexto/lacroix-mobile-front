@@ -1,5 +1,11 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  AlertController
+} from "ionic-angular";
+import { PlanningProvider } from "../../../../providers/planning/planning";
 
 /**
  * Generated class for the PlanningListPage page.
@@ -13,17 +19,17 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
   selector: "page-planning-list",
   templateUrl: "planning-list.html"
 })
-export class PlanningListPage {
+export class PlanningListPage implements OnInit, OnDestroy {
   title: string;
   ptds: Array<{ type: string; title: string }>;
-  plannings: Array<{
-    type: string;
-    date: string;
-    title: string;
-    description: string;
-  }>;
+  plannings: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public planningProvider: PlanningProvider,
+    public alertCtrl: AlertController
+  ) {
     this.title = navParams.get("title");
   }
 
@@ -34,43 +40,26 @@ export class PlanningListPage {
       { type: "ptd", title: "3º BIMESTRE" },
       { type: "ptd", title: "4º BIMESTRE" }
     ];
-    this.plannings = [
-      {
-        type: "diario",
-        date: "06/2 - 8:00 às 9:30",
-        title: "Apresentação da Turma",
-        description: "Primeiro contato com os alunos e entre eles"
-      },
-      {
-        type: "diario",
-        date: "06/2 - 10:00 às 10:30",
-        title: "Recolhimento de materiais",
-        description: "Coleta e organização do material didático"
-      },
-      {
-        type: "diario",
-        date: "06/2 - 10:30 às 11:30",
-        title: "Avaliação Diagnóstica",
-        description: "Português e Matemática"
-      },
-      {
-        type: "diario",
-        date: "07/2 - o dia todo",
-        title: "Hora Atividade",
-        description: "História e Geografia"
-      },
-      {
-        type: "diario",
-        date: "08/2 - o dia todo",
-        title: "Análise textual",
-        description: "Minhas vontades"
-      }
-    ];
   }
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad PlanningListPage");
+  ngOnInit(): void {
+    this.planningProvider
+      .getDailyPlanningByTheme(this.title["value"])
+      .then(res => {
+        console.log(res);
+        this.plannings = res;
+      })
+      .catch(err => {
+        let getPlanningError = this.alertCtrl.create({
+          title: "Erro na recuperação dos planos",
+          message:
+            "Ocorreu uma falha interna na recuperação dos seus planos diários. Tente novamente mais tarde.",
+          buttons: ["OK"]
+        });
+        getPlanningError.present();
+      });
   }
+  ngOnDestroy(): void {}
 
   open(planning?) {
     this.navCtrl.push(

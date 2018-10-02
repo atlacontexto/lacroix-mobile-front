@@ -64,7 +64,7 @@ export class PlanningPage implements OnInit, OnDestroy {
   openPlanning(page) {
     this.navCtrl.push(
       "PlanningListPage",
-      { title: page.viewValue },
+      { title: page },
       {
         animate: true,
         direction: "forward"

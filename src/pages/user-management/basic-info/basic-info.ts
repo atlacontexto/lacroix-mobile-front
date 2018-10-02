@@ -49,21 +49,21 @@ export class BasicInfoComponent {
           { value: "", disabled: false },
           Validators.compose([
             Validators.required,
-            Validators.pattern("^[a-z0-9_-]{8,15}$")
+            Validators.pattern("^[a-zA-Z0-9_-]{8,15}$")
           ])
         ],
         password: [
           "",
           Validators.compose([
             Validators.required,
-            Validators.pattern("^[a-z0-9_-]{8,15}$")
+            Validators.pattern("^[a-zA-Z0-9_-]{8,15}$")
           ])
         ],
         confirmPassword: [
           "",
           Validators.compose([
             Validators.required,
-            Validators.pattern("^[a-z0-9_-]{8,15}$")
+            Validators.pattern("^[a-zA-Z0-9_-]{8,15}$")
           ])
         ]
       },
@@ -92,6 +92,7 @@ export class BasicInfoComponent {
         .then(() => {
           let user = this.userService.user.value;
           if (user instanceof User) {
+            console.log(user);
             this.items = [
               { viewValue: "CONTA", value: "account", expanded: false },
               {
@@ -110,10 +111,12 @@ export class BasicInfoComponent {
             toast.present();
             this.cellphone = user.$mainContact.$address;
             this.form.get("shortName").disable();
+
             this.form.controls["peopleId"].setValue(user.$people.id);
             this.form.controls["name"].setValue(user.$people.$name);
             this.form.controls["userId"].setValue(user.id);
             this.form.controls["shortName"].setValue(user.$shortName);
+            console.log(this.form.value);
             if (user.getProfiles().length == 0) {
               this.requestForCreateProfile();
             }
@@ -185,6 +188,8 @@ export class BasicInfoComponent {
 
   updateInfo(value) {
     // this.eventEmmit.emit();
+    this.form.get("shortName").enable();
+    console.log(this.form.value);
     this.alertService.presentControlledLoader(
       "Atualizando suas informações..."
     );
@@ -250,7 +255,7 @@ export class BasicInfoComponent {
       } else {
         this.alertService.presentAlert(
           "Informações incorretas",
-          `Verifique usas informações básicas de usuário: Todos os campos são obrigatórios e a senha deve ter 6 caracteres`,
+          `Verifique usas informações básicas de usuário: Todos os campos são obrigatórios e a senha deve ter entre 8 e 15 caracteres, entre números e letras.`,
           "OK"
         );
       }

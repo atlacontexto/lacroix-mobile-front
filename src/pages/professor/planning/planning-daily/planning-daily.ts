@@ -1,10 +1,8 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController, Platform } from "ionic-angular";
-import { FileOpener } from "@ionic-native/file-opener";
-import { File } from "@ionic-native/file";
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { Component, ViewChild, AfterViewInit, Renderer } from "@angular/core";
+import { IonicPage, NavController, Platform, NavParams } from "ionic-angular";
+import * as jspdf from "jspdf";
+import html2canvas from "html2canvas";
+import { ElementRef } from "@angular/core";
 
 /**
  * Generated class for the PlanningDailyPage page.
@@ -18,81 +16,42 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   selector: "page-planning-daily",
   templateUrl: "planning-daily.html"
 })
-export class PlanningDailyPage {
-  letterObj = {
-    to: "Barbara",
-    from: "Savio",
-    text: "Olha o mini-couper na frente da garagem!"
-  };
-
+export class PlanningDailyPage implements AfterViewInit {
   pdfObj = null;
+  planning: any;
+  @ViewChild("test")
+  el: ElementRef;
 
   constructor(
     public navCtrl: NavController,
     private plt: Platform,
-    private file: File,
-    private fileOpener: FileOpener
-  ) {}
-
-  createPdf() {
-    var docDefinition = {
-      content: [
-        { text: "REMINDER", style: "header" },
-        { text: new Date().toTimeString(), alignment: "right" },
-
-        { text: "From", style: "subheader" },
-        { text: this.letterObj.from },
-
-        { text: "To", style: "subheader" },
-        this.letterObj.to,
-
-        { text: this.letterObj.text, style: "story", margin: [0, 20, 0, 20] },
-
-        {
-          ul: ["Bacon", "Rips", "BBQ"]
-        }
-      ],
-      styles: {
-        header: {
-          fontSize: 18,
-          bold: true
-        },
-        subheader: {
-          fontSize: 14,
-          bold: true,
-          margin: [0, 15, 0, 0]
-        },
-        story: {
-          italic: true,
-          alignment: "center",
-          width: "50%"
-        }
-      }
-    };
-    this.pdfObj = pdfMake.createPdf(docDefinition);
+    private navParams: NavParams,
+    private _renderer: Renderer
+  ) {
+    this.planning = this.navParams.get("planning");
   }
 
-  downloadPdf() {
-    if (this.plt.is("cordova")) {
-      this.pdfObj.getBuffer(buffer => {
-        var blob = new Blob([buffer], { type: "application/pdf" });
+  ngAfterViewInit(): void {
+    console.log(this.el);
 
-        // Save the PDF to the data Directory of our App
-        this.file
-          .writeFile(this.file.dataDirectory, "myletter.pdf", blob, {
-            replace: true
-          })
-          .then(fileEntry => {
-            // Open the PDf with the correct OS tools
-            this.fileOpener.open(
-              this.file.dataDirectory + "myletter.pdf",
-              "application/pdf"
-            );
-          });
-      });
-    } else {
-      // On a browser simply use download!
-      this.pdfObj.download();
-    }
+    this._renderer.setElementProperty(
+      this.el.nativeElement,
+      "innerHTML",
+      this.planning.content
+    );
+    html2canvas(this.el.nativeElement).then(canvas => {
+      // Few necessary setting options
+      var imgWidth = 208;
+      var pageHeight = 295;
+      var imgHeight = (canvas.height * imgWidth) / canvas.width;
+      var heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL("image/png");
+      let pdf = new jspdf("p", "mm", "a4"); // A4 size page of PDF
+      var position = 0;
+      pdf.addImage(contentDataURL, "PNG", 0, position, imgWidth, imgHeight);
+      pdf.save("MYPdf.pdf"); // Generated PDF
+      console.log(pdf);
+    });
   }
 }
