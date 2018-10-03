@@ -116,7 +116,7 @@ export class BasicInfoComponent {
             this.form.controls["name"].setValue(user.$people.$name);
             this.form.controls["userId"].setValue(user.id);
             this.form.controls["shortName"].setValue(user.$shortName);
-            console.log(this.form.value);
+            
             if (user.getProfiles().length == 0) {
               this.requestForCreateProfile();
             }

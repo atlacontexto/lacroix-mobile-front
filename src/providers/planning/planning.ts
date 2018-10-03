@@ -61,7 +61,7 @@ export class PlanningProvider {
     return new Promise((resolve, reject) => {
       this.http
         .get(
-          `/api/profile/professor/${
+          `${this.apiUrl}/profile/professor/${
             this._profilesProvider.currentProfile.value.id
           }/planning/daily?theme=${theme}`,
           this.headers
@@ -71,6 +71,7 @@ export class PlanningProvider {
             resolve(res["data"]["planning"]);
           },
           err => {
+            console.log(err);
             reject(err);
           }
         );

@@ -249,6 +249,28 @@ export class MyApp {
                       ]
                     });
                     incorrectAlert.present();
+                  } else if (err.status === 404) {
+                    let incorrectAlert = this.alertProvider.alertCtrl.create({
+                      title: "Usuário não encontrado",
+                      message:
+                        "Não foi possível identificar seu nome de usuário. Desculpe-nos o transtorno, sugerimos que selecione 'Sair', para fazer nova autenticação via SMS, ou pode tentar novamente selecionando 'OK'",
+                      buttons: [
+                        {
+                          text: "OK",
+                          handler: () => {
+                            this.authProvider.isLoggedIn.next(false);
+                            this.userProvider.buildUser();
+                          }
+                        },
+                        {
+                          text: "Sair",
+                          handler: () => {
+                            this.logout();
+                          }
+                        }
+                      ]
+                    });
+                    incorrectAlert.present();
                   }
 
                   console.error(err);
