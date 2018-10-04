@@ -3,6 +3,8 @@ import { IonicPage, NavController, Platform, NavParams } from "ionic-angular";
 import * as jspdf from "jspdf";
 import html2canvas from "html2canvas";
 import { ElementRef } from "@angular/core";
+import { File } from "@ionic-native/file";
+import { FileOpener } from "@ionic-native/file-opener";
 
 /**
  * Generated class for the PlanningDailyPage page.
@@ -26,7 +28,9 @@ export class PlanningDailyPage implements AfterViewInit {
     public navCtrl: NavController,
     private plt: Platform,
     private navParams: NavParams,
-    private _renderer: Renderer
+    private _renderer: Renderer,
+    private file: File,
+    private fileOpener: FileOpener
   ) {
     this.planning = this.navParams.get("planning");
   }
@@ -39,6 +43,9 @@ export class PlanningDailyPage implements AfterViewInit {
       "innerHTML",
       this.planning.content
     );
+  }
+
+  downloadPlanning() {
     html2canvas(this.el.nativeElement).then(canvas => {
       // Few necessary setting options
       var imgWidth = 208;
@@ -50,6 +57,22 @@ export class PlanningDailyPage implements AfterViewInit {
       let pdf = new jspdf("p", "mm", "a4"); // A4 size page of PDF
       var position = 0;
       pdf.addImage(contentDataURL, "PNG", 0, position, imgWidth, imgHeight);
+      if (this.plt.is("cordova")) {
+        var blob = pdf.output("blob", { type: "application/pdf" });
+
+        // Save the PDF to the data Directory of our App
+        this.file
+          .writeFile(this.file.dataDirectory, "myletter.pdf", blob, {
+            replace: true
+          })
+          .then(fileEntry => {
+            // Open the PDf with the correct OS tools
+            this.fileOpener.open(
+              this.file.dataDirectory + "myletter.pdf",
+              "application/pdf"
+            );
+          });
+      }
       pdf.save("MYPdf.pdf"); // Generated PDF
       console.log(pdf);
     });
