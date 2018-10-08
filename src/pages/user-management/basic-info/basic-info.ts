@@ -54,17 +54,11 @@ export class BasicInfoComponent {
         ],
         password: [
           "",
-          Validators.compose([
-            Validators.required,
-            Validators.pattern("^[a-zA-Z0-9_-]{8,15}$")
-          ])
+          Validators.compose([Validators.required, Validators.min(8)])
         ],
         confirmPassword: [
           "",
-          Validators.compose([
-            Validators.required,
-            Validators.pattern("^[a-zA-Z0-9_-]{8,15}$")
-          ])
+          Validators.compose([Validators.required, Validators.min(8)])
         ]
       },
       { validator: this.matchingPasswords("password", "confirmPassword") }
@@ -92,7 +86,6 @@ export class BasicInfoComponent {
         .then(() => {
           let user = this.userService.user.value;
           if (user instanceof User) {
-            console.log(user);
             this.items = [
               { viewValue: "CONTA", value: "account", expanded: false },
               {
@@ -116,7 +109,7 @@ export class BasicInfoComponent {
             this.form.controls["name"].setValue(user.$people.$name);
             this.form.controls["userId"].setValue(user.id);
             this.form.controls["shortName"].setValue(user.$shortName);
-            
+
             if (user.getProfiles().length == 0) {
               this.requestForCreateProfile();
             }

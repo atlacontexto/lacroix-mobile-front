@@ -6,18 +6,24 @@
     <ion-searchbar placeholder=Buscar [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)"
       (ionCancel)="onCancel($event)">
     </ion-searchbar>
+    <ion-buttons end>
+      <button ion-button icon-end (click)="newPost()">
+        Novidade
+        <ion-icon name="paper"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-  <ion-item no-lines no-padding *ngIf="isProfile(currentProfile)">
-    <ion-item no-lines (click)="showProfile()">
-      <ion-avatar item-start>
-        <img src="assets/imgs/placeholder.png">
-      </ion-avatar>
-      <p text-wrap>Acessando como {{currentProfile.getShowType()}}</p>
-      <h2>{{detail}}</h2>
 
-    </ion-item>
-    <button ion-button item-end (click)="newPost()">Tenho uma Novidade!</button>
+  <ion-item *ngIf="isProfile(currentProfile)" no-lines (click)="showProfile()">
+    <ion-avatar item-start>
+      <img src="assets/imgs/placeholder.png">
+    </ion-avatar>
+    <p text-wrap>Acessando como {{currentProfile.getShowType()}}</p>
+    <p *ngIf="currentProfile.role">{{currentProfile.role.type | translate}}</p>
+    <p *ngIf="currentProfile.school">{{currentProfile.school.requested.institution.name}}</p>
+
   </ion-item>
+
   <last-news></last-news>
 </ion-header>
 

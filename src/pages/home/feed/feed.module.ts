@@ -7,6 +7,7 @@ import { LastNewsComponent } from "./components/last-news/last-news";
 import { NewsShowComponent } from "./news/news-show/news-show";
 import { NewsCommentsComponent } from "./news/news-comments/news-comments";
 import { NewsShowOneComponent } from "./news/news-show-one/news-show-one";
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { NewsShowOneComponent } from "./news/news-show-one/news-show-one";
     NewsCommentsComponent,
     NewsShowOneComponent
   ],
-  imports: [IonicPageModule.forChild(FeedPage)],
+  imports: [IonicPageModule.forChild(FeedPage), TranslateModule.forChild()],
   entryComponents: [
     NewsNewPage,
     NewsEditPage,

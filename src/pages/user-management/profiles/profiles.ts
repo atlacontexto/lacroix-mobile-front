@@ -1,5 +1,10 @@
 import { Component } from "@angular/core";
-import { NavController, ModalController, Events } from "ionic-angular";
+import {
+  NavController,
+  ModalController,
+  Events,
+  LoadingController
+} from "ionic-angular";
 import { HomePage } from "../../../pages/home/home";
 import { UserProvider } from "../../../providers/user/user";
 
@@ -27,7 +32,8 @@ export class ProfilesComponent {
     public navCtrl: NavController,
     public modalCtrl: ModalController,
     public events: Events,
-    public userProvider: UserProvider
+    public userProvider: UserProvider,
+    public loadingCtrl: LoadingController
   ) {
     this.showProfiles = new Array();
   }
@@ -97,16 +103,16 @@ export class ProfilesComponent {
   }
 
   updateProfilesListing() {
+    let getLoading = this.loadingCtrl.create({
+      content: "Buscando perfis..."
+    });
+    getLoading.present();
     this.showProfiles = new Array();
     this.userProvider.getProfiles().then(
       profiles => {
         if (profiles) {
+          console.log(profiles);
           this.showProfiles = profiles;
-          if (this.showProfiles.length) {
-            this.events.publish("app:showstart", true);
-          } else {
-            this.events.publish("app:showstart", false);
-          }
         } else {
           this.showHelp = true;
         }
@@ -116,5 +122,6 @@ export class ProfilesComponent {
         console.log(err);
       }
     );
+    getLoading.dismiss();
   }
 }

@@ -69,6 +69,12 @@ export class ProfilesProvider {
   getSchoolRoles(): any {
     return this.profiles.schoolRoles;
   }
+
+  getSchoolRoleByName(name) {
+    return this.profiles.schoolRoles.filter(v => {
+      return v.value == name;
+    });
+  }
   getCourseLevels(): any {
     return this.profiles.courseLevels;
   }

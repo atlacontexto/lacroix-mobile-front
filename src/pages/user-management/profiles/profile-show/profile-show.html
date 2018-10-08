@@ -10,7 +10,9 @@
     <div class="circular"></div>
     <h2 *ngIf="isUser()">{{userIn.$people.$name}}</h2>
     <p *ngIf="isUser()">@{{userIn.$shortName}}</p>
-    <p *ngIf="isUser()">{{profile.$showType}} &bull; {{user.location}}</p>
+    <p *ngIf="isUser()">{{profile.$showType}}</p>
+    <p *ngIf="isUser() && profile.school">{{profile.school.requested.institution.name}}</p>
+    <p *ngIf="isUser() && profile.role">{{profile.role.type | translate}}</p>
     <p class="profile-description">{{user.description}}</p>
     <hr>
     <ion-list no-lines>

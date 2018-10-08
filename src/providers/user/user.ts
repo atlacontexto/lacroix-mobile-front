@@ -144,6 +144,7 @@ export class UserProvider {
         .subscribe(
           res => {
             if (res.status == 200 && res.body["success"]) {
+              console.log(res.body["data"]["user"]);
               resolve(res.body["data"]["user"]);
             } else {
               reject();

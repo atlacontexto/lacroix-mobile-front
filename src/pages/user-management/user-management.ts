@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import {
   IonicPage,
   NavController,
@@ -7,11 +7,14 @@ import {
   ModalController,
   Events
 } from "ionic-angular";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder } from "@angular/forms";
 import { HomePage } from "../home/home";
 import { Keyboard } from "@ionic-native/keyboard";
 import { UserProvider } from "../../providers/user/user";
 import { User } from "../../app/model/user";
+import { ProfilesProvider } from "../../providers/profiles/profiles";
+import { Subject } from "rxjs";
+import { takeUntil, filter } from "rxjs/operators";
 
 /**
  * Generated class for the UserBasicInfoPage page.
@@ -25,7 +28,7 @@ import { User } from "../../app/model/user";
   selector: "page-user-management",
   templateUrl: "user-management.html"
 })
-export class UserManagementPage {
+export class UserManagementPage implements OnInit, OnDestroy {
   userInfo: any;
   form: FormGroup;
   isReady: boolean;
@@ -35,6 +38,7 @@ export class UserManagementPage {
   showFooter = true;
   showProfiles: Array<any>;
   showStart = false;
+  private _unsubscribeAll: Subject<any>;
 
   constructor(
     public navCtrl: NavController,
@@ -44,16 +48,31 @@ export class UserManagementPage {
     public platform: Platform,
     public key: Keyboard,
     public modalCtrl: ModalController,
-    public events: Events
+    public events: Events,
+    public _profilesProvider: ProfilesProvider
   ) {
+    this._unsubscribeAll = new Subject();
     this.userService.user.subscribe(user => {
       if (user instanceof User) {
         this.statusProfile = false;
       }
     });
-    this.events.subscribe("app:showstart", value => {
-      this.showStart = value;
-    });
+  }
+
+  ngOnInit(): void {
+    this._profilesProvider.listProfiles
+      .pipe(
+        takeUntil(this._unsubscribeAll),
+        filter(profiles => profiles.length > 0)
+      )
+      .subscribe(() => {
+        this.showStart = true;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   openModal(page) {

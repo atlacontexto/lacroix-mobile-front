@@ -33,19 +33,9 @@
     <ion-avatar item-start>
       <img [src]="profile.avatar">
     </ion-avatar>
-    <h2 style="font-weight: bold;" text-wrap text-uppercase ion-text>{{profile.showType}}</h2>
-    <ion-grid>
-      <ion-row *ngIf="profile.main">
-        <ion-col>
-          <h3 ion-text text-wrap>PRINCIPAL</h3>
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="profile.description">
-        <ion-col>
-          <h3 ion-text text-wrap>{{profile.description}}</h3>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
+    <h2 style="font-weight: bold;" text-wrap text-capitalize ion-text>{{profile.showType}}</h2>
+    <h3 *ngIf="profile.main" ion-text text-wrap>PRINCIPAL</h3>
+    <h3 text-capitalize *ngIf="profile.role" ion-text text-wrap>{{profile.role.type | translate}}</h3>
+    <h3 *ngIf="profile.school" ion-text text-wrap text-capitalize>{{profile.school.requested.institution.name}}</h3>
   </button>
 </ion-list>
