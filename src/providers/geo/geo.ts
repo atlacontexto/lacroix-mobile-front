@@ -81,6 +81,7 @@ export class GeoProvider {
         )
         .subscribe(
           res => {
+            console.log(res);
             resolve(res);
           },
           err => {

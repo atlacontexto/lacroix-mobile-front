@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import {
   IonicPage,
   NavController,
@@ -15,6 +15,7 @@ import { User } from "../../app/model/user";
 import { ProfilesProvider } from "../../providers/profiles/profiles";
 import { Subject } from "rxjs";
 import { takeUntil, filter } from "rxjs/operators";
+import { ProfilesComponent } from "./profiles/profiles";
 
 /**
  * Generated class for the UserBasicInfoPage page.
@@ -29,6 +30,9 @@ import { takeUntil, filter } from "rxjs/operators";
   templateUrl: "user-management.html"
 })
 export class UserManagementPage implements OnInit, OnDestroy {
+  @ViewChild(ProfilesComponent)
+  child: ProfilesComponent = null;
+
   userInfo: any;
   form: FormGroup;
   isReady: boolean;
@@ -63,7 +67,7 @@ export class UserManagementPage implements OnInit, OnDestroy {
     this._profilesProvider.listProfiles
       .pipe(
         takeUntil(this._unsubscribeAll),
-        filter(profiles => profiles.length > 0)
+        filter(profiles => profiles && profiles.length > 0)
       )
       .subscribe(() => {
         this.showStart = true;
@@ -104,5 +108,9 @@ export class UserManagementPage implements OnInit, OnDestroy {
         direction: "forward"
       }
     );
+  }
+
+  showHelp() {
+    this.child.showHelpAction();
   }
 }

@@ -1,13 +1,8 @@
 <ion-row>
-  <ion-col col-8>
-    <button ion-button icon-left full color=atla-red (click)="createProfile()">
+  <ion-col col-8 offset-2>
+    <button ion-button icon-left full (click)="createProfile()">
       <ion-icon name=add></ion-icon>
       NOVO PERFIL
-    </button>
-  </ion-col>
-  <ion-col offset-2 col-2>
-    <button ion-button icon-only full color=atla-red (click)="showHelpAction()">
-      <ion-icon name=help></ion-icon>
     </button>
   </ion-col>
 </ion-row>
@@ -29,13 +24,17 @@
 </ion-row>
 
 <ion-list inset *ngIf="showProfiles && !showHelp">
-  <button ion-item *ngFor="let profile of showProfiles" (click)="editProfile(profile)">
+  <button no-padding ion-item *ngFor="let profile of showProfiles" (click)="editProfile(profile)">
     <ion-avatar item-start>
       <img [src]="profile.avatar">
     </ion-avatar>
     <h2 style="font-weight: bold;" text-wrap text-capitalize ion-text>{{profile.showType}}</h2>
-    <h3 *ngIf="profile.main" ion-text text-wrap>PRINCIPAL</h3>
     <h3 text-capitalize *ngIf="profile.role" ion-text text-wrap>{{profile.role.type | translate}}</h3>
     <h3 *ngIf="profile.school" ion-text text-wrap text-capitalize>{{profile.school.requested.institution.name}}</h3>
+    <ion-badge *ngIf="profile.main">principal</ion-badge>
+    <ion-icon *ngIf="profile.school && profile.school.status === 'accepted'" item-end color="secondary" name="checkmark-circle"></ion-icon>
+    <ion-icon *ngIf="profile.school && profile.school.status === 'waiting'" item-end color="primary" name="time"></ion-icon>
   </button>
+
+
 </ion-list>

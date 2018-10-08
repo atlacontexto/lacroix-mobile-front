@@ -1,4 +1,4 @@
-<form [formGroup]=formProfessor (ngSubmit)="onSubmit()">
+<form [formGroup]=parentPage.form (ngSubmit)="onSubmit()">
   <ion-row>
     <ion-col>
       <ion-item>
@@ -42,7 +42,7 @@
   </ion-row>
 
 
-  <div *ngIf="formProfessor.value.hasSchool">
+  <div *ngIf="parentPage.form.value.hasSchool">
     <!-- Seleção do Estado -->
 
     <ion-row>
@@ -74,7 +74,7 @@
       <ion-col>
         <ion-item padding-horizontal>
           <ion-label floating>Escola</ion-label>
-          <ion-select formControlName="schools" multiple="true">
+          <ion-select formControlName="school">
             <ion-option *ngFor="let school of schools" [value]="school._id">{{school.institution.name}}</ion-option>
           </ion-select>
         </ion-item>

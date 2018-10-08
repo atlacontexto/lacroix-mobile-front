@@ -1,4 +1,4 @@
-<form [formGroup]="formStudent" (ngSubmit)="onSubmit()">
+<form [formGroup]="parentPage.form" (ngSubmit)="onSubmit()">
   <ion-row>
     <ion-col>
       <ion-item padding-horizontal>
@@ -30,7 +30,7 @@
     </ion-col>
   </ion-row>
 
-  <div *ngIf="formStudent.value.hasSchool">
+  <div *ngIf="parentPage.form.value.hasSchool">
     <!-- Seleção do Estado -->
 
     <ion-row>
@@ -79,7 +79,7 @@
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="formStudent.value.hasParent">
+  <ion-row *ngIf="parentPage.form.value.hasParent">
     <ion-col col-12>
       <ion-item padding-horizontal>
         <ion-label floating>Celular ou E-mail</ion-label>
@@ -98,7 +98,7 @@
       <p ion-text text-center>Uma solicitação será enviada. Verifique o estado do convite em "usuário">
         "perfil-desejado"> "vínculo".</p>
     </ion-col>
-    <p ion-text text-center *ngIf="formStudent.value.parentContact && !parent">Nenhum usuário encontrado com este
+    <p ion-text text-center *ngIf="parentPage.form.value.parentContact && !parent">Nenhum usuário encontrado com este
       contato. Verifique se está correto, pois iremos mandar um convite.</p>
   </ion-row>
 

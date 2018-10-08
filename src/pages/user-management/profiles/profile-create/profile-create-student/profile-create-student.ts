@@ -3,9 +3,15 @@ import {
   Output,
   EventEmitter,
   OnInit,
-  OnDestroy
+  OnDestroy,
+  Inject
 } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl
+} from "@angular/forms";
 import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 import { GeoProvider } from "../../../../../providers/geo/geo";
 import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
@@ -16,6 +22,7 @@ import { Profile } from "../../../../../app/model/profile";
 import { Subject } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 import { User } from "../../../../../app/model/user";
+import { ProfileCreatePage } from "../profile-create";
 
 /**
  * Generated class for the ProfileCreateStudentComponent component.
@@ -41,25 +48,38 @@ export class ProfileCreateStudentComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(ProfileCreatePage) private parentPage: ProfileCreatePage,
     private profilesProvider: ProfilesProvider,
     private geoProvider: GeoProvider,
     private alertProvider: AlertProvider,
     private modalCtrl: ModalController,
-    private userService: UserProvider,
-    private authProvider: AuthProvider
+    private userService: UserProvider
   ) {
     this._unsubscribeAll = new Subject();
-    this.formStudent = this.formBuilder.group({
-      user: [null, Validators.compose([Validators.required])],
-      level: [null, Validators.compose([Validators.required])],
-      year: [null, Validators.compose([Validators.required])],
-      hasSchool: [false, Validators.compose([Validators.required])],
-      school: [null],
-      hasParent: [false, Validators.compose([Validators.required])],
-      parentContact: [null],
-      parentId: [null]
-    });
+    this.parentPage.form.addControl(
+      "user",
+      new FormControl(null, Validators.compose([Validators.required]))
+    );
+    this.parentPage.form.addControl(
+      "level",
+      new FormControl(null, Validators.compose([Validators.required]))
+    );
+    this.parentPage.form.addControl(
+      "year",
+      new FormControl(null, Validators.compose([Validators.required]))
+    );
+    this.parentPage.form.addControl(
+      "hasSchool",
+      new FormControl(false, Validators.compose([Validators.required]))
+    );
+    this.parentPage.form.addControl("school", new FormControl(null));
+    this.parentPage.form.addControl(
+      "hasParent",
+      new FormControl(false, Validators.compose([Validators.required]))
+    );
+    this.parentPage.form.addControl("parentContact", new FormControl(null));
+    this.parentPage.form.addControl("parentId", new FormControl(null));
+    console.log(this.parentPage.form.value);
   }
 
   ngOnInit(): void {
@@ -70,8 +90,7 @@ export class ProfileCreateStudentComponent implements OnInit, OnDestroy {
         takeUntil(this._unsubscribeAll)
       )
       .subscribe(user => {
-        console.log(user);
-        this.formStudent.controls["user"].setValue(user.id);
+        this.parentPage.form.controls["user"].setValue(user.id);
       });
     this.states = this.geoProvider.getStates();
     this.levels = this.profilesProvider.getCourseLevelsExcept("infantil");
@@ -131,10 +150,10 @@ export class ProfileCreateStudentComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.formStudent.value);
-    if (this.formStudent.valid) {
+    console.log(this.parentPage.form.value);
+    if (this.parentPage.form.valid) {
       this.profilesProvider
-        .createProfile("student", this.formStudent.value)
+        .createProfile("student", this.parentPage.form.value)
         .then(res => {
           if (res["success"]) {
             this.alertProvider.presentAlert(
@@ -170,7 +189,7 @@ export class ProfileCreateStudentComponent implements OnInit, OnDestroy {
         .then(res => {
           this.parent = res;
 
-          this.formStudent.controls["parentId"].setValue(
+          this.parentPage.form.controls["parentId"].setValue(
             this.parent.profile._id
           );
         })

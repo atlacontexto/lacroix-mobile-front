@@ -4,9 +4,15 @@
     <ion-title>
       <img height="40" src="assets/imgs/atla-red-full.png">
     </ion-title>
+    <ion-buttons end>
+      <button *ngIf="step === 'profile'" ion-button icon-end (click)="showHelp()">
+        Ajuda
+        <ion-icon name="help"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
   <ion-toolbar no-border-top transparent>
-    <ion-segment [(ngModel)]="step" color="atla-red">
+    <ion-segment [(ngModel)]="step" color=atla-red>
       <ion-segment-button [disabled]="statusUser" value="user">
         Usuário
       </ion-segment-button>
@@ -18,11 +24,11 @@
 </ion-header>
 
 <ion-content padding>
-  <div no-padding [ngSwitch]="step" col-xl-8 offset-xl-2>
+  <div [ngSwitch]="step" col-xl-8 offset-xl-2>
     <basic-info (eventEmmit)="switchSegment($event)" *ngSwitchCase="'user'"></basic-info>
     <profiles *ngSwitchCase="'profile'"></profiles>
   </div>
   <ion-row *ngIf="showStart">
-    <button ion-button full color=atla-red text-uppercase (click)="start()">{{'START_BUTTON' | translate}}</button>
+    <button ion-button full color=primary text-uppercase (click)="start()">{{'START_BUTTON' | translate}}</button>
   </ion-row>
 </ion-content>

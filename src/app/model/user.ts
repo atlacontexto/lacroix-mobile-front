@@ -102,7 +102,6 @@ export class User {
   }
 
   setProfiles(profiles: any): any {
-    console.log(profiles);
     this.profiles = new Array();
     if (profiles) {
       profiles.forEach(element => {
@@ -112,7 +111,6 @@ export class User {
         }
         this.profiles.push(profile);
       });
-      console.log(this.profiles);
       this.profilesProvider.listProfiles.next(this.profiles);
     }
   }

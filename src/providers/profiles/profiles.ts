@@ -129,6 +129,7 @@ export class ProfilesProvider {
   }
 
   getProfileByContact(profileType, contact: string) {
+    contact = contact.replace(/\+/g, "%2B");
     return new Promise((resolve, reject) => {
       this.http
         .get(
@@ -137,9 +138,11 @@ export class ProfilesProvider {
         )
         .subscribe(
           res => {
+            console.log(res);
             resolve(res["data"]);
           },
           err => {
+            console.log(err);
             reject(err);
           }
         );

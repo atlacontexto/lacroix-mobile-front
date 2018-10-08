@@ -13,7 +13,7 @@
     <p *ngIf="isUser()">{{profile.$showType}}</p>
     <p *ngIf="isUser() && profile.school">{{profile.school.requested.institution.name}}</p>
     <p *ngIf="isUser() && profile.role">{{profile.role.type | translate}}</p>
-    <p class="profile-description">{{user.description}}</p>
+    <p class="profile-description">{{profile.bio}}</p>
     <hr>
     <ion-list no-lines>
       <ion-item>

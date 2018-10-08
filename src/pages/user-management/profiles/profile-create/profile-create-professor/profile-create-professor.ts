@@ -1,10 +1,26 @@
-import { Component, Output, EventEmitter } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import {
+  Component,
+  Output,
+  EventEmitter,
+  Inject,
+  OnInit,
+  OnDestroy
+} from "@angular/core";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl
+} from "@angular/forms";
 import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 import { GeoProvider } from "../../../../../providers/geo/geo";
 import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
 import { SubjectsProvider } from "../../../../../providers/subjects/subjects";
 import { UserProvider } from "../../../../../providers/user/user";
+import { ProfileCreatePage } from "../profile-create";
+import { Subject } from "rxjs";
+import { filter, takeUntil } from "rxjs/operators";
+import { User } from "../../../../../app/model/user";
 
 /**
  * Generated class for the ProfileCreateProfessorComponent component.
@@ -16,8 +32,7 @@ import { UserProvider } from "../../../../../providers/user/user";
   selector: "profile-create-professor",
   templateUrl: "profile-create-professor.html"
 })
-export class ProfileCreateProfessorComponent {
-  formProfessor: FormGroup;
+export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
   @Output()
   formProfessorSubmited = new EventEmitter();
   levels: any;
@@ -26,8 +41,10 @@ export class ProfileCreateProfessorComponent {
   states: any;
   counties: any;
   subjects: any;
+  private _unsubscribeAll: Subject<any>;
 
   constructor(
+    @Inject(ProfileCreatePage) private parentPage: ProfileCreatePage,
     private formBuilder: FormBuilder,
     private profilesProvider: ProfilesProvider,
     private geoProvider: GeoProvider,
@@ -35,19 +52,37 @@ export class ProfileCreateProfessorComponent {
     private userService: UserProvider,
     private subjectsProvider: SubjectsProvider
   ) {
-    this.formProfessor = this.formBuilder.group({
-      user: [this.userService.getUserAtt("_id")],
-      level: [null, Validators.compose([Validators.required])],
-      serie: [null],
-      hasSchool: [false],
-      schools: [null],
-      subjects: [null]
-    });
+    this._unsubscribeAll = new Subject();
+    this.parentPage.form.addControl("user", new FormControl(null));
+    this.parentPage.form.addControl(
+      "level",
+      new FormControl(null, Validators.compose([Validators.required]))
+    );
+    this.parentPage.form.addControl(
+      "serie",
+      new FormControl(null, Validators.compose([Validators.required]))
+    );
+    this.parentPage.form.addControl("hasSchool", new FormControl(null));
+    this.parentPage.form.addControl("school", new FormControl(null));
+    this.parentPage.form.addControl("subjects", new FormControl(null));
   }
 
-  ngAfterContentInit() {
+  ngOnInit(): void {
+    console.log("OnInit Create Professor");
+    this.userService.user
+      .pipe(
+        filter(user => user instanceof User),
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe(user => {
+        this.parentPage.form.controls["user"].setValue(user.id);
+      });
     this.states = this.geoProvider.getStates();
     this.levels = this.profilesProvider.getCourseLevels();
+  }
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   stateChanged(stateId) {
@@ -78,6 +113,7 @@ export class ProfileCreateProfessorComponent {
     this.geoProvider
       .getSchoolsByCounty(countyId)
       .then(res => {
+        console.log(res);
         this.schools = res["data"]["schools"];
       })
       .catch(err => {
@@ -105,9 +141,9 @@ export class ProfileCreateProfessorComponent {
   }
 
   onSubmit() {
-    if (this.formProfessor.valid) {
+    if (this.parentPage.form.valid) {
       this.profilesProvider
-        .createProfile("professor", this.formProfessor.value)
+        .createProfile("professor", this.parentPage.form.value)
         .then(res => {
           console.log(res);
           if (res["success"]) {

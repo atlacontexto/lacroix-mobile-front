@@ -1,9 +1,10 @@
-import { Component, Output, EventEmitter } from "@angular/core";
+import { Component, Output, EventEmitter, Inject } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
 import { ModalController } from "ionic-angular";
 import { UserProvider } from "../../../../../providers/user/user";
+import { ProfileCreatePage } from "../profile-create";
 
 /**
  * Generated class for the ProfileCreateParentComponent component.
@@ -24,6 +25,7 @@ export class ProfileCreateParentComponent {
   childs: FormArray;
 
   constructor(
+    @Inject(ProfileCreatePage) private parentPage: ProfileCreatePage,
     private formBuilder: FormBuilder,
     private profilesProvider: ProfilesProvider,
     private alertProvider: AlertProvider,
@@ -64,17 +66,10 @@ export class ProfileCreateParentComponent {
       this.profilesProvider
         .getProfileByContact("student", data.value)
         .then(res => {
-          if (res["success"]) {
-            this.child = {
-              photo: "assets/imgs/placeholder.png",
-              ...res["data"]
-            };
-            console.log(this.child);
-            this.formParent.controls["childId"].setValue(
-              this.child.profile._id
-            );
-            this.alertProvider.loading.dismiss();
-          }
+          this.child = res;
+          console.log(this.child);
+          this.formParent.controls["childId"].setValue(this.child.profile._id);
+          this.alertProvider.loading.dismiss();
         })
         .catch(err => {
           console.error(err);

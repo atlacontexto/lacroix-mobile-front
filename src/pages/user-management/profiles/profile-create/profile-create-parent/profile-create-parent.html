@@ -29,15 +29,17 @@
     <ion-col col-12 *ngIf="child">
       <ion-item>
         <ion-thumbnail item-start>
-          <img [src]="child.photo">
+          <img [src]="child.profile.avatar">
         </ion-thumbnail>
         <h2>{{child.name}}</h2>
         <p>{{child.contact}}</p>
         <button ion-button clear item-end (click)="viewProfile(child.id)">VER PERFIL</button>
       </ion-item>
-      <p ion-text text-center>Uma solicitação será enviada. Verifique o estado do convite em "usuário"> "perfil-desejado"> "vínculo".</p>
+      <p ion-text text-center>Uma solicitação será enviada. Verifique o estado do convite em "usuário">
+        "perfil-desejado"> "vínculo".</p>
     </ion-col>
-    <p ion-text text-center *ngIf="formParent.value.childContact && !child">Nenhum usuário encontrado com este contato. Verifique se está correto, pois iremos mandar um convite.</p>
+    <p ion-text text-center *ngIf="formParent.value.childContact && !child">Nenhum usuário encontrado com este contato.
+      Verifique se está correto, pois iremos mandar um convite.</p>
   </ion-row>
 
   <ion-row>

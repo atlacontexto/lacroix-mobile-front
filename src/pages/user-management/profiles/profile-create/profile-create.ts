@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild, ElementRef } from "@angular/core";
 import {
   NavController,
   NavParams,
@@ -20,7 +20,11 @@ import profiles from "../../../../fakedb/profiles";
   templateUrl: "profile-create.html"
 })
 export class ProfileCreatePage {
+  @ViewChild("myInput")
+  myInput: ElementRef;
+
   profileType: string;
+  form: FormGroup;
   formParent: FormGroup;
   formProfessor: FormGroup;
   themes: Array<{ title: string; checked: boolean; formControl: string }>;
@@ -34,6 +38,9 @@ export class ProfileCreatePage {
     public viewCtrl: ViewController,
     public formBuilder: FormBuilder
   ) {
+    this.form = this.formBuilder.group({
+      bio: [null]
+    });
     this.themes = [
       { title: "Arte", checked: false, formControl: "arte" },
       { title: "Ciências", checked: false, formControl: "ciencias" },
@@ -54,40 +61,17 @@ export class ProfileCreatePage {
     this.profiles = profiles.profileTypes;
   }
 
-  typeChanged() {
-    // console.log('evento levantado ' + this.profileType);
-    if (this.profileType == "student") {
-      this.formParent = this.formBuilder.group({
-        profileType: ["student", Validators.required],
-        cgm: ["", Validators.required]
-      });
-    } else if (this.profileType == "parent") {
-      this.formParent = this.formBuilder.group({
-        profileType: ["parent", Validators.required],
-        cgmChild: ["", Validators.required]
-      });
-    } else if (this.profileType == "professor") {
-      this.formProfessor = this.formBuilder.group({
-        profileType: ["professor", Validators.required],
-        level: ["", Validators.required],
-        arte: ["", Validators.required],
-        ciencias: ["", Validators.required],
-        edfisica: ["", Validators.required],
-        filosofia: ["", Validators.required],
-        geografia: ["", Validators.required],
-        historia: ["", Validators.required],
-        lportuguesa: ["", Validators.required],
-        matematica: ["", Validators.required]
-      });
-    } else if (this.profileType == "comunity") {
-      this.formParent = this.formBuilder.group({
-        profileType: ["comunity", Validators.required],
-        role: [this.comunityRole]
-      });
-    }
-  }
-
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+
+  resize() {
+    var element = this.myInput[
+      "_elementRef"
+    ].nativeElement.getElementsByClassName("text-input")[0];
+    var scrollHeight = element.scrollHeight;
+    element.style.height = scrollHeight + "px";
+    this.myInput["_elementRef"].nativeElement.style.height =
+      scrollHeight + 16 + "px";
   }
 }
