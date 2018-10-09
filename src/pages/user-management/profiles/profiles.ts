@@ -78,20 +78,28 @@ export class ProfilesComponent {
       this.slides = [
         {
           title: "Perfil para Alunos",
-          description: "Texto explicativo do uso de perfis para Alunos"
+          description:
+            "ATLA Ensino para alunos permite o acesso do aluno ao cronograma de atividades, notas, frequência e outras notas de aula enviadas por professores e colegas."
         },
         {
-          title: "Perfil para Responsáveis",
+          title: "Perfil para Familiares e Responsáveis",
           description:
-            "Texto explicativo do uso de perfis para Pais e Responsáveis"
+            "ATLA Ensino para família, é o recurso ideal para acompanhamento do cronograma de atividades, notas, convocações e reuniões de interesse do grupo familiar sobre o desempenho dos seus dependentes."
         },
         {
           title: "Perfil para Professores",
-          description: "Texto explicativo do uso de perfis para Professores"
+          description:
+            "Com ATLA Ensino, os professores tem uma nova oportunidade de associarem a tecnologia para realização das tarefas cotidianas, como a criação de planos de aula e avaliações."
         },
         {
-          title: "Perfil para Gestão Escolar",
-          description: "Texto explicativo do uso de perfis para Gestão Escolar"
+          title: "Perfil para Funcionário da Gestão Escolar",
+          description:
+            "Uma gestão escolar mais forte é construída a partir da aproximação de todos os personagens envolvidos, explorando o que as tecnologias da comunicação têm a oferecer, na construção de um ambiente integrado, entre alunos, pais e professores."
+        },
+        {
+          title: "Perfil para Funcionário da Gestão Educacional do Município",
+          description:
+            "Os resultados de uma educação nivelada, que reflitam os esforços empregados na melhoria da educação municipal serão viabilizados com a adoção de métodos de análise de desempenho e auditoria dos colaboradores da educação."
         },
         {
           title: "Perfil para Administração Municipal",
@@ -111,7 +119,6 @@ export class ProfilesComponent {
     this.userProvider.getProfiles().then(
       profiles => {
         if (profiles) {
-          console.log(profiles);
           this.showProfiles = profiles;
         } else {
           this.showHelp = true;

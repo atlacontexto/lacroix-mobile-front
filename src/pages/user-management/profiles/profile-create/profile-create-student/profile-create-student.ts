@@ -210,7 +210,9 @@ export class ProfileCreateStudentComponent implements OnInit, OnDestroy {
       Object.assign(new Profile(), this.parent.profile)
     );
     const profileModal = this.modalCtrl.create("ProfileShowPage", {
-      profileId: profileId
+      profileId: profileId,
+      name: this.parent.name,
+      shortName: this.parent.shortName
     });
     profileModal.present();
   }

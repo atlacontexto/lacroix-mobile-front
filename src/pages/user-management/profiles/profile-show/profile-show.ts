@@ -6,6 +6,7 @@ import { ProfilesProvider } from "../../../../providers/profiles/profiles";
 import { UserProvider } from "../../../../providers/user/user";
 import { Subject } from "rxjs";
 import { takeUntil, filter } from "rxjs/operators";
+import { People } from "../../../../app/model/people";
 
 /**
  * Generated class for the ProfileShowPage page.
@@ -45,6 +46,13 @@ export class ProfileShowPage implements OnInit, OnDestroy {
     public userProvider: UserProvider
   ) {
     this._unsubscribeAll = new Subject();
+    if (this.navParams.get("name")) {
+      this.userIn = new User();
+      this.userIn.$shortName = this.navParams.get("shortName");
+      let people = new People();
+      people.$name = this.navParams.get("name");
+      this.userIn.$people = people;
+    }
   }
 
   ngOnInit(): void {
@@ -59,15 +67,17 @@ export class ProfileShowPage implements OnInit, OnDestroy {
         this.profile = profile;
       });
 
-    this.userProvider.user
-      .pipe(
-        takeUntil(this._unsubscribeAll),
-        filter(user => user instanceof User)
-      )
-      .subscribe(user => {
-        console.log(user);
-        this.userIn = user;
-      });
+    if (!this.userIn) {
+      this.userProvider.user
+        .pipe(
+          takeUntil(this._unsubscribeAll),
+          filter(user => user instanceof User)
+        )
+        .subscribe(user => {
+          console.log(user);
+          this.userIn = user;
+        });
+    }
   }
 
   ngOnDestroy(): void {

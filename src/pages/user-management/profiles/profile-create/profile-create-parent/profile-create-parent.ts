@@ -1,10 +1,27 @@
-import { Component, Output, EventEmitter, Inject } from "@angular/core";
-import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
+import {
+  Component,
+  Output,
+  EventEmitter,
+  Inject,
+  OnDestroy,
+  OnInit
+} from "@angular/core";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormArray,
+  FormControl
+} from "@angular/forms";
 import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
 import { ModalController } from "ionic-angular";
 import { UserProvider } from "../../../../../providers/user/user";
 import { ProfileCreatePage } from "../profile-create";
+import { Subject } from "rxjs";
+import { filter, takeUntil } from "rxjs/operators";
+import { User } from "../../../../../app/model/user";
+import { Profile } from "../../../../../app/model/profile";
 
 /**
  * Generated class for the ProfileCreateParentComponent component.
@@ -16,13 +33,12 @@ import { ProfileCreatePage } from "../profile-create";
   selector: "profile-create-parent",
   templateUrl: "profile-create-parent.html"
 })
-export class ProfileCreateParentComponent {
+export class ProfileCreateParentComponent implements OnDestroy, OnInit {
   @Output()
   formParentSubmited = new EventEmitter();
-  formParent: FormGroup;
   kinships: any;
   child: any;
-  childs: FormArray;
+  private _unsubscribeAll: Subject<any>;
 
   constructor(
     @Inject(ProfileCreatePage) private parentPage: ProfileCreatePage,
@@ -32,30 +48,33 @@ export class ProfileCreateParentComponent {
     private userService: UserProvider,
     private modalCtrl: ModalController
   ) {
-    this.formParent = this.formBuilder.group({
-      user: [this.userService.getUserAtt("_id")],
-      kinship: [null, Validators.compose([Validators.required])],
-      hasChilds: [false],
-      childs: formBuilder.array([this.createChild()]),
-      childId: [],
-      childContact: []
-    });
+    this._unsubscribeAll = new Subject();
+    this.parentPage.form.addControl("user", new FormControl());
+    this.parentPage.form.addControl("kinship", new FormControl());
+    this.parentPage.form.addControl(
+      "hasChilds",
+      new FormControl(false, Validators.compose([Validators.required]))
+    );
+    this.parentPage.form.addControl("childId", new FormControl(null));
+    this.parentPage.form.addControl("childContact", new FormControl(null));
   }
 
-  createChild(): FormGroup {
-    return this.formBuilder.group({
-      id: [""],
-      contact: [""]
-    });
-  }
-
-  addItem(): void {
-    this.childs = this.formParent.get("childs") as FormArray;
-    this.childs.push(this.createChild());
-  }
-
-  ngAfterContentInit() {
+  ngOnInit(): void {
+    console.log("OnInit Create Parent");
+    this.userService.user
+      .pipe(
+        filter(user => user instanceof User),
+        takeUntil(this._unsubscribeAll)
+      )
+      .subscribe(user => {
+        this.parentPage.form.controls["user"].setValue(user.id);
+      });
     this.kinships = this.profilesProvider.getKinships();
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   onInputTime(data) {
@@ -68,7 +87,9 @@ export class ProfileCreateParentComponent {
         .then(res => {
           this.child = res;
           console.log(this.child);
-          this.formParent.controls["childId"].setValue(this.child.profile._id);
+          this.parentPage.form.controls["childId"].setValue(
+            this.child.profile._id
+          );
           this.alertProvider.loading.dismiss();
         })
         .catch(err => {
@@ -81,17 +102,17 @@ export class ProfileCreateParentComponent {
               "Ok"
             );
           } else {
-            this.formParent.controls["childId"].setValue(this.child.id);
+            this.parentPage.form.controls["childId"].setValue(this.child.id);
           }
         });
     }
   }
 
   onSubmit() {
-    console.log(this.formParent.value);
-    if (this.formParent.valid) {
+    console.log(this.parentPage.form.value);
+    if (this.parentPage.form.valid) {
       this.profilesProvider
-        .createProfile("parent", this.formParent.value)
+        .createProfile("parent", this.parentPage.form.value)
         .then(res => {
           console.log(res);
           if (res["success"]) {
@@ -121,8 +142,13 @@ export class ProfileCreateParentComponent {
   }
 
   viewProfile(profileId) {
+    this.profilesProvider.showingProfile.next(
+      Object.assign(new Profile(), this.child.profile)
+    );
     const profileModal = this.modalCtrl.create("ProfileShowPage", {
-      profileId: profileId
+      profileId: profileId,
+      name: this.child.name,
+      shortName: this.child.shortName
     });
     profileModal.present();
   }

@@ -27,10 +27,12 @@
 
     <form [formGroup]="form">
       <ion-row>
-        <ion-item>
-          <ion-label stacked>Biografia</ion-label>
-          <ion-textarea #myInput id="myInput" rows="1" maxLength="200" (keyup)="resize()" formControlName="bio"></ion-textarea>
-        </ion-item>
+        <ion-col>
+          <ion-item padding-horizontal>
+            <ion-label stacked>Biografia</ion-label>
+            <ion-textarea #myInput id="myInput" rows="1" maxLength="200" (keyup)="resize()" formControlName="bio"></ion-textarea>
+          </ion-item>
+        </ion-col>
       </ion-row>
     </form>
 
