@@ -92,7 +92,7 @@ export class RegisterPhoneCheckPage {
       .then(res => {
         if (res["success"]) {
           this.authService.cellphone.next(this.cellphone);
-          this.navCtrl.push(
+          this.navCtrl.setRoot(
             "UserManagementPage",
             {},
             {

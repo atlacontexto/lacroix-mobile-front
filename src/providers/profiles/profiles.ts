@@ -149,6 +149,24 @@ export class ProfilesProvider {
     });
   }
 
+  /**
+   * Method getProfile
+   * @param {any}
+   * @return {Promise}
+   */
+  getProfile(arg0: any): any {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${this.apiUrl}/profile/${arg0}`, this.headers).subscribe(
+        res => {
+          resolve(res["data"]);
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
+  }
+
   createProfile(typeProfile, form) {
     return new Promise((resolve, reject) => {
       this.http

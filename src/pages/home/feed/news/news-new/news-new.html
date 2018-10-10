@@ -22,7 +22,7 @@
       <ion-avatar item-start>
         <img src="assets/imgs/placeholder.png">
       </ion-avatar>
-      <p text-wrap>Acessando como {{currentProfile.getShowType()}}</p>
+      <p text-wrap>Acessando como {{currentProfile.$showType}}</p>
       <h2>{{detail}}</h2>
     </ion-item>
   </ion-item>
@@ -31,11 +31,21 @@
 
 <ion-content padding>
   <ion-grid>
-    <ion-row>
-      <ion-item>
-        <ion-label stacked>O que tem para nos contar?</ion-label>
-        <ion-textarea #myInput id="myInput" rows="1" maxLength="500" (keyup)="resize()" [(ngModel)]="newsContent"></ion-textarea>
-      </ion-item>
-    </ion-row>
+    <form [formGroup]="newsForm">
+      <ion-row>
+        <ion-item>
+          <ion-label stacked>O que tem para nos contar?</ion-label>
+          <ion-textarea #myInput id="myInput" rows="1" maxLength="500" (keyup)="resize()" formControlName="content"></ion-textarea>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-item>
+          <ion-label>Visibilidade</ion-label>
+          <ion-select formControlName="visibility" multiple="false">
+            <ion-option *ngFor="let option of options" value="option.value">{{otion.viewValue}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-row>
+    </form>
   </ion-grid>
 </ion-content>

@@ -3,10 +3,13 @@ import {
   NavController,
   NavParams,
   ViewController,
-  IonicPage
+  IonicPage,
+  ModalController
 } from "ionic-angular";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import profiles from "../../../../fakedb/profiles";
+import { Profile } from "../../../../app/model/profile";
+import { ProfilesProvider } from "../../../../providers/profiles/profiles";
 
 /**
  * Generated class for the ProfileCreatePage page.
@@ -36,7 +39,9 @@ export class ProfileCreatePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    private profilesProvider: ProfilesProvider,
+    private modalCtrl: ModalController
   ) {
     this.form = this.formBuilder.group({
       bio: [null]
@@ -73,5 +78,17 @@ export class ProfileCreatePage {
     element.style.height = scrollHeight + "px";
     this.myInput["_elementRef"].nativeElement.style.height =
       scrollHeight + 16 + "px";
+  }
+
+  viewProfile(profileId: any, user: any): any {
+    this.profilesProvider.showingProfile.next(
+      Object.assign(new Profile(), user["profile"])
+    );
+    const profileModal = this.modalCtrl.create("ProfileShowPage", {
+      profileId: profileId,
+      name: user["name"],
+      shortName: user["shortName"]
+    });
+    profileModal.present();
   }
 }

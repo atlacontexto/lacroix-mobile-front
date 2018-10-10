@@ -6,6 +6,7 @@ import { Profile } from "../../../../../app/model/profile";
 import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
 import { filter, takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 /**
  * Generated class for the NewsNewPage page.
@@ -22,17 +23,34 @@ export class NewsNewPage {
   @ViewChild("myInput")
   myInput: ElementRef;
   private newsContent: string;
+  newsForm: FormGroup;
   currentProfile: Profile;
   private _unsubscribeAll: Subject<any>;
+  options: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
     public feedProvider: FeedProvider,
     public profilesProvider: ProfilesProvider,
-    public alertProvider: AlertProvider
+    public alertProvider: AlertProvider,
+    public formBuilder: FormBuilder
   ) {
     this._unsubscribeAll = new Subject();
+    this.newsForm = this.formBuilder.group({
+      content: [null, Validators.compose([Validators.required])],
+      visibility: [null, Validators.compose([Validators.required])]
+    });
+    this.options = [
+      {
+        value: "public",
+        viewValue: "Público"
+      },
+      {
+        value: "link",
+        viewValue: "Apenas minha escola"
+      }
+    ];
   }
 
   ionViewDidLoad() {

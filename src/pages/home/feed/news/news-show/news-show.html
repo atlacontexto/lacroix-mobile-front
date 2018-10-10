@@ -39,6 +39,8 @@
   </ion-slide>
 
   <ion-row>
-      <p *ngIf="news.length == 0" ion-text text-center>VOCÊ AINDA NÃO TEM NOTÍCIAS SOBRE...</p>
+    <ion-col>
+      <p *ngIf="news.length == 0" ion-text text-center>Não há notícias por aqui ainda...</p>
+    </ion-col>
   </ion-row>
 </ion-slides>

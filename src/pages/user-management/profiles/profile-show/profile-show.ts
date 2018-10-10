@@ -7,6 +7,7 @@ import { UserProvider } from "../../../../providers/user/user";
 import { Subject } from "rxjs";
 import { takeUntil, filter } from "rxjs/operators";
 import { People } from "../../../../app/model/people";
+import { ProfileSchoolInstitutional } from "../../../../app/model/profile-school-institutional";
 
 /**
  * Generated class for the ProfileShowPage page.
@@ -52,7 +53,28 @@ export class ProfileShowPage implements OnInit, OnDestroy {
       let people = new People();
       people.$name = this.navParams.get("name");
       this.userIn.$people = people;
+    } else if (this.navParams.get("profileId")) {
+      this.getProfile(this.navParams.get("profileId"));
+    } else if (this.navParams.get("school")) {
+      this.userIn = this.navParams.get("school");
+      console.log(this.userIn);
+      this.getProfile(this.userIn["_id"]);
     }
+  }
+
+  getProfile(arg0: any): any {
+    this.profilesProvider
+      .getProfile(arg0)
+      .then(res => {
+        this.profile = Object.assign(
+          new ProfileSchoolInstitutional(),
+          res["profile"]
+        );
+        console.log(this.profile);
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   ngOnInit(): void {
@@ -88,5 +110,19 @@ export class ProfileShowPage implements OnInit, OnDestroy {
 
   isUser(): boolean {
     return this.userIn instanceof User;
+  }
+
+  openSchool(school) {
+    console.log(school);
+    this.navCtrl.push("ProfileShowPage", { school: school });
+  }
+
+  openCounty(county) {
+    console.log(county);
+    this.navCtrl.push("ProfileShowPage", { county: county });
+  }
+
+  isInstitution() {
+    return this.profile instanceof ProfileSchoolInstitutional;
   }
 }

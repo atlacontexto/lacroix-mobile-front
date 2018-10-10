@@ -29,15 +29,7 @@ export class FeedPage {
   @ViewChild(NewsShowComponent)
   child: NewsShowComponent;
   private currentProfile: Profile;
-  postFake = {
-    creator: "Savio",
-    avatar: "assets/imgs/placeholder.png",
-    message: "Este é o primeiro post da Atla",
-    date: "1 abril, 2018",
-    countLikes: "14 likes",
-    countComments: "36 comentários",
-    timeAgo: "1h"
-  };
+
   private news: Array<NewsModel>;
   constructor(
     public navCtrl: NavController,

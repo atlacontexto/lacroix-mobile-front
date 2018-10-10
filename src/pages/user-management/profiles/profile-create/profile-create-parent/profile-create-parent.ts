@@ -42,11 +42,9 @@ export class ProfileCreateParentComponent implements OnDestroy, OnInit {
 
   constructor(
     @Inject(ProfileCreatePage) private parentPage: ProfileCreatePage,
-    private formBuilder: FormBuilder,
     private profilesProvider: ProfilesProvider,
     private alertProvider: AlertProvider,
-    private userService: UserProvider,
-    private modalCtrl: ModalController
+    private userService: UserProvider
   ) {
     this._unsubscribeAll = new Subject();
     this.parentPage.form.addControl("user", new FormControl());
@@ -142,14 +140,6 @@ export class ProfileCreateParentComponent implements OnDestroy, OnInit {
   }
 
   viewProfile(profileId) {
-    this.profilesProvider.showingProfile.next(
-      Object.assign(new Profile(), this.child.profile)
-    );
-    const profileModal = this.modalCtrl.create("ProfileShowPage", {
-      profileId: profileId,
-      name: this.child.name,
-      shortName: this.child.shortName
-    });
-    profileModal.present();
+    this.parentPage.viewProfile(profileId, this.child);
   }
 }
