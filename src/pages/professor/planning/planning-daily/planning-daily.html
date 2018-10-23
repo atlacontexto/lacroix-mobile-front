@@ -1,28 +1,29 @@
-<ion-header no-border>
+<ion-header no-border no-padding>
   <ion-navbar transparent>
     <ion-title>
-
       Ionic PDF
     </ion-title>
     <ion-buttons end>
+      <button ion-button>salvar no celular</button>
       <button ion-button icon-only (click)="downloadPlanning()">
         <ion-icon name="download"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
-</ion-header>
-
-<ion-content no-padding>
-  <ion-grid>
+  <ion-grid no-padding>
     <ion-row>
       <ion-col>
-        <ion-item>
+        <ion-item no-lines>
           <ion-label>Manter plano salvo no celular</ion-label>
-          <ion-toggle checked=""></ion-toggle>
+          <ion-toggle (ionChange)="toggleChanged($event)" [checked]="checked"></ion-toggle>
         </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>
+</ion-header>
+
+<ion-content no-padding>
+
   <ion-scroll scrollX="true" scrollY="true" zoom="true" style="width: 100%; height: 100%">
     <div padding style="width: 827px; height: 1169px; " #test></div>
   </ion-scroll>

@@ -1,5 +1,11 @@
 import { Component, ViewChild, AfterViewInit, Renderer } from "@angular/core";
-import { IonicPage, NavController, Platform, NavParams } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  Platform,
+  NavParams,
+  AlertController
+} from "ionic-angular";
 import * as jspdf from "jspdf";
 import html2canvas from "html2canvas";
 import { ElementRef } from "@angular/core";
@@ -23,6 +29,7 @@ export class PlanningDailyPage implements AfterViewInit {
   planning: any;
   @ViewChild("test")
   el: ElementRef;
+  checked = false;
 
   constructor(
     public navCtrl: NavController,
@@ -30,9 +37,13 @@ export class PlanningDailyPage implements AfterViewInit {
     private navParams: NavParams,
     private _renderer: Renderer,
     private file: File,
-    private fileOpener: FileOpener
+    private fileOpener: FileOpener,
+    private alertCtrl: AlertController
   ) {
     this.planning = this.navParams.get("planning");
+    if (localStorage.getItem(this.planning._id)) {
+      this.checked = true;
+    }
   }
 
   ngAfterViewInit(): void {
@@ -76,5 +87,14 @@ export class PlanningDailyPage implements AfterViewInit {
       pdf.save("MYPdf.pdf"); // Generated PDF
       console.log(pdf);
     });
+  }
+
+  toggleChanged(ev) {
+    if (ev.value) {
+      localStorage.setItem(this.planning._id, JSON.stringify(this.planning));
+      let alertRemoveOffLine = this.alertCtrl.create({});
+    } else {
+      localStorage.removeItem(this.planning._id);
+    }
   }
 }
