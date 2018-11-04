@@ -136,7 +136,9 @@ export class MyApp {
         this.privatePages = [
           { title: "INÍCIO", component: HomePage, icon: "home" },
           { title: "TURMAS", component: "ClassroomPage", icon: "home" },
-          { title: "AUTORIZAÇÃO", component: "AuthorizationPage", icon: "home" }
+          { title: "AUTORIZAÇÃO", component: "AuthorizationPage", icon: "home" },
+          { title: "AVALIAÇÕES", component: "AssestmentCheckPage", icon: "home" },
+          { title: "PLANO DIÁRIO", component: "PlanningCheckPage", icon: "home" }
         ];
       } else if (this.profileSelected["profileType"] === "ProfileCounty") {
         this.privatePages = [

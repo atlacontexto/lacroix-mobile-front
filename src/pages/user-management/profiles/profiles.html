@@ -33,6 +33,7 @@
     <h3 *ngIf="profile.school" ion-text text-wrap text-capitalize>{{profile.school.requested.institution.name}}</h3>
     <ion-badge *ngIf="profile.main">principal</ion-badge>
     <ion-icon *ngIf="profile.school && profile.school.status === 'accepted'" item-end color="secondary" name="checkmark-circle"></ion-icon>
+    <ion-icon *ngIf="profile.school && profile.school.status === 'denied'" item-end color="danger" name="close-circle"></ion-icon>
     <ion-icon *ngIf="profile.school && profile.school.status === 'waiting'" item-end color="primary" name="time"></ion-icon>
   </button>
 

@@ -34,17 +34,7 @@ export class ProfileCreateCountyComponent {
     this.geoProvider
       .getCountiesByState(stateId)
       .then(counties => {
-        console.log(counties["data"]);
-        this.counties = counties["data"]["profiles"];
-        this.counties.sort((a, b) => {
-          if (a.external_id > b.external_id) {
-            return 1;
-          }
-          if (a.external_id < b.external_id) {
-            return -1;
-          }
-          return 0;
-        });
+        this.counties = counties
       })
       .catch(err => {
         console.log(err);

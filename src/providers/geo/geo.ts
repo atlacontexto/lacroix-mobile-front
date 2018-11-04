@@ -81,8 +81,17 @@ export class GeoProvider {
         )
         .subscribe(
           res => {
-            console.log(res);
-            resolve(res);
+            let counties = res["data"]["profiles"];
+            counties.sort((a, b) => {
+              if (a.name > b.name) {
+                return 1;
+              }
+              if (a.name < b.name) {
+                return -1;
+              }
+              return 0;
+            });
+            resolve(counties);
           },
           err => {
             reject(err);

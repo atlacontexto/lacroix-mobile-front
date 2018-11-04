@@ -6,6 +6,7 @@ import { RequestsComponent } from "./requests/requests";
 
 @NgModule({
   declarations: [NotificationsPage, NoticesComponent, RequestsComponent],
-  imports: [IonicPageModule.forChild(NotificationsPage)]
+  imports: [IonicPageModule.forChild(NotificationsPage)],
+  exports: [RequestsComponent]
 })
 export class NotificationsPageModule {}
