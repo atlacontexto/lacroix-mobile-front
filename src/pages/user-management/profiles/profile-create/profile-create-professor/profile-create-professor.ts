@@ -64,7 +64,10 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
     );
     this.parentPage.form.addControl("hasSchool", new FormControl(null));
     this.parentPage.form.addControl("school", new FormControl(null));
-    this.parentPage.form.addControl("subjects", new FormControl(null));
+    this.parentPage.form.addControl(
+      "subjects",
+      new FormControl(null, Validators.compose([Validators.required]))
+    );
   }
 
   ngOnInit(): void {
@@ -157,7 +160,18 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
         })
         .catch(err => {
           console.error(err);
+          this.alertProvider.presentAlert(
+            "Erro ao criar Perfil de Professor",
+            "Não foi possível criar seu pefil agora. Informe esse problema no grupo de testes e tente novamente mais tarde",
+            "OK"
+          );
         });
+    } else {
+      this.alertProvider.presentAlert(
+        "Informações incompletas",
+        "Preencha os campos obrigatórios",
+        "Ok"
+      );
     }
   }
 }
