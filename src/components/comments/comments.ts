@@ -7,10 +7,10 @@ import { Component } from "@angular/core";
  * Components.
  */
 @Component({
-  selector: "news-comments",
-  templateUrl: "news-comments.html"
+  selector: "comments",
+  templateUrl: "comments.html"
 })
-export class NewsCommentsComponent {
+export class CommentsComponent {
   comments: { id: number; text: string }[];
   constructor() {
     this.comments = [

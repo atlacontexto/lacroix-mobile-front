@@ -1,13 +1,14 @@
 <ion-list>
   <ion-item-sliding *ngFor="let request of requests">
-    <ion-item>
+    <ion-item *ngIf="request.status == status">
       <ion-avatar item-start>
-        <img src="assets/imgs/placeholder.png">
+        <img [src]="request.requesting.avatar">
       </ion-avatar>
-      <h2>Venkman</h2>
-      <p>Back off man, I'm a scientist.</p>
+      <h2>{{request.requesting.user.people.name}}</h2>
+      <p>{{request.requesting.user.shortName}}</p>
+      <p>{{request.requesting.serie}}º Ano</p>
     </ion-item>
-    <ion-item-options side="left">
+    <ion-item-options side="left" (click)="action('denied', request._id)">
       <button ion-button color="light">
         <ion-icon name="arrow-up"></ion-icon>
         Recusar
@@ -16,10 +17,13 @@
     </ion-item-options>
     <ion-item-options side="right">
 
-      <button ion-button color="secondary">
+      <button ion-button color="secondary" (click)="action('accepted', request._id)">
         <ion-icon name="arrow-down"></ion-icon>
         Aceitar
       </button>
     </ion-item-options>
   </ion-item-sliding>
+
+  <p ion-text text-center *ngIf="!requests && status == 'waiting'">Não há solicitações pendentes</p>
+  <p ion-text text-center *ngIf="!requests && status == 'accepted'">Não há solicitações aceitas</p>
 </ion-list>

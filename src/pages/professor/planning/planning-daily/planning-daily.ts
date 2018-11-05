@@ -97,4 +97,8 @@ export class PlanningDailyPage implements AfterViewInit {
       localStorage.removeItem(this.planning._id);
     }
   }
+
+  openDetails() {
+    this.navCtrl.push("DocumentDetailPage");
+  }
 }

@@ -19,9 +19,7 @@
       </ion-list-header>
 
       <button ion-item *ngFor="let materia of subjects" (click)="openPlanning(materia)">
-        <!-- <ion-avatar item-start>
-          <img [src]="item.icon">
-        </ion-avatar> -->
+
         <h2 style="font-weight: bold;" text-uppercase ion-text color=blue-payplug>{{materia.viewValue}}</h2>
         <h3 ion-text color=blue-payplug text-wrap>{{materia.description}}</h3>
       </button>

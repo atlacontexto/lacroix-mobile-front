@@ -17,14 +17,13 @@
       <button ion-button item-end (click)="send()">Enviar</button>
     </ion-buttons>
   </ion-navbar>
-  <ion-item no-lines no-padding *ngIf="isProfile(currentProfile)">
-    <ion-item no-lines (click)="showProfile()">
-      <ion-avatar item-start>
-        <img src="assets/imgs/placeholder.png">
-      </ion-avatar>
-      <p text-wrap>Acessando como {{currentProfile.$showType}}</p>
-      <h2>{{detail}}</h2>
-    </ion-item>
+  <ion-item *ngIf="isProfile(currentProfile)" no-lines (click)="showProfile()">
+    <ion-avatar item-start>
+      <img src="assets/imgs/placeholder.png">
+    </ion-avatar>
+    <p text-wrap>Acessando como {{currentProfile.$showType}}</p>
+    <p *ngIf="currentProfile.role">{{currentProfile.role.type | translate}}</p>
+    <p *ngIf="currentProfile.school">{{currentProfile.school.requested.institution.name}}</p>
   </ion-item>
 </ion-header>
 
@@ -40,9 +39,9 @@
       </ion-row>
       <ion-row>
         <ion-item>
-          <ion-label>Visibilidade</ion-label>
+          <ion-label floating>Visibilidade</ion-label>
           <ion-select formControlName="visibility" multiple="false">
-            <ion-option *ngFor="let option of options" value="option.value">{{otion.viewValue}}</ion-option>
+            <ion-option *ngFor="let option of options" [value]="option.value">{{option.viewValue}}</ion-option>
           </ion-select>
         </ion-item>
       </ion-row>

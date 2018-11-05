@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title text-center>{{title.viewValue}}</ion-title>
+    <ion-title>{{title.viewValue}}</ion-title>
 
   </ion-navbar>
 
@@ -35,11 +35,9 @@
         PLANEJAMENTO DIÁRIO
       </ion-list-header>
 
-      <button ion-item *ngFor="let planning of plannings" (click)="openDaily(planning)">
-        <h2>{{ planning.meta.date | date:"medium" }}</h2>
-        <h3>{{planning.title}}</h3>
-        <p text-wrap>{{planning.description}}</p>
-      </button>
+      <planning-list-daily [id]="id" [title]="title.value"></planning-list-daily>
+
+
 
     </ion-list>
   </ion-grid>

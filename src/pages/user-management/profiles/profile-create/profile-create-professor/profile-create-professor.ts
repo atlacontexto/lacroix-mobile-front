@@ -95,16 +95,7 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
     this.geoProvider
       .getCountiesByState(stateId)
       .then(counties => {
-        this.counties = counties["data"]["profiles"];
-        this.counties.sort((a, b) => {
-          if (a.external_id > b.external_id) {
-            return 1;
-          }
-          if (a.external_id < b.external_id) {
-            return -1;
-          }
-          return 0;
-        });
+        this.counties = counties;
         this.alertProvider.loading.dismiss();
       })
       .catch(err => {
@@ -144,11 +135,12 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    
     if (this.parentPage.form.valid) {
       this.profilesProvider
         .createProfile("professor", this.parentPage.form.value)
         .then(res => {
-          console.log(res);
+          
           if (res["success"]) {
             this.alertProvider.presentAlert(
               "Perfil de Professor criado!",

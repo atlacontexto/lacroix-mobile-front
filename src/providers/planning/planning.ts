@@ -57,18 +57,21 @@ export class PlanningProvider {
     });
   }
 
-  getDailyPlanningByTheme(theme) {
+  getDailyPlanningByTheme(theme, id) {
     return new Promise((resolve, reject) => {
       this.http
         .get(
-          `${this.apiUrl}/profile/professor/${
-            this._profilesProvider.currentProfile.value.id
-          }/planning/daily?theme=${theme}`,
+          `${
+            this.apiUrl
+          }/profile/professor/${id}/planning/daily?theme=${theme}`,
           this.headers
         )
         .subscribe(
           res => {
-            resolve(res["data"]["planning"]);
+            console.log(res);
+            if (res["success"]) {
+              resolve(res["data"]["plannings"]);
+            }
           },
           err => {
             console.log(err);

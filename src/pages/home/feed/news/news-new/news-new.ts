@@ -121,11 +121,11 @@ export class NewsNewPage {
   }
 
   showProfile(profile?: Profile): void {
-    console.log(profile);
     if (!profile) {
-      this.navCtrl.push("ProfileShowPage", this.currentProfile);
+      this.profilesProvider.showingProfile.next(this.currentProfile);
     } else {
-      this.navCtrl.push("ProfileShowPage", profile);
+      this.profilesProvider.showingProfile.next(profile);
     }
+    this.navCtrl.push("ProfileShowPage");
   }
 }

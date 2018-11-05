@@ -23,6 +23,7 @@ export class PlanningListPage implements OnInit, OnDestroy {
   title: string;
   ptds: Array<{ type: string; title: string }>;
   plannings: any;
+  id: string;
 
   constructor(
     public navCtrl: NavController,
@@ -31,6 +32,7 @@ export class PlanningListPage implements OnInit, OnDestroy {
     public alertCtrl: AlertController
   ) {
     this.title = navParams.get("title");
+    this.id = navParams.get("id");
   }
 
   ionViewWillEnter() {
@@ -42,23 +44,7 @@ export class PlanningListPage implements OnInit, OnDestroy {
     ];
   }
 
-  ngOnInit(): void {
-    this.planningProvider
-      .getDailyPlanningByTheme(this.title["value"])
-      .then(res => {
-        console.log(res);
-        this.plannings = res;
-      })
-      .catch(err => {
-        let getPlanningError = this.alertCtrl.create({
-          title: "Erro na recuperação dos planos",
-          message:
-            "Ocorreu uma falha interna na recuperação dos seus planos diários. Tente novamente mais tarde.",
-          buttons: ["OK"]
-        });
-        getPlanningError.present();
-      });
-  }
+  ngOnInit(): void {}
   ngOnDestroy(): void {}
 
   open(planning?) {
