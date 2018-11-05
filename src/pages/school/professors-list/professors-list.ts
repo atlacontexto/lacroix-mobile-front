@@ -37,7 +37,6 @@ export class ProfessorsListComponent implements OnInit, OnDestroy {
         filter(profile => profile instanceof Profile)
       )
       .subscribe(profile => {
-        console.log(profile);
         this.profile = profile;
 
         this.profilesProvider
@@ -61,11 +60,11 @@ export class ProfessorsListComponent implements OnInit, OnDestroy {
   }
 
   openPage(professor) {
-    console.log(this.open);
+    console.log(professor);
     let page = "AssestmentsListPage";
     if (this.open == "plan") {
-      page = "PlanningListPage";
+      page = "PlanningPage";
     }
-    this.navCtrl.push(page, professor);
+    this.navCtrl.push(page, { professor: professor });
   }
 }

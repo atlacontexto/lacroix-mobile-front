@@ -38,6 +38,13 @@ export class PlanningPage implements OnInit, OnDestroy {
     private subjectsProvider: SubjectsProvider
   ) {
     this._unsubscribeAll = new Subject();
+    if (this.navParams.get("professor")) {
+      this.profile = Object.assign(
+        new Profile(),
+        this.navParams.get("professor")["requesting"]
+      );
+      console.log(this.profile);
+    }
   }
 
   ngOnInit(): void {
@@ -48,9 +55,11 @@ export class PlanningPage implements OnInit, OnDestroy {
         takeUntil(this._unsubscribeAll)
       )
       .subscribe(profile => {
-        this.profile = profile;
+        if (!this.profile) {
+          this.profile = profile;
+        }
         this.subjects = this.subjects.filter(x =>
-          profile.subjects.includes(x.value)
+          this.profile["subjects"].includes(x.value)
         );
         this.year = this._profilesProvider.getCourseYear(this.profile["serie"]);
       });
@@ -64,7 +73,7 @@ export class PlanningPage implements OnInit, OnDestroy {
   openPlanning(page) {
     this.navCtrl.push(
       "PlanningListPage",
-      { title: page },
+      { title: page, id: this.profile.id },
       {
         animate: true,
         direction: "forward"

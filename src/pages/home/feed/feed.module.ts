@@ -5,7 +5,7 @@ import { NewsNewPage } from "./news/news-new/news-new";
 import { NewsEditPage } from "./news/news-edit/news-edit";
 import { LastNewsComponent } from "./components/last-news/last-news";
 import { NewsShowComponent } from "./news/news-show/news-show";
-import { NewsCommentsComponent } from "./news/news-comments/news-comments";
+
 import { NewsShowOneComponent } from "./news/news-show-one/news-show-one";
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -16,7 +16,6 @@ import { TranslateModule } from "@ngx-translate/core";
     NewsEditPage,
     LastNewsComponent,
     NewsShowComponent,
-    NewsCommentsComponent,
     NewsShowOneComponent
   ],
   imports: [IonicPageModule.forChild(FeedPage), TranslateModule.forChild()],
@@ -25,9 +24,8 @@ import { TranslateModule } from "@ngx-translate/core";
     NewsEditPage,
     LastNewsComponent,
     NewsShowComponent,
-    NewsCommentsComponent,
     NewsShowOneComponent
   ],
-  exports: [NewsCommentsComponent, NewsShowOneComponent, NewsShowComponent]
+  exports: [NewsShowOneComponent, NewsShowComponent]
 })
 export class FeedPageModule {}

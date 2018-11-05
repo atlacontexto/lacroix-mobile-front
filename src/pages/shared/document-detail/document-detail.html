@@ -1,0 +1,39 @@
+<ion-header no-border>
+
+  <ion-navbar no-border-bottom transparent>
+
+  </ion-navbar>
+  <ion-toolbar no-border-top transparent>
+    <ion-segment [(ngModel)]="showSegment">
+      <ion-segment-button value="comments">
+        Comentários
+      </ion-segment-button>
+      <ion-segment-button value="attachments">
+        Anexos
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content padding>
+  <div [ngSwitch]="showSegment">
+    <comments *ngSwitchCase="'comments'"></comments>
+    <document-attachments *ngSwitchCase="'attachments'"></document-attachments>
+  </div>
+
+
+
+</ion-content>
+
+<ion-footer *ngIf="showSegment == 'comments'">
+  <ion-navbar>
+    <ion-input automcomplete=on autocorrect=on text-wrap type="text" placeholder="Escreva um comentário..."></ion-input>
+    <ion-buttons end>
+      <button ion-button icon-left (click)="comment()">
+        <ion-icon name="send"></ion-icon>
+        Enviar
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-footer>
