@@ -60,9 +60,13 @@ export class GeoProvider {
     });
   }
 
-  getStates(): any {
-    return this.geo.states.sort((a, b) => {
+  getStates(status): any {
+    console.log(this.geo.states);
+    this.geo.states.sort((a, b) => {
       return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+    });
+    return this.geo.states.filter(e => {
+      return (e.status === 1 || e.status === 3) && status > 0;
     });
   }
 
@@ -76,7 +80,9 @@ export class GeoProvider {
     return new Promise((resolve, reject) => {
       this.http
         .get(
-          this.apiUrl + "/profile/county-institutional?state_id=" + stateId,
+          `${
+            this.apiUrl
+          }/profile/county-institutional?state_id=${stateId}&active=true`,
           this.headers
         )
         .subscribe(

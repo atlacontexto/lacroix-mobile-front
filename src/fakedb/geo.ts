@@ -1,138 +1,166 @@
+const StatusEnum = { available: 1, unnavailable: 2, test: 3 };
 const states = [
   {
     id: 11,
     name: "Rondônia",
-    abbr: "RO"
+    abbr: "RO",
+    status: StatusEnum.unnavailable
   },
   {
     id: 12,
     name: "Acre",
-    abbr: "AC"
+    abbr: "AC",
+    status: StatusEnum.unnavailable
   },
   {
     id: 13,
     name: "Amazonas",
-    abbr: "AM"
+    abbr: "AM",
+    status: StatusEnum.unnavailable
   },
   {
     id: 14,
     name: "Roraima",
-    abbr: "RR"
+    abbr: "RR",
+    status: StatusEnum.unnavailable
   },
   {
     id: 15,
     name: "Pará",
-    abbr: "PA"
+    abbr: "PA",
+    status: StatusEnum.unnavailable
   },
   {
     id: 16,
     name: "Amapá",
-    abbr: "AP"
+    abbr: "AP",
+    status: StatusEnum.unnavailable
   },
   {
     id: 17,
     name: "Tocantins",
-    abbr: "TO"
+    abbr: "TO",
+    status: StatusEnum.unnavailable
   },
   {
     id: 21,
     name: "Maranhão",
-    abbr: "MA"
+    abbr: "MA",
+    status: StatusEnum.unnavailable
   },
   {
     id: 22,
     name: "Piauí",
-    abbr: "PI"
+    abbr: "PI",
+    status: StatusEnum.unnavailable
   },
   {
     id: 23,
     name: "Ceará",
-    abbr: "CE"
+    abbr: "CE",
+    status: StatusEnum.unnavailable
   },
   {
     id: 24,
     name: "Rio Grande do Norte",
-    abbr: "RN"
+    abbr: "RN",
+    status: StatusEnum.unnavailable
   },
   {
     id: 25,
     name: "Paraíba",
-    abbr: "PB"
+    abbr: "PB",
+    status: StatusEnum.unnavailable
   },
   {
     id: 26,
     name: "Pernambuco",
-    abbr: "PE"
+    abbr: "PE",
+    status: StatusEnum.unnavailable
   },
   {
     id: 27,
     name: "Alagoas",
-    abbr: "AL"
+    abbr: "AL",
+    status: StatusEnum.unnavailable
   },
   {
     id: 28,
     name: "Sergipe",
-    abbr: "SE"
+    abbr: "SE",
+    status: StatusEnum.unnavailable
   },
   {
     id: 29,
     name: "Bahia",
-    abbr: "BA"
+    abbr: "BA",
+    status: StatusEnum.unnavailable
   },
   {
     id: 31,
     name: "Minas Gerais",
-    abbr: "MG"
+    abbr: "MG",
+    status: StatusEnum.unnavailable
   },
   {
     id: 32,
     name: "Espírito Santo",
-    abbr: "ES"
+    abbr: "ES",
+    status: StatusEnum.unnavailable
   },
   {
     id: 33,
     name: "Rio de Janeiro",
-    abbr: "RJ"
+    abbr: "RJ",
+    status: StatusEnum.unnavailable
   },
   {
     id: 35,
     name: "São Paulo",
-    abbr: "SP"
+    abbr: "SP",
+    status: StatusEnum.unnavailable
   },
   {
     id: 41,
     name: "Paraná",
-    abbr: "PR"
+    abbr: "PR",
+    status: StatusEnum.available
   },
   {
     id: 42,
     name: "Santa Catarina",
-    abbr: "SC"
+    abbr: "SC",
+    status: StatusEnum.unnavailable
   },
   {
     id: 43,
     name: "Rio Grande do Sul",
-    abbr: "RS"
+    abbr: "RS",
+    status: StatusEnum.unnavailable
   },
   {
     id: 50,
     name: "Mato Grosso do Sul",
-    abbr: "MS"
+    abbr: "MS",
+    status: StatusEnum.unnavailable
   },
   {
     id: 51,
     name: "Mato Grosso",
-    abbr: "MT"
+    abbr: "MT",
+    status: StatusEnum.unnavailable
   },
   {
     id: 52,
     name: "Goiás",
-    abbr: "GO"
+    abbr: "GO",
+    status: StatusEnum.unnavailable
   },
   {
     id: 53,
     name: "Distrito Federal",
-    abbr: "DF"
+    abbr: "DF",
+    status: StatusEnum.unnavailable
   }
 ];
 

@@ -27,14 +27,14 @@ export class ProfileCreateCountyComponent {
   }
 
   ngAfterContentInit() {
-    this.states = this.geoProvider.getStates();
+    this.states = this.geoProvider.getStates(1);
   }
 
   stateChanged(stateId) {
     this.geoProvider
       .getCountiesByState(stateId)
       .then(counties => {
-        this.counties = counties
+        this.counties = counties;
       })
       .catch(err => {
         console.log(err);

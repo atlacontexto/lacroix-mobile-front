@@ -38,7 +38,7 @@ export class AddressComponent implements OnInit, OnDestroy {
       content: "Buscando..."
     });
     getLoading.present();
-    this.states = this._geoProvider.getStates();
+    this.states = this._geoProvider.getStates(0);
     this.addressForm = this.formBuilder.group({
       street: [null, Validators.required],
       number: [null, Validators.required],

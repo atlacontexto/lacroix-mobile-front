@@ -80,7 +80,7 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
       .subscribe(user => {
         this.parentPage.form.controls["user"].setValue(user.id);
       });
-    this.states = this.geoProvider.getStates();
+    this.states = this.geoProvider.getStates(1);
     this.levels = this.profilesProvider.getCourseLevels();
   }
   ngOnDestroy(): void {
@@ -135,12 +135,10 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    
     if (this.parentPage.form.valid) {
       this.profilesProvider
         .createProfile("professor", this.parentPage.form.value)
         .then(res => {
-          
           if (res["success"]) {
             this.alertProvider.presentAlert(
               "Perfil de Professor criado!",
