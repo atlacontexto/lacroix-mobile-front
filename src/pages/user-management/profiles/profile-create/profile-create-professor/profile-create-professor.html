@@ -2,7 +2,7 @@
   <ion-row>
     <ion-col>
       <ion-item>
-        <ion-label floating>* Nível Escolar</ion-label>
+        <ion-label floating>* Nível de Atuação</ion-label>
         <ion-select formControlName="level" (ionChange)="levelChanged($event)">
           <ion-option *ngFor="let level of levels" [value]="level.value">{{level.viewValue}}</ion-option>
         </ion-select>

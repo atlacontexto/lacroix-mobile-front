@@ -64,7 +64,7 @@ export class ProfileCreateSchoolComponent implements OnInit, OnDestroy {
         this.formSchool.controls["user"].setValue(user.id);
       });
     this.roles = this.profilesProvider.getSchoolRoles();
-    this.states = this.geoProvider.getStates();
+    this.states = this.geoProvider.getStates(1);
   }
   ngOnDestroy(): void {
     this._unsubscribeAll.next();

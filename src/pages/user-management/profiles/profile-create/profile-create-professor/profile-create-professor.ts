@@ -63,7 +63,10 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
     );
     this.parentPage.form.addControl("hasSchool", new FormControl(null));
     this.parentPage.form.addControl("school", new FormControl(null));
-    this.parentPage.form.addControl("subjects", new FormControl(null));
+    this.parentPage.form.addControl(
+      "subjects",
+      new FormControl(null, Validators.compose([Validators.required]))
+    );
   }
 
   ngOnInit(): void {
@@ -76,7 +79,7 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
       .subscribe(user => {
         this.parentPage.form.controls["user"].setValue(user.id);
       });
-    this.states = this.geoProvider.getStates();
+    this.states = this.geoProvider.getStates(1);
     this.levels = this.profilesProvider.getCourseLevels();
   }
   ngOnDestroy(): void {
@@ -149,7 +152,7 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
           console.error(err);
           this.alertProvider.presentAlert(
             "Erro ao criar Perfil de Professor",
-            "Não foi possível criar seu perfil agora. Tente novamente mais tarde",
+            "Não foi possível criar seu pefil agora. Informe esse problema no grupo de testes e tente novamente mais tarde",
             "OK"
           );
         });

@@ -100,7 +100,7 @@ export class PersonalComponent implements OnInit, OnDestroy {
       content: "Buscando..."
     });
     getLoading.present();
-    this.states = this._geoProvider.getStates();
+    this.states = this._geoProvider.getStates(0);
     this._personalProvider
       .getPeople()
       .then(people => {

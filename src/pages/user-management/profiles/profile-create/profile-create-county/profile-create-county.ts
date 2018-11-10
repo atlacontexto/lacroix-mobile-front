@@ -45,7 +45,7 @@ export class ProfileCreateCountyComponent {
   }
 
   ngAfterContentInit() {
-    this.states = this.geoProvider.getStates();
+    this.states = this.geoProvider.getStates(1);
   }
 
   stateChanged(stateId) {

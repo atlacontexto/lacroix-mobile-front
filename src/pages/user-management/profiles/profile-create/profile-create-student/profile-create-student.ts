@@ -6,12 +6,7 @@ import {
   OnDestroy,
   Inject
 } from "@angular/core";
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl
-} from "@angular/forms";
+import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 import { GeoProvider } from "../../../../../providers/geo/geo";
 import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
@@ -92,7 +87,7 @@ export class ProfileCreateStudentComponent implements OnInit, OnDestroy {
       .subscribe(user => {
         this.parentPage.form.controls["user"].setValue(user.id);
       });
-    this.states = this.geoProvider.getStates();
+    this.states = this.geoProvider.getStates(1);
     this.levels = this.profilesProvider.getCourseLevelsExcept("infantil");
   }
   ngOnDestroy(): void {
