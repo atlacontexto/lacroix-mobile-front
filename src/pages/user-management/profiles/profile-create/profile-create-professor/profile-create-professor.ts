@@ -45,7 +45,6 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(ProfileCreatePage) private parentPage: ProfileCreatePage,
-    private formBuilder: FormBuilder,
     private profilesProvider: ProfilesProvider,
     private geoProvider: GeoProvider,
     private alertProvider: AlertProvider,
@@ -96,6 +95,7 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
         this.alertProvider.loading.dismiss();
       })
       .catch(err => {
+        console.log(err);
         this.alertProvider.loading.dismiss();
       });
   }
@@ -132,12 +132,10 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    
     if (this.parentPage.form.valid) {
       this.profilesProvider
         .createProfile("professor", this.parentPage.form.value)
         .then(res => {
-          
           if (res["success"]) {
             this.alertProvider.presentAlert(
               "Perfil de Professor criado!",
@@ -149,7 +147,18 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
         })
         .catch(err => {
           console.error(err);
+          this.alertProvider.presentAlert(
+            "Erro ao criar Perfil de Professor",
+            "Não foi possível criar seu perfil agora. Tente novamente mais tarde",
+            "OK"
+          );
         });
+    } else {
+      this.alertProvider.presentAlert(
+        "Informações incompletas",
+        "Preencha os campos obrigatórios",
+        "Ok"
+      );
     }
   }
 }

@@ -159,7 +159,7 @@ export class ProfileCreateStudentComponent implements OnInit, OnDestroy {
           console.error(err);
           this.alertProvider.presentAlert(
             "Erro ao criar Perfil de Aluno",
-            "Não foi possível criar seu pefil agora. Tente novamente mais tarde",
+            "Não foi possível criar seu perfil agora. Tente novamente mais tarde",
             "OK"
           );
         });

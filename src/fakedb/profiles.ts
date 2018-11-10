@@ -13,11 +13,11 @@ const profileTypes = [
   },
   {
     value: "school",
-    viewValue: "Escola"
+    viewValue: "Gestão Escolar"
   },
   {
     value: "county",
-    viewValue: "Município"
+    viewValue: "Rede de Ensino"
   },
   {
     value: "comunity",

@@ -30,7 +30,6 @@ export class ProfileCreatePage {
   form: FormGroup;
   formParent: FormGroup;
   formProfessor: FormGroup;
-  themes: Array<{ title: string; checked: boolean; formControl: string }>;
   level: string;
   comunityRole: string;
   profiles: any;
@@ -46,20 +45,6 @@ export class ProfileCreatePage {
     this.form = this.formBuilder.group({
       bio: [null]
     });
-    this.themes = [
-      { title: "Arte", checked: false, formControl: "arte" },
-      { title: "Ciências", checked: false, formControl: "ciencias" },
-      { title: "Educação Física", checked: false, formControl: "edfisica" },
-      { title: "Filosofia", checked: false, formControl: "filosofia" },
-      { title: "Geografia", checked: false, formControl: "geografia" },
-      { title: "História", checked: false, formControl: "historia" },
-      {
-        title: "Língua Portuguesa",
-        checked: false,
-        formControl: "lportuguesa"
-      },
-      { title: "Matemática", checked: false, formControl: "matematica" }
-    ];
   }
 
   ionViewWillEnter() {

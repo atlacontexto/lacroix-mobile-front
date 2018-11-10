@@ -1,6 +1,14 @@
-import { Component, Output, EventEmitter } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Component, Output, EventEmitter, Inject } from "@angular/core";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl
+} from "@angular/forms";
 import { GeoProvider } from "../../../../../providers/geo/geo";
+import { ProfileCreatePage } from "../../../../../pages/user-management/profiles/profile-create/profile-create";
+import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
+import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
 
 /**
  * Generated class for the ProfileCreateCountyComponent component.
@@ -14,16 +22,26 @@ import { GeoProvider } from "../../../../../providers/geo/geo";
 })
 export class ProfileCreateCountyComponent {
   formCounty: FormGroup;
-  @Output() formCountySubmited = new EventEmitter();
+  @Output()
+  formCountySubmited = new EventEmitter();
   states: { id: number; name: string; abbr: string }[];
   counties: any;
+  roles: { value: number; viewValue: string }[];
 
-  constructor(formBuilder: FormBuilder, private geoProvider: GeoProvider) {
-    this.formCounty = formBuilder.group({
-      state: ["", Validators.compose([Validators.required])],
-      county: ["", Validators.compose([Validators.required])],
-      division: ["", Validators.compose([Validators.required])]
-    });
+  constructor(
+    @Inject(ProfileCreatePage) private parentPage: ProfileCreatePage,
+    private profilesProvider: ProfilesProvider,
+    private geoProvider: GeoProvider,
+    private alertProvider: AlertProvider
+  ) {
+    this.parentPage.form.addControl(
+      "county",
+      new FormControl(null, Validators.compose([Validators.required]))
+    );
+    this.parentPage.form.addControl(
+      "role",
+      new FormControl(null, Validators.compose([Validators.required]))
+    );
   }
 
   ngAfterContentInit() {
@@ -31,13 +49,54 @@ export class ProfileCreateCountyComponent {
   }
 
   stateChanged(stateId) {
+    this.alertProvider.presentControlledLoader(
+      "Atualizando lista de cidades..."
+    );
     this.geoProvider
       .getCountiesByState(stateId)
       .then(counties => {
-        this.counties = counties
+        this.counties = counties;
+        this.alertProvider.loading.dismiss();
       })
       .catch(err => {
         console.log(err);
+        this.alertProvider.loading.dismiss();
       });
+  }
+  countyChanged(ev) {
+    this.roles = [
+      { value: 0, viewValue: "Chefe Departamento Pedagógico" },
+      { value: 0, viewValue: "Chefe Departamento Administrativo" }
+    ];
+  }
+
+  onSubmit() {
+    if (this.parentPage.form.valid) {
+      this.profilesProvider
+        .createProfile("county", this.parentPage.form.value)
+        .then(res => {
+          if (res["success"]) {
+            this.alertProvider.presentAlert(
+              "Perfil da Gestão da Rede de Ensino!",
+              "Aproveite para criar provas, planejamentos e materiais didáticos",
+              "Ok"
+            );
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          this.alertProvider.presentAlert(
+            "Erro ao criar Perfil da Gestão da Rede de Ensino",
+            "Não foi possível criar seu perfil agora. Tente novamente mais tarde",
+            "OK"
+          );
+        });
+    } else {
+      this.alertProvider.presentAlert(
+        "Informações incompletas",
+        "Preencha os campos obrigatórios",
+        "Ok"
+      );
+    }
   }
 }

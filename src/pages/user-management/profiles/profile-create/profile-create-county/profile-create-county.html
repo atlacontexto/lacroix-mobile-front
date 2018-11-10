@@ -1,9 +1,9 @@
-<form [formGroup]="formCounty">
+<form [formGroup]="parentPage.form" (ngSubmit)="onSubmit()">
   <ion-row>
     <ion-col>
       <ion-item>
         <ion-label floating>Estado</ion-label>
-        <ion-select formControlName=state (ionChange)="stateChanged($event)">
+        <ion-select (ionChange)="stateChanged($event)">
           <ion-option *ngFor="let state of states" [value]="state.id">{{state.name}}</ion-option>
         </ion-select>
       </ion-item>
@@ -13,8 +13,8 @@
   <ion-row>
     <ion-col>
       <ion-item>
-        <ion-label floating>Nome do Município</ion-label>
-        <ion-select formControlName="county">
+        <ion-label floating>Município</ion-label>
+        <ion-select (ionChange)="countyChanged($event)" formControlName="county">
           <ion-option *ngFor="let county of counties" [value]="county.id">{{county.name}}</ion-option>
         </ion-select>
       </ion-item>
@@ -24,12 +24,23 @@
   <ion-row>
     <ion-col>
       <ion-item>
-        <ion-label floating>Departamento</ion-label>
-        <ion-select formControlName="division">
-          <ion-option value="pedagogical">Pedagógico</ion-option>
-          <ion-option value="administrative">Administrativo</ion-option>
+        <ion-label floating>Cargo</ion-label>
+        <ion-select formControlName="role">
+          <ion-option *ngFor="let role of roles" [value]="role.value">{{role.viewValue}}</ion-option>
+
         </ion-select>
       </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col padding-horizontal>
+      <p>(*) Campos obrigatórios</p>
+    </ion-col>
+  </ion-row>
+  <ion-row padding-vertical>
+    <ion-col>
+      <button type="submit" ion-button block full>CRIAR PERFIL</button>
     </ion-col>
   </ion-row>
 </form>

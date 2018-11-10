@@ -116,8 +116,8 @@ export class ProfileCreateSchoolComponent implements OnInit, OnDestroy {
         .catch(err => {
           console.error(err);
           this.alertProvider.presentAlert(
-            "Erro ao criar Perfil de Aluno",
-            "Não foi possível criar seu pefil agora. Tente novamente mais tarde",
+            "Erro ao criar Perfil de Gestão Escolar criado",
+            "Não foi possível criar seu perfil agora. Tente novamente mais tarde",
             "OK"
           );
         });
