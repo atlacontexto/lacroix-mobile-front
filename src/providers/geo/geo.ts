@@ -61,7 +61,6 @@ export class GeoProvider {
   }
 
   getStates(status): any {
-    console.log(this.geo.states);
     this.geo.states.sort((a, b) => {
       return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
     });

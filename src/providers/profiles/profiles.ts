@@ -87,6 +87,9 @@ export class ProfilesProvider {
   getSchoolRoles(): any {
     return this.profiles.schoolRoles;
   }
+  getCountyRoles(): any {
+    return this.profiles.countyRoles;
+  }
 
   getSchoolRoleByName(name) {
     return this.profiles.schoolRoles.filter(v => {

@@ -4,7 +4,9 @@
       <ion-item>
         <ion-label floating>Estado</ion-label>
         <ion-select (ionChange)="stateChanged($event)">
-          <ion-option *ngFor="let state of states" [value]="state.id">{{state.name}}</ion-option>
+          <ion-option *ngFor="let state of states" [value]="state.id">{{
+            state.name
+          }}</ion-option>
         </ion-select>
       </ion-item>
     </ion-col>
@@ -14,8 +16,10 @@
     <ion-col>
       <ion-item>
         <ion-label floating>Município</ion-label>
-        <ion-select (ionChange)="countyChanged($event)" formControlName="county">
-          <ion-option *ngFor="let county of counties" [value]="county.id">{{county.name}}</ion-option>
+        <ion-select formControlName="county">
+          <ion-option *ngFor="let county of counties" [value]="county._id">{{
+            county.name
+          }}</ion-option>
         </ion-select>
       </ion-item>
     </ion-col>
@@ -26,17 +30,20 @@
       <ion-item>
         <ion-label floating>Cargo</ion-label>
         <ion-select formControlName="role">
-          <ion-option *ngFor="let role of roles" [value]="role.value">{{role.viewValue}}</ion-option>
-
+          <ion-option
+            ion-text
+            text-wrap
+            *ngFor="let role of roles"
+            [value]="role.value"
+            >{{ role.viewValue }}</ion-option
+          >
         </ion-select>
       </ion-item>
     </ion-col>
   </ion-row>
 
   <ion-row>
-    <ion-col padding-horizontal>
-      <p>(*) Campos obrigatórios</p>
-    </ion-col>
+    <ion-col padding-horizontal> <p>(*) Campos obrigatórios</p> </ion-col>
   </ion-row>
   <ion-row padding-vertical>
     <ion-col>

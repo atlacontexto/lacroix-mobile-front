@@ -56,6 +56,17 @@ const courseLevels = [
   }
 ];
 
+const countyRoles = [
+  {
+    value: "pedChief",
+    viewValue: "Chefe Pedagógico"
+  },
+  {
+    value: "admChief",
+    viewValue: "Chefe Administrativo"
+  }
+];
+
 const schoolRoles = [
   {
     value: "director",
@@ -209,6 +220,7 @@ export default {
   courseLevels,
   profileTypes,
   schoolRoles,
+  countyRoles,
   kinships,
   voluntaries,
   courseYears,

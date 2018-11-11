@@ -1,4 +1,11 @@
-import { Component, Output, EventEmitter, Inject } from "@angular/core";
+import {
+  Component,
+  Output,
+  EventEmitter,
+  Inject,
+  OnDestroy,
+  OnInit
+} from "@angular/core";
 import {
   FormGroup,
   FormBuilder,
@@ -9,6 +16,7 @@ import { GeoProvider } from "../../../../../providers/geo/geo";
 import { ProfileCreatePage } from "../../../../../pages/user-management/profiles/profile-create/profile-create";
 import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 import { AlertProvider } from "../../../../../providers/alert-service/alert-service";
+import { Subject } from "rxjs";
 
 /**
  * Generated class for the ProfileCreateCountyComponent component.
@@ -20,13 +28,14 @@ import { AlertProvider } from "../../../../../providers/alert-service/alert-serv
   selector: "profile-create-county",
   templateUrl: "profile-create-county.html"
 })
-export class ProfileCreateCountyComponent {
+export class ProfileCreateCountyComponent implements OnInit, OnDestroy {
   formCounty: FormGroup;
   @Output()
   formCountySubmited = new EventEmitter();
   states: { id: number; name: string; abbr: string }[];
   counties: any;
   roles: { value: number; viewValue: string }[];
+  private _unsubscribeAll: Subject<any>;
 
   constructor(
     @Inject(ProfileCreatePage) private parentPage: ProfileCreatePage,
@@ -34,6 +43,7 @@ export class ProfileCreateCountyComponent {
     private geoProvider: GeoProvider,
     private alertProvider: AlertProvider
   ) {
+    this._unsubscribeAll = new Subject();
     this.parentPage.form.addControl(
       "county",
       new FormControl(null, Validators.compose([Validators.required]))
@@ -44,8 +54,14 @@ export class ProfileCreateCountyComponent {
     );
   }
 
-  ngAfterContentInit() {
+  ngOnInit(): void {
+    this.roles = this.profilesProvider.getCountyRoles();
     this.states = this.geoProvider.getStates(1);
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   stateChanged(stateId) {
@@ -63,18 +79,14 @@ export class ProfileCreateCountyComponent {
         this.alertProvider.loading.dismiss();
       });
   }
-  countyChanged(ev) {
-    this.roles = [
-      { value: 0, viewValue: "Chefe Departamento Pedagógico" },
-      { value: 0, viewValue: "Chefe Departamento Administrativo" }
-    ];
-  }
 
   onSubmit() {
+    console.log(this.parentPage.form.value);
     if (this.parentPage.form.valid) {
       this.profilesProvider
         .createProfile("county", this.parentPage.form.value)
         .then(res => {
+          console.log(res);
           if (res["success"]) {
             this.alertProvider.presentAlert(
               "Perfil da Gestão da Rede de Ensino!",
