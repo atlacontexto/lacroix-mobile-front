@@ -130,7 +130,8 @@ export class MyApp {
           { title: "BOLETIM", component: "ReportPage", icon: "home" },
           { title: "PLANEJAMENTO", component: "PlanningPage", icon: "home" },
           { title: "FREQUÊNCIA", component: "ClassroomPage", icon: "home" },
-          { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
+          { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" },
+          { title: "TURMA", component: "ClassroomDetailPage", icon: "home" }
         ];
       } else if (this.profileSelected["profileType"] === "ProfileSchool") {
         this.privatePages = [

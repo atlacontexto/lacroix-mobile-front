@@ -9,7 +9,15 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-item>
+  <ion-row *ngIf="profile.school && profile.school.status === 'waiting'">
+    <ion-col>
+      <p ion-text text-center>
+        Seu perfil ainda não tem permissão de acesso. Entre em contato com a sua
+        escola para liberação.
+      </p>
+    </ion-col>
+  </ion-row>
+  <ion-item *ngIf="classroom">
     <h2 text-wrap>{{ classroom.series }}</h2>
     <h2>Turma: {{ classroom.subClass }}</h2>
     <p>Operação: {{ classroom.hour }}</p>
@@ -21,7 +29,7 @@
     <ion-segment-button value="professors"> Professores</ion-segment-button>
   </ion-segment>
 
-  <div [ngSwitch]="show">
+  <div *ngIf="classroom" [ngSwitch]="show">
     <ion-list *ngSwitchCase="'students'">
       <button
         ion-item

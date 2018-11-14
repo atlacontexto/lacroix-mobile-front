@@ -107,7 +107,6 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
     this.profilesProvider
       .getSchoolsByCounty(countyId)
       .then(schools => {
-        console.log(schools);
         this.schools = schools;
       })
       .catch(err => {

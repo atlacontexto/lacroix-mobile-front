@@ -60,7 +60,6 @@ export class ProfileCreateSchoolComponent implements OnInit, OnDestroy {
         takeUntil(this._unsubscribeAll)
       )
       .subscribe(user => {
-        console.log(user);
         this.formSchool.controls["user"].setValue(user.id);
       });
     this.roles = this.profilesProvider.getSchoolRoles();
@@ -99,12 +98,10 @@ export class ProfileCreateSchoolComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.formSchool.value);
     if (this.formSchool.valid) {
       this.profilesProvider
         .createProfile("school", this.formSchool.value)
         .then(res => {
-          console.log(res);
           if (res["success"]) {
             this.alertProvider.presentAlert(
               "Perfil de Gestão Escolar criado!",

@@ -28,31 +28,38 @@ const profileTypes = [
 const courseLevels = [
   {
     value: "infantil",
-    viewValue: "Educação Infantil"
+    viewValue: "Educação Infantil",
+    availability: "waiting"
   },
   {
     value: "f1",
-    viewValue: "Ensino Fundamental 1"
+    viewValue: "Ensino Fundamental 1",
+    availability: "done"
   },
   {
     value: "f2",
-    viewValue: "Ensino Fundamental 2"
+    viewValue: "Ensino Fundamental 2",
+    availability: "waiting"
   },
   {
     value: "medio",
-    viewValue: "Ensino Médio"
+    viewValue: "Ensino Médio",
+    availability: "waiting"
   },
   {
     value: "mediot",
-    viewValue: "Ensino Médio Técnico"
+    viewValue: "Ensino Médio Técnico",
+    availability: "waiting"
   },
   {
     value: "superior",
-    viewValue: "Ensino Superior"
+    viewValue: "Ensino Superior",
+    availability: "waiting"
   },
   {
     value: "eja",
-    viewValue: "EJA"
+    viewValue: "EJA",
+    availability: "waiting"
   }
 ];
 
@@ -70,23 +77,28 @@ const countyRoles = [
 const schoolRoles = [
   {
     value: "director",
-    viewValue: "Diretor"
+    viewValue: "Diretor",
+    availability: "done"
   },
   {
     value: "subdirector",
-    viewValue: "Vice-diretor"
+    viewValue: "Vice-diretor",
+    availability: "waiting"
   },
   {
     value: "pedAdvisor",
-    viewValue: "Orientador Pedagógico"
+    viewValue: "Orientador Pedagógico",
+    availability: "done"
   },
   {
     value: "scribe",
-    viewValue: "Escriturário"
+    viewValue: "Escriturário",
+    availability: "waiting"
   },
   {
     value: "librarian",
-    viewValue: "Bibliotecário"
+    viewValue: "Bibliotecário",
+    availability: "waiting"
   }
 ];
 

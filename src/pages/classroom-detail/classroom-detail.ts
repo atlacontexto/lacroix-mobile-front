@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import {
   IonicPage,
   NavController,
@@ -23,11 +23,12 @@ import { ClassroomsProvider } from "../../providers/classrooms/classrooms";
   selector: "page-classroom-detail",
   templateUrl: "classroom-detail.html"
 })
-export class ClassroomDetailPage {
+export class ClassroomDetailPage implements OnInit, OnDestroy {
   classroom: any;
   show = "students";
   private _unsubscribeAll: Subject<any>;
   requests: any;
+  profile: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -40,8 +41,7 @@ export class ClassroomDetailPage {
     console.log(this.classroom);
   }
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad ClassroomDetailPage");
+  ngOnInit(): void {
     this.profilesProvider.currentProfile
       .pipe(
         filter(profile => profile instanceof Profile),
@@ -49,6 +49,7 @@ export class ClassroomDetailPage {
       )
       .subscribe(profile => {
         console.log(profile);
+        this.profile = profile;
 
         this.profilesProvider
           .getRequestings(profile.school.requested._id)
@@ -59,13 +60,18 @@ export class ClassroomDetailPage {
             );
           })
           .catch(err => {
+            console.error(err);
             let requestingErrorAlert = this.alertCtrl.create({
               title: "Erro na recuperação de solicitações",
-              message: "Ocorreu um erro interno. Tente novamente depois"
+              message: "Ocorreu um erro interno. Tente novamente mais tarde."
             });
             requestingErrorAlert.present();
           });
       });
+  }
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
   }
 
   openEnrollment(student) {

@@ -4,7 +4,12 @@
       <ion-item padding-horizontal>
         <ion-label floating>Cargo</ion-label>
         <ion-select formControlName="role">
-          <ion-option *ngFor="let role of roles" [value]="role.value">{{role.viewValue}}</ion-option>
+          <ion-option
+            [disabled]="role.availability != 'done'"
+            *ngFor="let role of roles"
+            [value]="role.value"
+            >{{ role.viewValue }}</ion-option
+          >
         </ion-select>
       </ion-item>
     </ion-col>
@@ -27,7 +32,9 @@
         <ion-item padding-horizontal>
           <ion-label floating>Estado</ion-label>
           <ion-select (ionChange)="stateChanged($event)">
-            <ion-option *ngFor="let state of states" [value]="state.id">{{state.name}}</ion-option>
+            <ion-option *ngFor="let state of states" [value]="state.id">{{
+              state.name
+            }}</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -40,7 +47,9 @@
         <ion-item padding-horizontal>
           <ion-label floating>Município</ion-label>
           <ion-select (ionChange)="countyChanged($event)">
-            <ion-option *ngFor="let county of counties" [value]="county._id">{{county.name}}</ion-option>
+            <ion-option *ngFor="let county of counties" [value]="county._id">{{
+              county.name
+            }}</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -52,7 +61,9 @@
         <ion-item padding-horizontal>
           <ion-label floating>Escola</ion-label>
           <ion-select formControlName="school">
-            <ion-option *ngFor="let school of schools" [value]="school._id">{{school.institution.name}}</ion-option>
+            <ion-option *ngFor="let school of schools" [value]="school._id">{{
+              school.institution.name
+            }}</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>

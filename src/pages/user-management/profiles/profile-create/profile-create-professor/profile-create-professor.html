@@ -1,10 +1,15 @@
-<form [formGroup]=parentPage.form (ngSubmit)="onSubmit()">
+<form [formGroup]="parentPage.form" (ngSubmit)="onSubmit()">
   <ion-row>
     <ion-col>
       <ion-item>
         <ion-label floating>* Nível de Atuação</ion-label>
         <ion-select formControlName="level" (ionChange)="levelChanged($event)">
-          <ion-option *ngFor="let level of levels" [value]="level.value">{{level.viewValue}}</ion-option>
+          <ion-option
+            *ngFor="let level of levels"
+            [value]="level.value"
+            [disabled]="level.availability !== 'done'"
+            >{{ level.viewValue }}</ion-option
+          >
         </ion-select>
       </ion-item>
     </ion-col>
@@ -15,7 +20,9 @@
       <ion-item>
         <ion-label stacked>* Ano</ion-label>
         <ion-select formControlName="serie">
-          <ion-option *ngFor="let year of years" [value]="year.value">{{year.viewValue}}</ion-option>
+          <ion-option *ngFor="let year of years" [value]="year.value">{{
+            year.viewValue
+          }}</ion-option>
         </ion-select>
       </ion-item>
     </ion-col>
@@ -26,7 +33,11 @@
       <ion-item>
         <ion-label stacked>Discplinas</ion-label>
         <ion-select formControlName="subjects" multiple="true">
-          <ion-option *ngFor="let subject of subjects" [value]="subject.value">{{subject.viewValue}}</ion-option>
+          <ion-option
+            *ngFor="let subject of subjects"
+            [value]="subject.value"
+            >{{ subject.viewValue }}</ion-option
+          >
         </ion-select>
       </ion-item>
     </ion-col>
@@ -41,7 +52,6 @@
     </ion-col>
   </ion-row>
 
-
   <div *ngIf="parentPage.form.value.hasSchool">
     <!-- Seleção do Estado -->
 
@@ -50,7 +60,9 @@
         <ion-item padding-horizontal>
           <ion-label floating>Estado</ion-label>
           <ion-select (ionChange)="stateChanged($event)">
-            <ion-option *ngFor="let state of states" [value]="state.id">{{state.name}}</ion-option>
+            <ion-option *ngFor="let state of states" [value]="state.id">{{
+              state.name
+            }}</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -63,7 +75,9 @@
         <ion-item padding-horizontal>
           <ion-label floating>Município</ion-label>
           <ion-select (ionChange)="countyChanged($event)">
-            <ion-option *ngFor="let county of counties" [value]="county._id">{{county.name}}</ion-option>
+            <ion-option *ngFor="let county of counties" [value]="county._id">{{
+              county.name
+            }}</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -75,17 +89,16 @@
         <ion-item padding-horizontal>
           <ion-label floating>Escola</ion-label>
           <ion-select formControlName="school">
-            <ion-option *ngFor="let school of schools" [value]="school._id">{{school.institution.name}}</ion-option>
+            <ion-option *ngFor="let school of schools" [value]="school._id">{{
+              school.institution.name
+            }}</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
     </ion-row>
-
   </div>
   <ion-row>
-    <ion-col padding-horizontal>
-      <p>(*) Campos obrigatórios</p>
-    </ion-col>
+    <ion-col padding-horizontal> <p>(*) Campos obrigatórios</p> </ion-col>
   </ion-row>
   <ion-row padding-vertical>
     <ion-col>
