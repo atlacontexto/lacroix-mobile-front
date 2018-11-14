@@ -29,6 +29,7 @@ import { FileOpener } from "@ionic-native/file-opener";
 import { File } from "@ionic-native/file";
 import { AddressProvider } from '../providers/address/address';
 import { PersonalProvider } from '../providers/personal/personal';
+import { ClassroomsProvider } from '../providers/classrooms/classrooms';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -70,7 +71,8 @@ export function createTranslateLoader(http: HttpClient) {
     File,
     FileOpener,
     AddressProvider,
-    PersonalProvider
+    PersonalProvider,
+    ClassroomsProvider
   ]
 })
 export class AppModule {}

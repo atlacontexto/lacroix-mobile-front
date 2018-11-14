@@ -1,0 +1,59 @@
+<!--
+  Generated template for the EnrollmentDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar> <ion-title>Detalhes da Matrícula</ion-title> </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item no-lines *ngIf="student">
+      <h2>{{ student["Nome do Aluno"] }}</h2>
+      <p text-wrap>{{ student.CGM }}</p>
+      <p text-wrap>{{ student["Data Matric/Mov"] }}</p>
+      <p text-wrap>{{ student["Data Nascimento"] }}</p>
+      <p text-wrap>{{ student["sexo"] }}</p>
+      <p text-wrap>{{ student["Sit da Matrícula"] }}</p>
+    </ion-item>
+    <ion-list-header *ngIf="student.contato">Contato</ion-list-header>
+    <ion-item no-lines>
+      <p text-wrap>{{ student.contato["Celular Aluno"] }}</p>
+      <p text-wrap>{{ student.contato["Celular Responsável"] }}</p>
+      <p text-wrap>{{ student.contato["Email aluno"] }}</p>
+      <p text-wrap>{{ student.contato["Email responsável"] }}</p>
+      <p text-wrap>{{ student.contato["Ramal"] }}</p>
+      <p text-wrap>
+        Telefone Comercial: {{ student.contato["Telefone Comercial"] }}
+      </p>
+      <p text-wrap>
+        Telefone Residencial: {{ student.contato["Telefone Residencial"] }}
+      </p>
+    </ion-item>
+    <ion-list-header *ngIf="student.endereco">Endereço</ion-list-header>
+    <ion-item no-lines>
+      <p text-wrap>Bairro: {{ student.endereco["Bairro"] }}</p>
+      <p text-wrap>CEP: {{ student.endereco.CEP }}</p>
+      <p text-wrap>Caixa Postal: {{ student.endereco["Caixa Postal"] }}</p>
+      <p text-wrap>Cidade: {{ student.endereco.Cidade }}</p>
+      <p text-wrap>Complemento: {{ student.endereco.Complemento }}</p>
+      <p text-wrap>Rua: {{ student.endereco["Endereço"] }}</p>
+      <p text-wrap>Número: {{ student.endereco["Número"] }}</p>
+      <p text-wrap>UF: {{ student.endereco.UF }}</p>
+    </ion-item>
+    <ion-list-header *ngIf="student.filiacao">Filiacao</ion-list-header>
+    <ion-item no-lines>
+      <p text-wrap>Nome do Mãe: {{ student.filiacao["Nome da Mãe"] }}</p>
+      <p text-wrap>Nome do Pai: {{ student.filiacao["Nome do Pai"] }}</p>
+      <p text-wrap>
+        Nome do Responsável: {{ student.filiacao["Nome do Responsável"] }}
+      </p>
+      <p text-wrap>
+        Parentesco do Responsável:
+        {{ student.filiacao["Parentesco do Responsável"] }}
+      </p>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -106,7 +106,7 @@ export class MyApp {
   private changeSelected(): void {
     console.log(this.profileSelected);
     this.profilesProvider.currentProfile.next(this.profileSelected);
-    this.updateList;
+    this.updateList();
   }
 
   private updateList(): void {
@@ -135,15 +135,34 @@ export class MyApp {
       } else if (this.profileSelected["profileType"] === "ProfileSchool") {
         this.privatePages = [
           { title: "INÍCIO", component: HomePage, icon: "home" },
-          { title: "TURMAS", component: "ClassroomPage", icon: "home" },
-          { title: "AUTORIZAÇÃO", component: "AuthorizationPage", icon: "home" },
-          { title: "AVALIAÇÕES", component: "AssestmentCheckPage", icon: "home" },
-          { title: "PLANO DIÁRIO", component: "PlanningCheckPage", icon: "home" }
+          { title: "TURMAS", component: "ClassroomListPage", icon: "home" },
+          {
+            title: "AUTORIZAÇÃO",
+            component: "AuthorizationPage",
+            icon: "home"
+          },
+          {
+            title: "AVALIAÇÕES",
+            component: "AssestmentCheckPage",
+            icon: "home"
+          },
+          {
+            title: "PLANO DIÁRIO",
+            component: "PlanningCheckPage",
+            icon: "home"
+          }
         ];
       } else if (this.profileSelected["profileType"] === "ProfileCounty") {
         this.privatePages = [
           { title: "INÍCIO", component: HomePage, icon: "home" },
-          { title: "AUTORIZAÇÃO", component: "AuthorizationPage", icon: "home" }
+          {
+            title: "AUTORIZAÇÃO",
+            component: "AuthorizationPage",
+            icon: "home"
+          },
+          { title: "ESCOLAS", component: "SchoolsPage", icon: "home" },
+          { title: "PAPÉIS", component: "RolesPage", icon: "home" },
+          { title: "PERMISSÕES", component: "PermissionsPage", icon: "home" }
         ];
       } else if (this.profileSelected["profileType"] === "ProfileComunity") {
         this.privatePages = [

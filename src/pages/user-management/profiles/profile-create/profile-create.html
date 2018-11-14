@@ -1,16 +1,11 @@
 <ion-header>
-
   <ion-navbar text-center>
     <ion-title>Novo Perfil</ion-title>
     <ion-buttons start>
-      <button ion-button (click)="dismiss()">
-        Cancelar
-      </button>
+      <button ion-button (click)="dismiss()">Cancelar</button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content no-padding>
   <ion-grid padding-vertical>
@@ -19,7 +14,11 @@
         <ion-item padding-horizontal>
           <ion-label floating>* Tipo de Perfil</ion-label>
           <ion-select [(ngModel)]="profileType">
-            <ion-option *ngFor="let profile of profiles" [value]="profile.value">{{profile.viewValue}}</ion-option>
+            <ion-option
+              *ngFor="let profile of profiles"
+              [value]="profile.value"
+              >{{ profile.viewValue }}</ion-option
+            >
           </ion-select>
         </ion-item>
       </ion-col>
@@ -30,24 +29,47 @@
         <ion-col>
           <ion-item padding-horizontal>
             <ion-label stacked>Biografia</ion-label>
-            <ion-textarea #myInput id="myInput" rows="1" maxLength="200" (keyup)="resize()" formControlName="bio"></ion-textarea>
+            <ion-textarea
+              #myInput
+              id="myInput"
+              rows="1"
+              maxLength="200"
+              (keyup)="resize()"
+              formControlName="bio"
+            ></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
     </form>
 
-    <profile-create-student *ngIf="profileType == 'student'" (formStudentSubmited)="dismiss($event)"></profile-create-student>
+    <profile-create-student
+      *ngIf="profileType == 'student'"
+      (formStudentSubmited)="dismiss($event)"
+    ></profile-create-student>
 
-    <profile-create-parent *ngIf="profileType == 'parent'" (formParentSubmited)="dismiss($event)"></profile-create-parent>
+    <profile-create-parent
+      *ngIf="profileType == 'parent'"
+      (formParentSubmited)="dismiss($event)"
+    ></profile-create-parent>
 
-    <profile-create-professor *ngIf="profileType == 'professor'" (formProfessorSubmited)="dismiss($event)"></profile-create-professor>
+    <profile-create-professor
+      *ngIf="profileType == 'professor'"
+      (formProfessorSubmited)="dismiss($event)"
+    ></profile-create-professor>
 
-    <profile-create-comunity *ngIf="profileType == 'comunity'" (formComunitySubmited)="dismiss()"></profile-create-comunity>
+    <profile-create-school
+      *ngIf="profileType == 'school'"
+      (formSchoolSubmited)="dismiss($event)"
+    ></profile-create-school>
 
-    <profile-create-county *ngIf="profileType == 'county'" (formCountySubmited)="dismiss($event)"></profile-create-county>
+    <profile-create-county
+      *ngIf="profileType == 'county'"
+      (formCountySubmited)="dismiss($event)"
+    ></profile-create-county>
 
-    <profile-create-school *ngIf="profileType == 'school'" (formSchoolSubmited)="dismiss($event)"></profile-create-school>
-
+    <profile-create-comunity
+      *ngIf="profileType == 'comunity'"
+      (formComunitySubmited)="dismiss($event)"
+    ></profile-create-comunity>
   </ion-grid>
-
 </ion-content>

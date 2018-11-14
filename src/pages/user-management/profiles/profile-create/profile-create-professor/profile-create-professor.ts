@@ -104,11 +104,11 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
   }
 
   countyChanged(countyId) {
-    this.geoProvider
+    this.profilesProvider
       .getSchoolsByCounty(countyId)
-      .then(res => {
-        console.log(res);
-        this.schools = res["data"]["schools"];
+      .then(schools => {
+        console.log(schools);
+        this.schools = schools;
       })
       .catch(err => {
         console.error(err);

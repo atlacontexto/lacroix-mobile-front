@@ -1,0 +1,58 @@
+<!--
+  Generated template for the ClassroomDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar> <ion-title>Detalhes da Turma</ion-title> </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <h2 text-wrap>{{ classroom.series }}</h2>
+    <h2>Turma: {{ classroom.subClass }}</h2>
+    <p>Operação: {{ classroom.hour }}</p>
+    <p>Turno: {{ classroom.shift }}</p>
+  </ion-item>
+
+  <ion-segment [(ngModel)]="show">
+    <ion-segment-button value="students"> Alunos</ion-segment-button>
+    <ion-segment-button value="professors"> Professores</ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="show">
+    <ion-list *ngSwitchCase="'students'">
+      <button
+        ion-item
+        *ngFor="let student of classroom.students"
+        (click)="openEnrollment(student)"
+      >
+        <h2 text-wrap>{{ student["Nome do Aluno"] }}</h2>
+        <p>CGM: {{ student.CGM }}</p>
+        <p>Turno: {{ student.Idade }}</p>
+        <p>Turma: {{ student.Sexo }}</p>
+      </button>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'professors'">
+      <ion-item *ngFor="let professor of requests">
+        <ion-thumbnail item-start>
+          <img [src]="professor.requesting.avatar" />
+        </ion-thumbnail>
+        <h2 text-wrap>{{ professor.requesting.user.people.name }}</h2>
+        <button
+          ion-button
+          small
+          item-end
+          (click)="activateProfessor(professor.requesting._id)"
+        >
+          Ativar
+        </button>
+      </ion-item>
+      <p ion-text text-center *ngIf="!requests">
+        Nenhum professor se cadastrou para este Ano.
+      </p>
+    </ion-list>
+  </div>
+</ion-content>

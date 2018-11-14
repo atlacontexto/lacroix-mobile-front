@@ -1,0 +1,24 @@
+<!--
+  Generated template for the ClassroomListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar> <ion-title>classroom-list</ion-title> </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <button
+      ion-item
+      *ngFor="let classroom of classrooms"
+      (click)="openClassroom(classroom)"
+    >
+      <h2 text-wrap>{{ classroom.series }}</h2>
+      <p>Operação: {{ classroom.hour }}</p>
+      <p>Turno: {{ classroom.shift }}</p>
+      <p>Turma: {{ classroom.subClass }}</p>
+    </button>
+  </ion-list>
+</ion-content>

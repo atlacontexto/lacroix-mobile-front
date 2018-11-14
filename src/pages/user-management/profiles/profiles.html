@@ -1,7 +1,7 @@
 <ion-row>
   <ion-col col-8 offset-2>
     <button ion-button icon-left full (click)="createProfile()">
-      <ion-icon name=add></ion-icon>
+      <ion-icon name="add"></ion-icon>
       NOVO PERFIL
     </button>
   </ion-col>
@@ -10,12 +10,18 @@
 <ion-row *ngIf="showProfiles.length === 0 || showHelp">
   <ion-slides pager="true" padding-top>
     <ion-slide *ngFor="let slide of slides">
-      <!-- <img style="width: 80px; height: 80px;" [src]="slide.icone" class="slide-image" /> -->
+      <!--
+        <img style="width: 80px; height: 80px;" [src]="slide.icone" class="slide-image" />
+      -->
       <h3 ion-text [innerHTML]="slide.title"></h3>
       <ion-grid>
         <ion-row>
           <ion-col col-8 offset-2>
-            <p class="landing-text" ion-text [innerHTML]="slide.description"></p>
+            <p
+              class="landing-text"
+              ion-text
+              [innerHTML]="slide.description"
+            ></p>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -24,18 +30,52 @@
 </ion-row>
 
 <ion-list inset *ngIf="showProfiles && !showHelp">
-  <button no-padding ion-item *ngFor="let profile of showProfiles" (click)="editProfile(profile)">
-    <ion-avatar item-start>
-      <img [src]="profile.avatar">
-    </ion-avatar>
-    <h2 style="font-weight: bold;" text-wrap text-capitalize ion-text>{{profile.showType}}</h2>
-    <h3 text-capitalize *ngIf="profile.role" ion-text text-wrap>{{profile.role.type | translate}}</h3>
-    <h3 *ngIf="profile.school" ion-text text-wrap text-capitalize>{{profile.school.requested.institution.name}}</h3>
+  <button
+    no-padding
+    ion-item
+    *ngFor="let profile of showProfiles"
+    (click)="editProfile(profile)"
+  >
+    <ion-avatar item-start> <img [src]="profile.avatar" /> </ion-avatar>
+    <h2 style="font-weight: bold;" text-wrap text-capitalize ion-text>
+      {{ profile.showType }}
+    </h2>
+    <h3 text-capitalize *ngIf="profile.role" ion-text text-wrap>
+      {{ profile.role.type | translate }}
+    </h3>
+    <h3 *ngIf="profile.school" ion-text text-wrap text-capitalize>
+      {{ profile.school.requested.institution.name }}
+    </h3>
+    <h3 *ngIf="profile.county" ion-text text-wrap text-capitalize>
+      {{ profile.county.requested.name }}
+    </h3>
     <ion-badge *ngIf="profile.main">principal</ion-badge>
-    <ion-icon *ngIf="profile.school && profile.school.status === 'accepted'" item-end color="secondary" name="checkmark-circle"></ion-icon>
-    <ion-icon *ngIf="profile.school && profile.school.status === 'denied'" item-end color="danger" name="close-circle"></ion-icon>
-    <ion-icon *ngIf="profile.school && profile.school.status === 'waiting'" item-end color="primary" name="time"></ion-icon>
+    <ion-icon
+      *ngIf="
+        (profile.school && profile.school.status === 'accepted') ||
+        (profile.county && profile.county.status === 'accepted')
+      "
+      item-end
+      color="secondary"
+      name="checkmark-circle"
+    ></ion-icon>
+    <ion-icon
+      *ngIf="
+        (profile.school && profile.school.status === 'denied') ||
+        (profile.county && profile.county.status === 'denied')
+      "
+      item-end
+      color="danger"
+      name="close-circle"
+    ></ion-icon>
+    <ion-icon
+      *ngIf="
+        (profile.school && profile.school.status === 'waiting') ||
+        (profile.county && profile.county.status === 'waiting')
+      "
+      item-end
+      color="primary"
+      name="time"
+    ></ion-icon>
   </button>
-
-
 </ion-list>

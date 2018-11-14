@@ -90,9 +90,10 @@ export class ProfileCreateCountyComponent implements OnInit, OnDestroy {
           if (res["success"]) {
             this.alertProvider.presentAlert(
               "Perfil da Gestão da Rede de Ensino!",
-              "Aproveite para criar provas, planejamentos e materiais didáticos",
+              "Aproveite para gerenciar as escolas, turmas e profissionais que compõe a sua rede.",
               "Ok"
             );
+            this.formCountySubmited.emit();
           }
         })
         .catch(err => {

@@ -125,10 +125,10 @@ export class ProfileCreateStudentComponent implements OnInit, OnDestroy {
   }
 
   countyChanged(countyId) {
-    this.geoProvider
+    this.profilesProvider
       .getSchoolsByCounty(countyId)
-      .then(res => {
-        this.schools = res["data"]["schools"];
+      .then(schools => {
+        this.schools = schools;
       })
       .catch(err => {
         console.error(err);

@@ -44,6 +44,61 @@ export class ProfilesProvider {
     });
   }
 
+  getSchoolsByCounty(county_id: any) {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(
+          this.apiUrl +
+            "/profile/school-institutional?countyInstitutional=" +
+            county_id,
+          this.headers
+        )
+        .subscribe(
+          res => {
+            let schools = res["data"]["schools"];
+            schools.sort((a, b) => {
+              if (a.institution.name > b.institution.name) {
+                return 1;
+              }
+              if (a.institution.name < b.institution.name) {
+                return -1;
+              }
+              return 0;
+            });
+            resolve(schools);
+          },
+          err => {
+            reject(err);
+          }
+        );
+    });
+  }
+
+  getSchoolsProfiles(): any {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(`${this.apiUrl}/profile/school-institutional`, this.headers)
+        .subscribe(
+          res => {
+            let schools = res["data"]["schools"];
+            schools.sort((a, b) => {
+              if (a.institution.name > b.institution.name) {
+                return 1;
+              }
+              if (a.institution.name < b.institution.name) {
+                return -1;
+              }
+              return 0;
+            });
+            resolve(schools);
+          },
+          err => {
+            reject(err);
+          }
+        );
+    });
+  }
+
   getRequestings(idSchool): any {
     return new Promise((resolve, reject) => {
       this.http
