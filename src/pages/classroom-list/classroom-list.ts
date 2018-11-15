@@ -38,7 +38,6 @@ export class ClassroomListPage implements OnInit, OnDestroy {
         filter(profile => profile instanceof Profile)
       )
       .subscribe(profile => {
-        console.log(profile);
         this.profile = profile;
         this.classroomsProvider
           .getClassRoomsBySchoolId(this.profile.school.requested._id)

@@ -11,12 +11,12 @@
 <ion-content padding>
   <ion-list>
     <ion-item no-lines *ngIf="student">
-      <h2>{{ student["Nome do Aluno"] }}</h2>
-      <p text-wrap>{{ student.CGM }}</p>
-      <p text-wrap>{{ student["Data Matric/Mov"] }}</p>
-      <p text-wrap>{{ student["Data Nascimento"] }}</p>
-      <p text-wrap>{{ student["sexo"] }}</p>
-      <p text-wrap>{{ student["Sit da Matrícula"] }}</p>
+      <h2>{{ student.basic["Nome do Aluno"] }}</h2>
+      <p text-wrap>{{ student.basic.CGM }}</p>
+      <p text-wrap>{{ student.basic["Data Matric/Mov"] }}</p>
+      <p text-wrap>{{ student.basic["Data Nascimento"] }}</p>
+      <p text-wrap>{{ student.basic["sexo"] }}</p>
+      <p text-wrap>{{ student.basic["Sit da Matrícula"] }}</p>
     </ion-item>
     <ion-list-header *ngIf="student.contato">Contato</ion-list-header>
     <ion-item no-lines>

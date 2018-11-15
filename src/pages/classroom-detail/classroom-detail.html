@@ -17,14 +17,15 @@
       </p>
     </ion-col>
   </ion-row>
-  <ion-item *ngIf="classroom">
+  <ion-item no-lines *ngIf="classroom">
     <h2 text-wrap>{{ classroom.series }}</h2>
     <h2>Turma: {{ classroom.subClass }}</h2>
     <p>Operação: {{ classroom.hour }}</p>
+    <p>Alunos: {{ classroom.students.length }}</p>
     <p>Turno: {{ classroom.shift }}</p>
   </ion-item>
 
-  <ion-segment [(ngModel)]="show">
+  <ion-segment padding [(ngModel)]="show">
     <ion-segment-button value="students"> Alunos</ion-segment-button>
     <ion-segment-button value="professors"> Professores</ion-segment-button>
   </ion-segment>
@@ -33,13 +34,13 @@
     <ion-list *ngSwitchCase="'students'">
       <button
         ion-item
-        *ngFor="let student of classroom.students"
+        *ngFor="let student of students"
         (click)="openEnrollment(student)"
       >
-        <h2 text-wrap>{{ student["Nome do Aluno"] }}</h2>
-        <p>CGM: {{ student.CGM }}</p>
-        <p>Turno: {{ student.Idade }}</p>
-        <p>Turma: {{ student.Sexo }}</p>
+        <h2 text-wrap>{{ student.basic["Nome do Aluno"] }}</h2>
+        <p>CGM: {{ student.basic.CGM }}</p>
+        <p>Turno: {{ student.basic.Idade }}</p>
+        <p>Turma: {{ student.basic.Sexo }}</p>
       </button>
     </ion-list>
 
@@ -50,12 +51,22 @@
         </ion-thumbnail>
         <h2 text-wrap>{{ professor.requesting.user.people.name }}</h2>
         <button
+          *ngIf="!professor.requesting.classroom"
           ion-button
           small
           item-end
           (click)="activateProfessor(professor.requesting._id)"
         >
           Ativar
+        </button>
+        <button
+          *ngIf="professor.requesting.classroom"
+          ion-button
+          small
+          item-end
+          (click)="deactivateProfessor(professor.requesting._id)"
+        >
+          Desativar
         </button>
       </ion-item>
       <p ion-text text-center *ngIf="!requests">

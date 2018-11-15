@@ -36,12 +36,9 @@ export class SchoolsPage implements OnInit, OnDestroy {
         filter(profile => profile instanceof Profile)
       )
       .subscribe(profile => {
-        console.log(profile);
-
         this.profilesProvider
           .getSchoolsProfiles()
           .then(schools => {
-            console.log(schools);
             this.schools = schools;
           })
           .catch(err => {

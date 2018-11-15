@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy, Input } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Input,
+  Output,
+  EventEmitter
+} from "@angular/core";
 import { Subject } from "rxjs";
 import { ProfilesProvider } from "../../../../providers/profiles/profiles";
 import { takeUntil, filter } from "rxjs/operators";
@@ -20,6 +27,8 @@ export class RequestsComponent implements OnInit, OnDestroy {
   requests: Array<{}>;
   @Input()
   status: string;
+  @Output()
+  updateRequestins = new EventEmitter();
 
   private _unsubscribeAll: Subject<any>;
   constructor(
@@ -49,6 +58,7 @@ export class RequestsComponent implements OnInit, OnDestroy {
       .changeStatus(action, id)
       .then(res => {
         console.log(res);
+        this.updateRequestins.emit();
       })
       .catch(err => {
         let alertChange = this.alertCtrl.create({

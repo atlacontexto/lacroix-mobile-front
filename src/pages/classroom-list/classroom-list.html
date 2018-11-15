@@ -16,8 +16,18 @@
       (click)="openClassroom(classroom)"
     >
       <h2 text-wrap>{{ classroom.series }}</h2>
+      <ion-badge *ngIf="classroom.professors.length != 0" color="secondary"
+        >{{ classroom.professors.length }}
+        {{
+          classroom.professors.length > 1 ? "professores" : "professor"
+        }}</ion-badge
+      >
+      <ion-badge *ngIf="classroom.professors.length == 0" color="danger"
+        >sem professor</ion-badge
+      >
       <p>Operação: {{ classroom.hour }}</p>
       <p>Turno: {{ classroom.shift }}</p>
+      <p>Alunos: {{ classroom.students.length }}</p>
       <p>Turma: {{ classroom.subClass }}</p>
     </button>
   </ion-list>

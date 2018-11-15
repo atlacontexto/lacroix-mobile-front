@@ -49,20 +49,23 @@ export class AuthorizationPage implements OnInit, OnDestroy {
       .subscribe(profile => {
         console.log(profile);
         this.profile = profile;
+        this.updateRequestings();
+      });
+  }
 
-        this.profilesProvider
-          .getRequestings(profile.school.requested._id)
-          .then(res => {
-            console.log(res);
-            this.requests = res;
-          })
-          .catch(err => {
-            let requestingErrorAlert = this.alertCtrl.create({
-              title: "Erro na recuperação de solicitações",
-              message: "Ocorreu um erro interno. Tente novamente depois"
-            });
-            requestingErrorAlert.present();
-          });
+  updateRequestings() {
+    this.profilesProvider
+      .getRequestings(this.profile["school"].requested._id)
+      .then(res => {
+        console.log(res);
+        this.requests = res;
+      })
+      .catch(err => {
+        let requestingErrorAlert = this.alertCtrl.create({
+          title: "Erro na recuperação de solicitações",
+          message: "Ocorreu um erro interno. Tente novamente depois"
+        });
+        requestingErrorAlert.present();
       });
   }
   ngOnDestroy(): void {

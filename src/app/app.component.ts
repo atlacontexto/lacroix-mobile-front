@@ -104,7 +104,6 @@ export class MyApp {
   }
 
   private changeSelected(): void {
-    console.log(this.profileSelected);
     this.profilesProvider.currentProfile.next(this.profileSelected);
     this.updateList();
   }
