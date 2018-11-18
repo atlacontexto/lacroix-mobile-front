@@ -74,6 +74,40 @@ export class ClassroomsProvider {
     });
   }
 
+  getClassroomFrequencie(_id: any): any {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(`${this.apiUrl}/classroom/${_id}/frequency`, this.headers)
+        .subscribe(
+          res => {
+            resolve(res["data"]);
+          },
+          err => {
+            reject(err);
+          }
+        );
+    });
+  }
+
+  setFrequency(value: any, idClassroom: any): any {
+    return new Promise((resolve, reject) => {
+      this.http
+        .post(
+          `${this.apiUrl}/classroom/${idClassroom}/frequency`,
+          value,
+          this.headers
+        )
+        .subscribe(
+          res => {
+            resolve(res["data"]);
+          },
+          err => {
+            reject(err);
+          }
+        );
+    });
+  }
+
   getEnrollments(_id: any): any {
     return new Promise((resolve, reject) => {
       this.http

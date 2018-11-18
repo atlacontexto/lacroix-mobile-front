@@ -5,17 +5,31 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar> <ion-title>Schools</ion-title> </ion-navbar>
+  <ion-navbar> <ion-title>Escolas da Rede</ion-title> </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
-    <button ion-item *ngFor="let school of schools">
-      <ion-thumbnail item-start> <img [src]="school.avatar" /> </ion-thumbnail>
-      <h2 text-wrap>{{ school.institution.name }}</h2>
-      <p>{{ school.professors.length }} professores</p>
-      <p>{{ school.classrooms.length }} turmas</p>
-      <p>{{ school.school_managers.length }} gestores</p>
-    </button>
-  </ion-list>
+  <ion-grid>
+    <ion-row *ngIf="institution && institution.status === 'waiting'">
+      <ion-col>
+        <p ion-text text-center>
+          Seu perfil ainda não tem permissão de acesso. Entre em contato com o
+          Administrador da Rede de Ensino ou contate a ATLA.
+        </p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-list>
+        <button ion-item *ngFor="let school of schools">
+          <ion-thumbnail item-start>
+            <img [src]="school.avatar" />
+          </ion-thumbnail>
+          <h2 text-wrap>{{ school.institution.name }}</h2>
+          <p>{{ school.professors.length }} professores</p>
+          <p>{{ school.classrooms.length }} turmas</p>
+          <p>{{ school.school_managers.length }} gestores</p>
+        </button>
+      </ion-list>
+    </ion-row>
+  </ion-grid>
 </ion-content>

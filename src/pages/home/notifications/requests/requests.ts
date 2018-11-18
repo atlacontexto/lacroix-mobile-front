@@ -31,6 +31,9 @@ export class RequestsComponent implements OnInit, OnDestroy {
   updateRequestins = new EventEmitter();
 
   private _unsubscribeAll: Subject<any>;
+  requestsWai: {};
+  requestsClo: {};
+  requestsAcc: {};
   constructor(
     public _profilesProvider: ProfilesProvider,
     public alertCtrl: AlertController
@@ -45,7 +48,13 @@ export class RequestsComponent implements OnInit, OnDestroy {
         filter(profile => profile instanceof Profile)
       )
       .subscribe(profile => {
-        console.log(profile);
+        if (this.requests) {
+          this.requestsAcc = this.requests.find(
+            r => r["status"] === "accepted"
+          );
+          this.requestsClo = this.requests.find(r => r["status"] === "closed");
+          this.requestsWai = this.requests.find(r => r["status"] === "waiting");
+        }
       });
   }
   ngOnDestroy(): void {
@@ -57,7 +66,6 @@ export class RequestsComponent implements OnInit, OnDestroy {
     this._profilesProvider
       .changeStatus(action, id)
       .then(res => {
-        console.log(res);
         this.updateRequestins.emit();
       })
       .catch(err => {

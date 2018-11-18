@@ -21,6 +21,8 @@ import { takeUntil, filter } from "rxjs/operators";
 export class SchoolsPage implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
   schools: any;
+  profile: any;
+  institution: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -36,14 +38,20 @@ export class SchoolsPage implements OnInit, OnDestroy {
         filter(profile => profile instanceof Profile)
       )
       .subscribe(profile => {
-        this.profilesProvider
-          .getSchoolsProfiles()
-          .then(schools => {
-            this.schools = schools;
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        this.profile = profile;
+        if (this.profile.$profileType == "ProfileCounty") {
+          this.institution = profile.county;
+          if (this.institution.status == "accepted") {
+            this.profilesProvider
+              .getSchoolsProfiles()
+              .then(schools => {
+                this.schools = schools;
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+        }
       });
   }
 

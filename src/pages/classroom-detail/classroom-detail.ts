@@ -68,7 +68,7 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
   }
   getRequests(): any {
     this.profilesProvider
-      .getRequestings(this.profile.school.requested._id)
+      .getSchoolProfessorsRequestings(this.profile.school.requested._id)
       .then(res => {
         console.log(res);
         this.requests = res.filter(profile =>

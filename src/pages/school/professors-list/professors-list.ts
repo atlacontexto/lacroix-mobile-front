@@ -40,7 +40,7 @@ export class ProfessorsListComponent implements OnInit, OnDestroy {
         this.profile = profile;
 
         this.profilesProvider
-          .getRequestings(profile.school.requested._id)
+          .getSchoolProfessorsRequestings(profile.school.requested._id)
           .then(res => {
             console.log(res);
             this.professors = res;

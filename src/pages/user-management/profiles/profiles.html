@@ -77,5 +77,14 @@
       color="primary"
       name="time"
     ></ion-icon>
+    <ion-icon
+      *ngIf="
+        (profile.school && profile.school.status === 'closed') ||
+        (profile.county && profile.county.status === 'closed')
+      "
+      item-end
+      color="alert"
+      name="alert"
+    ></ion-icon>
   </button>
 </ion-list>

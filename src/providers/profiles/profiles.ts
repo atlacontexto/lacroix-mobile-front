@@ -99,7 +99,7 @@ export class ProfilesProvider {
     });
   }
 
-  getRequestings(idSchool): any {
+  getSchoolProfessorsRequestings(idSchool): any {
     return new Promise((resolve, reject) => {
       this.http
         .get(
@@ -109,6 +109,40 @@ export class ProfilesProvider {
         .subscribe(
           res => {
             resolve(res["data"]);
+          },
+          err => {
+            reject(err);
+          }
+        );
+    });
+  }
+  getSchoolManagersRequestings(idCounty): any {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(
+          `${
+            this.apiUrl
+          }/profile/county-institutional/${idCounty}/schools/school-managers`,
+          this.headers
+        )
+        .subscribe(
+          res => {
+            let managers = res["data"];
+
+            managers.sort((a, b) => {
+              if (
+                a.requesting.user.people.name > b.requesting.user.people.name
+              ) {
+                return 1;
+              }
+              if (
+                a.requesting.user.people.name < b.requesting.user.people.name
+              ) {
+                return -1;
+              }
+              return 0;
+            });
+            resolve(managers);
           },
           err => {
             reject(err);

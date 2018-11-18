@@ -24,9 +24,10 @@ import { Profile } from "../../../app/model/profile";
 })
 export class AuthorizationPage implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
-  step = "pending";
+  step: string;
   profile: Profile;
   requests: any;
+  institution: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -47,27 +48,52 @@ export class AuthorizationPage implements OnInit, OnDestroy {
         filter(profile => profile instanceof Profile)
       )
       .subscribe(profile => {
-        console.log(profile);
         this.profile = profile;
-        this.updateRequestings();
+        if (this.profile.$profileType == "ProfileSchool") {
+          this.institution = profile.school;
+          this.updateRequestings();
+        } else if (this.profile.$profileType == "ProfileCounty") {
+          this.institution = profile.county;
+          this.updateRequestings();
+        } else if (this.profile.$profileType == "ProfileProfessor") {
+          this.institution = profile.school;
+        }
+        if (this.institution && this.institution.status == "accepted") {
+          this.step = "pending";
+        }
       });
   }
 
   updateRequestings() {
-    this.profilesProvider
-      .getRequestings(this.profile["school"].requested._id)
-      .then(res => {
-        console.log(res);
-        this.requests = res;
-      })
-      .catch(err => {
-        let requestingErrorAlert = this.alertCtrl.create({
-          title: "Erro na recuperação de solicitações",
-          message: "Ocorreu um erro interno. Tente novamente depois"
+    if (this.profile.$profileType == "ProfileSchool") {
+      this.profilesProvider
+        .getSchoolProfessorsRequestings(this.profile["school"].requested._id)
+        .then(res => {
+          this.requests = res;
+        })
+        .catch(err => {
+          let requestingErrorAlert = this.alertCtrl.create({
+            title: "Erro na recuperação de solicitações",
+            message: "Ocorreu um erro interno. Tente novamente depois"
+          });
+          requestingErrorAlert.present();
         });
-        requestingErrorAlert.present();
-      });
+    } else if (this.profile.$profileType == "ProfileCounty") {
+      this.profilesProvider
+        .getSchoolManagersRequestings(this.profile["county"].requested._id)
+        .then(res => {
+          this.requests = res;
+        })
+        .catch(err => {
+          let requestingErrorAlert = this.alertCtrl.create({
+            title: "Erro na recuperação de solicitações",
+            message: "Ocorreu um erro interno. Tente novamente depois"
+          });
+          requestingErrorAlert.present();
+        });
+    }
   }
+
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();

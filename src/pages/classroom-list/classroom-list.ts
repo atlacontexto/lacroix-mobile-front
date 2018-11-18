@@ -42,7 +42,6 @@ export class ClassroomListPage implements OnInit, OnDestroy {
         this.classroomsProvider
           .getClassRoomsBySchoolId(this.profile.school.requested._id)
           .then(res => {
-            console.log(res);
             this.classrooms = res;
           })
           .catch(err => {

@@ -25,6 +25,7 @@ export class MyApp {
   profiles: any;
   privatePages: Array<{ title: string; component: any; icon: string }>;
   user: User;
+  label = "Perfil";
 
   constructor(
     public menu: MenuController,
@@ -111,6 +112,7 @@ export class MyApp {
   private updateList(): void {
     if (this.profileSelected) {
       if (this.profileSelected["profileType"] === "ProfileStudent") {
+        this.label = "Perfil";
         this.privatePages = [
           { title: "INÍCIO", component: HomePage, icon: "home" },
           { title: "BOLETIM", component: "ReportPage", icon: "home" },
@@ -118,21 +120,29 @@ export class MyApp {
           { title: "TAREFAS", component: "TaskPage", icon: "home" }
         ];
       } else if (this.profileSelected["profileType"] === "ProfileParent") {
+        this.label = "Perfil";
         this.privatePages = [
           { title: "INÍCIO", component: HomePage, icon: "home" },
           { title: "BOLETIM", component: "ReportPage", icon: "home" },
           { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
         ];
       } else if (this.profileSelected["profileType"] === "ProfileProfessor") {
+        this.label = this.profileSelected.$showType;
         this.privatePages = [
           { title: "INÍCIO", component: HomePage, icon: "home" },
           { title: "BOLETIM", component: "ReportPage", icon: "home" },
           { title: "PLANEJAMENTO", component: "PlanningPage", icon: "home" },
           { title: "FREQUÊNCIA", component: "ClassroomPage", icon: "home" },
           { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" },
-          { title: "TURMA", component: "ClassroomDetailPage", icon: "home" }
+          { title: "TURMA", component: "ClassroomDetailPage", icon: "home" },
+          {
+            title: "AUTORIZAÇÃO",
+            component: "AuthorizationPage",
+            icon: "home"
+          }
         ];
       } else if (this.profileSelected["profileType"] === "ProfileSchool") {
+        this.label = this.profileSelected.$showType;
         this.privatePages = [
           { title: "INÍCIO", component: HomePage, icon: "home" },
           { title: "TURMAS", component: "ClassroomListPage", icon: "home" },
@@ -140,19 +150,22 @@ export class MyApp {
             title: "AUTORIZAÇÃO",
             component: "AuthorizationPage",
             icon: "home"
-          },
-          {
+          }
+        ];
+        if (this.profileSelected["role"].type == "pedAdvisor") {
+          this.privatePages.push({
             title: "AVALIAÇÕES",
             component: "AssestmentCheckPage",
             icon: "home"
-          },
-          {
+          });
+          this.privatePages.push({
             title: "PLANO DIÁRIO",
             component: "PlanningCheckPage",
             icon: "home"
-          }
-        ];
+          });
+        }
       } else if (this.profileSelected["profileType"] === "ProfileCounty") {
+        this.label = "Perfil";
         this.privatePages = [
           { title: "INÍCIO", component: HomePage, icon: "home" },
           {

@@ -25,25 +25,39 @@
           </h3>
           <ion-badge *ngIf="profile.main">principal</ion-badge>
           <ion-icon
-            *ngIf="profile.school && profile.school.status === 'accepted'"
+            *ngIf="institution && institution.status === 'accepted'"
             item-end
             color="secondary"
             name="checkmark-circle"
           ></ion-icon>
           <ion-icon
-            *ngIf="profile.school && profile.school.status === 'waiting'"
+            *ngIf="institution && institution.status === 'waiting'"
             item-end
             color="primary"
             name="time"
           ></ion-icon>
+          <ion-icon
+            *ngIf="institution && institution.status === 'closed'"
+            item-end
+            color="alert"
+            name="alert"
+          ></ion-icon>
         </ion-item>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="profile.school && profile.school.status === 'waiting'">
+    <ion-row *ngIf="institution && institution.status === 'waiting'">
       <ion-col>
         <p ion-text text-center>
           Seu perfil ainda não tem permissão de acesso. Entre em contato com a
           sua escola para liberação.
+        </p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="institution && institution.status === 'closed'">
+      <ion-col>
+        <p ion-text text-center>
+          Seu perfil está com permissão de acesso suspenso. Entre em contato com
+          a sua escola para liberação.
         </p>
       </ion-col>
     </ion-row>
@@ -52,10 +66,11 @@
       padding
       [(ngModel)]="step"
       color="atla-red"
-      *ngIf="profile.school && profile.school.status === 'accepted'"
+      *ngIf="institution && institution.status === 'accepted'"
     >
-      <ion-segment-button value="pending"> Pendentes </ion-segment-button>
-      <ion-segment-button value="accepted"> Aceitas </ion-segment-button>
+      <ion-segment-button value="pending"> Espera </ion-segment-button>
+      <ion-segment-button value="accepted"> Aceita </ion-segment-button>
+      <ion-segment-button value="closed"> Suspensa </ion-segment-button>
     </ion-segment>
 
     <div no-padding [ngSwitch]="step" col-xl-8 offset-xl-2>
@@ -66,9 +81,16 @@
         *ngSwitchCase="'pending'"
       ></requests>
       <requests
+        (updateRequestins)="updateRequestings()"
         [status]="'accepted'"
         [requests]="requests"
         *ngSwitchCase="'accepted'"
+      ></requests>
+      <requests
+        (updateRequestins)="updateRequestings()"
+        [status]="'closed'"
+        [requests]="requests"
+        *ngSwitchCase="'closed'"
       ></requests>
     </div>
   </ion-grid>

@@ -119,7 +119,6 @@ export class ProfilesComponent {
     this.userProvider.getProfiles().then(
       profiles => {
         if (profiles) {
-          console.log(profiles)
           this.showProfiles = profiles;
         } else {
           this.showHelp = true;

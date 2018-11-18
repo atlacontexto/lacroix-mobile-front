@@ -2,28 +2,58 @@
   <ion-item-sliding *ngFor="let request of requests">
     <ion-item *ngIf="request.status == status">
       <ion-avatar item-start>
-        <img [src]="request.requesting.avatar">
+        <img [src]="request.requesting.avatar" />
       </ion-avatar>
-      <h2>{{request.requesting.user.people.name}}</h2>
-      <p>{{request.requesting.user.shortName}}</p>
-      <p>{{request.requesting.serie}}º Ano</p>
+      <h2>{{ request.requesting.user.people.name }}</h2>
+      <p>{{ request.requesting.user.shortName }}</p>
+      <p *ngIf="request.requesting.serie">
+        {{ request.requesting.serie }}º Ano
+      </p>
+      <p *ngIf="request.requesting.role">
+        {{ request.requesting.role.type | translate }}
+      </p>
+      <p *ngIf="request.requested">{{ request.requested.institution.name }}</p>
     </ion-item>
-    <ion-item-options side="left" (click)="action('denied', request._id)">
-      <button ion-button color="light">
+    <ion-item-options side="left">
+      <button
+        ion-button
+        color="light"
+        (click)="action('denied', request._id)"
+        *ngIf="status == 'waiting'"
+      >
         <ion-icon name="arrow-up"></ion-icon>
         Recusar
       </button>
-
+      <button
+        ion-button
+        color="light"
+        (click)="action('closed', request._id)"
+        *ngIf="status == 'accepted'"
+      >
+        <ion-icon name="arrow-up"></ion-icon>
+        Suspender
+      </button>
     </ion-item-options>
     <ion-item-options side="right">
-
-      <button ion-button color="secondary" (click)="action('accepted', request._id)">
+      <button
+        ion-button
+        color="secondary"
+        (click)="action('accepted', request._id)"
+        *ngIf="status == 'closed' || status == 'waiting'"
+      >
         <ion-icon name="arrow-down"></ion-icon>
         Aceitar
       </button>
     </ion-item-options>
   </ion-item-sliding>
 
-  <p ion-text text-center *ngIf="!requests && status == 'waiting'">Não há solicitações pendentes</p>
-  <p ion-text text-center *ngIf="!requests && status == 'accepted'">Não há solicitações aceitas</p>
+  <p ion-text text-center *ngIf="!requestsWai && status == 'waiting'">
+    Não há solicitações pendentes
+  </p>
+  <p ion-text text-center *ngIf="!requestsAcc && status == 'accepted'">
+    Não há solicitações aceitas
+  </p>
+  <p ion-text text-center *ngIf="!requestsClo && status == 'closed'">
+    Não há solicitações suspensas
+  </p>
 </ion-list>

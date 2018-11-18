@@ -14,7 +14,7 @@
 
   <ion-content>
     <ion-item>
-      <ion-label stacked>Perfil</ion-label>
+      <ion-label stacked>{{ label }}</ion-label>
       <ion-select
         ion-text
         text-wrap
@@ -27,7 +27,11 @@
           *ngFor="let profile of profiles"
           [value]="profile"
         >
-          {{ profile.$showType }}
+          {{
+            profile.school
+              ? profile.school.requested.institution.name
+              : profile.$showType
+          }}
         </ion-option>
       </ion-select>
     </ion-item>
