@@ -13,16 +13,27 @@
     placeholder="Buscar chamada"
     (ionInput)="getItems($event)"
   ></ion-searchbar>
-  <ion-grid offset-xl-2 col-xl-8>
+  <ion-grid no-padding offset-xl-2 col-xl-8>
     <ion-list inset>
-      <button
-        ion-item
-        *ngFor="let frequency of frequencies"
-        (click)="itemSelected(item)"
-      >
+      <ion-item no-padding *ngFor="let frequency of frequencies">
         <h3>{{ frequency.date | date: "medium" }}</h3>
-        <p>Nº de faltas: {{ frequency.absence }}</p>
-      </button>
+        <p>
+          {{ frequency.absence }}
+          {{ frequency.absence > 0 ? "ausências" : "ausência" }}
+        </p>
+        <button item-end ion-button small (click)="editFrequency(frequency)">
+          Editar
+        </button>
+        <button
+          item-end
+          ion-button
+          small
+          (click)="eraseFrequency(frequency)"
+          color="danger"
+        >
+          Excluir
+        </button>
+      </ion-item>
     </ion-list>
   </ion-grid>
 </ion-content>
@@ -39,8 +50,7 @@
               solid
               large
               full
-              color="atla-red"
-              (click)="newDaily()"
+              (click)="newFrequency()"
             >
               NOVA CHAMADA
             </button>

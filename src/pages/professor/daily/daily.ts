@@ -1,5 +1,10 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  AlertController
+} from "ionic-angular";
 import { ClassroomServiceProvider } from "../../../providers/classroom-service/classroom-service";
 import { ProfilesProvider } from "../../../providers/profiles/profiles";
 import { filter, takeUntil } from "rxjs/operators";
@@ -33,13 +38,16 @@ export class DailyPage implements OnInit, OnDestroy {
   classroom: any;
   students: any;
   frequency: FormGroup;
+  currentFrequency: any;
+  action: string;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public classroomService: ClassroomServiceProvider,
     public profilesProvider: ProfilesProvider,
     public classroomProvider: ClassroomsProvider,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public alertCtrl: AlertController
   ) {
     this.frequency = formBuilder.group({
       date: [null, Validators.compose([Validators.required])]
@@ -56,8 +64,9 @@ export class DailyPage implements OnInit, OnDestroy {
       )
       .subscribe(profile => {
         this.profile = profile;
-        this.classroom = this.navParams.get("classroom");
-        if (this.classroom == null && this.profile.classroom != null) {
+        this.currentFrequency = this.navParams.get("frequency");
+        console.log(this.currentFrequency);
+        if (this.currentFrequency == null && this.profile.classroom != null) {
           this.classroomProvider
             .getClassroomById(this.profile.classroom)
             .then(res => {
@@ -67,11 +76,45 @@ export class DailyPage implements OnInit, OnDestroy {
             .catch(err => {
               console.log(err);
             });
-        } else if (this.classroom != null) {
-          this.getEnrollments(this.classroom._id);
+        } else if (
+          this.currentFrequency != null &&
+          this.profile.classroom != null
+        ) {
+          this.frequency.controls["date"].setValue(
+            this.currentFrequency["date"]
+          );
+          this.action = "edit";
+          this.getEnrollmentsEdit(
+            this.currentFrequency,
+            this.profile.classroom
+          );
         }
       });
   }
+
+  getEnrollmentsEdit(currentFrequency, _id: any): any {
+    this.classroomProvider
+      .getEnrollments(_id)
+      .then(res => {
+        res.forEach(element => {
+          this.frequency.addControl(
+            element.basic.CGM,
+            new FormControl(currentFrequency.students[element.basic.CGM])
+          );
+          this.frequency.addControl(
+            element.basic.CGM + "_obs",
+            new FormControl(
+              currentFrequency.students[element.basic.CGM + "_obs"]
+            )
+          );
+        });
+        this.students = res;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
@@ -95,15 +138,32 @@ export class DailyPage implements OnInit, OnDestroy {
       });
   }
 
-  saveDaily() {
-    console.log(this.frequency.value);
+  saveFrequency() {
     this.classroomProvider
       .setFrequency(this.frequency.value, this.classroom._id)
       .then(res => {
-        console.log(res);
+        let alertFrequency = this.alertCtrl.create({
+          title: "Nova chamada salva",
+          buttons: ["Ok"]
+        });
+        alertFrequency.present();
       })
       .catch(err => {
-        console.error(err);
+        let alertFrequency = this.alertCtrl.create({
+          title: "Erro ao salvar",
+          message: "Tente novamente depois",
+          buttons: ["Ok"]
+        });
+        alertFrequency.present();
       });
+  }
+
+  editFrequency() {
+    let alertFrequency = this.alertCtrl.create({
+      title: "Funcionalidade ainda não implementada",
+      message: "Aguarde atualização",
+      buttons: ["Ok"]
+    });
+    alertFrequency.present();
   }
 }

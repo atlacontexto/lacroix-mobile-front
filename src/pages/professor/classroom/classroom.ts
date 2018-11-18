@@ -1,5 +1,10 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  AlertController
+} from "ionic-angular";
 import { Subject } from "rxjs";
 import { ProfilesProvider } from "../../../providers/profiles/profiles";
 import { filter, takeUntil } from "rxjs/operators";
@@ -38,7 +43,8 @@ export class ClassroomPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public profilesProvider: ProfilesProvider,
-    public classroomProvider: ClassroomsProvider
+    public classroomProvider: ClassroomsProvider,
+    public alertCtrl: AlertController
   ) {
     this._unsubscribeAll = new Subject();
   }
@@ -64,6 +70,7 @@ export class ClassroomPage {
         }
       });
   }
+
   getFrequencies(_id: any): any {
     this.classroomProvider
       .getClassroomFrequencie(_id)
@@ -82,19 +89,38 @@ export class ClassroomPage {
         console.error(err);
       });
   }
+
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
   }
 
-  itemSelected(event) {}
+  editFrequency(frequency) {
+    this.navCtrl.push(
+      "DailyPage",
+      { frequency: frequency },
+      {
+        animate: true,
+        direction: "forward"
+      }
+    );
+  }
+
+  eraseFrequency() {
+    let alertFrequency = this.alertCtrl.create({
+      title: "Funcionalidade ainda não implementada",
+      message: "Aguarde atualização",
+      buttons: ["Ok"]
+    });
+    alertFrequency.present();
+  }
 
   getItems(event) {}
 
-  newDaily() {
+  newFrequency() {
     this.navCtrl.push(
       "DailyPage",
-      { professorId: this.profile["_id"] },
+      {},
       {
         animate: true,
         direction: "forward"

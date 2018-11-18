@@ -10,18 +10,18 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content no-padding>
   <form [formGroup]="frequency">
     <ion-list *ngIf="students">
-      <ion-list-header>Hoje</ion-list-header>
       <ion-item>
+        <ion-label floating>Data</ion-label>
         <ion-datetime
           displayFormat=""
           pickerFormat=""
           formControlName="date"
         ></ion-datetime>
       </ion-item>
-      <div padding-top *ngFor="let student of students">
+      <div padding-vertical *ngFor="let student of students">
         <ion-item no-lines>
           <ion-toggle
             [formControlName]="student.basic.CGM"
@@ -59,10 +59,21 @@
               solid
               large
               full
-              color="atla-red"
-              (click)="saveDaily()"
+              *ngIf="action != 'edit'"
+              (click)="saveFrequency()"
             >
               SALVAR CHAMADA
+            </button>
+            <button
+              *ngIf="action == 'edit'"
+              text-uppercase
+              ion-button
+              solid
+              large
+              full
+              (click)="editFrequency()"
+            >
+              EDIT CHAMADA
             </button>
           </ion-col>
         </ion-row>
