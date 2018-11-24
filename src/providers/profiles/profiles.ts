@@ -128,7 +128,6 @@ export class ProfilesProvider {
         .subscribe(
           res => {
             let managers = res["data"];
-
             managers.sort((a, b) => {
               if (
                 a.requesting.user.people.name > b.requesting.user.people.name

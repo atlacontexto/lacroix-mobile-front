@@ -25,8 +25,14 @@
             <img [src]="school.avatar" />
           </ion-thumbnail>
           <h2 text-wrap>{{ school.institution.name }}</h2>
-          <p>{{ school.professors.length }} professores</p>
-          <p>{{ school.classrooms.length }} turmas</p>
+          <p>
+            {{ school.professors.length }}
+            {{ school.professors.length == 1 ? "professor" : "professores" }}
+          </p>
+          <p>
+            {{ school.classrooms.length }}
+            {{ school.classrooms.length == 1 ? "turma" : "turmas" }}
+          </p>
           <p>{{ school.school_managers.length }} gestores</p>
         </button>
       </ion-list>

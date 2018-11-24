@@ -93,7 +93,7 @@ const schoolRoles = [
   {
     value: "scribe",
     viewValue: "Escriturário",
-    availability: "waiting"
+    availability: "done"
   },
   {
     value: "librarian",

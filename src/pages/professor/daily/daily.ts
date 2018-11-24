@@ -139,23 +139,32 @@ export class DailyPage implements OnInit, OnDestroy {
   }
 
   saveFrequency() {
-    this.classroomProvider
-      .setFrequency(this.frequency.value, this.classroom._id)
-      .then(res => {
-        let alertFrequency = this.alertCtrl.create({
-          title: "Nova chamada salva",
-          buttons: ["Ok"]
+    if (this.frequency.valid) {
+      this.classroomProvider
+        .setFrequency(this.frequency.value, this.classroom._id)
+        .then(res => {
+          let alertFrequency = this.alertCtrl.create({
+            title: "Nova chamada salva",
+            buttons: ["Ok"]
+          });
+          alertFrequency.present();
+        })
+        .catch(err => {
+          let alertFrequency = this.alertCtrl.create({
+            title: "Erro ao salvar",
+            message: "Tente novamente depois.",
+            buttons: ["Ok"]
+          });
+          alertFrequency.present();
         });
-        alertFrequency.present();
-      })
-      .catch(err => {
-        let alertFrequency = this.alertCtrl.create({
-          title: "Erro ao salvar",
-          message: "Tente novamente depois",
-          buttons: ["Ok"]
-        });
-        alertFrequency.present();
+    } else {
+      let alertFrequency = this.alertCtrl.create({
+        title: "Informe a data",
+        message: "Tente novamente.",
+        buttons: ["Ok"]
       });
+      alertFrequency.present();
+    }
   }
 
   editFrequency() {
