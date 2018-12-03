@@ -27,9 +27,14 @@ const profileTypes = [
 
 const courseLevels = [
   {
+    value: "special",
+    viewValue: "Educação Especial",
+    availability: "done"
+  },
+  {
     value: "infantil",
     viewValue: "Educação Infantil",
-    availability: "waiting"
+    availability: "done"
   },
   {
     value: "f1",
@@ -83,7 +88,7 @@ const schoolRoles = [
   {
     value: "subdirector",
     viewValue: "Vice-diretor",
-    availability: "waiting"
+    availability: "done"
   },
   {
     value: "pedAdvisor",
@@ -93,13 +98,13 @@ const schoolRoles = [
   {
     value: "scribe",
     viewValue: "Escriturário",
-    availability: "done"
-  },
-  {
-    value: "librarian",
-    viewValue: "Bibliotecário",
     availability: "waiting"
   }
+  // {
+  //   value: "librarian",
+  //   viewValue: "Bibliotecário",
+  //   availability: "waiting"
+  // }
 ];
 
 const kinships = [
@@ -153,6 +158,29 @@ const voluntaries = [
   {
     value: "psychologist",
     viewValue: "Psicólogo"
+  }
+];
+
+const courseYearsChild = [
+  {
+    value: "i1",
+    viewValue: "Infantil 1"
+  },
+  {
+    value: "i2",
+    viewValue: "Infantil 2"
+  },
+  {
+    value: "i3",
+    viewValue: "Infantil 3"
+  },
+  {
+    value: "i4",
+    viewValue: "Infantil 4"
+  },
+  {
+    value: "i5",
+    viewValue: "Infantil 5"
   }
 ];
 
@@ -236,5 +264,6 @@ export default {
   kinships,
   voluntaries,
   courseYears,
-  foundExamples
+  foundExamples,
+  courseYearsChild
 };

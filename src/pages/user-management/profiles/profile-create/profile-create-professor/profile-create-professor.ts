@@ -115,7 +115,11 @@ export class ProfileCreateProfessorComponent implements OnInit, OnDestroy {
   }
 
   levelChanged(ev) {
-    if (ev == "f1") {
+    console.log(ev);
+    if (ev == "infantil") {
+      this.years = this.profilesProvider.changeYearsRangeChildlike();
+      console.log(this.years);
+    } else if (ev == "f1") {
       this.years = this.profilesProvider.changeYearsRange(1, 5);
       this.subjects = this.subjectsProvider.getSubjectsFake();
     } else if (ev == "f2") {

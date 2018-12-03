@@ -66,7 +66,9 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
         }
       });
   }
+  
   getRequests(): any {
+    console.log(this.classroom);
     this.profilesProvider
       .getSchoolProfessorsRequestings(this.profile.school.requested._id)
       .then(res => {

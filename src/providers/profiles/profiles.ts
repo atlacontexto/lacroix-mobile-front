@@ -195,6 +195,10 @@ export class ProfilesProvider {
     return this.profiles.voluntaries;
   }
 
+  changeYearsRangeChildlike(): any {
+    return this.profiles.courseYearsChild;
+  }
+
   changeYearsRange(v1, v2) {
     return this.profiles.courseYears.filter(v => {
       return Number(v.value) >= v1 && Number(v.value) <= v2;

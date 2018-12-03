@@ -6,8 +6,11 @@
       </ion-avatar>
       <h2>{{ request.requesting.user.people.name }}</h2>
       <p>{{ request.requesting.user.shortName }}</p>
+      <p *ngIf="request.requesting.level">
+        {{ request.requesting.level | translate }}
+      </p>
       <p *ngIf="request.requesting.serie">
-        {{ request.requesting.serie }}º Ano
+        {{ request.requesting.serie | translate }}
       </p>
       <p *ngIf="request.requesting.role">
         {{ request.requesting.role.type | translate }}
