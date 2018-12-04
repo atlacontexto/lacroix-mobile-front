@@ -6,11 +6,13 @@ import { NotificationsPageModule } from "./notifications/notifications.module";
 import { SchedulePageModule } from "./schedule/schedule.module";
 import { ChatPageModule } from "./chat/chat.module";
 import { ChatShowPageModule } from "./chat-show/chat-show.module";
+import { AppsPageModule } from "./apps/apps.module";
 
 @NgModule({
   declarations: [HomePage],
   imports: [
     IonicPageModule.forChild(HomePage),
+    AppsPageModule,
     FeedPageModule,
     NotificationsPageModule,
     SchedulePageModule,

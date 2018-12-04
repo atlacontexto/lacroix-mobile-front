@@ -1,0 +1,65 @@
+<!--
+  Generated template for the AppsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+    <ion-searchbar
+      placeholder="Buscar"
+      [(ngModel)]="myInput"
+      [showCancelButton]="shouldShowCancel"
+      (ionInput)="onInput($event)"
+      (ionCancel)="onCancel($event)"
+    >
+    </ion-searchbar>
+    <ion-buttons end>
+      <!--
+        <button ion-button icon-end (click)="newPost()">
+          Novidade
+          <ion-icon name="paper"></ion-icon>
+        </button>
+      -->
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-padding>
+  <ion-item>
+    <ion-label stacked>{{ label }}</ion-label>
+    <ion-select
+      ion-text
+      text-wrap
+      [(ngModel)]="profileSelected"
+      (ionChange)="changeSelected()"
+    >
+      <ion-option
+        ion-text
+        text-wrap
+        *ngFor="let profile of profiles"
+        [value]="profile"
+      >
+        {{
+          profile.school
+            ? profile.school.requested.institution.name
+            : profile.$showType
+        }}
+      </ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-list>
+    <button
+      no-lines
+      ion-item
+      *ngFor="let page of privatePages"
+      (click)="openPage(page)"
+    >
+      <ion-thumbnail item-left> <img [src]="page.icon" /> </ion-thumbnail>
+      <h2>{{ page.title }}</h2>
+      <p></p>
+    </button>
+  </ion-list>
+</ion-content>
