@@ -1,58 +1,48 @@
 <ion-header no-border>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-searchbar placeholder=Buscar [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
+    <button ion-button menuToggle><ion-icon name="settings"></ion-icon></button>
+    <ion-searchbar
+      placeholder="Buscar"
+      [(ngModel)]="myInput"
+      [showCancelButton]="shouldShowCancel"
+      (ionInput)="onInput($event)"
+      (ionCancel)="onCancel($event)"
+    >
     </ion-searchbar>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-
   <ion-list>
-
     <ion-list-header>Hoje</ion-list-header>
 
     <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
-      <ion-avatar item-start>
-        <img [src]="item.avatar">
-      </ion-avatar>
-      <h2>{{item.name}}</h2>
-      <p>{{item.lastMessage}}</p>
-      <ion-note item-end>{{item.lastMessageTime}}</ion-note>
+      <ion-avatar item-start> <img [src]="item.avatar" /> </ion-avatar>
+      <h2>{{ item.name }}</h2>
+      <p>{{ item.lastMessage }}</p>
+      <ion-note item-end>{{ item.lastMessageTime }}</ion-note>
     </button>
-
   </ion-list>
 
   <ion-list>
-
     <ion-list-header>Ontem</ion-list-header>
 
     <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
-      <ion-avatar item-start>
-        <img [src]="item.avatar">
-      </ion-avatar>
-      <h2>{{item.name}}</h2>
-      <p>{{item.lastMessage}}</p>
-      <ion-note item-end>{{item.lastMessageTime}}</ion-note>
+      <ion-avatar item-start> <img [src]="item.avatar" /> </ion-avatar>
+      <h2>{{ item.name }}</h2>
+      <p>{{ item.lastMessage }}</p>
+      <ion-note item-end>{{ item.lastMessageTime }}</ion-note>
     </button>
-
   </ion-list>
 
   <ion-list>
-
     <ion-list-header>Última semana</ion-list-header>
 
     <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
-      <ion-avatar item-start>
-        <img [src]="item.avatar">
-      </ion-avatar>
-      <h2>{{item.name}}</h2>
-      <p>{{item.lastMessage}}</p>
-      <ion-note item-end>{{item.lastMessageTime}}</ion-note>
+      <ion-avatar item-start> <img [src]="item.avatar" /> </ion-avatar>
+      <h2>{{ item.name }}</h2>
+      <p>{{ item.lastMessage }}</p>
+      <ion-note item-end>{{ item.lastMessageTime }}</ion-note>
     </button>
-
   </ion-list>
-
 </ion-content>

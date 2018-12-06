@@ -10,6 +10,7 @@ import { ProfilesProvider } from "../../../providers/profiles/profiles";
 import { filter, takeUntil } from "rxjs/operators";
 import { Profile } from "../../../app/model/profile";
 import { ClassroomsProvider } from "../../../providers/classrooms/classrooms";
+import { AlertProvider } from "../../../providers/alert-service/alert-service";
 
 /**
  * Generated class for the ClassroomPage page.
@@ -25,16 +26,6 @@ import { ClassroomsProvider } from "../../../providers/classrooms/classrooms";
 })
 export class ClassroomPage {
   private profile: any;
-  private items = [
-    { data: "21/04/2018", absence: "5" },
-    { data: "23/04/2018", absence: "4" },
-    { data: "24/04/2018", absence: "2" },
-    { data: "25/04/2018", absence: "3" },
-    { data: "26/04/2018", absence: "4" },
-    { data: "27/04/2018", absence: "1" },
-    { data: "28/04/2018", absence: "4" },
-    { data: "02/05/2018", absence: "3" }
-  ];
   private _unsubscribeAll: Subject<any>;
   classroom: any;
   frequencies: any;
@@ -44,9 +35,17 @@ export class ClassroomPage {
     public navParams: NavParams,
     public profilesProvider: ProfilesProvider,
     public classroomProvider: ClassroomsProvider,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public _alertProvider: AlertProvider
   ) {
     this._unsubscribeAll = new Subject();
+  }
+
+  ionViewWillEnter() {
+    console.log("OnInit Frequência");
+    if (this.classroom) {
+      this.getFrequencies(this.classroom._id);
+    }
   }
 
   ngOnInit(): void {
@@ -72,6 +71,9 @@ export class ClassroomPage {
   }
 
   getFrequencies(_id: any): any {
+    this._alertProvider.presentControlledLoader(
+      "Buscando lista de chamadas..."
+    );
     this.classroomProvider
       .getClassroomFrequencie(_id)
       .then(res => {
@@ -84,8 +86,10 @@ export class ClassroomPage {
           console.log(a);
           this.frequencies[key]["absence"] = a;
         }
+        this._alertProvider.loading.dismiss();
       })
       .catch(err => {
+        this._alertProvider.loading.dismiss();
         console.error(err);
       });
   }

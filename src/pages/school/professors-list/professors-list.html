@@ -1,10 +1,14 @@
 <ion-list inset>
-  <button ion-item *ngFor="let professor of professors" (click)="openPage(professor)">
+  <button
+    ion-item
+    *ngFor="let professor of professors"
+    (click)="openPage(professor)"
+  >
     <ion-avatar item-start>
-      <img [src]="professor.requesting.avatar">
+      <img [src]="professor.requesting.avatar" />
     </ion-avatar>
-    <h2>{{professor.requesting.user.people.name}}</h2>
-    <p>{{professor.requesting.user.shortName}}</p>
-    <p>{{professor.requesting.serie}}º Ano</p>
+    <h2 text-wrap>{{ professor.requesting.user.people.name }}</h2>
+    <p>{{ professor.requesting.user.shortName }}</p>
+    <p>{{ professor.requesting.serie }}º Ano</p>
   </button>
 </ion-list>

@@ -60,7 +60,7 @@ export class AppsPage implements OnInit, OnDestroy {
 
   openPage(page) {
     this.navCtrl.push(
-      page,
+      page.component,
       { profileSelected: this.profileSelected },
       {
         animate: true,
@@ -93,23 +93,27 @@ export class AppsPage implements OnInit, OnDestroy {
             icon: "assets/icon/flaticon/education/diploma.svg"
           },
           {
-            title: "PLANEJAMENTO",
+            title: "PLANEJAMENTOS",
             component: "PlanningPage",
             icon: "assets/icon/flaticon/education/open-book.svg"
           },
-          { title: "FREQUÊNCIA", component: "ClassroomPage", icon: "home" },
           {
-            title: "AVALIAÇÃO",
-            component: "ExamPage",
+            title: "FREQUÊNCIA",
+            component: "ClassroomPage",
             icon: "assets/icon/flaticon/education/exam.svg"
           },
           {
-            title: "TURMA",
+            title: "AVALIAÇÕES",
+            component: "ExamPage",
+            icon: "assets/icon/flaticon/education/exam-1.svg"
+          },
+          {
+            title: "TURMAS",
             component: "ClassroomDetailPage",
             icon: "assets/icon/flaticon/education/mortarboard.svg"
           },
           {
-            title: "AUTORIZAÇÃO",
+            title: "AUTORIZAÇÕES",
             component: "AuthorizationPage",
             icon: "assets/icon/flaticon/education/lock.svg"
           }
@@ -117,9 +121,13 @@ export class AppsPage implements OnInit, OnDestroy {
       } else if (this.profileSelected["profileType"] === "ProfileSchool") {
         this.label = this.profileSelected.$showType;
         this.privatePages = [
-          { title: "TURMAS", component: "ClassroomListPage", icon: "home" },
           {
-            title: "AUTORIZAÇÃO",
+            title: "TURMAS",
+            component: "ClassroomListPage",
+            icon: "assets/icon/flaticon/education/mortarboard.svg"
+          },
+          {
+            title: "AUTORIZAÇÕES",
             component: "AuthorizationPage",
             icon: "assets/icon/flaticon/education/lock.svg"
           }
@@ -128,21 +136,21 @@ export class AppsPage implements OnInit, OnDestroy {
           this.privatePages.push({
             title: "AVALIAÇÕES",
             component: "AssestmentCheckPage",
-            icon: "home"
+            icon: "assets/icon/flaticon/education/exam-1.svg"
           });
           this.privatePages.push({
-            title: "PLANO DIÁRIO",
+            title: "PLANEJAMENTOS",
             component: "PlanningCheckPage",
-            icon: "home"
+            icon: "assets/icon/flaticon/education/open-book.svg"
           });
         }
       } else if (this.profileSelected["profileType"] === "ProfileCounty") {
         this.label = "Perfil";
         this.privatePages = [
           {
-            title: "AUTORIZAÇÃO",
+            title: "AUTORIZAÇÕES",
             component: "AuthorizationPage",
-            icon: "home"
+            icon: "assets/icon/flaticon/education/lock.svg"
           },
           {
             title: "ESCOLAS",

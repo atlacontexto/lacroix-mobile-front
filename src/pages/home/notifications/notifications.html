@@ -1,18 +1,12 @@
 <ion-header no-border>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+    <button ion-button menuToggle><ion-icon name="settings"></ion-icon></button>
     <ion-title>NOTIFICAÇÕES</ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top transparent>
     <ion-segment [(ngModel)]="step" color="atla-red">
-      <ion-segment-button value="notices">
-        Informes
-      </ion-segment-button>
-      <ion-segment-button value="requests">
-        Solicitações
-      </ion-segment-button>
+      <ion-segment-button value="notices"> Informes </ion-segment-button>
+      <ion-segment-button value="requests"> Solicitações </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </ion-header>

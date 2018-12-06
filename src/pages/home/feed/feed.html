@@ -1,10 +1,13 @@
 <ion-header no-border>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-searchbar placeholder=Buscar [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)"
-      (ionCancel)="onCancel($event)">
+    <button ion-button menuToggle><ion-icon name="settings"></ion-icon></button>
+    <ion-searchbar
+      placeholder="Buscar"
+      [(ngModel)]="myInput"
+      [showCancelButton]="shouldShowCancel"
+      (ionInput)="onInput($event)"
+      (ionCancel)="onCancel($event)"
+    >
     </ion-searchbar>
     <ion-buttons end>
       <button ion-button icon-end (click)="newPost()">
@@ -16,20 +19,20 @@
 
   <ion-item *ngIf="isProfile(currentProfile)" no-lines (click)="showProfile()">
     <ion-avatar item-start>
-      <img src="assets/imgs/placeholder.png">
+      <img src="assets/imgs/placeholder.png" />
     </ion-avatar>
-    <p text-wrap>Acessando como {{currentProfile.$showType}}</p>
-    <p *ngIf="currentProfile.role">{{currentProfile.role.type | translate}}</p>
-    <p *ngIf="currentProfile.school">{{currentProfile.school.requested.institution.name}}</p>
+    <p text-wrap>Acessando como {{ currentProfile.$showType }}</p>
+    <p *ngIf="currentProfile.role">
+      {{ currentProfile.role.type | translate }}
+    </p>
+    <p *ngIf="currentProfile.school">
+      {{ currentProfile.school.requested.institution.name }}
+    </p>
   </ion-item>
 
   <last-news></last-news>
 </ion-header>
 
 <ion-content padding class="cards-bg social-cards">
-
-
   <news-show [main]="true"></news-show>
-
-
 </ion-content>

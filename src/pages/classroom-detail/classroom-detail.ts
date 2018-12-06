@@ -10,6 +10,7 @@ import { Subject } from "rxjs";
 import { ProfilesProvider } from "../../providers/profiles/profiles";
 import { Profile } from "../../app/model/profile";
 import { ClassroomsProvider } from "../../providers/classrooms/classrooms";
+import { AlertProvider } from "../../providers/alert-service/alert-service";
 
 /**
  * Generated class for the ClassroomDetailPage page.
@@ -31,26 +32,30 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
   profile: any;
   students: any;
   constructor(
+    public _classroomProvider: ClassroomsProvider,
+    public _profilesProvider: ProfilesProvider,
+    public _alertProvider: AlertProvider,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public profilesProvider: ProfilesProvider,
-    public alertCtrl: AlertController,
-    public classroomProvider: ClassroomsProvider
+    public alertCtrl: AlertController
   ) {
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit(): void {
-    this.profilesProvider.currentProfile
+    this._profilesProvider.currentProfile
       .pipe(
         filter(profile => profile instanceof Profile),
         takeUntil(this._unsubscribeAll)
       )
       .subscribe(profile => {
+        this._alertProvider.presentControlledLoader(
+          "Buscando detalhes da turma..."
+        );
         this.profile = profile;
         this.classroom = this.navParams.get("classroom");
         if (this.classroom == null && this.profile.classroom != null) {
-          this.classroomProvider
+          this._classroomProvider
             .getClassroomById(this.profile.classroom)
             .then(res => {
               this.classroom = res;
@@ -64,12 +69,13 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
           this.getEnrollments(this.classroom._id);
           this.getRequests();
         }
+        this._alertProvider.loading.dismiss();
       });
   }
-  
+
   getRequests(): any {
     console.log(this.classroom);
-    this.profilesProvider
+    this._profilesProvider
       .getSchoolProfessorsRequestings(this.profile.school.requested._id)
       .then(res => {
         console.log(res);
@@ -92,7 +98,7 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
   }
 
   getEnrollments(_id: any): any {
-    this.classroomProvider
+    this._classroomProvider
       .getEnrollments(_id)
       .then(res => {
         console.log(res);
@@ -108,7 +114,7 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
   }
 
   activateProfessor(id) {
-    this.classroomProvider
+    this._classroomProvider
       .activateProfessor(id, this.classroom._id)
       .then(res => {
         console.log(res);
@@ -120,7 +126,7 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
   }
 
   deactivateProfessor(id) {
-    this.classroomProvider
+    this._classroomProvider
       .deactivateProfessor(id, this.classroom._id)
       .then(res => {
         console.log(res);

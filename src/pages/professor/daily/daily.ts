@@ -17,6 +17,7 @@ import {
   Validators,
   FormControl
 } from "@angular/forms";
+import { AlertProvider } from "../../../providers/alert-service/alert-service";
 
 /**
  * Generated class for the DailyPage page.
@@ -47,7 +48,8 @@ export class DailyPage implements OnInit, OnDestroy {
     public profilesProvider: ProfilesProvider,
     public classroomProvider: ClassroomsProvider,
     public formBuilder: FormBuilder,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public _alertProvider: AlertProvider
   ) {
     this.frequency = formBuilder.group({
       date: [null, Validators.compose([Validators.required])]
@@ -93,6 +95,7 @@ export class DailyPage implements OnInit, OnDestroy {
   }
 
   getEnrollmentsEdit(currentFrequency, _id: any): any {
+    this._alertProvider.presentControlledLoader("Buscando Matrículas...");
     this.classroomProvider
       .getEnrollments(_id)
       .then(res => {
@@ -108,9 +111,11 @@ export class DailyPage implements OnInit, OnDestroy {
             )
           );
         });
+        this._alertProvider.loading.dismiss();
         this.students = res;
       })
       .catch(err => {
+        this._alertProvider.loading.dismiss();
         console.log(err);
       });
   }
@@ -121,19 +126,22 @@ export class DailyPage implements OnInit, OnDestroy {
   }
 
   getEnrollments(_id: any): any {
+    this._alertProvider.presentControlledLoader("Buscando Matrículas...");
     this.classroomProvider
       .getEnrollments(_id)
       .then(res => {
         res.forEach(element => {
-          this.frequency.addControl(element.basic.CGM, new FormControl(false));
+          this.frequency.addControl(element.basic.CGM, new FormControl(true));
           this.frequency.addControl(
             element.basic.CGM + "_obs",
             new FormControl(null)
           );
         });
+        this._alertProvider.loading.dismiss();
         this.students = res;
       })
       .catch(err => {
+        this._alertProvider.loading.dismiss();
         console.log(err);
       });
   }
