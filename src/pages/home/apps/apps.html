@@ -49,22 +49,24 @@
   </ion-item>
 
   <ion-list>
-    <button
-      no-lines
-      ion-item
-      *ngFor="let page of privatePages"
-      (click)="openPage(page)"
-    >
-      <ion-thumbnail item-left> <img [src]="page.icon" /> </ion-thumbnail>
-      <h2>{{ page.title }}</h2>
-      <p></p>
-    </button>
+    <ion-item-group [reorder]="editing" (ionItemReorder)="reorderData($event)">
+      <button
+        no-lines
+        ion-item
+        *ngFor="let page of privatePages"
+        (click)="openPage(page)"
+      >
+        <ion-thumbnail item-left> <img [src]="page.icon" /> </ion-thumbnail>
+        <h2>{{ page.title }}</h2>
+        <p></p>
+      </button>
+    </ion-item-group>
   </ion-list>
   <ion-row>
     <ion-col>
-      <button block small outline ion-button icon-left>
+      <button block small outline ion-button icon-left (click)="toggleEdit()">
         <ion-icon name="swap"></ion-icon>
-        Reordenar opções
+        {{ editButton }}
       </button>
     </ion-col>
   </ion-row>

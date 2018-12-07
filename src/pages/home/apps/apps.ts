@@ -23,7 +23,8 @@ export class AppsPage implements OnInit, OnDestroy {
   label: string;
   privatePages: { title: string; component: any; icon: string }[];
   profiles: any;
-
+  editing: boolean = false;
+  editButton: string = "Reordenar opções";
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -67,6 +68,19 @@ export class AppsPage implements OnInit, OnDestroy {
         direction: "forward"
       }
     );
+  }
+
+  reorderData(ev) {
+    console.log(ev);
+  }
+
+  toggleEdit() {
+    this.editing = !this.editing;
+    if (this.editing) {
+      this.editButton = "Pronto";
+    } else {
+      this.editButton = "Reordenar opções";
+    }
   }
 
   private updateList(): void {
