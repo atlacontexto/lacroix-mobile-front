@@ -71,7 +71,14 @@ export class AppsPage implements OnInit, OnDestroy {
   }
 
   reorderData(ev) {
-    console.log(ev);
+    this.privatePages = this.reorderArray(this.privatePages, ev);
+  }
+
+  reorderArray(array: any[], indexes: { from: number; to: number }): any[] {
+    const element = array[indexes.from];
+    array.splice(indexes.from, 1);
+    array.splice(indexes.to, 0, element);
+    return array;
   }
 
   toggleEdit() {
