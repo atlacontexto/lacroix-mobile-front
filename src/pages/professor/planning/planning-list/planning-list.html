@@ -1,45 +1,28 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>{{title.viewValue}}</ion-title>
-
+    <ion-title>{{ title.viewValue }}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-
   <ion-grid col-xl-8 offset-xl-2>
     <ion-list>
       <ion-list-header text-center no-lines>
         PLANO DE TRABALHO DOCENTE
       </ion-list-header>
 
-      <ion-row>
-        <ion-col col-12 col-xl-2 col-lg-3 col-md-4>
-          <button ion-button icon-left block (click)="open({type: 'ptd'})">
-            <ion-icon name=add></ion-icon>
-            NOVO
-          </button>
-        </ion-col>
-      </ion-row>
-
       <button ion-item *ngFor="let ptd of ptds" (click)="open(ptd)">
-        <h2>{{ptd.title}}</h2>
+        <h2>{{ ptd.title }}</h2>
       </button>
     </ion-list>
 
     <ion-list>
-      <ion-list-header text-center>
-        PLANEJAMENTO DIÁRIO
-      </ion-list-header>
+      <ion-list-header text-center> PLANEJAMENTO DIÁRIO </ion-list-header>
 
-      <planning-list-daily [id]="id" [title]="title.value"></planning-list-daily>
-
-
-
+      <planning-list-daily
+        [id]="id"
+        [title]="title.value"
+      ></planning-list-daily>
     </ion-list>
   </ion-grid>
-
 </ion-content>

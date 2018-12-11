@@ -42,6 +42,10 @@ export class RegisterPhonePage {
     });
   }
 
+  goToLogin() {
+    this.navCtrl.push("LoginPage");
+  }
+
   next() {
     if (this.isReady) {
       let phone = this.form.value.prefix.concat(

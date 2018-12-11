@@ -1,46 +1,62 @@
 <ion-header no-border>
   <ion-navbar transparent text-center>
     <ion-title>
-      <img height="40" src="assets/imgs/atla-red-full.png">
+      <img height="40" src="assets/imgs/atla-red-full.png" />
     </ion-title>
   </ion-navbar>
 </ion-header>
-
 
 <ion-content padding>
   <ion-grid>
     <ion-row>
       <ion-col text-center>
-        <h2 text-uppercase>
-          {{ 'REGISTER_PHONE_TITLE' | translate}}
-        </h2>
-        <h4>
-          {{ 'REGISTER_PHONE_DESCRIPTION' | translate}}
-        </h4>
+        <h2 text-uppercase>{{ "REGISTER_PHONE_TITLE" | translate }}</h2>
+        <h4>{{ "REGISTER_PHONE_DESCRIPTION" | translate }}</h4>
       </ion-col>
     </ion-row>
 
-    <form (submit)="next()" [formGroup]=form>
+    <form [formGroup]="form">
       <ion-row>
-        <ion-col offset-2 col-2 no-padding>
+        <ion-col col-2 no-padding>
           <ion-item no-padding>
             <ion-input disabled formControlName="prefix" type=""></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col col-6 no-padding>
+        <ion-col col-10 no-padding>
           <ion-item no-padding>
-            <ion-input formControlName="cellphone" type="text" name="phone" placeholder="(00) 90000-0000" [brmasker]="{mask: '(00) 00000-0000', len: 15}"></ion-input>
+            <ion-input
+              formControlName="cellphone"
+              type="text"
+              name="phone"
+              placeholder="(00) 90000-0000"
+              [brmasker]="{ mask: '(00) 00000-0000', len: 15 }"
+            ></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row padding-top>
         <ion-col no-padding>
-          <button text-uppercase ion-button solid large full color="atla-red">
-            {{ 'NEXT_BUTTON' | translate}}
+          <button
+            text-uppercase
+            ion-button
+            solid
+            large
+            full
+            color="atla-red"
+            (click)="next()"
+          >
+            {{ "NEXT_BUTTON" | translate }}
           </button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col> <p ion-text text-center>Já tem uma conta?</p> </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <button clear ion-button small (click)="goToLogin()">Entrar</button>
         </ion-col>
       </ion-row>
     </form>
   </ion-grid>
-
 </ion-content>

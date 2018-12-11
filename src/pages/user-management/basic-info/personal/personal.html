@@ -7,13 +7,21 @@
   <ion-item padding-horizontal>
     <ion-label stacked>Sexo</ion-label>
     <ion-select formControlName="gender">
-      <ion-option *ngFor="let gender of genders" [value]="gender.value">{{gender.viewValue}}</ion-option>
+      <ion-option *ngFor="let gender of genders" [value]="gender.value">{{
+        gender.viewValue
+      }}</ion-option>
     </ion-select>
   </ion-item>
 
   <ion-item padding-horizontal>
-    <ion-label stacked>Data de Nascimento</ion-label>
-    <ion-input formControlName="born" type="text"></ion-input>
+    <ion-label floating>Data de Nascimento</ion-label>
+    <ion-datetime
+      cancelText="Cancelar"
+      doneText="Pronto"
+      displayFormat=""
+      pickerFormat=""
+      formControlName="born"
+    ></ion-datetime>
   </ion-item>
 
   <ion-item padding-horizontal>
@@ -24,7 +32,9 @@
   <ion-item padding-horizontal>
     <ion-label floating>Estado</ion-label>
     <ion-select formControlName="rg_uf">
-      <ion-option *ngFor="let state of states" [value]="state.abbr">{{state.name}}</ion-option>
+      <ion-option *ngFor="let state of states" [value]="state.abbr">{{
+        state.name
+      }}</ion-option>
     </ion-select>
   </ion-item>
 

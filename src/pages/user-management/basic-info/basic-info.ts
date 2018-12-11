@@ -47,10 +47,7 @@ export class BasicInfoComponent {
         userId: [null],
         shortName: [
           { value: "", disabled: false },
-          Validators.compose([
-            Validators.required,
-            Validators.pattern("^[a-zA-Z0-9_-]{8,15}$")
-          ])
+          Validators.compose([Validators.required])
         ],
         password: [
           "",

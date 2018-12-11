@@ -120,6 +120,7 @@ export class AuthProvider {
           }
         },
         err => {
+          console.log(err)
           reject(err);
         }
       );
