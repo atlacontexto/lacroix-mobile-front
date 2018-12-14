@@ -4,7 +4,8 @@ import {
   OnDestroy,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  SimpleChange
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { ProfilesProvider } from "../../../../providers/profiles/profiles";
@@ -41,6 +42,18 @@ export class RequestsComponent implements OnInit, OnDestroy {
     this._unsubscribeAll = new Subject();
   }
 
+  ngOnChanges(changes: SimpleChange) {
+    if (this.requests) {
+      this.findStatus();
+    }
+  }
+
+  findStatus() {
+    this.requestsAcc = this.requests.find(r => r["status"] === "accepted");
+    this.requestsClo = this.requests.find(r => r["status"] === "closed");
+    this.requestsWai = this.requests.find(r => r["status"] === "waiting");
+  }
+
   ngOnInit(): void {
     this._profilesProvider.currentProfile
       .pipe(
@@ -49,11 +62,7 @@ export class RequestsComponent implements OnInit, OnDestroy {
       )
       .subscribe(profile => {
         if (this.requests) {
-          this.requestsAcc = this.requests.find(
-            r => r["status"] === "accepted"
-          );
-          this.requestsClo = this.requests.find(r => r["status"] === "closed");
-          this.requestsWai = this.requests.find(r => r["status"] === "waiting");
+          this.findStatus();
         }
       });
   }

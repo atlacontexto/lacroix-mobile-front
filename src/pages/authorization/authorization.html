@@ -5,7 +5,14 @@
   Ionic pages and navigation.
 -->
 <ion-header no-border>
-  <ion-navbar transparent> <ion-title>Autorização</ion-title> </ion-navbar>
+  <ion-navbar transparent>
+    <ion-title>Autorização</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-end (click)="openHelp()">
+        Ajuda
+        <ion-icon name="info"></ion-icon>
+      </button> </ion-buttons
+  ></ion-navbar>
 </ion-header>
 
 <ion-content no-padding>

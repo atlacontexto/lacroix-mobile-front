@@ -5,10 +5,10 @@ import {
   NavParams,
   AlertController
 } from "ionic-angular";
-import { ProfilesProvider } from "../../../providers/profiles/profiles";
+import { ProfilesProvider } from "../../providers/profiles/profiles";
 import { takeUntil, filter } from "rxjs/operators";
 import { Subject } from "rxjs";
-import { Profile } from "../../../app/model/profile";
+import { Profile } from "../../app/model/profile";
 
 /**
  * Generated class for the AuthorizationPage page.
@@ -97,5 +97,9 @@ export class AuthorizationPage implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
+  }
+
+  openHelp() {
+    this.navCtrl.push("HelpCenterPage", { source: "Autorização" });
   }
 }

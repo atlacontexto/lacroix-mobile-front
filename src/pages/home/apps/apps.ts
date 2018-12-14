@@ -90,6 +90,10 @@ export class AppsPage implements OnInit, OnDestroy {
     }
   }
 
+  openHelp() {
+    this.navCtrl.push("HelpCenterPage", { source: "Início" });
+  }
+
   private updateList(): void {
     if (this.profileSelected) {
       if (this.profileSelected["profileType"] === "ProfileStudent") {
