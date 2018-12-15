@@ -67,4 +67,10 @@ export class HelpCenterPage {
       return listItem;
     });
   }
+
+  openVideo(item) {
+    this.navCtrl.push("VideoTutorialPage", { item: item });
+  }
+
+  voteFaq(vote) {}
 }

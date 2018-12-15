@@ -29,6 +29,7 @@ export class ClassroomPage {
   private _unsubscribeAll: Subject<any>;
   classroom: any;
   frequencies: any;
+  isInitialized: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -42,13 +43,23 @@ export class ClassroomPage {
   }
 
   ionViewWillEnter() {
-    console.log("OnInit Frequência");
+    console.log("WillEnter Frequência");
+    if (this.isInitialized) {
+      this.isInitialized = false;
+    } else {
+      this.updateFrequencies();
+    }
+  }
+
+  updateFrequencies() {
     if (this.classroom) {
       this.getFrequencies(this.classroom._id);
     }
   }
 
   ngOnInit(): void {
+    console.log("OnInit");
+    this.isInitialized = true;
     this.profilesProvider.currentProfile
       .pipe(
         filter(profile => profile instanceof Profile),
@@ -77,13 +88,12 @@ export class ClassroomPage {
     this.classroomProvider
       .getClassroomFrequencie(_id)
       .then(res => {
-        console.log(res);
         this.frequencies = res;
         for (const key in this.frequencies) {
           let a = Object.values(this.frequencies[key]["students"]).filter(
             v => v == false
           ).length;
-          console.log(a);
+
           this.frequencies[key]["absence"] = a;
         }
         this._alertProvider.loading.dismiss();
@@ -110,7 +120,7 @@ export class ClassroomPage {
     );
   }
 
-  eraseFrequency() {
+  errorMessage() {
     let alertFrequency = this.alertCtrl.create({
       title: "Funcionalidade ainda não implementada",
       message: "Aguarde atualização",

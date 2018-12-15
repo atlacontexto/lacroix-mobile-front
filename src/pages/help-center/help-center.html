@@ -9,13 +9,18 @@
   <p ion-text text-center>Precisa de ajuda com '{{ source }}'?</p>
 </ion-header>
 
-<ion-content padding> 
-  <ion-searchbar placeholder="Pesquise a sua dúvida" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
+<ion-content padding>
+  <ion-searchbar
+    placeholder="Pesquise a sua dúvida"
+    [showCancelButton]="shouldShowCancel"
+    (ionInput)="onInput($event)"
+    (ionCancel)="onCancel($event)"
+  >
   </ion-searchbar>
   <ion-grid padding-right>
     <ion-row *ngFor="let item of items">
       <ion-item class="bold" icon-right detail-none (click)="expandItem(item)">
-        <h3 class="bold" ion-text color=blue-payplug>{{item.title}}</h3>
+        <h3 class="bold" ion-text color="blue-payplug">{{ item.title }}</h3>
         <button ion-button clear item-end>
           <ion-icon name="add" *ngIf="!item.expanded"></ion-icon>
           <ion-icon name="remove" *ngIf="item.expanded"></ion-icon>
@@ -23,12 +28,44 @@
       </ion-item>
       <expandable [expandHeight]="itemExpandHeight" [expanded]="item.expanded">
         <ion-row *ngIf="item.expanded">
-          <p padding-horizontal ion-text>{{item.text}}</p>
+          <p padding-horizontal ion-text>{{ item.text }}</p>
+
+          <ion-col col-4>
+            <button
+              ion-button
+              icon-left
+              block
+              color="secondary"
+              (click)="voteFaq(up)"
+            >
+              <ion-icon name="arrow-up"></ion-icon>
+              Sim
+            </button>
+          </ion-col>
+          <ion-col col-4>
+            <button ion-button icon-left block (click)="voteFaq(down)">
+              <ion-icon name="arrow-down"></ion-icon>
+              não
+            </button>
+          </ion-col>
+          <ion-col col-4>
+            <button
+              ion-button
+              icon-left
+              block
+              color="danger"
+              (click)="openVideo(item)"
+            >
+              <ion-icon name="logo-instagram"></ion-icon>
+              Vídeo
+            </button>
+          </ion-col>
         </ion-row>
       </expandable>
-
     </ion-row>
 
-    <button margin-left margin-top ion-button outline color="orange-payplug">Suporte</button>
+    <button margin-left margin-top ion-button outline color="orange-payplug">
+      Suporte
+    </button>
   </ion-grid>
 </ion-content>

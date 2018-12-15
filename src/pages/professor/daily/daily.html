@@ -23,11 +23,23 @@
           formControlName="date"
         ></ion-datetime>
       </ion-item>
+      <ion-item>
+        <ion-label stacked>O que tem para nos contar?</ion-label>
+        <ion-textarea
+          #myInput
+          id="myInput"
+          rows="1"
+          maxLength="500"
+          (keyup)="resize()"
+          formControlName="content"
+        ></ion-textarea>
+      </ion-item>
       <div padding-vertical *ngFor="let student of students">
         <ion-item no-lines>
           <ion-toggle
             [formControlName]="student.basic.CGM"
             checked="false"
+            (ionChange)="updateItem(student)"
           ></ion-toggle>
           <ion-label ion-text text-wrap text-capitalize>
             {{ student.basic["Nome do Aluno"] }}

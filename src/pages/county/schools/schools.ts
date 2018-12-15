@@ -56,4 +56,8 @@ export class SchoolsPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {}
+
+  openHelp() {
+    this.navCtrl.push("HelpCenterPage", { source: "Escolas" });
+  }
 }

@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef
+} from "@angular/core";
 import {
   IonicPage,
   NavController,
@@ -32,6 +38,9 @@ import { AlertProvider } from "../../../providers/alert-service/alert-service";
   templateUrl: "daily.html"
 })
 export class DailyPage implements OnInit, OnDestroy {
+  @ViewChild("myInput")
+  myInput: ElementRef;
+
   professorId: string;
 
   private _unsubscribeAll: Subject<any>;
@@ -51,8 +60,10 @@ export class DailyPage implements OnInit, OnDestroy {
     public alertCtrl: AlertController,
     public _alertProvider: AlertProvider
   ) {
+    let myDate: String = new Date().toISOString();
     this.frequency = formBuilder.group({
-      date: [null, Validators.compose([Validators.required])]
+      content: [null, Validators.compose([Validators.required])],
+      date: [myDate, Validators.compose([Validators.required])]
     });
 
     this._unsubscribeAll = new Subject();
@@ -67,7 +78,7 @@ export class DailyPage implements OnInit, OnDestroy {
       .subscribe(profile => {
         this.profile = profile;
         this.currentFrequency = this.navParams.get("frequency");
-        console.log(this.currentFrequency);
+
         if (this.currentFrequency == null && this.profile.classroom != null) {
           this.classroomProvider
             .getClassroomById(this.profile.classroom)
@@ -84,6 +95,9 @@ export class DailyPage implements OnInit, OnDestroy {
         ) {
           this.frequency.controls["date"].setValue(
             this.currentFrequency["date"]
+          );
+          this.frequency.controls["content"].setValue(
+            this.currentFrequency["content"]
           );
           this.action = "edit";
           this.getEnrollmentsEdit(
@@ -182,5 +196,27 @@ export class DailyPage implements OnInit, OnDestroy {
       buttons: ["Ok"]
     });
     alertFrequency.present();
+  }
+
+  resize() {
+    var element = this.myInput[
+      "_elementRef"
+    ].nativeElement.getElementsByClassName("text-input")[0];
+    var scrollHeight = element.scrollHeight;
+    element.style.height = scrollHeight + "px";
+    this.myInput["_elementRef"].nativeElement.style.height =
+      scrollHeight + 16 + "px";
+  }
+
+  updateItem(student) {
+    console.log(student);
+    console.log(this.frequency.controls[student.basic.CGM].value);
+    if (!this.frequency.controls[student.basic.CGM].value) {
+      this.frequency.controls[student.basic.CGM + "_obs"].setValue(
+        "Ausência não justificada"
+      );
+    } else {
+      this.frequency.controls[student.basic.CGM + "_obs"].setValue(null);
+    }
   }
 }
