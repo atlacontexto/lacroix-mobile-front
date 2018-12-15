@@ -11,6 +11,7 @@ import { User } from "./model/user";
 import { AuthProvider } from "../providers/auth/auth";
 import { AlertProvider } from "../providers/alert-service/alert-service";
 import { Profile } from "./model/profile";
+import { NetworkProvider } from "../providers/network/network";
 
 @Component({
   templateUrl: "app.html"
@@ -38,6 +39,7 @@ export class MyApp {
     public authProvider: AuthProvider,
     public profilesProvider: ProfilesProvider,
     public alertProvider: AlertProvider,
+    public networkProvider: NetworkProvider,
     public userProvider: UserProvider
   ) {
     // Controle d

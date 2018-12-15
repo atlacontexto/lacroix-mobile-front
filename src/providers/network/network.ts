@@ -10,5 +10,19 @@ import { Network } from "@ionic-native/network";
 */
 @Injectable()
 export class NetworkProvider {
-  constructor(public http: HttpClient, network: Network) {}
+  constructor(public http: HttpClient, public network: Network) {
+    this.network.onConnect().subscribe(
+      data => {
+        console.log(data);
+      },
+      error => console.error(error)
+    );
+
+    this.network.onDisconnect().subscribe(
+      data => {
+        console.log(data);
+      },
+      error => console.error(error)
+    );
+  }
 }

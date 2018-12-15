@@ -27,11 +27,12 @@ import { AuthProvider } from "../providers/auth/auth";
 import { PlanningProvider } from "../providers/planning/planning";
 import { FileOpener } from "@ionic-native/file-opener";
 import { File } from "@ionic-native/file";
-import { AddressProvider } from '../providers/address/address';
-import { PersonalProvider } from '../providers/personal/personal';
-import { ClassroomsProvider } from '../providers/classrooms/classrooms';
-import { Network } from '@ionic-native/network';
-import { NetworkProvider } from '../providers/network/network';
+import { AddressProvider } from "../providers/address/address";
+import { PersonalProvider } from "../providers/personal/personal";
+import { ClassroomsProvider } from "../providers/classrooms/classrooms";
+import { Network } from "@ionic-native/network";
+import { NetworkProvider } from "../providers/network/network";
+import { InAppBrowser } from "@ionic-native/in-app-browser";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -76,7 +77,8 @@ export function createTranslateLoader(http: HttpClient) {
     PersonalProvider,
     ClassroomsProvider,
     Network,
-    NetworkProvider
+    NetworkProvider,
+    InAppBrowser
   ]
 })
 export class AppModule {}
