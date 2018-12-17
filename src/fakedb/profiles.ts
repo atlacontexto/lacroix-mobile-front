@@ -158,6 +158,10 @@ const voluntaries = [
   {
     value: "psychologist",
     viewValue: "Psicólogo"
+  },
+  {
+    value: "trainee_teacher",
+    viewValue: "Professor Estagiário"
   }
 ];
 

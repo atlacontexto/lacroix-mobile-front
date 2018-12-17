@@ -1,7 +1,7 @@
 <form [formGroup]="parentPage.form" (ngSubmit)="onSubmit()">
   <ion-row>
     <ion-col>
-      <ion-item>
+      <ion-item padding-horizontal>
         <ion-label floating>* Nível de Atuação</ion-label>
         <ion-select formControlName="level" (ionChange)="levelChanged($event)">
           <ion-option
@@ -17,7 +17,7 @@
 
   <ion-row margin-bottom>
     <ion-col>
-      <ion-item>
+      <ion-item padding-horizontal>
         <ion-label stacked>* Ano</ion-label>
         <ion-select formControlName="serie">
           <ion-option *ngFor="let year of years" [value]="year.value">{{
@@ -30,7 +30,7 @@
 
   <ion-row>
     <ion-col>
-      <ion-item>
+      <ion-item padding-horizontal>
         <ion-label stacked>Discplinas</ion-label>
         <ion-select formControlName="subjects" multiple="true">
           <ion-option

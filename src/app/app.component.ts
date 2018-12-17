@@ -42,6 +42,18 @@ export class MyApp {
     public networkProvider: NetworkProvider,
     public userProvider: UserProvider
   ) {
+    this.privatePages = [
+      { title: "ASSINATURA", component: "BillingPage", icon: "card" },
+      { title: "CONTA", component: HomePage, icon: "key" },
+      { title: "ENDEREÇO", component: "AddressPage", icon: "home" },
+      {
+        title: "INFORMAÇÕES PESSOAIS",
+        component: "PersonalPage",
+        icon: "contact"
+      },
+      { title: "PERFIS", component: "ProfilesPage", icon: "people" }
+    ];
+
     // Controle d
     this.authProvider.isLoggedIn.subscribe(value => {
       if (!value && localStorage.getItem("token")) {
@@ -55,16 +67,7 @@ export class MyApp {
         this.username = this.user.$shortName;
       }
     });
-    this.profilesProvider.listProfiles.subscribe(profiles => {
-      this.profiles = profiles;
-      this.updateList();
-    });
-    this.profilesProvider.currentProfile.subscribe(profile => {
-      if (profile instanceof Profile) {
-        this.profileSelected = profile;
-        this.updateList();
-      }
-    });
+
     this.userComp = "UserManagementPage";
 
     platform.ready().then(() => {
@@ -87,8 +90,6 @@ export class MyApp {
   }
 
   setRoot() {
-    // console.log(this.user instanceof User);
-    // console.log(this.user.getProfiles().length);
     if (this.user instanceof User && this.user.getProfiles().length == 0) {
       this.rootPage = "UserManagementPage";
     } else if (localStorage.getItem("token")) {
@@ -103,89 +104,7 @@ export class MyApp {
     this.translate.get(["BACK_BUTTON_TEXT"]).subscribe(values => {
       this.config.set("ios", "backButtonText", values.BACK_BUTTON_TEXT);
     });
-    this.config.set("tabsHideOnSubPages", true);
-  }
-
-  private changeSelected(): void {
-    this.profilesProvider.currentProfile.next(this.profileSelected);
-    this.updateList();
-  }
-
-  private updateList(): void {
-    if (this.profileSelected) {
-      if (this.profileSelected["profileType"] === "ProfileStudent") {
-        this.label = "Perfil";
-        this.privatePages = [
-          { title: "INÍCIO", component: HomePage, icon: "home" },
-          { title: "BOLETIM", component: "ReportPage", icon: "home" },
-          { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" },
-          { title: "TAREFAS", component: "TaskPage", icon: "home" }
-        ];
-      } else if (this.profileSelected["profileType"] === "ProfileParent") {
-        this.label = "Perfil";
-        this.privatePages = [
-          { title: "INÍCIO", component: HomePage, icon: "home" },
-          { title: "BOLETIM", component: "ReportPage", icon: "home" },
-          { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
-        ];
-      } else if (this.profileSelected["profileType"] === "ProfileProfessor") {
-        this.label = this.profileSelected.$showType;
-        this.privatePages = [
-          { title: "INÍCIO", component: HomePage, icon: "home" },
-          { title: "BOLETIM", component: "ReportPage", icon: "home" },
-          { title: "PLANEJAMENTO", component: "PlanningPage", icon: "home" },
-          { title: "FREQUÊNCIA", component: "ClassroomPage", icon: "home" },
-          { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" },
-          { title: "TURMA", component: "ClassroomDetailPage", icon: "home" },
-          {
-            title: "AUTORIZAÇÃO",
-            component: "AuthorizationPage",
-            icon: "home"
-          }
-        ];
-      } else if (this.profileSelected["profileType"] === "ProfileSchool") {
-        this.label = this.profileSelected.$showType;
-        this.privatePages = [
-          { title: "INÍCIO", component: HomePage, icon: "home" },
-          { title: "TURMAS", component: "ClassroomListPage", icon: "home" },
-          {
-            title: "AUTORIZAÇÃO",
-            component: "AuthorizationPage",
-            icon: "home"
-          }
-        ];
-        if (this.profileSelected["role"].type == "pedAdvisor") {
-          this.privatePages.push({
-            title: "AVALIAÇÕES",
-            component: "AssestmentCheckPage",
-            icon: "home"
-          });
-          this.privatePages.push({
-            title: "PLANO DIÁRIO",
-            component: "PlanningCheckPage",
-            icon: "home"
-          });
-        }
-      } else if (this.profileSelected["profileType"] === "ProfileCounty") {
-        this.label = "Perfil";
-        this.privatePages = [
-          { title: "INÍCIO", component: HomePage, icon: "home" },
-          {
-            title: "AUTORIZAÇÃO",
-            component: "AuthorizationPage",
-            icon: "home"
-          },
-          { title: "ESCOLAS", component: "SchoolsPage", icon: "home" },
-          { title: "PAPÉIS", component: "RolesPage", icon: "home" },
-          { title: "PERMISSÕES", component: "PermissionsPage", icon: "home" }
-        ];
-      } else if (this.profileSelected["profileType"] === "ProfileComunity") {
-        this.privatePages = [
-          { title: "INÍCIO", component: HomePage, icon: "home" },
-          { title: "HISTÓRICO", component: "HomePage", icon: "home" }
-        ];
-      }
-    }
+    // this.config.set("tabsHideOnSubPages", true);
   }
 
   logout() {

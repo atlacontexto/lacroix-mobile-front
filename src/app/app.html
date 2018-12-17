@@ -13,37 +13,18 @@
   </ion-header>
 
   <ion-content>
-    <ion-item>
-      <ion-label stacked>{{ label }}</ion-label>
-      <ion-select
-        ion-text
-        text-wrap
-        [(ngModel)]="profileSelected"
-        (ionChange)="changeSelected()"
-      >
-        <ion-option
-          ion-text
-          text-wrap
-          *ngFor="let profile of profiles"
-          [value]="profile"
-        >
-          {{
-            profile.school
-              ? profile.school.requested.institution.name
-              : profile.$showType
-          }}
-        </ion-option>
-      </ion-select>
-    </ion-item>
     <ion-list *ngIf="privatePages">
       <button
+        ion-text
+        text-wrap
         color="space"
         menuClose
-        lo-line
         ion-item
+        icon-left
         *ngFor="let p of privatePages"
         (click)="openPage(p.component)"
       >
+        <ion-icon [name]="p.icon"></ion-icon>
         {{ p.title }}
       </button>
     </ion-list>

@@ -6,12 +6,7 @@ import {
   OnInit,
   OnDestroy
 } from "@angular/core";
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl
-} from "@angular/forms";
+import { Validators, FormControl } from "@angular/forms";
 import { ProfilesProvider } from "../../../../../providers/profiles/profiles";
 import { GeoProvider } from "../../../../../providers/geo/geo";
 import { AlertProvider } from "../../../../../providers/alert-service/alert-service";

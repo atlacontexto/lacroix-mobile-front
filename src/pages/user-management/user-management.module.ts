@@ -24,6 +24,7 @@ import { BillingComponent } from "./basic-info/billing/billing";
     IonicPageModule.forChild(UserManagementPage),
     TranslateModule.forChild(),
     ComponentsModule
-  ]
+  ],
+  exports: [ProfilesComponent]
 })
 export class UserManagementModule {}

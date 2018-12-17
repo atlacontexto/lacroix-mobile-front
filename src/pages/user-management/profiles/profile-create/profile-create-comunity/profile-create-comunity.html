@@ -1,51 +1,73 @@
-<form [formGroup]="formComunity">
+<form [formGroup]="parentPage.form" (ngSubmit)="onSubmit()">
   <ion-row>
-    <ion-col>
-      <ion-item no-padding>
-        <ion-label floating>Representação</ion-label>
-        <ion-select formControlName="personality">
-          <ion-option value="entity">Entidade</ion-option>
-          <ion-option value="individual">Individual</ion-option>
+    <ion-col col-12>
+      <ion-item padding-horizontal>
+        <ion-label floating>Interesse</ion-label>
+        <ion-select formControlName="type">
+          <ion-option value="observer">Observador</ion-option>
+          <ion-option value="representant">Representante</ion-option>
+          <ion-option value="voluntary">Voluntário</ion-option>
         </ion-select>
       </ion-item>
     </ion-col>
-  </ion-row>
 
-  <ion-row *ngIf="formComunity.value.personality == 'entity'">
-    <ion-col col-12>
-      <ion-item no-padding>
+    <ion-col col-12 *ngIf="parentPage.form.value.type == 'representant'">
+      <ion-item padding-horizontal>
         <ion-label floating>Tipo</ion-label>
-        <ion-select formControlName="type">
+        <ion-select formControlName="representant">
+          <ion-option value="ong">Conselho / ONG</ion-option>
           <ion-option value="private">Empresa Privada</ion-option>
-          <ion-option value="ong">ONG</ion-option>
           <ion-option value="syndicate">Sindicato</ion-option>
         </ion-select>
       </ion-item>
     </ion-col>
 
-    <ion-col col-12>
-      <ion-item no-padding>
-        <ion-label floating>Nome da Organização</ion-label>
-        <ion-input formControlName="name" type="text"></ion-input>
-      </ion-item>
-    </ion-col>
-
-    <ion-col col-12>
-      <ion-item no-padding>
-        <ion-label floating>Meu Cargo</ion-label>
-        <ion-input formControlName="post" type="text"></ion-input>
+    <ion-col *ngIf="parentPage.form.value.type == 'voluntary'">
+      <ion-item padding-horizontal>
+        <ion-label floating>Função de Voluntário</ion-label>
+        <ion-select formControlName="voluntary">
+          <ion-option
+            *ngFor="let voluntary of voluntaries"
+            [value]="voluntary.value"
+          >
+            {{ voluntary.viewValue }}
+          </ion-option>
+        </ion-select>
       </ion-item>
     </ion-col>
   </ion-row>
 
   <ion-row>
     <ion-col>
-      <ion-item no-padding>
-        <ion-label floating>Voluntário</ion-label>
-        <ion-select formControlName="voluntary">
-          <ion-option *ngFor="let voluntary of voluntaries" [value]="voluntary.value">{{voluntary.viewValue}}</ion-option>
+      <ion-item padding-horizontal>
+        <ion-label floating>Estado</ion-label>
+        <ion-select (ionChange)="stateChanged($event)">
+          <ion-option *ngFor="let state of states" [value]="state.id">{{
+            state.name
+          }}</ion-option>
         </ion-select>
       </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <!-- Seleção do Município -->
+
+  <ion-row>
+    <ion-col>
+      <ion-item padding-horizontal>
+        <ion-label floating>Município</ion-label>
+        <ion-select formControlName="county">
+          <ion-option *ngFor="let county of counties" [value]="county._id">{{
+            county.name
+          }}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row padding-vertical>
+    <ion-col>
+      <button type="submit" ion-button block full>CRIAR PERFIL</button>
     </ion-col>
   </ion-row>
 </form>

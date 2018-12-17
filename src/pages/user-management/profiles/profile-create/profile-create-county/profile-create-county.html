@@ -1,7 +1,7 @@
 <form [formGroup]="parentPage.form" (ngSubmit)="onSubmit()">
   <ion-row>
     <ion-col>
-      <ion-item>
+      <ion-item padding-horizontal>
         <ion-label floating>Estado</ion-label>
         <ion-select (ionChange)="stateChanged($event)">
           <ion-option *ngFor="let state of states" [value]="state.id">{{
@@ -14,7 +14,7 @@
 
   <ion-row>
     <ion-col>
-      <ion-item>
+      <ion-item padding-horizontal>
         <ion-label floating>Município</ion-label>
         <ion-select formControlName="county">
           <ion-option *ngFor="let county of counties" [value]="county._id">{{
@@ -27,7 +27,7 @@
 
   <ion-row>
     <ion-col>
-      <ion-item>
+      <ion-item padding-horizontal>
         <ion-label floating>Cargo</ion-label>
         <ion-select formControlName="role">
           <ion-option

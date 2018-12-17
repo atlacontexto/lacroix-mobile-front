@@ -186,9 +186,29 @@ export class AppsPage implements OnInit, OnDestroy {
           { title: "PERMISSÕES", component: "PermissionsPage", icon: "home" }
         ];
       } else if (this.profileSelected["profileType"] === "ProfileComunity") {
-        this.privatePages = [
-          { title: "HISTÓRICO", component: "HomePage", icon: "home" }
-        ];
+        this.label = "Perfil";
+        if (this.profileSelected["role"].type == "voluntary") {
+          this.privatePages = [
+            {
+              title: "DISPONIBILIDADE",
+              component: "HomePage",
+              icon: "assets/icon/flaticon/education/clock.svg"
+            },
+            {
+              title: "HISTÓRICO",
+              component: "HomePage",
+              icon: "assets/icon/flaticon/education/exam.svg"
+            }
+          ];
+        } else if (this.profileSelected["role"].type == "representant") {
+          this.privatePages = [
+            {
+              title: "ENGAJAMENTO",
+              component: "HomePage",
+              icon: "assets/icon/flaticon/education/collaboration.svg"
+            }
+          ];
+        }
       }
     }
   }
