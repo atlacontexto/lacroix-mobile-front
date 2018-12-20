@@ -88,6 +88,29 @@
           <p>{{ school.school_managers.length }} gestores</p>
         </button>
       </ion-list>
+
+      <ion-list *ngSwitchCase="'courses'">
+        <ion-item
+          *ngFor="let course of courses"
+          (click)="openCourseDetail(course)"
+        >
+          {{ courseName }}
+        </ion-item>
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'schoolYear'">
+        <ion-row padding>
+          <button ion-button icon-left (click)="addSchoolYear()">
+            <ion-icon name="add"></ion-icon>
+            Adicionar calendário
+          </button>
+        </ion-row>
+        <ion-item *ngFor="let year of schoolYears" (click)="openYear(year)">
+          <h2>{{ year.title }}</h2>
+          <h4>{{ year.start }}</h4>
+          <h4>{{ year.end }}</h4>
+        </ion-item>
+      </ion-list>
     </ion-row>
   </ion-grid>
 </ion-content>

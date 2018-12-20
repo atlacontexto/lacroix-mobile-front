@@ -174,4 +174,26 @@ export class ClassroomsProvider {
         );
     });
   }
+
+  createSchoolYear(value: any, profileCounty: any): any {
+    return new Promise((resolve, reject) => {
+      this.http
+        .post(
+          `${
+            this.apiUrl
+          }/profile/county-institutional/${profileCounty}/school-year`,
+          value,
+          this.headers
+        )
+        .subscribe(
+          res => {
+            console.log(res);
+            resolve(res["data"]);
+          },
+          err => {
+            reject(err);
+          }
+        );
+    });
+  }
 }

@@ -70,4 +70,8 @@ export class SchoolsPage implements OnInit, OnDestroy {
     console.log(id);
     this.navCtrl.push("ClassroomListPage", { school: id });
   }
+
+  addSchoolYear() {
+    this.navCtrl.push("SchoolYearPage");
+  }
 }
