@@ -182,7 +182,11 @@ export class AppsPage implements OnInit, OnDestroy {
             component: "SchoolsPage",
             icon: "assets/icon/flaticon/education/university.svg"
           },
-          { title: "PAPÉIS", component: "RolesPage", icon: "home" },
+          {
+            title: "PAPÉIS",
+            component: "RoleManagementPage",
+            icon: "assets/icon/flaticon/education/connection.svg"
+          },
           { title: "PERMISSÕES", component: "PermissionsPage", icon: "home" }
         ];
       } else if (this.profileSelected["profileType"] === "ProfileComunity") {

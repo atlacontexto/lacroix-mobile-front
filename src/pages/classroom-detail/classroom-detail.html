@@ -8,17 +8,18 @@
   <ion-navbar transparent>
     <ion-title>Detalhes da Turma</ion-title>
   </ion-navbar>
-</ion-header>
 
-<ion-content padding>
-  <ion-row *ngIf="profile.school && profile.school.status === 'waiting'">
-    <ion-col>
-      <p ion-text text-center>
-        Seu perfil ainda não tem permissão de acesso. Entre em contato com a sua
-        escola para liberação.
-      </p>
-    </ion-col>
-  </ion-row>
+  <ion-item>
+    <ion-label>Turma</ion-label>
+    <ion-select [(ngModel)]="currentClassroom" (ionChange)="getClassroomInfo()">
+      <ion-option
+        *ngFor="let classroom of profile.classrooms"
+        [value]="classroom._id"
+        >{{ classroom.series + " | " + classroom.subClass }}</ion-option
+      >
+    </ion-select>
+  </ion-item>
+
   <ion-item no-lines *ngIf="classroom">
     <h2 text-wrap>{{ classroom.series }}</h2>
     <h2>Turma: {{ classroom.subClass }}</h2>
@@ -27,10 +28,30 @@
     <p>Turno: {{ classroom.shift }}</p>
   </ion-item>
 
-  <ion-segment padding [(ngModel)]="show">
+  <ion-segment padding-horizontal [(ngModel)]="show">
     <ion-segment-button value="students"> Alunos</ion-segment-button>
     <ion-segment-button value="professors"> Professores</ion-segment-button>
   </ion-segment>
+</ion-header>
+
+<ion-content no-padding>
+  <ion-row *ngIf="profile.school && profile.school.status === 'waiting'">
+    <ion-col>
+      <p ion-text text-center>
+        Seu perfil ainda não tem permissão de acesso. Entre em contato com a sua
+        escola para liberação.
+      </p>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="profile.school && profile.classrooms.length === 0">
+    <ion-col>
+      <p ion-text text-center>
+        Seu perfil ainda não tem nenhuma turma atribuída. Entre em contato com a
+        sua escola para liberar o acesso às suas turmas.
+      </p>
+    </ion-col>
+  </ion-row>
 
   <div *ngIf="classroom" [ngSwitch]="show">
     <ion-list *ngSwitchCase="'students'">
@@ -53,7 +74,7 @@
         </ion-thumbnail>
         <h2 text-wrap>{{ professor.requesting.user.people.name }}</h2>
         <button
-          *ngIf="!professor.requesting.classroom"
+          *ngIf="!professor.requesting.classrooms.includes(classroom._id)"
           ion-button
           small
           item-end
@@ -62,7 +83,7 @@
           Ativar
         </button>
         <button
-          *ngIf="professor.requesting.classroom"
+          *ngIf="professor.requesting.classrooms.includes(classroom._id)"
           ion-button
           small
           item-end

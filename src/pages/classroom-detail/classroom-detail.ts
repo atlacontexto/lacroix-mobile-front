@@ -31,6 +31,8 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
   requests: any;
   profile: any;
   students: any;
+  _idSchool: any;
+  currentClassroom: any;
   constructor(
     public _classroomProvider: ClassroomsProvider,
     public _profilesProvider: ProfilesProvider,
@@ -40,6 +42,7 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
     public alertCtrl: AlertController
   ) {
     this._unsubscribeAll = new Subject();
+    this._idSchool = this.navParams.get("school");
   }
 
   ngOnInit(): void {
@@ -54,17 +57,10 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
         );
         this.profile = profile;
         this.classroom = this.navParams.get("classroom");
-        if (this.classroom == null && this.profile.classroom != null) {
-          this._classroomProvider
-            .getClassroomById(this.profile.classroom)
-            .then(res => {
-              this.classroom = res;
-              this.getEnrollments(this.classroom._id);
-              this.getRequests();
-            })
-            .catch(err => {
-              console.log(err);
-            });
+        console.log(this.profile);
+        if (this.classroom == null && this.profile.classrooms.length > 0) {
+          this.currentClassroom = this.profile.classrooms[0]._id;
+          this.getClassroomInfo(this.profile.classrooms[0]._id);
         } else if (this.classroom != null) {
           this.getEnrollments(this.classroom._id);
           this.getRequests();
@@ -73,15 +69,33 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
       });
   }
 
-  getRequests(): any {
-    console.log(this.classroom);
-    this._profilesProvider
-      .getSchoolProfessorsRequestings(this.profile.school.requested._id)
+  getClassroomInfo(id?) {
+    if (!id) {
+      id = this.currentClassroom;
+    }
+    this._classroomProvider
+      .getClassroomById(id)
       .then(res => {
-        console.log(res);
-        this.requests = res.filter(profile =>
-          this.classroom.series.includes(profile.requesting.serie)
-        );
+        this.classroom = res;
+        this.getEnrollments(this.classroom._id);
+        this.getRequests();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  getRequests(): any {
+    if (this._idSchool == null) {
+      this._idSchool = this.profile.school.requested._id;
+    }
+    this._profilesProvider
+      .getSchoolProfessorsRequestings(this._idSchool)
+      .then(res => {
+        this.requests = res;
+        // this.requests = res.filter(profile =>
+        //   this.classroom.series.includes(profile.requesting.serie)
+        // );
       })
       .catch(err => {
         console.error(err);
@@ -101,7 +115,6 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
     this._classroomProvider
       .getEnrollments(_id)
       .then(res => {
-        console.log(res);
         this.students = res;
       })
       .catch(err => {
@@ -117,7 +130,6 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
     this._classroomProvider
       .activateProfessor(id, this.classroom._id)
       .then(res => {
-        console.log(res);
         this.getRequests();
       })
       .catch(err => {
@@ -129,7 +141,6 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
     this._classroomProvider
       .deactivateProfessor(id, this.classroom._id)
       .then(res => {
-        console.log(res);
         this.getRequests();
       })
       .catch(err => {

@@ -13,45 +13,53 @@
         <ion-icon name="info"></ion-icon>
       </button> </ion-buttons
   ></ion-navbar>
+  <ion-item no-lines>
+    <ion-avatar item-start> <img [src]="profile.avatar" /> </ion-avatar>
+    <h2 style="font-weight: bold;" text-wrap text-capitalize ion-text>
+      {{ profile.showType }}
+    </h2>
+    <h3 text-capitalize *ngIf="profile.role" ion-text text-wrap>
+      {{ profile.role.type | translate }}
+    </h3>
+    <h3 *ngIf="profile.school" ion-text text-wrap text-capitalize>
+      {{ profile.school.requested.institution.name }}
+    </h3>
+    <ion-badge *ngIf="profile.main">principal</ion-badge>
+    <ion-icon
+      *ngIf="institution && institution.status === 'accepted'"
+      item-end
+      color="secondary"
+      name="checkmark-circle"
+    ></ion-icon>
+    <ion-icon
+      *ngIf="institution && institution.status === 'waiting'"
+      item-end
+      color="primary"
+      name="time"
+    ></ion-icon>
+    <ion-icon
+      *ngIf="institution && institution.status === 'closed'"
+      item-end
+      color="alert"
+      name="alert"
+    ></ion-icon>
+  </ion-item>
+  <ion-segment
+    padding-horizontal
+    [(ngModel)]="step"
+    color="atla-red"
+    *ngIf="institution && institution.status === 'accepted'"
+    (ionChange)="onSegmentChange()"
+  >
+    <ion-segment-button value="pending"> Espera </ion-segment-button>
+    <ion-segment-button value="accepted"> Aceita </ion-segment-button>
+    <ion-segment-button value="closed"> Suspensa </ion-segment-button>
+  </ion-segment>
 </ion-header>
 
 <ion-content no-padding>
   <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-item no-lines>
-          <ion-avatar item-start> <img [src]="profile.avatar" /> </ion-avatar>
-          <h2 style="font-weight: bold;" text-wrap text-capitalize ion-text>
-            {{ profile.showType }}
-          </h2>
-          <h3 text-capitalize *ngIf="profile.role" ion-text text-wrap>
-            {{ profile.role.type | translate }}
-          </h3>
-          <h3 *ngIf="profile.school" ion-text text-wrap text-capitalize>
-            {{ profile.school.requested.institution.name }}
-          </h3>
-          <ion-badge *ngIf="profile.main">principal</ion-badge>
-          <ion-icon
-            *ngIf="institution && institution.status === 'accepted'"
-            item-end
-            color="secondary"
-            name="checkmark-circle"
-          ></ion-icon>
-          <ion-icon
-            *ngIf="institution && institution.status === 'waiting'"
-            item-end
-            color="primary"
-            name="time"
-          ></ion-icon>
-          <ion-icon
-            *ngIf="institution && institution.status === 'closed'"
-            item-end
-            color="alert"
-            name="alert"
-          ></ion-icon>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+    <ion-row> <ion-col> </ion-col> </ion-row>
     <ion-row *ngIf="institution && institution.status === 'waiting'">
       <ion-col>
         <p ion-text text-center>
@@ -68,17 +76,6 @@
         </p>
       </ion-col>
     </ion-row>
-
-    <ion-segment
-      padding
-      [(ngModel)]="step"
-      color="atla-red"
-      *ngIf="institution && institution.status === 'accepted'"
-    >
-      <ion-segment-button value="pending"> Espera </ion-segment-button>
-      <ion-segment-button value="accepted"> Aceita </ion-segment-button>
-      <ion-segment-button value="closed"> Suspensa </ion-segment-button>
-    </ion-segment>
 
     <div no-padding [ngSwitch]="step" col-xl-8 offset-xl-2>
       <requests

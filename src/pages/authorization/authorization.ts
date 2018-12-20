@@ -99,6 +99,11 @@ export class AuthorizationPage implements OnInit, OnDestroy {
     this._unsubscribeAll.complete();
   }
 
+  onSegmentChange() {
+    console.log("segment changed")
+    this.updateRequestings();
+  }
+
   openHelp() {
     this.navCtrl.push("HelpCenterPage", { source: "Autorização" });
   }

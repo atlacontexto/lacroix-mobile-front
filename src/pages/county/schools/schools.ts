@@ -23,6 +23,7 @@ export class SchoolsPage implements OnInit, OnDestroy {
   schools: any;
   profile: any;
   institution: any;
+  step = "schools";
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -39,6 +40,7 @@ export class SchoolsPage implements OnInit, OnDestroy {
       )
       .subscribe(profile => {
         this.profile = profile;
+        console.log(profile);
         if (this.profile.$profileType == "ProfileCounty") {
           this.institution = profile.county;
           if (this.institution.status == "accepted") {
@@ -55,9 +57,17 @@ export class SchoolsPage implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
 
   openHelp() {
     this.navCtrl.push("HelpCenterPage", { source: "Escolas" });
+  }
+
+  openSchoolClassRooms(id) {
+    console.log(id);
+    this.navCtrl.push("ClassroomListPage", { school: id });
   }
 }

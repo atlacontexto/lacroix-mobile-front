@@ -22,6 +22,8 @@ export class ClassroomListPage implements OnInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
   profile: any;
   classrooms: any;
+  _id: any;
+  isInitialized: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -29,24 +31,42 @@ export class ClassroomListPage implements OnInit, OnDestroy {
     public classroomsProvider: ClassroomsProvider
   ) {
     this._unsubscribeAll = new Subject();
+    this._id = this.navParams.get("school");
+  }
+
+  ionViewWillEnter() {
+    if (this.isInitialized) {
+      this.isInitialized = false;
+    } else {
+      this.updateClassroomList();
+    }
   }
 
   ngOnInit(): void {
+    this.isInitialized = true;
     this.profilesProvider.currentProfile
       .pipe(
         takeUntil(this._unsubscribeAll),
         filter(profile => profile instanceof Profile)
       )
       .subscribe(profile => {
-        this.profile = profile;
-        this.classroomsProvider
-          .getClassRoomsBySchoolId(this.profile.school.requested._id)
-          .then(res => {
-            this.classrooms = res;
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        if (this._id == null) {
+          this.profile = profile;
+          this._id = this.profile.school.requested._id;
+        }
+        this.updateClassroomList();
+      });
+  }
+
+  updateClassroomList() {
+    this.classroomsProvider
+      .getClassRoomsBySchoolId(this._id)
+      .then(res => {
+        console.log(res)
+        this.classrooms = res;
+      })
+      .catch(err => {
+        console.log(err);
       });
   }
 
@@ -58,7 +78,7 @@ export class ClassroomListPage implements OnInit, OnDestroy {
   openClassroom(classroom) {
     this.navCtrl.push(
       "ClassroomDetailPage",
-      { classroom: classroom },
+      { classroom: classroom, school: this._id },
       { animate: true }
     );
   }
