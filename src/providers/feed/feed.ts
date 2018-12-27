@@ -79,7 +79,7 @@ export class FeedProvider {
     });
   }
 
-  getFeed(id: string): any {
+  getFeed(id: String): any {
     return new Promise((resolve, reject) => {
       this.http
         .get(`${this.apiUrl}/social/news/${id}/feed`, this.headers)

@@ -260,6 +260,12 @@ const foundExamples = [
   }
 ];
 
+const periods = [
+  { value: "bi", showValue: "Bimestral", periods: 4 },
+  { value: "tri", showValue: "Trimestral", periods: 3 },
+  { value: "sem", showValue: "Semestral", periods: 2 }
+];
+
 export default {
   courseLevels,
   profileTypes,
@@ -269,5 +275,6 @@ export default {
   voluntaries,
   courseYears,
   foundExamples,
-  courseYearsChild
+  courseYearsChild,
+  periods
 };

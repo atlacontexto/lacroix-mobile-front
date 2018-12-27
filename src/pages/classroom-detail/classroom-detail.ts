@@ -58,7 +58,11 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
         this.profile = profile;
         this.classroom = this.navParams.get("classroom");
         console.log(this.profile);
-        if (this.classroom == null && this.profile.classrooms.length > 0) {
+        if (
+          this.classroom == null &&
+          this.profile.classrooms &&
+          this.profile.classrooms.length > 0
+        ) {
           this.currentClassroom = this.profile.classrooms[0]._id;
           this.getClassroomInfo(this.profile.classrooms[0]._id);
         } else if (this.classroom != null) {

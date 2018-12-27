@@ -15,12 +15,14 @@ export class ClassroomsProvider {
   apiUrl = ENV.API_LOCAL;
 
   headers: any;
+
   constructor(
     public http: HttpClient,
     public authProvider: AuthProvider,
     public platform: Platform
   ) {
     console.log("Hello ClassroomsProvider Provider");
+
     if (platform.is("cordova")) {
       this.apiUrl = ENV.API_ENDPOINT;
     }
@@ -166,28 +168,6 @@ export class ClassroomsProvider {
         )
         .subscribe(
           res => {
-            resolve(res["data"]);
-          },
-          err => {
-            reject(err);
-          }
-        );
-    });
-  }
-
-  createSchoolYear(value: any, profileCounty: any): any {
-    return new Promise((resolve, reject) => {
-      this.http
-        .post(
-          `${
-            this.apiUrl
-          }/profile/county-institutional/${profileCounty}/school-year`,
-          value,
-          this.headers
-        )
-        .subscribe(
-          res => {
-            console.log(res);
             resolve(res["data"]);
           },
           err => {

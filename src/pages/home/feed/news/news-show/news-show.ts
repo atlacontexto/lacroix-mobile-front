@@ -61,7 +61,7 @@ export class NewsShowComponent implements OnInit, OnDestroy {
     }
   }
 
-  getNews(id: string, arg1: number, arg2: number): any {
+  getNews(id: String, arg1: number, arg2: number): any {
     this._feedProvider
       .getPostsByProfile(this.profile.id)
       .then(res => {
@@ -72,7 +72,7 @@ export class NewsShowComponent implements OnInit, OnDestroy {
       });
   }
 
-  getFeed(id: string, arg1: number, arg2: number) {
+  getFeed(id: String, arg1: number, arg2: number) {
     this._feedProvider
       .getFeed(this.profile.id)
       .then(res => {

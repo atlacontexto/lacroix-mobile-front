@@ -33,6 +33,7 @@ import { ClassroomsProvider } from "../providers/classrooms/classrooms";
 import { Network } from "@ionic-native/network";
 import { NetworkProvider } from "../providers/network/network";
 import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { SchoolYearProvider } from '../providers/school-year/school-year';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -78,7 +79,8 @@ export function createTranslateLoader(http: HttpClient) {
     ClassroomsProvider,
     Network,
     NetworkProvider,
-    InAppBrowser
+    InAppBrowser,
+    SchoolYearProvider
   ]
 })
 export class AppModule {}

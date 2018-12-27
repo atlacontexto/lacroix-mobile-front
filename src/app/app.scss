@@ -17,3 +17,16 @@ ion-note {
   align-self: flex-start;
   margin-top: 14px;
 }
+
+.list-md > .item-block:first-child {
+  border-top: none;
+}
+.list-md > .item-block:last-child {
+  border-bottom: none;
+}
+.list-ios > .item-block:first-child {
+  border-top: none;
+}
+.list-ios > .item-block:last-child {
+  border-bottom: none;
+}

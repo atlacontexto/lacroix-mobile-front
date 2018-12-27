@@ -1,13 +1,13 @@
 export class Profile {
-  private _id: string;
+  private _id: String;
   private createdAt: Date;
-  private profileType: string;
+  private profileType: String;
   private kinship: any;
-  private showType: string;
-  private avatar: string;
+  private showType: String;
+  private avatar: String;
   private main = false;
   private contacts: any;
-  private bio: string;
+  private bio: String;
   private active: boolean;
   private news: any;
   private follow: any;
@@ -56,9 +56,9 @@ export class Profile {
 
   /**
    * Getter $profileType
-   * @return {string}
+   * @return {String}
    */
-  public get $profileType(): string {
+  public get $profileType(): String {
     return this.profileType;
   }
 
@@ -80,9 +80,9 @@ export class Profile {
 
   /**
    * Getter $bio
-   * @return {string}
+   * @return {String}
    */
-  public get $bio(): string {
+  public get $bio(): String {
     return this.bio;
   }
 
@@ -104,9 +104,9 @@ export class Profile {
 
   /**
    * Setter $profileType
-   * @param {string} value
+   * @param {String} value
    */
-  public set $profileType(value: string) {
+  public set $profileType(value: String) {
     this.profileType = value;
   }
 
@@ -128,9 +128,9 @@ export class Profile {
 
   /**
    * Setter $bio
-   * @param {string} value
+   * @param {String} value
    */
-  public set $bio(value: string) {
+  public set $bio(value: String) {
     this.bio = value;
   }
 
@@ -142,27 +142,27 @@ export class Profile {
     this.active = value;
   }
 
-  getProfileType(): string {
+  getProfileType(): String {
     return this.profileType;
   }
 
-  getKinship(): string {
+  getKinship(): String {
     return this.kinship;
   }
 
   /**
    * Getter id
-   * @return {string}
+   * @return {String}
    */
-  public get id(): string {
+  public get id(): String {
     return this._id;
   }
 
   /**
    * Setter id
-   * @param {string} value
+   * @param {String} value
    */
-  public set id(value: string) {
+  public set id(value: String) {
     this._id = value;
   }
 
@@ -170,17 +170,17 @@ export class Profile {
 
   /**
    * Getter $avatar
-   * @return {string}
+   * @return {String}
    */
-  public get $avatar(): string {
+  public get $avatar(): String {
     return this.avatar;
   }
 
   /**
    * Setter $avatar
-   * @param {string} value
+   * @param {String} value
    */
-  public set $avatar(value: string) {
+  public set $avatar(value: String) {
     this.avatar = value;
   }
 
@@ -202,17 +202,17 @@ export class Profile {
 
   /**
    * Getter $showType
-   * @return {string}
+   * @return {String}
    */
-  public get $showType(): string {
+  public get $showType(): String {
     return this.showType;
   }
 
   /**
    * Setter $showType
-   * @param {string} value
+   * @param {String} value
    */
-  public set $showType(value: string) {
+  public set $showType(value: String) {
     this.showType = value;
   }
 }

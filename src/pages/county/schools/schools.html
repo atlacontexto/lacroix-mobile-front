@@ -49,6 +49,7 @@
     [(ngModel)]="step"
     color="atla-red"
     *ngIf="institution && institution.status === 'accepted'"
+    (ionChange)="onSegmentChange($event)"
   >
     <ion-segment-button value="schools"> Escolas </ion-segment-button>
     <ion-segment-button value="courses"> Cursos </ion-segment-button>
@@ -66,7 +67,7 @@
         </p>
       </ion-col>
     </ion-row>
-    <ion-row [ngSwitch]="step">
+    <div [ngSwitch]="step">
       <ion-list *ngSwitchCase="'schools'">
         <button
           ion-item
@@ -106,11 +107,11 @@
           </button>
         </ion-row>
         <ion-item *ngFor="let year of schoolYears" (click)="openYear(year)">
-          <h2>{{ year.title }}</h2>
-          <h4>{{ year.start }}</h4>
+          <h2>{{ year.year | date: "yyyy":"+0000" }}</h2>
+          <h4>{{ year.regime.showValue }}</h4>
           <h4>{{ year.end }}</h4>
         </ion-item>
       </ion-list>
-    </ion-row>
+    </div>
   </ion-grid>
 </ion-content>

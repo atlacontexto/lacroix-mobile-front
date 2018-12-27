@@ -20,7 +20,7 @@ import { takeUntil, filter } from "rxjs/operators";
 export class AppsPage implements OnInit, OnDestroy {
   profileSelected: Profile;
   private _unsubscribeAll: Subject<any>;
-  label: string;
+  label: String;
   privatePages: { title: string; component: any; icon: string }[];
   profiles: any;
   editing: boolean = false;
@@ -186,8 +186,7 @@ export class AppsPage implements OnInit, OnDestroy {
             title: "PAPÉIS",
             component: "RoleManagementPage",
             icon: "assets/icon/flaticon/education/connection.svg"
-          },
-          { title: "PERMISSÕES", component: "PermissionsPage", icon: "home" }
+          }
         ];
       } else if (this.profileSelected["profileType"] === "ProfileComunity") {
         this.label = "Perfil";

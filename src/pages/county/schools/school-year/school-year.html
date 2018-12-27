@@ -9,6 +9,8 @@
   <ion-item>
     <ion-label>Ano</ion-label>
     <ion-datetime
+      cancelText="Cancelar"
+      doneText="Pronto"
       displayFormat="YYYY"
       pickerFormat="YYYY"
       [(ngModel)]="year"
@@ -18,8 +20,8 @@
   </ion-item>
   <ion-item>
     <ion-label floating>Regime Avaliativo</ion-label>
-    <ion-select [(ngModel)]="regime" (ionChange)="onSelectChange($event)">
-      <ion-option *ngFor="let regime of regimes" [value]="regime">{{
+    <ion-select [disabled]="schoolYear != null" [(ngModel)]="regimeSelected">
+      <ion-option *ngFor="let regime of regimes" [value]="regime.value">{{
         regime.showValue
       }}</ion-option>
     </ion-select>
@@ -27,43 +29,36 @@
 </ion-header>
 
 <ion-content no-padding>
-  <form [formGroup]="form">
-    <ion-card *ngFor="let period of periods">
-      <ion-card-header>
-        <h3>{{ period.showValue }} Período</h3>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-item>
-          <ion-label floating>Início do período</ion-label>
-          <ion-datetime
-            cancelText="Cancelar"
-            doneText="Pronto"
-            displayFormat="DD/MM/YYYY"
-            [min]="year"
-            [max]="year"
-            [formControlName]="period.value + '_start'"
-          ></ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Início do período</ion-label>
-          <ion-datetime
-            cancelText="Cancelar"
-            doneText="Pronto"
-            displayFormat="DD/MM/YYYY"
-            [min]="year"
-            [max]="year"
-            [formControlName]="period.value + '_end'"
-          ></ion-datetime>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-  </form>
-</ion-content>
-
-<ion-footer>
-  <ion-row>
+  <ion-row *ngIf="!schoolYear">
     <ion-col>
-      <button ion-button block small (click)="saveYear()">SALVAR</button>
+      <button ion-button block (click)="saveYear()">SALVAR ANO LETIVO</button>
     </ion-col>
   </ion-row>
-</ion-footer>
+  <!-- <ion-row *ngIf="schoolYearId">
+    <ion-col>
+      <button ion-button block (click)="saveYear()">
+        ATUALIZAR ANO LETIVO
+      </button>
+    </ion-col>
+  </ion-row> -->
+  <ion-list-header text-center *ngIf="schoolYearId">PERÍODOS</ion-list-header>
+  <ion-row
+    *ngIf="schoolYear && schoolYear.periods.length < schoolYear.regime.periods"
+  >
+    <ion-col>
+      <button ion-button block (click)="addPeriod()">ADICIONAR PERÍODO</button>
+    </ion-col>
+  </ion-row>
+  <ion-list inset *ngIf="schoolYear">
+    <button
+      ion-item
+      *ngFor="let period of schoolYear.periods"
+      (click)="editPeriod(period)"
+    >
+      <h2>{{ period.start.start | date }}</h2>
+      <h3>{{ period.start.title }}</h3>
+      <h2>{{ period.end.start | date }}</h2>
+      <h3>{{ period.end.title }}</h3>
+    </button>
+  </ion-list>
+</ion-content>

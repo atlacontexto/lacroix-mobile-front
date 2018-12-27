@@ -44,7 +44,11 @@
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="profile.school && profile.classrooms.length === 0">
+  <ion-row
+    *ngIf="
+      profile.school && profile.classrooms && profile.classrooms.length === 0
+    "
+  >
     <ion-col>
       <p ion-text text-center>
         Seu perfil ainda não tem nenhuma turma atribuída. Entre em contato com a
