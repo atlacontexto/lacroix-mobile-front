@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ENV } from "@environment";
 import { Platform } from "ionic-angular";
@@ -36,10 +36,13 @@ export class ClassroomsProvider {
     });
   }
 
-  getClassRoomsBySchoolId(_id: any): any {
+  getClassRoomsBySchoolId(params: HttpParams): any {
     return new Promise((resolve, reject) => {
       this.http
-        .get(`${this.apiUrl}/classroom?school=${_id}`, this.headers)
+        .get(`${this.apiUrl}/classroom`, {
+          params: params,
+          headers: this.headers.headers
+        })
         .subscribe(
           res => {
             let classrooms = res["data"];

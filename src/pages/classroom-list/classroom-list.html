@@ -6,6 +6,14 @@
 -->
 <ion-header>
   <ion-navbar> <ion-title>Lista de Turmas</ion-title> </ion-navbar>
+  <ion-item>
+    <ion-label stacked>Ano</ion-label>
+    <ion-select [(ngModel)]="yearSelected" (ionChange)="updateClassroomList()">
+      <ion-option *ngFor="let year of years" [value]="year._id">{{
+        year.year | date: "yyyy":"+0000"
+      }}</ion-option>
+    </ion-select>
+  </ion-item>
 </ion-header>
 
 <ion-content padding>

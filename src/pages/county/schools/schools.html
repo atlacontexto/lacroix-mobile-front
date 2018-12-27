@@ -69,6 +69,9 @@
     </ion-row>
     <div [ngSwitch]="step">
       <ion-list *ngSwitchCase="'schools'">
+        <p ion-text text-center *ngIf="schools">
+          Você administra {{ schools.length }} escolas
+        </p>
         <button
           ion-item
           *ngFor="let school of schools"
