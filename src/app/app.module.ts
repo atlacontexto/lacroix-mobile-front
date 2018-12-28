@@ -13,6 +13,9 @@ import { UserProvider } from "../providers/user/user";
 import { AlertProvider } from "../providers/alert-service/alert-service";
 import { Keyboard } from "@ionic-native/keyboard";
 
+import { AngularFireModule } from "angularfire2";
+import { AngularFirestore } from "angularfire2/firestore";
+
 import { NgCalendarModule } from "ionic2-calendar";
 import { NotificationProvider } from "../providers/notification/notification";
 import { ClassroomServiceProvider } from "../providers/classroom-service/classroom-service";
@@ -33,7 +36,8 @@ import { ClassroomsProvider } from "../providers/classrooms/classrooms";
 import { Network } from "@ionic-native/network";
 import { NetworkProvider } from "../providers/network/network";
 import { InAppBrowser } from "@ionic-native/in-app-browser";
-import { SchoolYearProvider } from '../providers/school-year/school-year';
+import { SchoolYearProvider } from "../providers/school-year/school-year";
+import { ChatProvider } from "../providers/chat/chat";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/i18n/", ".json");
@@ -53,7 +57,15 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    HomePageModule
+    HomePageModule,
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyDgRHGcziDYfSSIsm3_u91nX-gEml1mrp8",
+      authDomain: "atla-app-teste.firebaseapp.com",
+      databaseURL: "https://atla-app-teste.firebaseio.com",
+      projectId: "atla-app-teste",
+      storageBucket: "atla-app-teste.appspot.com",
+      messagingSenderId: "27576423204"
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, HomePage],
@@ -80,7 +92,8 @@ export function createTranslateLoader(http: HttpClient) {
     Network,
     NetworkProvider,
     InAppBrowser,
-    SchoolYearProvider
+    SchoolYearProvider,
+    ChatProvider
   ]
 })
 export class AppModule {}
