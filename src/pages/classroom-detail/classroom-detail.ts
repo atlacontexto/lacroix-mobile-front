@@ -97,6 +97,12 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
       .getSchoolProfessorsRequestings(this._idSchool)
       .then(res => {
         this.requests = res;
+
+        if (this.profile.profileType != "ProfileSchool") {
+          this.requests = res.filter(element => {
+            return element.requesting.classrooms.includes(this.classroom._id);
+          });
+        }
         // this.requests = res.filter(profile =>
         //   this.classroom.series.includes(profile.requesting.serie)
         // );

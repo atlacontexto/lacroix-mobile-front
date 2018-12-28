@@ -78,7 +78,10 @@
         </ion-thumbnail>
         <h2 text-wrap>{{ professor.requesting.user.people.name }}</h2>
         <button
-          *ngIf="!professor.requesting.classrooms.includes(classroom._id)"
+          *ngIf="
+            profile.profileType == 'ProfileSchool' &&
+            !professor.requesting.classrooms.includes(classroom._id)
+          "
           ion-button
           small
           item-end
@@ -87,7 +90,10 @@
           Ativar
         </button>
         <button
-          *ngIf="professor.requesting.classrooms.includes(classroom._id)"
+          *ngIf="
+            profile.profileType == 'ProfileSchool' &&
+            professor.requesting.classrooms.includes(classroom._id)
+          "
           ion-button
           small
           item-end
@@ -95,6 +101,12 @@
         >
           Desativar
         </button>
+        <ion-icon
+          *ngIf="professor.requesting.classrooms.includes(classroom._id)"
+          item-end
+          color="secondary"
+          name="checkmark-circle"
+        ></ion-icon>
       </ion-item>
       <p ion-text text-center *ngIf="!requests">
         Nenhum professor se cadastrou para este Ano.

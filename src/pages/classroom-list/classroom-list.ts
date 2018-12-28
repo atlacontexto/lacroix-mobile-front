@@ -47,6 +47,8 @@ export class ClassroomListPage implements OnInit, OnDestroy {
   ) {
     this._unsubscribeAll = new Subject();
     this._schoolId = this.navParams.get("school");
+    this._countyId = this.navParams.get("countyId");
+    console.log(this._countyId);
   }
 
   ionViewWillEnter() {
@@ -66,12 +68,12 @@ export class ClassroomListPage implements OnInit, OnDestroy {
       )
       .subscribe(profile => {
         console.log(profile);
-        if (this._schoolId == null) {
-          this.profile = profile;
+        this.profile = profile;
+        if (this._schoolId == null && this._countyId == null) {
           this._schoolId = this.profile.school.requested._id;
           this._countyId = this.profile.school.requested.countyInstitutional;
-          this.getSchoolYears(this._countyId);
         }
+        this.getSchoolYears(this._countyId);
       });
   }
 
@@ -80,14 +82,16 @@ export class ClassroomListPage implements OnInit, OnDestroy {
       this._schoolYear
         .getSchoolYearByCounty(_countyId)
         .then(res => {
-          console.log(res);
           res.forEach(element => {
             this.years.push(Object.assign(new SchoolYear(), element));
-            if (element._id == this.profile.school.requested.currentYear) {
+            if (
+              this.profile.school &&
+              element._id == this.profile.school.requested.currentYear
+            ) {
               this.yearSelected = element._id;
             }
           });
-          console.log(this.yearSelected);
+
           this.updateClassroomList();
         })
         .catch(err => {

@@ -110,7 +110,11 @@ export class SchoolsPage implements OnInit, OnDestroy {
 
   openSchoolClassRooms(id) {
     console.log(id);
-    this.navCtrl.push("ClassroomListPage", { school: id });
+    let params = { school: id };
+    if (this.profile.county) {
+      params["countyId"] = this.profile.county.requested._id;
+    }
+    this.navCtrl.push("ClassroomListPage", params);
   }
 
   addSchoolYear() {
