@@ -13,7 +13,30 @@
 </ion-header>
 
 <ion-content padding>
+  <!-- <ion-grid>
+   
+  </ion-grid> -->
+
   <ion-list>
+    <ion-list-header> {{ priorityProfileText }} </ion-list-header>
+    <button ion-item *ngFor="let item of priorityProfiles" (click)="itemSelected(item)">
+        <h2>{{ item.name }}</h2>
+    </button>
+    <ion-list-header> {{ secondaryProfileText }} </ion-list-header>
+    <button ion-item *ngFor="let item of secondaryProfiles" (click)="itemSelected(item)">
+        <h2>{{ item.name }}</h2>
+    </button>
+  </ion-list>
+  <ion-footer>
+      <ion-row>
+          <ion-col text-center>
+            <button ion-button outline (click)="openOthers()">Outras conversas</button>
+          </ion-col>
+        </ion-row>
+  </ion-footer>
+
+
+  <!-- <ion-list>
     <ion-list-header>Hoje</ion-list-header>
 
     <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
@@ -44,5 +67,5 @@
       <p>{{ item.lastMessage }}</p>
       <ion-note item-end>{{ item.lastMessageTime }}</ion-note>
     </button>
-  </ion-list>
+  </ion-list> -->
 </ion-content>
