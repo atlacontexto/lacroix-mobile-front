@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { PlanningProvider } from "../../../../providers/planning/planning";
-import { AlertController, NavController } from "ionic-angular";
+import { NavController } from "ionic-angular";
 
 /**
  * Generated class for the PlanningListDailyComponent component.
@@ -22,7 +22,6 @@ export class PlanningListDailyComponent {
 
   constructor(
     public planningProvider: PlanningProvider,
-    public alertCtrl: AlertController,
     public navCtrl: NavController
   ) {
     console.log("Hello PlanningListDailyComponent Component");
@@ -34,17 +33,10 @@ export class PlanningListDailyComponent {
     this.planningProvider
       .getDailyPlanningByTheme(this.title, this.id)
       .then(res => {
-        console.log(res);
         this.plannings = res;
       })
       .catch(err => {
-        let getPlanningError = this.alertCtrl.create({
-          title: "Erro na recuperação dos planos",
-          message:
-            "Ocorreu uma falha interna na recuperação dos seus planos diários. Tente novamente mais tarde.",
-          buttons: ["OK"]
-        });
-        getPlanningError.present();
+        console.error(err);
       });
   }
   ngOnDestroy(): void {}

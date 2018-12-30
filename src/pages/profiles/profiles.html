@@ -5,7 +5,9 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar> <ion-title>profiles</ion-title> </ion-navbar>
+  <ion-navbar> <ion-title>Meus Perfis</ion-title> </ion-navbar>
 </ion-header>
 
-<ion-content padding> <profiles></profiles> </ion-content>
+<ion-content no-padding>
+  <profiles [openProfile]="hasBackButton"></profiles>
+</ion-content>

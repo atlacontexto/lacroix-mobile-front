@@ -8,7 +8,7 @@
   <ion-navbar> <ion-title>Detalhes da Matrícula</ion-title> </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content no-padding>
   <ion-list>
     <ion-item no-lines *ngIf="student">
       <h2>{{ student.basic["Nome do Aluno"] }}</h2>
@@ -20,8 +20,10 @@
     </ion-item>
     <ion-list-header *ngIf="student.contato">Contato</ion-list-header>
     <ion-item no-lines>
-      <p text-wrap>{{ student.contato["Celular Aluno"] }}</p>
-      <p text-wrap>{{ student.contato["Celular Responsável"] }}</p>
+      <p text-wrap>Celular do Aluno: {{ student.contato["Celular Aluno"] }}</p>
+      <p text-wrap>
+        Celular do Responsável: {{ student.contato["Celular Responsável"] }}
+      </p>
       <p text-wrap>{{ student.contato["Email aluno"] }}</p>
       <p text-wrap>{{ student.contato["Email responsável"] }}</p>
       <p text-wrap>{{ student.contato["Ramal"] }}</p>

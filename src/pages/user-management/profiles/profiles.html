@@ -34,7 +34,7 @@
     no-padding
     ion-item
     *ngFor="let profile of showProfiles"
-    (click)="editProfile(profile)"
+    (click)="openProfile ? setCurrentProfile(profile) : editProfile(profile)"
   >
     <ion-avatar item-start> <img [src]="profile.avatar" /> </ion-avatar>
     <h2 style="font-weight: bold;" text-wrap text-capitalize ion-text>
@@ -50,41 +50,11 @@
       {{ profile.county.requested.name }}
     </h3>
     <ion-badge *ngIf="profile.main">principal</ion-badge>
-    <ion-icon
-      *ngIf="
-        (profile.school && profile.school.status === 'accepted') ||
-        (profile.county && profile.county.status === 'accepted')
-      "
-      item-end
-      color="secondary"
-      name="checkmark-circle"
-    ></ion-icon>
-    <ion-icon
-      *ngIf="
-        (profile.school && profile.school.status === 'denied') ||
-        (profile.county && profile.county.status === 'denied')
-      "
-      item-end
-      color="danger"
-      name="close-circle"
-    ></ion-icon>
-    <ion-icon
-      *ngIf="
-        (profile.school && profile.school.status === 'waiting') ||
-        (profile.county && profile.county.status === 'waiting')
-      "
-      item-end
-      color="primary"
-      name="time"
-    ></ion-icon>
-    <ion-icon
-      *ngIf="
-        (profile.school && profile.school.status === 'closed') ||
-        (profile.county && profile.county.status === 'closed')
-      "
-      item-end
-      color="alert"
-      name="alert"
-    ></ion-icon>
+    <ion-badge [color]="profile.school?.status">{{
+      profile.school?.status | translate
+    }}</ion-badge>
+    <ion-badge [color]="profile.county?.status">{{
+      profile.county?.status | translate
+    }}</ion-badge>
   </button>
 </ion-list>

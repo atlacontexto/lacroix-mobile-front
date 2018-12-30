@@ -9,5 +9,23 @@
 </ion-header>
 
 <ion-content no-padding>
-  <professors-list [open]="'plan'"></professors-list>
+  <ion-row
+    *ngIf="currentInstitution && currentInstitution.status === 'waiting'"
+  >
+    <ion-col>
+      <p ion-text text-center>
+        Seu perfil ainda não tem permissão de acesso. Entre em contato com a sua
+        escola para liberação.
+      </p>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="currentInstitution && currentInstitution.status === 'closed'">
+    <ion-col>
+      <p ion-text text-center>
+        Seu perfil está com permissão de acesso suspenso. Entre em contato com a
+        sua escola para liberação.
+      </p>
+    </ion-col>
+  </ion-row>
+  <professors-list [open]="content"></professors-list>
 </ion-content>

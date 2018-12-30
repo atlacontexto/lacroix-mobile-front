@@ -17,6 +17,11 @@
 </ion-header>
 
 <ion-content no-padding>
+  <div padding *ngIf="classrooms.length == 0">
+    <p ion-text text-center>
+      Não existem turmas cadastradas ainda. Aguarde a atualização.
+    </p>
+  </div>
   <ion-list>
     <button
       ion-item

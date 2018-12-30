@@ -30,7 +30,7 @@ import { HttpParams } from "@angular/common/http";
 export class ClassroomListPage implements OnInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
   profile: any;
-  classrooms: any;
+  classrooms = new Array();
   _schoolId: any;
   isInitialized: any;
   _countyId: any;
@@ -48,7 +48,6 @@ export class ClassroomListPage implements OnInit, OnDestroy {
     this._unsubscribeAll = new Subject();
     this._schoolId = this.navParams.get("school");
     this._countyId = this.navParams.get("countyId");
-    console.log(this._countyId);
   }
 
   ionViewWillEnter() {
@@ -67,7 +66,6 @@ export class ClassroomListPage implements OnInit, OnDestroy {
         filter(profile => profile instanceof Profile)
       )
       .subscribe(profile => {
-        console.log(profile);
         this.profile = profile;
         if (this._schoolId == null && this._countyId == null) {
           this._schoolId = this.profile.school.requested._id;

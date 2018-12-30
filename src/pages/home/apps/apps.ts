@@ -1,5 +1,10 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  ModalController
+} from "ionic-angular";
 import { ProfilesProvider } from "../../../providers/profiles/profiles";
 import { Profile } from "../../../app/model/profile";
 import { Subject } from "rxjs";
@@ -18,7 +23,7 @@ import { takeUntil, filter } from "rxjs/operators";
   templateUrl: "apps.html"
 })
 export class AppsPage implements OnInit, OnDestroy {
-  profileSelected: Profile;
+  currentProfile: Profile;
   private _unsubscribeAll: Subject<any>;
   label: String;
   privatePages: { title: string; component: any; icon: string }[];
@@ -28,23 +33,24 @@ export class AppsPage implements OnInit, OnDestroy {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public profilesProvider: ProfilesProvider
+    public _profilesProvider: ProfilesProvider,
+    public modalCtrl: ModalController
   ) {
     this._unsubscribeAll = new Subject();
   }
 
   ngOnInit(): void {
-    this.profilesProvider.listProfiles.subscribe(profiles => {
+    this._profilesProvider.listProfiles.subscribe(profiles => {
       this.profiles = profiles;
       this.updateList();
     });
-    this.profilesProvider.currentProfile
+    this._profilesProvider.currentProfile
       .pipe(
         filter(profile => profile instanceof Profile),
         takeUntil(this._unsubscribeAll)
       )
       .subscribe(profile => {
-        this.profileSelected = profile;
+        this.currentProfile = profile;
         this.updateList();
       });
   }
@@ -55,19 +61,29 @@ export class AppsPage implements OnInit, OnDestroy {
   }
 
   private changeSelected(): void {
-    this.profilesProvider.currentProfile.next(this.profileSelected);
+    this._profilesProvider.currentProfile.next(this.currentProfile);
     this.updateList();
   }
 
   openPage(page) {
     this.navCtrl.push(
       page.component,
-      { profileSelected: this.profileSelected },
+      { profileSelected: this.currentProfile },
       {
         animate: true,
         direction: "forward"
       }
     );
+  }
+
+  openProfileSelect() {
+    let profileSelectModal = this.modalCtrl.create(
+      "ProfilesPage",
+      { modal: true },
+      { showBackdrop: true, enableBackdropDismiss: true }
+    );
+    profileSelectModal.present();
+    profileSelectModal.onDidDismiss(() => {});
   }
 
   reorderData(ev) {
@@ -95,22 +111,22 @@ export class AppsPage implements OnInit, OnDestroy {
   }
 
   private updateList(): void {
-    if (this.profileSelected) {
-      if (this.profileSelected["profileType"] === "ProfileStudent") {
+    if (this.currentProfile) {
+      if (this.currentProfile["profileType"] === "ProfileStudent") {
         this.label = "Perfil";
         this.privatePages = [
           { title: "BOLETIM", component: "ReportPage", icon: "home" },
           { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" },
           { title: "TAREFAS", component: "TaskPage", icon: "home" }
         ];
-      } else if (this.profileSelected["profileType"] === "ProfileParent") {
+      } else if (this.currentProfile["profileType"] === "ProfileParent") {
         this.label = "Perfil";
         this.privatePages = [
           { title: "BOLETIM", component: "ReportPage", icon: "home" },
           { title: "AVALIAÇÃO", component: "ExamPage", icon: "home" }
         ];
-      } else if (this.profileSelected["profileType"] === "ProfileProfessor") {
-        this.label = this.profileSelected.$showType;
+      } else if (this.currentProfile["profileType"] === "ProfileProfessor") {
+        this.label = this.currentProfile.$showType;
         this.privatePages = [
           {
             title: "BOLETIM",
@@ -143,8 +159,8 @@ export class AppsPage implements OnInit, OnDestroy {
             icon: "assets/icon/flaticon/education/lock.svg"
           }
         ];
-      } else if (this.profileSelected["profileType"] === "ProfileSchool") {
-        this.label = this.profileSelected.$showType;
+      } else if (this.currentProfile["profileType"] === "ProfileSchool") {
+        this.label = this.currentProfile.$showType;
         this.privatePages = [
           {
             title: "TURMAS",
@@ -157,7 +173,7 @@ export class AppsPage implements OnInit, OnDestroy {
             icon: "assets/icon/flaticon/education/lock.svg"
           }
         ];
-        if (this.profileSelected["role"].type == "pedAdvisor") {
+        if (this.currentProfile["role"].type == "pedAdvisor") {
           this.privatePages.push({
             title: "AVALIAÇÕES",
             component: "AssestmentCheckPage",
@@ -169,7 +185,7 @@ export class AppsPage implements OnInit, OnDestroy {
             icon: "assets/icon/flaticon/education/open-book.svg"
           });
         }
-      } else if (this.profileSelected["profileType"] === "ProfileCounty") {
+      } else if (this.currentProfile["profileType"] === "ProfileCounty") {
         this.label = "Perfil";
         this.privatePages = [
           {
@@ -188,9 +204,9 @@ export class AppsPage implements OnInit, OnDestroy {
             icon: "assets/icon/flaticon/education/connection.svg"
           }
         ];
-      } else if (this.profileSelected["profileType"] === "ProfileComunity") {
+      } else if (this.currentProfile["profileType"] === "ProfileComunity") {
         this.label = "Perfil";
-        if (this.profileSelected["role"].type == "voluntary") {
+        if (this.currentProfile["role"].type == "voluntary") {
           this.privatePages = [
             {
               title: "DISPONIBILIDADE",
@@ -203,7 +219,7 @@ export class AppsPage implements OnInit, OnDestroy {
               icon: "assets/icon/flaticon/education/exam.svg"
             }
           ];
-        } else if (this.profileSelected["role"].type == "representant") {
+        } else if (this.currentProfile["role"].type == "representant") {
           this.privatePages = [
             {
               title: "ENGAJAMENTO",

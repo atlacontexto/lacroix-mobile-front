@@ -6,15 +6,17 @@
 -->
 <ion-header no-border>
   <ion-navbar transparent>
-    <button ion-button menuToggle><ion-icon name="settings"></ion-icon></button>
-    <ion-searchbar
+    <button ion-button menuToggle>
+      <ion-icon name="settings"></ion-icon>CONFIGURAÇÕES
+    </button>
+    <!-- <ion-searchbar
       placeholder="Buscar"
       [(ngModel)]="myInput"
       [showCancelButton]="shouldShowCancel"
       (ionInput)="onInput($event)"
       (ionCancel)="onCancel($event)"
     >
-    </ion-searchbar>
+    </ion-searchbar> -->
     <ion-buttons end>
       <button ion-button icon-end (click)="openHelp()">
         Ajuda
@@ -22,12 +24,27 @@
       </button>
     </ion-buttons>
   </ion-navbar>
-  <ion-item>
+  <ion-toolbar>
+    <ion-item no-lines (click)="openProfileSelect()">
+      <ion-avatar item-start>
+        <img src="assets/imgs/placeholder.png" />
+      </ion-avatar>
+      <!-- <p ion-text text-center text-wrap>Toque aqui para trocar de perfil</p> -->
+      <p text-wrap>Acessando como {{ currentProfile.$showType }}</p>
+      <p *ngIf="currentProfile.role">
+        {{ currentProfile.role.type | translate }}
+      </p>
+      <p *ngIf="currentProfile.school">
+        {{ currentProfile.school.requested.institution.name }}
+      </p>
+    </ion-item>
+  </ion-toolbar>
+  <!-- <ion-item>
     <ion-label stacked>{{ label }}</ion-label>
     <ion-select
       ion-text
       text-wrap
-      [(ngModel)]="profileSelected"
+      [(ngModel)]="currentProfile"
       (ionChange)="changeSelected()"
     >
       <ion-option
@@ -43,7 +60,7 @@
         }}
       </ion-option>
     </ion-select>
-  </ion-item>
+  </ion-item> -->
 </ion-header>
 
 <ion-content no-padding>

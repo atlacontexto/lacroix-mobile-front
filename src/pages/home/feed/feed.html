@@ -17,18 +17,24 @@
     </ion-buttons>
   </ion-navbar>
 
-  <ion-item *ngIf="isProfile(currentProfile)" no-lines (click)="showProfile()">
-    <ion-avatar item-start>
-      <img src="assets/imgs/placeholder.png" />
-    </ion-avatar>
-    <p text-wrap>Acessando como {{ currentProfile.$showType }}</p>
-    <p *ngIf="currentProfile.role">
-      {{ currentProfile.role.type | translate }}
-    </p>
-    <p *ngIf="currentProfile.school">
-      {{ currentProfile.school.requested.institution.name }}
-    </p>
-  </ion-item>
+  <ion-toolbar>
+    <ion-item
+      *ngIf="isProfile(currentProfile)"
+      no-lines
+      (click)="showProfile()"
+    >
+      <ion-avatar item-start>
+        <img src="assets/imgs/placeholder.png" />
+      </ion-avatar>
+      <p text-wrap>Acessando como {{ currentProfile.$showType }}</p>
+      <p *ngIf="currentProfile.role">
+        {{ currentProfile.role.type | translate }}
+      </p>
+      <p text-wrap *ngIf="currentProfile.school">
+        {{ currentProfile.school.requested.institution.name }}
+      </p>
+    </ion-item>
+  </ion-toolbar>
 
   <last-news></last-news>
 </ion-header>

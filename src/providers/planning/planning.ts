@@ -4,6 +4,7 @@ import { AuthProvider } from "../auth/auth";
 import { Platform } from "ionic-angular";
 import { ENV } from "@environment";
 import { ProfilesProvider } from "../profiles/profiles";
+import { AlertProvider } from "../alert-service/alert-service";
 
 /*
   Generated class for the PlanningProvider provider.
@@ -19,7 +20,8 @@ export class PlanningProvider {
     public http: HttpClient,
     public authProvider: AuthProvider,
     public platform: Platform,
-    public _profilesProvider: ProfilesProvider
+    public _profilesProvider: ProfilesProvider,
+    public _alertProvider: AlertProvider
   ) {
     console.log("Hello PlanningProvider Provider");
     if (platform.is("cordova")) {
@@ -68,13 +70,16 @@ export class PlanningProvider {
         )
         .subscribe(
           res => {
-            console.log(res);
             if (res["success"]) {
               resolve(res["data"]["plannings"]);
             }
           },
           err => {
-            console.log(err);
+            this._alertProvider.presentAlert(
+              "Erro na recuperação dos planos",
+              "Ocorreu uma falha interna na recuperação dos seus planos diários. Tente novamente mais tarde.",
+              "Ok"
+            );
             reject(err);
           }
         );

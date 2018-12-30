@@ -41,7 +41,6 @@ export class SchoolYearProvider {
     return new Promise((resolve, reject) => {
       this.http.post(`${this.apiUrl}/period`, form, this.headers).subscribe(
         res => {
-          console.log(res);
           this.haveSchoolYearsUpdated.next(res["success"]);
           resolve(res["data"]);
         },
@@ -58,7 +57,6 @@ export class SchoolYearProvider {
         .put(`${this.apiUrl}/school-year/${id}`, value, this.headers)
         .subscribe(
           res => {
-            console.log(res);
             this.haveSchoolYearsUpdated.next(res["success"]);
             resolve(res["data"]);
           },
@@ -75,7 +73,6 @@ export class SchoolYearProvider {
         .post(`${this.apiUrl}/school-year`, value, this.headers)
         .subscribe(
           res => {
-            console.log(res);
             this.haveSchoolYearsUpdated.next(res["success"]);
             resolve(res["data"]);
           },
@@ -92,7 +89,6 @@ export class SchoolYearProvider {
         .get(`${this.apiUrl}/school-year?county=${_id}`, this.headers)
         .subscribe(
           res => {
-            console.log(res);
             if (res["data"]["regime"]) {
               res["data"]["regime"] = profiles.periods.find(
                 el => el.value == res["data"]["regime"]

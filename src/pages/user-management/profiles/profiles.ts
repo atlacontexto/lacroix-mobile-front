@@ -1,12 +1,14 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import {
   NavController,
   ModalController,
   Events,
-  LoadingController
+  LoadingController,
+  ViewController
 } from "ionic-angular";
 import { HomePage } from "../../../pages/home/home";
 import { UserProvider } from "../../../providers/user/user";
+import { ProfilesProvider } from "../../../providers/profiles/profiles";
 
 /**
  * Generated class for the ProfilesComponent component.
@@ -24,6 +26,7 @@ export interface Slide {
   templateUrl: "profiles.html"
 })
 export class ProfilesComponent {
+  @Input() openProfile;
   slides: Slide[];
   showHelp = false;
   showProfiles: Array<any>;
@@ -33,9 +36,20 @@ export class ProfilesComponent {
     public modalCtrl: ModalController,
     public events: Events,
     public userProvider: UserProvider,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public _profilesProvider: ProfilesProvider,
+    public viewCtrl: ViewController
   ) {
     this.showProfiles = new Array();
+  }
+
+  ngOnChanges() {
+    console.log(this.openProfile);
+  }
+
+  setCurrentProfile(profile) {
+    this._profilesProvider.currentProfile.next(profile);
+    this.viewCtrl.dismiss();
   }
 
   showHelpAction() {
