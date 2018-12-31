@@ -44,7 +44,7 @@ export class ProfilesComponent {
   }
 
   ngOnChanges() {
-    console.log(this.openProfile);
+    
   }
 
   setCurrentProfile(profile) {

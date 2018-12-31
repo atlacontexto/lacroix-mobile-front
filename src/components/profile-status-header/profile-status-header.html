@@ -1,0 +1,62 @@
+<ion-item no-lines>
+  <ion-avatar item-start> <img [src]="profile.avatar" /> </ion-avatar>
+  <h2 style="font-weight: bold;" text-wrap text-capitalize ion-text>
+    {{ profile.showType }}
+  </h2>
+  <h3 text-capitalize *ngIf="profile.role" ion-text text-wrap>
+    {{ profile.role.type | translate }}
+  </h3>
+  <h3 ion-text text-wrap text-capitalize>
+    {{ profile.school?.requested.institution.name }}
+  </h3>
+  <h3 ion-text text-wrap text-capitalize>
+    {{ profile.county?.requested.name }}
+  </h3>
+  <ion-badge *ngIf="profile.main">principal</ion-badge>
+  <ion-icon
+    *ngIf="
+      profile.school?.status === 'accepted' ||
+      profile.county?.status === 'accepted'
+    "
+    item-end
+    color="secondary"
+    name="checkmark-circle"
+  ></ion-icon>
+  <ion-icon
+    *ngIf="
+      profile.school?.status === 'waiting' ||
+      profile.county?.status === 'waiting'
+    "
+    item-end
+    color="primary"
+    name="time"
+  ></ion-icon>
+  <ion-icon
+    *ngIf="
+      profile.school?.status === 'closed' || profile.county?.status === 'closed'
+    "
+    item-end
+    color="alert"
+    name="alert"
+  ></ion-icon>
+</ion-item>
+
+<p
+  *ngIf="
+    profile.school?.status === 'waiting' || profile.county?.status === 'waiting'
+  "
+  ion-text
+  text-center
+>
+  {{ "PROFILE_STATUS_WAITING" | translate }}
+</p>
+
+<p
+  *ngIf="
+    profile.school?.status === 'closed' || profile.county?.status === 'closed'
+  "
+  ion-text
+  text-center
+>
+  {{ "PROFILE_STATUS_CLOSED" | translate }}
+</p>

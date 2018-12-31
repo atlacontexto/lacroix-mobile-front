@@ -25,7 +25,7 @@ import { Profile } from "../../app/model/profile";
 export class AuthorizationPage implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any>;
   step: string;
-  profile: Profile;
+  profile: any;
   requests: any;
   institution: any;
   constructor(
@@ -48,6 +48,7 @@ export class AuthorizationPage implements OnInit, OnDestroy {
         filter(profile => profile instanceof Profile)
       )
       .subscribe(profile => {
+        console.log(profile);
         this.profile = profile;
         if (this.profile.$profileType == "ProfileSchool") {
           this.institution = profile.school;
@@ -100,7 +101,7 @@ export class AuthorizationPage implements OnInit, OnDestroy {
   }
 
   onSegmentChange() {
-    console.log("segment changed")
+    console.log("segment changed");
     this.updateRequestings();
   }
 

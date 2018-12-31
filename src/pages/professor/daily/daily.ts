@@ -50,6 +50,7 @@ export class DailyPage implements OnInit, OnDestroy {
   frequency: FormGroup;
   currentFrequency: any;
   action: string;
+  classroomId: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -78,11 +79,13 @@ export class DailyPage implements OnInit, OnDestroy {
       .subscribe(profile => {
         this.profile = profile;
         this.currentFrequency = this.navParams.get("frequency");
-
-        if (this.currentFrequency == null && this.profile.classroom != null) {
+        this.classroomId = this.navParams.get("classroomId");
+        console.log(this.classroomId);
+        if (this.currentFrequency == null && this.classroomId != null) {
           this.classroomProvider
-            .getClassroomById(this.profile.classroom)
+            .getClassroomById(this.classroomId)
             .then(res => {
+              console.log(res);
               this.classroom = res;
               this.getEnrollments(this.classroom._id);
             })

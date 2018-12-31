@@ -30,9 +30,44 @@
       <p *ngIf="currentProfile.role">
         {{ currentProfile.role.type | translate }}
       </p>
-      <p text-wrap *ngIf="currentProfile.school">
-        {{ currentProfile.school.requested.institution.name }}
-      </p>
+      <p>{{ currentProfile.school?.requested.institution.name }}</p>
+      <p>{{ currentProfile.county?.requested.name }}</p>
+      <ion-icon
+        *ngIf="
+          currentProfile.school?.status == 'waiting' ||
+          currentProfile.county?.status == 'waiting'
+        "
+        [color]="currentProfile.school?.status || currentProfile.county?.status"
+        name="time"
+        item-end
+      ></ion-icon>
+      <ion-icon
+        *ngIf="
+          currentProfile.school?.status == 'accepted' ||
+          currentProfile.county?.status == 'accepted'
+        "
+        [color]="currentProfile.school?.status || currentProfile.county?.status"
+        name="checkmark-circle"
+        item-end
+      ></ion-icon>
+      <ion-icon
+        *ngIf="
+          currentProfile.school?.status == 'closed' ||
+          currentProfile.county?.status == 'closed'
+        "
+        [color]="currentProfile.school?.status || currentProfile.county?.status"
+        name="alert"
+        item-end
+      ></ion-icon>
+      <ion-icon
+        *ngIf="
+          currentProfile.school?.status == 'denied' ||
+          currentProfile.county?.status == 'denied'
+        "
+        [color]="currentProfile.school?.status || currentProfile.county?.status"
+        name="close"
+        item-end
+      ></ion-icon>
     </ion-item>
   </ion-toolbar>
 

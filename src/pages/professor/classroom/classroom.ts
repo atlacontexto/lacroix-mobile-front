@@ -25,11 +25,12 @@ import { AlertProvider } from "../../../providers/alert-service/alert-service";
   templateUrl: "classroom.html"
 })
 export class ClassroomPage {
-  private profile: any;
+  profile: any;
   private _unsubscribeAll: Subject<any>;
   classroom: any;
   frequencies: any;
   isInitialized: boolean;
+  currentClassroom: any;
 
   constructor(
     public navCtrl: NavController,
@@ -67,9 +68,10 @@ export class ClassroomPage {
       )
       .subscribe(profile => {
         this.profile = profile;
-        if (this.profile.classroom != null) {
+        if (this.profile.classrooms != null) {
+          this.currentClassroom = this.profile.classrooms[0]._id;
           this.classroomProvider
-            .getClassroomById(this.profile.classroom)
+            .getClassroomById(this.profile.classrooms[0]._id)
             .then(res => {
               this.classroom = res;
               this.getFrequencies(this.classroom._id);
@@ -88,6 +90,7 @@ export class ClassroomPage {
     this.classroomProvider
       .getClassroomFrequencie(_id)
       .then(res => {
+        console.log(res);
         this.frequencies = res;
         for (const key in this.frequencies) {
           let a = Object.values(this.frequencies[key]["students"]).filter(
@@ -132,9 +135,10 @@ export class ClassroomPage {
   getItems(event) {}
 
   newFrequency() {
+    console.log(this.currentClassroom);
     this.navCtrl.push(
       "DailyPage",
-      {},
+      { classroomId: this.currentClassroom },
       {
         animate: true,
         direction: "forward"

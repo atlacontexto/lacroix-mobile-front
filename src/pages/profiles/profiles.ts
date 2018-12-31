@@ -17,7 +17,7 @@ export class ProfilesPage {
   hasBackButton: any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.hasBackButton = this.navParams.get("modal");
-    console.log(this.hasBackButton);
+    
   }
 
   ionViewDidLoad() {

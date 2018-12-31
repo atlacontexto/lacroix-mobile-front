@@ -33,12 +33,19 @@
   "RESEND_CODE": "reenviar código",
 
   "BACK_BUTTON_TEXT": "voltar",
+
+  "PROFILE_STATUS_CLOSED": "Seu perfil está com permissão de acesso suspenso. Entre em contato com a sua escola para liberação.",
+  "PROFILE_STATUS_WAITING": "Seu perfil ainda não tem permissão de acesso. Entre em contato com a sua escola para liberação.",
+  "CLASSROOM_HAS_NO_PROFESSOR": "Nenhum professor se cadastrou para este Ano.",
+  "PROFESSOR_HAS_NO_CLASSROOM": "Seu perfil ainda não tem nenhuma turma atribuída. Entre em contato com a sua escola para liberar o acesso às suas turmas.",
+  "HAS_NO_AVAILABLE_PROFESSORS": "Não há professores disponíveis",
+
   "director": "diretor",
   "pedAdvisor": "orientador pedagógico",
   "pedChief": "chefe pedagógico",
-  "accepted": "Aceito",
+  "accepted": "Autorizado",
   "waiting": "Em espera",
-  "closed": "Suspenso",
+  "closed": "Em revisão",
   "denied": "Negado",
   "i1": "Infantil 1",
   "i2": "Infantil 2",

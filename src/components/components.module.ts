@@ -6,6 +6,7 @@ import { DisciplinesListComponent } from "./disciplines-list/disciplines-list";
 import { DocumentCommentsComponent } from "./document-comments/document-comments";
 import { DocumentAttachmentsComponent } from "./document-attachments/document-attachments";
 import { CommentsComponent } from "./comments/comments";
+import { ProfileStatusHeaderComponent } from './profile-status-header/profile-status-header';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { CommentsComponent } from "./comments/comments";
     DisciplinesListComponent,
     DocumentCommentsComponent,
     DocumentAttachmentsComponent,
-    CommentsComponent
+    CommentsComponent,
+    ProfileStatusHeaderComponent
   ],
   imports: [IonicModule, TranslateModule.forChild()],
   exports: [
@@ -21,7 +23,8 @@ import { CommentsComponent } from "./comments/comments";
     DisciplinesListComponent,
     DocumentCommentsComponent,
     DocumentAttachmentsComponent,
-    CommentsComponent
+    CommentsComponent,
+    ProfileStatusHeaderComponent
   ]
 })
 export class ComponentsModule {}

@@ -59,6 +59,8 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
         this.classroom = this.navParams.get("classroom");
         console.log(this.profile);
         if (
+          profile.school &&
+          profile.school.status === "accepted" &&
           this.classroom == null &&
           this.profile.classrooms &&
           this.profile.classrooms.length > 0
@@ -96,6 +98,7 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
     this._profilesProvider
       .getSchoolProfessorsRequestings(this._idSchool)
       .then(res => {
+        console.log(res);
         this.requests = res;
 
         if (this.profile.profileType != "ProfileSchool") {
@@ -125,6 +128,7 @@ export class ClassroomDetailPage implements OnInit, OnDestroy {
     this._classroomProvider
       .getEnrollments(_id)
       .then(res => {
+        console.log(res);
         this.students = res;
       })
       .catch(err => {

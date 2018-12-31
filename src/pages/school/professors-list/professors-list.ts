@@ -42,7 +42,9 @@ export class ProfessorsListComponent implements OnInit, OnDestroy {
         this.profilesProvider
           .getSchoolProfessorsRequestings(profile.school.requested._id)
           .then(res => {
-            this.professors = res;
+            this.professors = res.filter(profile => {
+              return profile.status == "accepted";
+            });
           })
           .catch(err => {
             let requestingErrorAlert = this.alertCtrl.create({
@@ -59,7 +61,6 @@ export class ProfessorsListComponent implements OnInit, OnDestroy {
   }
 
   openPage(professor) {
-    console.log(professor);
     let page = "AssestmentsListPage";
     if (this.open == "plan") {
       page = "PlanningPage";

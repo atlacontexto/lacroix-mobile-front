@@ -11,4 +11,7 @@
     <p>{{ professor.requesting.user.shortName }}</p>
     <p>{{ professor.requesting.serie }}º Ano</p>
   </button>
+  <p *ngIf="professors?.length == 0" ion-text text-center>
+    {{ "HAS_NO_AVAILABLE_PROFESSORS" | translate }}
+  </p>
 </ion-list>

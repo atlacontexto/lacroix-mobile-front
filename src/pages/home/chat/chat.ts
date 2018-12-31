@@ -1,12 +1,10 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import * as JWT from "jwt-decode";
-import { ChatShowPage } from "../chat-show/chat-show";
 import { ProfilesProvider } from "../../../providers/profiles/profiles";
 import { Profile } from "../../../app/model/profile";
 import { ChatProvider } from "../../../providers/chat/chat";
-import { ProfileSchoolInstitutional } from "app/model/profile-school-institutional";
-import { ChatOthersPage } from "../chat-others/chat-others";
+import { ProfileSchoolInstitutional } from "../../../app/model/profile-school-institutional";
 
 /**
  * Generated class for the ChatPage page.
@@ -131,7 +129,7 @@ export class ChatPage {
 
   itemSelected(item: string) {
     this.navCtrl.push(
-      ChatShowPage,
+      "ChatShowPage",
       { item },
       {
         animate: true,
@@ -143,6 +141,6 @@ export class ChatPage {
   onInput(event) {}
 
   openOthers() {
-    this.navCtrl.push(ChatOthersPage);
+    this.navCtrl.push("ChatOthersPage");
   }
 }

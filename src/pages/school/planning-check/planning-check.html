@@ -1,31 +1,14 @@
-<!--
-  Generated template for the PlanningCheckPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-  <ion-navbar> <ion-title>PLANEJAMENTOS</ion-title> </ion-navbar>
+<ion-header no-border>
+  <ion-navbar transparent> <ion-title>Planejamentos</ion-title> </ion-navbar>
+  <ion-toolbar> <profile-status-header></profile-status-header> </ion-toolbar>
 </ion-header>
 
 <ion-content no-padding>
-  <ion-row
-    *ngIf="currentInstitution && currentInstitution.status === 'waiting'"
-  >
-    <ion-col>
-      <p ion-text text-center>
-        Seu perfil ainda não tem permissão de acesso. Entre em contato com a sua
-        escola para liberação.
-      </p>
-    </ion-col>
-  </ion-row>
-  <ion-row *ngIf="currentInstitution && currentInstitution.status === 'closed'">
-    <ion-col>
-      <p ion-text text-center>
-        Seu perfil está com permissão de acesso suspenso. Entre em contato com a
-        sua escola para liberação.
-      </p>
-    </ion-col>
-  </ion-row>
-  <professors-list [open]="content"></professors-list>
+  <professors-list
+    *ngIf="
+      currentProfile?.school?.status === 'accepted' ||
+      currentProfile?.county?.status === 'accepted'
+    "
+    [open]="content"
+  ></professors-list>
 </ion-content>

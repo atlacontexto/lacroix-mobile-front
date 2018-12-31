@@ -4,8 +4,8 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-  <ion-navbar>
+<ion-header no-border>
+  <ion-navbar tranparent>
     <ion-title>Escolas da Rede</ion-title>
     <ion-buttons end>
       <button ion-button icon-end (click)="openHelp()">
@@ -13,42 +13,16 @@
         <ion-icon name="info"></ion-icon>
       </button> </ion-buttons
   ></ion-navbar>
-  <ion-item no-lines>
-    <ion-avatar item-start> <img [src]="profile.avatar" /> </ion-avatar>
-    <h2 style="font-weight: bold;" text-wrap text-capitalize ion-text>
-      {{ profile.showType }}
-    </h2>
-    <h3 text-capitalize *ngIf="profile.role" ion-text text-wrap>
-      {{ profile.role.type | translate }}
-    </h3>
-    <h3 *ngIf="profile.county" ion-text text-wrap text-capitalize>
-      {{ profile.county.requested.name }}
-    </h3>
-    <ion-badge *ngIf="profile.main">principal</ion-badge>
-    <ion-icon
-      *ngIf="institution && institution.status === 'accepted'"
-      item-end
-      color="secondary"
-      name="checkmark-circle"
-    ></ion-icon>
-    <ion-icon
-      *ngIf="institution && institution.status === 'waiting'"
-      item-end
-      color="primary"
-      name="time"
-    ></ion-icon>
-    <ion-icon
-      *ngIf="institution && institution.status === 'closed'"
-      item-end
-      color="alert"
-      name="alert"
-    ></ion-icon>
-  </ion-item>
+  <ion-toolbar> <profile-status-header></profile-status-header> </ion-toolbar>
+
   <ion-segment
     padding-horizontal
     [(ngModel)]="step"
     color="atla-red"
-    *ngIf="institution && institution.status === 'accepted'"
+    *ngIf="
+      profile.school?.status === 'accepted' ||
+      profile.county?.status === 'accepted'
+    "
     (ionChange)="onSegmentChange($event)"
   >
     <ion-segment-button value="schools"> Escolas </ion-segment-button>
@@ -58,15 +32,12 @@
 </ion-header>
 
 <ion-content no-padding>
-  <ion-grid>
-    <ion-row *ngIf="institution && institution.status === 'waiting'">
-      <ion-col>
-        <p ion-text text-center>
-          Seu perfil ainda não tem permissão de acesso. Entre em contato com o
-          Administrador da Rede de Ensino ou contate a ATLA.
-        </p>
-      </ion-col>
-    </ion-row>
+  <ion-grid
+    *ngIf="
+      profile.school?.status === 'accepted' ||
+      profile.county?.status === 'accepted'
+    "
+  >
     <div [ngSwitch]="step">
       <ion-list *ngSwitchCase="'schools'">
         <p ion-text text-center *ngIf="schools">

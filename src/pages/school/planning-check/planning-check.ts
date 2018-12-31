@@ -42,19 +42,7 @@ export class PlanningCheckPage implements OnInit, OnDestroy {
       )
       .subscribe(profile => {
         this.currentProfile = profile;
-        if (this.currentProfile.$profileType == "ProfileSchool") {
-          this.currentInstitution = profile.school;
-        } else if (this.currentProfile.$profileType == "ProfileCounty") {
-          this.currentInstitution = profile.county;
-        } else if (this.currentProfile.$profileType == "ProfileProfessor") {
-          this.currentInstitution = profile.school;
-        }
-        if (
-          this.currentInstitution &&
-          this.currentInstitution.status == "accepted"
-        ) {
-          this.content = "plan";
-        }
+        this.content = "plan";
       });
   }
   ngOnDestroy(): void {

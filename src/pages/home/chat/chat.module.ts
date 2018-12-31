@@ -7,9 +7,9 @@ import { ChatPage } from "./chat";
 import { ChatOthersPage } from "../chat-others/chat-others";
 
 @NgModule({
-  declarations: [ChatPage, ChatOthersPage],
+  declarations: [ChatPage],
   imports: [IonicPageModule.forChild(ChatPage)],
-  entryComponents: [ChatOthersPage],
+
   providers: [AngularFirestore]
 })
 export class ChatPageModule {}

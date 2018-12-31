@@ -9,50 +9,60 @@
     <ion-title>Detalhes da Turma</ion-title>
   </ion-navbar>
 
-  <ion-item>
-    <ion-label>Turma</ion-label>
-    <ion-select [(ngModel)]="currentClassroom" (ionChange)="getClassroomInfo()">
-      <ion-option
-        *ngFor="let classroom of profile.classrooms"
-        [value]="classroom._id"
-        >{{ classroom.series + " | " + classroom.subClass }}</ion-option
+  <ion-toolbar>
+    <profile-status-header></profile-status-header>
+    <ion-item no-lines *ngIf="profile.school?.status === 'accepted'">
+      <ion-label>Trocar turma</ion-label>
+      <ion-select
+        [(ngModel)]="currentClassroom"
+        (ionChange)="getClassroomInfo()"
       >
-    </ion-select>
-  </ion-item>
+        <ion-option
+          *ngFor="let classroom of profile.classrooms"
+          [value]="classroom._id"
+          >{{ classroom.series + " | " + classroom.subClass }}</ion-option
+        >
+      </ion-select>
+    </ion-item>
+  </ion-toolbar>
 
-  <ion-item no-lines *ngIf="classroom">
-    <h2 text-wrap>{{ classroom.series }}</h2>
-    <h2>Turma: {{ classroom.subClass }}</h2>
+  <ion-item
+    no-lines
+    *ngIf="
+      (profile.school?.status === 'accepted' ||
+        profile.county?.status === 'accepted') &&
+      classroom
+    "
+  >
+    <h2 text-wrap *ngIf="!currentClassroom">
+      {{
+        classroom.series + " | " + classroom.subClass + " | " + classroom.shift
+      }}
+    </h2>
+    <!-- <h2>Turma: {{ classroom.subClass }}</h2> -->
     <p>Operação: {{ classroom.hour }}</p>
     <p>Alunos: {{ classroom.students.length }}</p>
-    <p>Turno: {{ classroom.shift }}</p>
+    <!-- <p>Turno: {{ classroom.shift }}</p> -->
   </ion-item>
 
-  <ion-segment padding-horizontal [(ngModel)]="show">
+  <ion-segment
+    *ngIf="
+      profile.school?.status === 'accepted' ||
+      profile.county?.status === 'accepted'
+    "
+    padding-horizontal
+    [(ngModel)]="show"
+  >
     <ion-segment-button value="students"> Alunos</ion-segment-button>
     <ion-segment-button value="professors"> Professores</ion-segment-button>
   </ion-segment>
 </ion-header>
 
 <ion-content no-padding>
-  <ion-row *ngIf="profile.school && profile.school.status === 'waiting'">
+  <ion-row *ngIf="profile.classrooms?.length === 0">
     <ion-col>
       <p ion-text text-center>
-        Seu perfil ainda não tem permissão de acesso. Entre em contato com a sua
-        escola para liberação.
-      </p>
-    </ion-col>
-  </ion-row>
-
-  <ion-row
-    *ngIf="
-      profile.school && profile.classrooms && profile.classrooms.length === 0
-    "
-  >
-    <ion-col>
-      <p ion-text text-center>
-        Seu perfil ainda não tem nenhuma turma atribuída. Entre em contato com a
-        sua escola para liberar o acesso às suas turmas.
+        {{ "PROFESSOR_HAS_NO_CLASSROOM" | translate }}.
       </p>
     </ion-col>
   </ion-row>
@@ -72,6 +82,9 @@
     </ion-list>
 
     <ion-list *ngSwitchCase="'professors'">
+      <p *ngIf="requests?.length == 0" ion-text text-center>
+        {{ "HAS_NO_AVAILABLE_PROFESSORS" | translate }}
+      </p>
       <ion-item *ngFor="let professor of requests">
         <ion-thumbnail item-start>
           <img [src]="professor.requesting.avatar" />
@@ -109,7 +122,7 @@
         ></ion-icon>
       </ion-item>
       <p ion-text text-center *ngIf="!requests">
-        Nenhum professor se cadastrou para este Ano.
+        {{ "CLASSROOM_HAS_NO_PROFESSOR" | translate }}.
       </p>
     </ion-list>
   </div>

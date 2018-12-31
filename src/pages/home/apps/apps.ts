@@ -51,6 +51,7 @@ export class AppsPage implements OnInit, OnDestroy {
       )
       .subscribe(profile => {
         this.currentProfile = profile;
+        console.log(this.currentProfile);
         this.updateList();
       });
   }
@@ -128,11 +129,6 @@ export class AppsPage implements OnInit, OnDestroy {
       } else if (this.currentProfile["profileType"] === "ProfileProfessor") {
         this.label = this.currentProfile.$showType;
         this.privatePages = [
-          {
-            title: "BOLETIM",
-            component: "ReportPage",
-            icon: "assets/icon/flaticon/education/diploma.svg"
-          },
           {
             title: "PLANEJAMENTOS",
             component: "PlanningPage",

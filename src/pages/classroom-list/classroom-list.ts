@@ -28,7 +28,7 @@ import { HttpParams } from "@angular/common/http";
   templateUrl: "classroom-list.html"
 })
 export class ClassroomListPage implements OnInit, OnDestroy {
-  _unsubscribeAll: Subject<any>;
+  private _unsubscribeAll: Subject<any>;
   profile: any;
   classrooms = new Array();
   _schoolId: any;
@@ -39,7 +39,7 @@ export class ClassroomListPage implements OnInit, OnDestroy {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public profilesProvider: ProfilesProvider,
+    public _profilesProvider: ProfilesProvider,
     public loadingCtrl: LoadingController,
     public _classroomsProvider: ClassroomsProvider,
     public _alertProvider: AlertProvider,
@@ -60,7 +60,7 @@ export class ClassroomListPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isInitialized = true;
-    this.profilesProvider.currentProfile
+    this._profilesProvider.currentProfile
       .pipe(
         takeUntil(this._unsubscribeAll),
         filter(profile => profile instanceof Profile)
@@ -69,13 +69,15 @@ export class ClassroomListPage implements OnInit, OnDestroy {
         this.profile = profile;
         if (this._schoolId == null && this._countyId == null) {
           this._schoolId = this.profile.school.requested._id;
-          this._countyId = this.profile.school.requested.countyInstitutional;
+          this._countyId = this.profile.school.requested.countyInstitutional._id;
         }
+        this._countyId;
         this.getSchoolYears(this._countyId);
       });
   }
 
   getSchoolYears(_countyId: any): any {
+    console.log(_countyId);
     if (_countyId) {
       this._schoolYear
         .getSchoolYearByCounty(_countyId)

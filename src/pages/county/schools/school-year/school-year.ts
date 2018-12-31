@@ -153,13 +153,17 @@ export class SchoolYearPage implements OnInit, OnDestroy {
   }
 
   saveYear() {
+    console.log(this.regimeSelected);
     this.form.addControl(
       "year",
       new FormControl(this.year, Validators.compose([Validators.required]))
     );
     this.form.addControl(
       "regime",
-      new FormControl(this.regime, Validators.compose([Validators.required]))
+      new FormControl(
+        this.regimeSelected,
+        Validators.compose([Validators.required])
+      )
     );
     this.form.addControl(
       "county",
@@ -182,8 +186,8 @@ export class SchoolYearPage implements OnInit, OnDestroy {
     //     Validators.compose([Validators.required])
     //   )
     // );
+    console.log(this.form.value);
     if (this.form.valid) {
-      console.log(this.form.value);
       if (this.schoolYear) {
         this._schoolYearProvider
           .updateSchoolYear(this.schoolYear.id, this.form.value)
