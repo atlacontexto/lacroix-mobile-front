@@ -7,8 +7,9 @@
   "proxies": [
     {
       "path": "/api",
-      "proxyUrl": "https://www.atlaensino.com/api"
+      "proxyUrl": "http://localhost:3000/api"
     }
   ],
-  "pro_id": "b7cfa783"
+  "pro_id": "b7cfa783",
+  "id": "b7cfa783"
 }
