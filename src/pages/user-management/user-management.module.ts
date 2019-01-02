@@ -5,25 +5,27 @@ import { TranslateModule } from "@ngx-translate/core";
 import { ComponentsModule } from "../../components/components.module";
 import { BasicInfoComponent } from "./basic-info/basic-info";
 import { ProfilesComponent } from "./profiles/profiles";
-import { PersonalComponent } from "./basic-info/personal/personal";
+
 import { AccountComponent } from "./basic-info/account/account";
-import { AddressComponent } from "./basic-info/address/address";
+
 import { BillingComponent } from "./basic-info/billing/billing";
+import { AddressPageModule } from "./address/address.module";
+import { PersonalPageModule } from "./personal/personal.module";
 
 @NgModule({
   declarations: [
     UserManagementPage,
     BasicInfoComponent,
     ProfilesComponent,
-    PersonalComponent,
     AccountComponent,
-    AddressComponent,
     BillingComponent
   ],
   imports: [
     IonicPageModule.forChild(UserManagementPage),
     TranslateModule.forChild(),
-    ComponentsModule
+    ComponentsModule,
+    AddressPageModule,
+    PersonalPageModule
   ],
   exports: [ProfilesComponent]
 })

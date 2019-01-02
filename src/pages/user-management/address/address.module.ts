@@ -1,13 +1,11 @@
-import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { AddressPage } from './address';
+import { NgModule } from "@angular/core";
+import { IonicPageModule } from "ionic-angular";
+import { AddressPage } from "./address";
+import { AddressComponent } from "./address/address";
 
 @NgModule({
-  declarations: [
-    AddressPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(AddressPage),
-  ],
+  declarations: [AddressPage, AddressComponent],
+  imports: [IonicPageModule.forChild(AddressPage)],
+  exports: [AddressComponent]
 })
 export class AddressPageModule {}
